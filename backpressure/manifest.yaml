@@ -1,0 +1,59 @@
+# Backpressure condition registry.
+# Each enabled condition is checked against every changed feature before commit.
+conditions:
+  - id: lint-rules
+    path: backpressure/lint-rules.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: dry
+    path: backpressure/dry.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: anti-reward-hacking
+    path: backpressure/anti-reward-hacking.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: one-function-one-test
+    path: backpressure/one-function-one-test.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: definition-of-done
+    path: backpressure/definition-of-done.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: evidence-log
+    path: backpressure/evidence-log.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: scope-control
+    path: backpressure/scope-control.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: destructive-operations
+    path: backpressure/destructive-operations.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: data-integrity
+    path: backpressure/data-integrity.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: security-boundaries
+    path: backpressure/security-boundaries.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: visual-regression
+    path: backpressure/visual-regression.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: performance-budget
+    path: backpressure/performance-budget.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+  - id: autonomy-boundary
+    path: backpressure/autonomy-boundary.md
+    enabled: true
+    verifier_policy: main_agent_allowed
+
+# Executable lint/format/static-analysis commands.
+# These are separate from the `lint-rules` backpressure attestation.
+lint_commands: []

@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:19440d6b2a627ad5801d213eaa79e66e81ef65477257109f12bf919752e24240",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "ScarletOwl",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "85b2ca57cfe68e5ff4a3c620d520cdf2a61879c9",
+  "created_at": "2026-07-03T23:47:22.716577853Z",
+  "feature": {
+    "id": "project-readiness-kit-a25-findings-entry",
+    "kind": "feature",
+    "name": "project-readiness-kit-a25-findings-entry",
+    "source_bead": "project-readiness-kit-a25-findings-entry",
+    "bead_ids": [
+      "project-readiness-kit-a25-findings-entry"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-a25-findings-entry"
+  },
+  "bead_ids": [
+    "project-readiness-kit-a25-findings-entry"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Docs-only A25 dogfooding finding entry for the audited 7b3f761 gate escape; staged payload is exactly docs/dogfooding-findings-2026-07.md."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Docs-only A25 slice is mechanically clean and the current endpoint full suite passes.",
+      "evidence": [
+        "Agent Mail 3551: hash matched sha256:19440d6b2a627ad5801d213eaa79e66e81ef65477257109f12bf919752e24240 with only docs/dogfooding-findings-2026-07.md included.\\nAgent Mail 3551: git diff --cached --check passed.\\nAgent Mail 3551: go test ./... passed, including burpvalve/cmd/burpvalve."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged change adds one A25 finding and updates the next-ID line without duplicate findings.",
+      "evidence": [
+        "Agent Mail 3551: staged diff adds one A25 finding and changes log-discipline next ID from A25 to A26.\\nAgent Mail 3551: duplicate-ID awk check printed no duplicate finding IDs."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The entry distinguishes a real gate escape from evidence fabrication and names focused-suite selection as the gap.",
+      "evidence": [
+        "Agent Mail 3552: archive sweep showed 39b5ada PASS, e79595d PASS, 7b3f761 FAIL, cd1b042 FAIL for the prompt-list test.\\nAgent Mail 3552: 7b3f761 added prompt-bank/scaffold/template surfaces; cd1b042 was docs-only.\\nAgent Mail 3552: 7b3f761 attestation recorded focused internal/backpressure and internal/scaffold tests, not a fabricated full-suite claim."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload is documentation-only and changes no functions or tests.",
+      "evidence": [
+        "Agent Mail 3551: git diff --cached --name-status showed only M docs/dogfooding-findings-2026-07.md.\\nAgent Mail 3551: no functions, code paths, or tests changed."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged findings entry is hash-bound, whitespace-clean, source-checked, and endpoint full tests pass.",
+      "evidence": [
+        "Agent Mail 3552: git diff --cached --name-status returned only M docs/dogfooding-findings-2026-07.md.\\nAgent Mail 3552: git diff --cached --check passed.\\nAgent Mail 3552: staged diff showed only the A25 entry addition and next pointer update.\\nAgent Mail 3552: go test ./... passed in the temp staged worktree."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The entry records the audit matrix conclusions and remedy lines with hash-bound evidence.",
+      "evidence": [
+        "Agent Mail 3551: A25 text records the matrix for 39b5ada/e79595d/7b3f761/cd1b042.\\nAgent Mail 3551: A25 states the gap was not fabricated evidence, identifies missing minimum prompt-bank test coverage, and names the red-baseline detector remedy."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The slice is limited to the A25 finding and next-ID update; remedies are scoped to round 3 hardening.",
+      "evidence": [
+        "Agent Mail 3552: git diff --cached --stat reported one docs file changed, 27 insertions and 1 deletion.\\nAgent Mail 3552: rg showed A25 inserted after A24 and log discipline now says next A26.\\nAgent Mail 3552: remedy text is limited to minimum test suites by evidence surface and red-baseline detector."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is a documentation finding only and adds no destructive operation surface.",
+      "evidence": [
+        "Agent Mail 3551: staged payload is a documentation finding entry only.\\nAgent Mail 3551: diff contains no executable commands, scripts, hook changes, removal commands, or destructive operation instructions."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged hash/path binding is exact, A25 is placed before section B, and log discipline now points to A26.",
+      "evidence": [
+        "Agent Mail 3551: hash command showed exactly one included staged path and no hash-excluded staged payload.\\nAgent Mail 3551: staged diff places A25 before section B and updates next IDs to A26, B8, C31, D15.\\nAgent Mail 3551: duplicate-ID check produced no output."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The docs-only finding changes no auth, secret, network, permission, installer, CI credential, or security-boundary behavior.",
+      "evidence": [
+        "Agent Mail 3551: inspected staged docs-only diff.\\nAgent Mail 3551: no auth, secret handling, network, permissions, installer, CI credential, or security-boundary behavior changes."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no visual or UI surface.",
+      "evidence": [
+        "Agent Mail 3551: only a Markdown findings log changed.\\nAgent Mail 3551: no UI, TUI rendering, screenshots, demos, CSS, terminal styling, or visual output surface."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload is documentation-only and has no runtime/performance surface.",
+      "evidence": [
+        "Agent Mail 3551: no runtime code, loops, commands, algorithms, package size, CI workload, or hot-path behavior changed."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-03T23:47:22.716577853Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The entry proposes future hardening without authorizing agents to bypass current gates or self-certify.",
+      "evidence": [
+        "Agent Mail 3552: A25 is labeled issue-candidate and says round 3 needs hardening changes rather than declaring gate behavior changed now.\\nAgent Mail 3552: red-baseline remedy preserves explicit work-unit and evidence control.\\nAgent Mail 3552: no backpressure condition files, gate code, Beads state, or command behavior changed."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-03T23:47:22.716577853Z"
+    }
+  ]
+}

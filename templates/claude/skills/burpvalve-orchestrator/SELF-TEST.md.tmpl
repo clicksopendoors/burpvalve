@@ -1,0 +1,14 @@
+# Self-Test
+
+Use this after coordinating a real Burpvalve turn.
+
+- [ ] I preserved one atomic payload per gated commit.
+- [ ] I verified the staged hash before requesting verifier verdicts.
+- [ ] I used real verifier evidence and preserved disagreements.
+- [ ] I treated terminal wakes as attention routing, not evidence.
+- [ ] I released file and gate reservations after commit or abort.
+- [ ] I recorded commit, attestation, verifier, and work-unit refs in the handoff.
+- [ ] I stopped instead of widening scope when the payload boundary was unclear.
+
+Stop using the skill when there is no active work unit, no queued owner, and no
+coordination decision to make.

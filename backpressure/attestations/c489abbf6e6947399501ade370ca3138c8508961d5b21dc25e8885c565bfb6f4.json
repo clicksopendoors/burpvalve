@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:c489abbf6e6947399501ade370ca3138c8508961d5b21dc25e8885c565bfb6f4",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "bb74e4ca6e44ab293575dbf2a0aaf50352ca5655",
+  "created_at": "2026-07-02T06:46:58.441769243Z",
+  "feature": {
+    "id": "project-readiness-kit-land-10-recovery-contract-explain-mp8",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-10-recovery-contract-explain-mp8",
+    "diff_cluster": "explicit:project-readiness-kit-land-10-recovery-contract-explain-mp8"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is one atomic land-10 unit: recovery/result-contract JSON fields, read-only explain command, lint --json plumbing needed for explain, docs/result-contract.md, and focused tests for that same recovery contract. The staged path list is exactly cmd/burpvalve/explain_test.go, cmd/burpvalve/main.go, docs/result-contract.md, internal/backpressure/artifacts.go, and internal/backpressure/lint.go; later-unit bead metadata, attestation query/list/show, verifier prompts, setup/config init, completion verify, and commit_test.go hunks are not staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2383: Re: [land-10] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2383 condition lint-rules",
+        "created_at": "2026-07-02T06:42:10.732704Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The staged land-10 payload is formatter-clean and passes focused plus full regression checks for explain, result-contract recovery fields, and lint JSON behavior.",
+      "evidence": [
+        "git diff --cached --name-status showed exactly A cmd/burpvalve/explain_test.go, M cmd/burpvalve/main.go, A docs/result-contract.md, M internal/backpressure/artifacts.go, and M internal/backpressure/lint.go.",
+        "git diff --cached --check produced no output.",
+        "Staged Go blobs for cmd/burpvalve/main.go, cmd/burpvalve/explain_test.go, internal/backpressure/artifacts.go, and internal/backpressure/lint.go matched gofmt output.",
+        "go test ./cmd/burpvalve -run 'Explain|Result|NextSteps|Commit' passed.",
+        "go test ./internal/backpressure -run 'NextSteps|Artifact|Lint' passed.",
+        "go run ./cmd/burpvalve explain --help passed and documented explain as read-only plus --json/--root flags.",
+        "go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition dry",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Recovery/explain logic is centralized through shared explanation structs/builders and focused tests; repeated test setup is handled by helpers rather than copy-pasted implementation logic.",
+      "evidence": [
+        "`git diff --cached --name-status \u0026\u0026 git diff --cached --stat \u0026\u0026 git diff --cached --check`: exactly A cmd/burpvalve/explain_test.go, M cmd/burpvalve/main.go, A docs/result-contract.md, M internal/backpressure/artifacts.go, M internal/backpressure/lint.go; 1194 insertions/29 deletions; no diff-check diagnostics.",
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1410,1815p'`: one dispatcher path with shared `explanation`, `explainBlocker`, `baseExplanation`, and per-source explain builders.",
+        "`git show :cmd/burpvalve/explain_test.go | nl -ba | sed -n '1,430p'`: shared helpers `decodeExplain`, `mustJSONString`, `executeBurpvalveCommandWithInput`, `artifactFixture`, and `writeArtifactFixture`.",
+        "Staged snapshot from `git archive HEAD` + `git diff --cached --binary | git apply` passed targeted tests and full `go test ./...`."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition anti-reward-hacking",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload does not present weak or missing evidence as success: lint no-op becomes a missing-evidence explanation, and blocked-report verifier policy defects stay visible as blockers.",
+      "evidence": [
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1577,1698p'`: `explainLint` treats non-enforced lint as not proof, and `explainArtifact` blocks non-pass verdicts or failed `VerifierPolicyAccepted()`.",
+        "`git show :cmd/burpvalve/explain_test.go | nl -ba | sed -n '83,203p'`: tests cover lint no-op missing evidence, real lint JSON pipe, commit blocked-report guidance, and independent-required policy failure from main-agent evidence.",
+        "Staged-snapshot probe `go run ./cmd/burpvalve lint --json | go run ./cmd/burpvalve explain --json - | jq ...` returned schema 1, command explain, input lint, status explained, fatal false, one blocker, one next step.",
+        "`git show :docs/result-contract.md | nl -ba | sed -n '29,39p'`: skipped wishlist policy must not be treated as proof that lint passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition one-function-one-test",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "New explain/recovery behavior has direct coverage for setup, lint, commit, blocked/passing artifacts, malformed inputs, robot help, and lint JSON mode.",
+      "evidence": [
+        "`git show :cmd/burpvalve/explain_test.go | nl -ba | sed -n '43,272p'`: direct tests for setup explanation, lint no-op, real lint JSON pipe, commit blocked-report guidance, verifier-policy failure, passing attestation, malformed/unknown input, robots help, and lint help JSON docs.",
+        "Staged snapshot passed `go test ./cmd/burpvalve -run 'Explain|Result|NextSteps|Commit'` (`ok`, 6.412s).",
+        "Staged snapshot passed `go test ./internal/backpressure -run 'NextSteps|Artifact|Lint'` (`ok`, 1.211s).",
+        "Full staged-snapshot `go test ./...` passed, including cmd/burpvalve 21.505s and internal/backpressure 3.298s."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition definition-of-done",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload matches land-10 recovery/explain scope, includes result-contract docs, and passes diff-check, targeted tests, CLI probe, and full suite on a staged snapshot.",
+      "evidence": [
+        "`git diff --cached --name-only | sort`: only cmd/burpvalve/explain_test.go, cmd/burpvalve/main.go, docs/result-contract.md, internal/backpressure/artifacts.go, internal/backpressure/lint.go.",
+        "`git diff --cached --numstat`: 366/0 explain_test.go, 722/19 main.go, 39/0 docs/result-contract.md, 52/10 artifacts.go, 15/0 lint.go.",
+        "`git show :docs/result-contract.md | nl -ba | sed -n '1,120p'`: documents common JSON fields, read-only explain behavior, commit recovery, and lint evidence semantics.",
+        "Staged snapshot passed targeted tests, `go run ./cmd/burpvalve explain --help`, lint-to-explain JSON pipe, and full `go test ./...`."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition evidence-log",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload strengthens evidence/recovery records with shared JSON fields, blocked-report next steps, and explain blockers carrying verifier policy, verdict, next action, and missing-evidence signal.",
+      "evidence": [
+        "`git show :internal/backpressure/artifacts.go | nl -ba | sed -n '51,178p'`: `PreCommitResult` now includes schema_version, command, fatal, and next_steps, with branch-specific recovery steps.",
+        "`git show :internal/backpressure/artifacts.go | nl -ba | sed -n '477,633p'`: blocked reports include next_steps derived from condition NextAction values via `blockedReportNextSteps`.",
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1320,1332p'` and `1656,1698p`: explain blockers include condition_file, verifier_policy/kind, verdict, next_action, and evidence_missing.",
+        "Staged-snapshot lint-to-explain JSON pipe produced schema_version 1, command explain, input_type lint, status explained, one blocker, and one next step."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition scope-control",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within land-10 recovery contract and explain command boundaries; no future unit surfaces are staged.",
+      "evidence": [
+        "`git diff --cached --name-only | sort`: only the five expected land-10 files; no cmd/burpvalve/commit_test.go or later-unit files.",
+        "`git diff --cached -- ... | rg -n 'bead_ids|--bead|attestations list|attestations show|setup readiness|completion verify|verifier prompt|query|config init|bead_rationale' || true`: no matches.",
+        "`rg -n 'unit 10|recovery contract|explain' log/landing-condition-preanalysis.md`: unit-10 expected explain command/tests, result-contract docs, and recovery-output hunks in artifacts/lint; current paths align.",
+        "`git diff --cached --unified=3 -- cmd/burpvalve/main.go | rg ...`: staged main.go hunks are explain registration/implementation, robot help docs, and `lint --json` plumbing."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2383: Re: [land-10] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2383 condition destructive-operations",
+        "created_at": "2026-07-02T06:42:10.732704Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive-operation surface. It adds a read-only explain command, JSON recovery fields, docs, and tests; it does not add deletes, resets, force pushes, deploys, migrations, external sends, or production mutations.",
+      "evidence": [
+        "git diff --cached --name-status shows only added/modified files, with no deletions or renames.",
+        "Boundary grep over the staged diff found no rm -rf, git reset, force push, deploy, production, curl, or external mutation behavior.",
+        "cmd/burpvalve/main.go explain help text says explain is read-only and never repairs, stages, commits, or changes config.",
+        "The only os.WriteFile hit in the staged diff is in cmd/burpvalve/explain_test.go writeArtifactFixture, a test fixture helper."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition data-integrity",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Result-contract data preserves schema/version fields, artifact identity validation, blocked-report next-step data, and structured JSON output without dropping underlying attestation fields.",
+      "evidence": [
+        "`git show :internal/backpressure/lint.go | nl -ba | sed -n '20,155p'`: `LintResult` includes schema_version, command, fatal, and next_steps; malformed and required-failure paths set fatal true and recovery steps.",
+        "`git show :internal/backpressure/artifacts.go | nl -ba | sed -n '51,178p'`: `PreCommitResult` uses schema_version 1, command commit, fatal status, and branch-specific next steps while preserving artifact/blocked report paths.",
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1787,1842p'`: blocked artifact decoding validates schema_version, tool, identity hashes, generator/git head/created_at, feature identity, source bead/diff cluster, condition ids/files/hashes, verdict enum, and timestamps.",
+        "Full staged-snapshot `go test ./...` passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition security-boundaries",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed evidence-boundary surfaces are satisfied: explain is read-only, validates artifacts before explanation, and reports verifier-policy violations as blockers rather than weakening evidence acceptance.",
+      "evidence": [
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1362,1410p'`: explain command documents read-only behavior and only builds/prints or JSON-encodes explanations.",
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1700,1842p'`: artifact references go through read/resolve/decode/validate before explanation; malformed or incomplete artifacts are rejected.",
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1656,1698p'`: conditions become blockers when verdict is not pass or verifier policy is not accepted.",
+        "`git diff --cached -- ... | rg -n '^\\+.*(os\\.WriteFile|os\\.Mkdir|git add|git commit|exec\\.Command|Apply|Repair|Init|Stage|Commit)' || true`: no mutating calls in explain execution path; matches were test fixture writes, docs/strings, result fields, or existing commit artifact-writing code.",
+        "Staged snapshot `go run ./cmd/burpvalve explain --help` included: `This command is read-only: it never repairs, stages, commits, or changes config.`"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2383: Re: [land-10] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2383 condition visual-regression",
+        "created_at": "2026-07-02T06:42:10.732704Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no governed visual-regression surface: no UI rendering, browser, screenshot, canvas, responsive layout, or visual asset behavior is changed.",
+      "evidence": [
+        "Staged paths are cmd/burpvalve/explain_test.go, cmd/burpvalve/main.go, docs/result-contract.md, internal/backpressure/artifacts.go, and internal/backpressure/lint.go.",
+        "Diff inspection found CLI command/output logic, result-contract docs, and tests, not frontend or terminal layout rendering changes beyond plain explain text output.",
+        "Boundary grep for visual, screenshot, browser, and canvas found no governed visual-regression changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2383: Re: [land-10] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2383 condition performance-budget",
+        "created_at": "2026-07-02T06:42:10.732704Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload does not introduce a governed performance-budget surface. The new explain command reads one stdin payload or one artifact/ref lookup on demand and does not add concurrency, hot-path fanout, network calls, benchmarked paths, or broad runtime loops.",
+      "evidence": [
+        "Diff inspection found no goroutines, WaitGroup/concurrency changes, network calls, benchmark changes, cache/memory-heavy structures, or latency budget changes.",
+        "resolveExplainArtifactPath scans only the two artifact directories when resolving a user-provided ref; this is command-invoked recovery inspection, not a commit hot path.",
+        "go test ./cmd/burpvalve -run 'Explain|Result|NextSteps|Commit', go test ./internal/backpressure -run 'NextSteps|Artifact|Lint', and go test ./... all passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2385: Re: [land-10] verifier packet — BrightOwl cells (resend)",
+        "evidence_ref": "Agent Mail message 2385 condition autonomy-boundary",
+        "created_at": "2026-07-02T06:44:08.163552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload gives agent-safe recovery guidance but does not autonomously perform mutating actions; callers are told what to do next.",
+      "evidence": [
+        "`git show :docs/result-contract.md | nl -ba | sed -n '18,27p'`: explain never repairs, stages, commits, or changes config; commit recovery tells the agent which JSON file to stage rather than staging it itself.",
+        "`git show :cmd/burpvalve/main.go | nl -ba | sed -n '1641,1653p'`: commit explanations point to `burpvalve explain \u003cblocked report\u003e` and next steps, not automatic execution.",
+        "`git show :internal/backpressure/artifacts.go | nl -ba | sed -n '126,178p'`: PreCommit next_steps are explicit strings such as rerun, fix responses, or `git add \u003cartifact\u003e`; no automatic git add/commit is introduced.",
+        "Staged snapshot `go run ./cmd/burpvalve explain --help` passed and showed read-only help text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:46:58.441769243Z"
+    }
+  ]
+}

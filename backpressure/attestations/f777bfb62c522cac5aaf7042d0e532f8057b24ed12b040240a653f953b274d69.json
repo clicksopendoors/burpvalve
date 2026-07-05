@@ -1,0 +1,396 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:f777bfb62c522cac5aaf7042d0e532f8057b24ed12b040240a653f953b274d69",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "a6bdd5cd8230e1215843ffd861deec839308db53",
+  "created_at": "2026-07-02T09:56:06.894858589Z",
+  "feature": {
+    "id": "project-readiness-kit-land-18-agents-template-refresh-nwu",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-18-agents-template-refresh-nwu",
+    "source_bead": "project-readiness-kit-land-18-agents-template-refresh-nwu",
+    "bead_ids": [
+      "project-readiness-kit-land-18-agents-template-refresh-nwu"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-18-agents-template-refresh-nwu"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-18-agents-template-refresh-nwu"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged slice is exactly land-18: AGENTS repair heading refresh in internal/scaffold/agents_template.go so repaired AGENTS.md includes core operating-contract sections. internal/scaffold/template_contract_test.go is unchanged because existing repair/apply/template contract tests already cover the required AGENTS clauses; no hook template, broad docs refresh, or unrelated scaffold changes are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The one-file staged Go slice is formatted and passes focused scaffold tests plus the full test suite.",
+      "evidence": [
+        "ScarletMarsh message 2438: git diff --cached --name-status and --stat matched the packet exactly: M internal/scaffold/agents_template.go; 5 changed lines, 4 insertions and 1 deletion.",
+        "ScarletMarsh verified the staged internal/scaffold/agents_template.go blob was gofmt-clean.",
+        "ScarletMarsh verified git diff --cached --check exited 0.",
+        "ScarletMarsh verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' exited 0 and go test ./... exited 0."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2437",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed repair-heading surface remains centralized in one helper and does not duplicate template or repair logic.",
+      "evidence": [
+        "BrightOwl message 2437: git diff --cached -- internal/scaffold/agents_template.go showed a single helper change in agentsRepairHeadings: five core headings are now appended unconditionally while optional headings remain conditional.",
+        "BrightOwl inspected sed -n '165,190p' internal/scaffold/agents_template.go in a staged snapshot and found the heading list centralized in agentsRepairHeadings with no duplicated repair-heading logic.",
+        "BrightOwl verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' passed in the staged snapshot."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2437",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload closes a repair coverage gap without weakening the agent operating contract or making completion easier to claim falsely.",
+      "evidence": [
+        "BrightOwl message 2437: git diff --cached showed the staged change adds Agent Startup, Atomic Work And Commits, Definition Of Done, Uncertainty, and File Coordination to repair headings instead of removing or weakening AGENTS operating-contract content.",
+        "BrightOwl found repair tests requiring those core sections for scoped AGENTS repair and skip-aware repair while forbidding optional Beads/NTM/Docs sections when skipped or out of scope.",
+        "BrightOwl verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' passed in the staged snapshot.",
+        "ScarletMarsh message 2438 independently agreed pass for this shared cell, citing the same unconditional core headings and skip-aware optional heading behavior."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The changed behavior is the agentsRepairHeadings helper, and existing focused repair/apply/template contract tests cover the new unconditional core headings and skip-aware optional headings.",
+      "evidence": [
+        "ScarletMarsh message 2438: staged diff changes only func agentsRepairHeadings in internal/scaffold/agents_template.go.",
+        "ScarletMarsh found internal/scaffold/repair_test.go TestApplyRepairCanRepairOnlyAgents checks scoped AGENTS.md repair appends core sections Agent Startup, Atomic Work And Commits, Definition Of Done, Uncertainty, and File Coordination while omitting optional sections.",
+        "ScarletMarsh found TestApplyRepairOmitsSkippedAgentsSections checks skip-aware repair includes core sections and Backpressure while omitting skipped Beads, NTM Session Naming, and Docs/Plans/Logs sections.",
+        "ScarletMarsh found internal/scaffold/apply_test.go assertions for AGENTS.md section repair reporting and required core headings.",
+        "ScarletMarsh verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' and go test ./... exited 0."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2437",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice has implementation evidence and targeted/full test evidence bound to a staged-only snapshot.",
+      "evidence": [
+        "BrightOwl message 2437: git diff --cached --name-status/stat matched the packet exactly: only M internal/scaffold/agents_template.go, with 4 insertions and 1 deletion.",
+        "BrightOwl verified git diff --cached --check exited 0 on the staged payload.",
+        "BrightOwl verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' passed in the staged snapshot.",
+        "BrightOwl verified go test ./... passed in the staged snapshot across cmd/burpvalve and all internal packages."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed surface is repaired AGENTS.md guidance that must include Definition Of Done/evidence expectations even when optional scaffold pieces are skipped.",
+      "evidence": [
+        "ScarletMarsh message 2438: staged diff appends Definition Of Done unconditionally in agentsRepairHeadings, rather than only relying on optional target-derived sections.",
+        "ScarletMarsh cited AGENTS.md Definition Of Done clauses requiring relevant checks to run, results to be recorded, and the backpressure verifier to have a complete feature x condition matrix.",
+        "ScarletMarsh found internal/scaffold/repair_test.go and internal/scaffold/apply_test.go assertions that Definition Of Done appears in repaired AGENTS.md and repair result reporting.",
+        "ScarletMarsh verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' exited 0."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2437",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The change is limited to the land-18 repair-heading helper behavior described in the packet.",
+      "evidence": [
+        "BrightOwl message 2437: git diff --cached --name-status showed only internal/scaffold/agents_template.go staged.",
+        "BrightOwl verified git diff --cached --stat showed exactly 1 file changed, 4 insertions, 1 deletion.",
+        "BrightOwl verified git diff --cached -- internal/scaffold/agents_template.go showed only agentsRepairHeadings changed; no template files, hook files, docs, or unrelated scaffold code were staged.",
+        "ScarletMarsh message 2438 independently agreed pass for this shared cell and confirmed no internal/scaffold/template_contract_test.go, command, hook, docs, or future-unit files were staged."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no destructive-operation surface.",
+      "evidence": [
+        "ScarletMarsh message 2438: git diff --cached shows only internal/scaffold/agents_template.go with a small agentsRepairHeadings slice-content change.",
+        "ScarletMarsh's targeted staged grep for remove/delete/rm-rf/WriteFile/Mkdir/exec/shell/PATH and similar risky operations found only heading names and the function under review; no destructive command or write path was introduced.",
+        "The land-18 pre-analysis marked destructive-operations not governed, consistent with the staged diff."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed surface is idempotent repair of persisted AGENTS.md contract sections.",
+      "evidence": [
+        "ScarletMarsh message 2438: staged diff initializes headings with Agent Startup, appends Atomic Work And Commits, Definition Of Done, and Uncertainty/File Coordination unconditionally while leaving Beads, NTM Session Naming, Backpressure, and Docs/Plans/Logs conditional on active scaffold targets.",
+        "ScarletMarsh found internal/scaffold/repair_test.go idempotency checks for ApplyRepair reruns and section marker counts, preventing duplicate repaired blocks.",
+        "ScarletMarsh found TestApplyRepairCanRepairOnlyAgents verifies scoped AGENTS.md repair appends core sections and omits optional sections.",
+        "ScarletMarsh found TestApplyRepairOmitsSkippedAgentsSections verifies skipped optional sections remain omitted while core sections remain present.",
+        "ScarletMarsh verified go test ./internal/scaffold -run 'AGENTS|Template|Contract' and go test ./... exited 0."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2437",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No governed security-boundary surface exists in this staged payload under the packet's applicability rule.",
+      "evidence": [
+        "BrightOwl message 2437: git diff --cached -- internal/scaffold/agents_template.go showed only heading-name additions in agentsRepairHeadings.",
+        "BrightOwl verified git diff --cached -- internal/scaffold/agents_template.go | rg -ni 'auth|token|secret|credential|permission|security|hook|execute|shell|command|path|chmod|chown|sudo' produced no matches.",
+        "BrightOwl found no staged template text, hook execution path, auth/credential handling, permissions, or security-sensitive instruction surface was changed.",
+        "ScarletMarsh message 2438 independently agreed not_applicable for this shared cell, citing no auth, secrets, permissions, sandbox changes, external APIs, hooks, command execution, or security-sensitive template instructions."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no browser UI, screenshot, canvas, image, TUI layout, responsive layout, or visual-diff surface.",
+      "evidence": [
+        "ScarletMarsh message 2438: git diff --cached --name-status shows only internal/scaffold/agents_template.go.",
+        "ScarletMarsh verified the staged diff changes a Go helper's heading list, not rendered UI, CSS, images, demo media, or terminal layout rendering code.",
+        "The land-18 pre-analysis marked visual-regression not governed, consistent with the staged payload."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2438",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no governed performance surface: it appends a few constant strings to a small slice and does not add loops, scans, network calls, expensive IO, benchmarks, or runtime hot-path behavior.",
+      "evidence": [
+        "ScarletMarsh message 2438: git diff --cached shows only four inserted heading strings and one changed slice initialization in agentsRepairHeadings.",
+        "ScarletMarsh found no benchmark-relevant code, recursive traversal, concurrency, network, token/cost, memory, or bundle-size surface is staged.",
+        "ScarletMarsh verified go test ./... exited 0; the land-18 pre-analysis marked performance-budget not governed."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2437",
+        "created_at": "2026-07-02T09:56:06.894858589Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Because AGENTS.md governs agent behavior, this is governed; the payload restores baseline human/agent operating boundaries without expanding autonomous authority.",
+      "evidence": [
+        "BrightOwl message 2437: git diff --cached showed AGENTS repair now restores core operating-contract sections including Agent Startup, Definition Of Done, Uncertainty, and File Coordination.",
+        "BrightOwl inspected agentsRepairHeadings and found optional Beads, NTM, Backpressure, and Docs/Plans/Logs sections remain conditional on active scaffold targets rather than being forced into every repair.",
+        "BrightOwl found repair/apply tests requiring core sections and forbidding optional sections when out of scope."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T09:56:06.894858589Z"
+    }
+  ]
+}

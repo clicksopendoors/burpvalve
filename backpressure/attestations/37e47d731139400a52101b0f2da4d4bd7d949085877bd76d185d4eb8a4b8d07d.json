@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:37e47d731139400a52101b0f2da4d4bd7d949085877bd76d185d4eb8a4b8d07d",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "e214644d9b1b910ee74cf81da72e3b4141e412fe",
+  "created_at": "2026-07-04T22:11:06.956947238Z",
+  "feature": {
+    "id": "diff:.",
+    "kind": "feature",
+    "name": "staged changes in .",
+    "diff_cluster": "."
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single docs-only change: adds ORCHESTRATOR.md, the Claude-orchestrator-only operating notes recording the owner's 2026-07-05 role-split ruling (orchestrator delegates execution to codex agents via NTM). One file, one purpose."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Docs-only payload has applicable Markdown/style surface and no executable lint enforcement was bypassed.",
+      "evidence": [
+        "Canonical staged payload hash verified as sha256:37e47d731139400a52101b0f2da4d4bd7d949085877bd76d185d4eb8a4b8d07d.",
+        "git diff --cached shows one added Markdown file: ORCHESTRATOR.md, 29 lines.",
+        "The file is plain Markdown operating notes with readable headings and bullet structure.",
+        "backpressure/lint-rules.md says executable lint rules require exact commands; no such command is named for this docs-only payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The new orchestrator notes avoid parallel worker-contract duplication and keep the role split localized.",
+      "evidence": [
+        "ORCHESTRATOR.md explicitly says worker agents read AGENTS.md and must not be pointed at this file.",
+        "The staged file records a single Claude-orchestrator role split rather than duplicating implementation instructions across AGENTS.md.",
+        "No copied code blocks, duplicated helpers, repeated validation logic, or parallel implementations are introduced."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The notes push against superficial completion and fabricated evidence.",
+      "evidence": [
+        "ORCHESTRATOR.md says the Claude orchestrator does not implement, edit docs, run verifier cells, or execute commit-gate payload work itself.",
+        "The staged file requires mailing hash-bound verifier packets to codex panes and preserving per-cell evidence.",
+        "The staged file explicitly says not to manufacture evidence or record a codex verdict not actually produced by a codex pane."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload adds no code function, command behavior, schema, or executable logic that requires direct test coverage.",
+      "evidence": [
+        "git diff --cached adds ORCHESTRATOR.md only.",
+        "The payload is documentation-only operating notes, not production code or testable runtime behavior.",
+        "No function, method, CLI command, persisted schema, or executable branch is added or changed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged notes satisfy docs-only completion by recording the owner ruling in the intended durable file.",
+      "evidence": [
+        "The file records the owner ruling date as 2026-07-05 under “Role Split”.",
+        "The content defines orchestrator scope, worker/checker responsibilities, verifier fanout, NTM checks, and evidence discipline.",
+        "The current staged payload is limited to ORCHESTRATOR.md and matches the packet hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload improves evidence expectations rather than weakening them.",
+      "evidence": [
+        "ORCHESTRATOR.md tells the orchestrator to preserve per-cell evidence.",
+        "It requires hash-bound verifier packets for verifier fanout.",
+        "It forbids recording codex verdicts that were not actually produced by a codex pane."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged docs stay within the approved orchestrator-notes scope.",
+      "evidence": [
+        "git diff --cached --name-status shows only A ORCHESTRATOR.md.",
+        "The file audience is explicitly limited to the Claude orchestrator session.",
+        "The staged content does not alter AGENTS.md, code, hooks, workflows, Beads data, or release surfaces."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The only destructive/state-changing surface is procedural guidance, and it adds appropriate checks.",
+      "evidence": [
+        "ORCHESTRATOR.md mentions state-changing NTM commands but requires ntm --robot-capabilities before them.",
+        "It also requires state verification with ntm --robot-snapshot.",
+        "No destructive command, deletion, reset, force push, deployment, external send, spend change, or production mutation is staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged notes protect evidence and coordination integrity.",
+      "evidence": [
+        "The notes require preserving per-cell evidence.",
+        "They prohibit manufacturing evidence or recording unproduced codex verdicts.",
+        "They separate orchestrator notes from the worker contract to reduce role-confusion data/process drift."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "No sensitive security material is introduced, and the file narrows role boundaries.",
+      "evidence": [
+        "The staged file contains no secrets, tokens, credentials, IP addresses, hostnames, private network details, or local absolute paths.",
+        "The only named infrastructure is project scaffolding context: NTM tmux session, Beads/bv, Agent Mail, and AGENTS.md.",
+        "The file tells workers not to use ORCHESTRATOR.md and keeps orchestrator-only rules out of the worker contract."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no visual or UI surface.",
+      "evidence": [
+        "ORCHESTRATOR.md is a Markdown operating-notes file.",
+        "No UI, browser, screenshot, CSS, canvas, demo asset, or generated visual file is staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no runtime performance surface.",
+      "evidence": [
+        "ORCHESTRATOR.md is documentation only.",
+        "No executable code, workflow command, dependency, benchmark, runtime path, bundle, memory, latency, token, or cost behavior is staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "codex-api-burpvalve-verifier",
+        "model": "gpt-5",
+        "runtime": "OpenAI Codex API verifier session for /home/ubuntu/Projects/burpvalve",
+        "separate_context": true,
+        "created_at": "2026-07-04T22:10:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged notes define and constrain the orchestrator autonomy boundary.",
+      "evidence": [
+        "ORCHESTRATOR.md says the Claude orchestrator does not implement, edit docs, run verifier cells, or execute commit-gate payload work itself.",
+        "It assigns implementation and checker work to Codex agents in the repo NTM tmux session.",
+        "It limits orchestrator scope to triage, owner-decision capture, routing, review, gate-window operation, evidence/decision recording, Agent Mail coordination, and pane wake discipline."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:11:06.956947238Z"
+    }
+  ]
+}

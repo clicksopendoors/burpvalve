@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:e2332d370b939efb9f151dba4ec8b9b83277ac904c587208482cf09e95878135",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "dc8c2ee17a2c7a4609646a5ecb392ca2345d980e",
+  "created_at": "2026-07-03T01:39:04.963775132Z",
+  "feature": {
+    "id": "project-readiness-kit-ci-commit-multicluster-feature-9hf",
+    "kind": "feature",
+    "name": "project-readiness-kit-ci-commit-multicluster-feature-9hf",
+    "diff_cluster": "explicit:project-readiness-kit-ci-commit-multicluster-feature-9hf"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged diff is one bug fix: ci --commit now honors explicit --feature when auditing committed multi-cluster payloads, with focused regression coverage and tracker state for the blocker bead."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3005 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:36:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Staged CI fix passes formatting and focused/full Go checks.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json matched staged hash sha256:e2332d370b939efb9f151dba4ec8b9b83277ac904c587208482cf09e95878135 and included exactly .beads/issues.jsonl, cmd/burpvalve/commit_test.go, internal/backpressure/ci.go.",
+        "git diff --cached --check exited 0.",
+        "go test ./cmd/burpvalve -run 'TestCICommitExplicitFeatureAuditsMultiClusterCommit' -count=1 passed.",
+        "go test ./internal/backpressure -run 'Test.*CI|TestDetectFeaturesExplicitFlag' -count=1 passed.",
+        "go test ./... passed for all packages."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The change removes the commit-mode special case instead of adding a parallel audit path; the new fixture/test reuses existing helpers and keeps duplication local to the regression setup.",
+      "evidence": [
+        "git diff --cached --name-status showed exactly .beads/issues.jsonl, cmd/burpvalve/commit_test.go, and internal/backpressure/ci.go staged.",
+        "git diff --cached -- internal/backpressure/ci.go cmd/burpvalve/commit_test.go showed production code only changes explicitFeatureForPlan to return opts.ExplicitFeature; existing assertCommitFeature remains in RunCI.",
+        "rg found one production helper, the existing assertion helper, and one focused regression fixture/test."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf; ScarletMarsh corroborated in message 3005",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The fix does not turn --feature into a way to launder arbitrary attestations: matching multi-cluster commit audits now pass, but mismatched feature assertions still block against the committed attestation feature id.",
+      "evidence": [
+        "go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature project-readiness-kit-oxp-option-b-install-surfaces-idu returned status passed and feature_id project-readiness-kit-oxp-option-b-install-surfaces-idu for the real multi-cluster OXP option-B commit.",
+        "go run ./cmd/burpvalve --robots ci --commit HEAD --feature project-readiness-kit-oxp-skill-refactor-prompt-bank-fy8 returned status passed and feature_id project-readiness-kit-oxp-skill-refactor-prompt-bank-fy8 for the real multi-cluster skill-refactor commit.",
+        "go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature wrong-feature exited nonzero with feature assertion mismatch.",
+        "ScarletMarsh independently verified the matching pass, wrong-feature failure, and regression test coverage."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The changed behavior has direct regression coverage for a committed multi-cluster payload with matching --feature and a wrong-feature assertion failure, while existing commit-audit tests remain covered.",
+      "evidence": [
+        "git diff --cached -- cmd/burpvalve/commit_test.go added TestCICommitExplicitFeatureAuditsMultiClusterCommit, which creates a committed payload spanning src/app.go and docs/readme.md, expects ci --commit \u003csha\u003e --feature br-123 to pass, and expects wrong-feature to fail with feature assertion mismatch.",
+        "go test ./cmd/burpvalve -run 'TestCICommitAuditsSpecifiedCommit|TestCICommitExplicitFeatureAuditsMultiClusterCommit' -count=1 passed.",
+        "go test ./internal/backpressure -run 'Test.*CI|TestDetectFeaturesExplicitFlag' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload satisfies the blocker bead's acceptance criteria: matching multi-cluster committed audits pass, wrong --feature fails, single-cluster behavior remains passing, focused tests and full suite pass, and the staged hash matches the packet.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json reported sha256:e2332d370b939efb9f151dba4ec8b9b83277ac904c587208482cf09e95878135, matching the packet.",
+        "br show project-readiness-kit-ci-commit-multicluster-feature-9hf showed acceptance criteria for multi-cluster pass with matching --feature, wrong-feature mismatch, preserving single-cluster behavior and robot mode, focused tests, and go test ./....",
+        "go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature project-readiness-kit-oxp-option-b-install-surfaces-idu passed; go run ./cmd/burpvalve --robots ci --commit HEAD --feature project-readiness-kit-oxp-skill-refactor-prompt-bank-fy8 passed; wrong-feature failed with feature assertion mismatch; go run ./cmd/burpvalve --robots ci --commit 1ead769 --feature project-readiness-kit-oxp-hash-staged-helper-a48 passed as single-cluster control.",
+        "go test ./... passed all packages."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3005 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:36:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload includes tracker state and regression evidence for the blocker fix.",
+      "evidence": [
+        "Inspected git diff --cached -- .beads/issues.jsonl; staged tracker state adds/claims project-readiness-kit-ci-commit-multicluster-feature-9hf and preserves the corrected skill-refactor close reason.",
+        "Inspected git diff --cached -- cmd/burpvalve/commit_test.go internal/backpressure/ci.go; the test names the multi-cluster committed-audit regression and asserts both matching-feature pass and wrong-feature failure.",
+        "Historical probes verified the behavior: go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature project-readiness-kit-oxp-option-b-install-surfaces-idu passed, while the same commit with --feature wrong-feature failed with feature assertion mismatch."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf; ScarletMarsh corroborated in message 3005",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged changes stay inside the approved blocker-fix scope: one CI behavior change, one regression test/fixture, and tracker state including the related skill-refactor close-reason correction called out by the final-acceptance hold.",
+      "evidence": [
+        "git diff --cached --stat showed .beads/issues.jsonl, cmd/burpvalve/commit_test.go, and internal/backpressure/ci.go only, with 50 insertions and 5 deletions.",
+        "br show project-readiness-kit-ci-commit-multicluster-feature-9hf described likely scope as internal/backpressure/ci.go plus focused tests in cmd/burpvalve/commit_test.go and/or internal/backpressure/ci_test.go.",
+        "git diff --cached -- internal/backpressure/ci.go showed only the removal of the commit-mode blanking of ExplicitFeature; git diff --cached -- cmd/burpvalve/commit_test.go showed the focused multi-cluster committed-payload test and fixture.",
+        "ScarletMarsh independently verified no unrelated CLI, docs, scaffold, hook, prompt, or workflow files are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3005 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:36:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "No destructive operation surface is introduced by the staged fix.",
+      "evidence": [
+        "git diff --cached --name-status lists only modified .beads/issues.jsonl, cmd/burpvalve/commit_test.go, and internal/backpressure/ci.go.",
+        "Inspected the staged code diff: internal/backpressure/ci.go only removes the special-case suppression of ExplicitFeature for commit audits; commit_test.go adds a local temp-repo fixture and assertions.",
+        "No staged hook, script, delete/reset command, filesystem cleanup behavior, or destructive command path was added."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The committed attestation binding remains intact: explicit feature scopes the expected plan, but validation still rejects an attestation whose stored feature id does not match the assertion, and artifact paths/payload hashes are preserved in robot output.",
+      "evidence": [
+        "go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature project-readiness-kit-oxp-option-b-install-surfaces-idu returned artifact_path backpressure/attestations/66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237.json, feature_id project-readiness-kit-oxp-option-b-install-surfaces-idu, and the expected .beads/cmd/internal payload paths.",
+        "go run ./cmd/burpvalve --robots ci --commit HEAD --feature project-readiness-kit-oxp-skill-refactor-prompt-bank-fy8 returned artifact_path backpressure/attestations/213435be8d686ff2a8574002cb889dec62301169f4f9a6d68ed56c35e852568c.json and expected .beads/skill payload paths.",
+        "wrong-feature command against f3c4a46 returned the committed attestation feature id in the mismatch message instead of passing or silently selecting another feature."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf; ScarletMarsh corroborated in message 3005",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "No new external, secret, permission, or execution boundary is introduced; this is a local CI audit path change, and the safety boundary around asserted feature identity remains enforced.",
+      "evidence": [
+        "git diff --cached -- internal/backpressure/ci.go showed no new IO, network, shell execution, secret handling, or authorization surface; it only returns opts.ExplicitFeature for plan creation.",
+        "rg scan found assertCommitFeature still called in RunCI and still returning feature assertion mismatch when explicit feature differs from the committed attestation feature.",
+        "The live wrong-feature audit exited nonzero with feature assertion mismatch, confirming the identity boundary is enforced after the plan is scoped.",
+        "ScarletMarsh independently verified no auth, network, file permission, hook execution, shell invocation, verifier provenance, or attestation trust-boundary code is changed outside internal/backpressure/ci.go."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3005 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:36:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No visual or TUI surface exists in this staged payload.",
+      "evidence": [
+        "git diff --cached --name-status shows only .beads/issues.jsonl, cmd/burpvalve/commit_test.go, and internal/backpressure/ci.go.",
+        "No UI/TUI rendering, screenshots, SVG/GIF assets, terminal styling, or visual output files are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3005 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:36:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The runtime change is constant-time option plumbing and the full suite passed.",
+      "evidence": [
+        "Inspected internal/backpressure/ci.go: the staged runtime change removes three lines so explicitFeatureForPlan returns opts.ExplicitFeature for commit audits instead of blanking it.",
+        "No loops, external calls, broad scans, concurrency, or algorithmic expansion are added in runtime code.",
+        "go test ./... passed, including cmd/burpvalve and internal/backpressure."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 3006 / thread project-readiness-kit-ci-commit-multicluster-feature-9hf",
+        "created_at": "2026-07-03T01:35:07Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The fix keeps ci read-only and preserves the user's required explicit assertion contract: agents can audit historical multi-cluster commits, but cannot use --feature to self-certify a mismatched attestation.",
+      "evidence": [
+        "Packet and staged diff identify only CI audit code/test/tracker changes; no commit, push, staging, mail, pane, or workflow-engine behavior is added.",
+        "go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature project-readiness-kit-oxp-option-b-install-surfaces-idu passed in robot/read-only audit mode.",
+        "go run ./cmd/burpvalve --robots ci --commit f3c4a46 --feature wrong-feature failed with feature assertion mismatch, so explicit --feature remains an assertion that requires the committed evidence to agree."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:39:04.963775132Z"
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:9fe4f293a416036847bb6975dc57bfe2360df409cb02beac8f8ca99cc4f44c89",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "LilacGlacier",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "15eec70585a905df2a87398bea792f6dd11cff82",
+  "created_at": "2026-07-02T12:15:51.614282356Z",
+  "feature": {
+    "id": "project-readiness-kit-vorch-01-config-schema-fc3",
+    "kind": "feature",
+    "name": "project-readiness-kit-vorch-01-config-schema-fc3",
+    "source_bead": "project-readiness-kit-vorch-01-config-schema-fc3",
+    "bead_ids": [
+      "project-readiness-kit-vorch-01-config-schema-fc3"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-vorch-01-config-schema-fc3"
+  },
+  "bead_ids": [
+    "project-readiness-kit-vorch-01-config-schema-fc3"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged payload implements one bead only: vorch-01 config schema for defaults.verifier in internal/config/config.go plus matching internal/config/config_test.go coverage."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Staged config schema slice is formatted, tested, and constrained to verifier defaults implementation/tests.",
+      "evidence": [
+        "ScarletMarsh message 2539: git diff --cached --name-status shows exactly M internal/config/config.go and M internal/config/config_test.go staged.",
+        "ScarletMarsh message 2539: git diff --cached --check produced no output.",
+        "ScarletMarsh message 2539: go test ./internal/config -run 'Verifier|Defaults|Merge|Source|Validate|Unknown|Write' -count=1, go test ./internal/config -count=1, and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The verifier config behavior follows the existing config-default pattern without creating a parallel loader or duplicate validation path.",
+      "evidence": [
+        "ScarletMarsh message 2539: staged diff adds VerifierDefaults and dedicated helpers wired into existing mergeDefaults, Normalize, Validate, and noteDefaultsSources paths.",
+        "ScarletMarsh message 2539: rg over config.go/config_test.go confirms integration with the existing strict decoder, normalize, validate, and source-tracking flow.",
+        "ScarletMarsh message 2539: invalid verifier defaults are covered with targeted table tests."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2542",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged config-schema change does not treat standing verifier authorization as per-cell evidence or silently weaken verification claims.",
+      "evidence": [
+        "BrightOwl message 2542: staged diff is exactly internal/config/config.go and internal/config/config_test.go.",
+        "BrightOwl message 2542: staged code adds config fields, merge/normalize/validate helpers, and source tracking; no verifier verdict or attestation-evidence logic is staged.",
+        "BrightOwl message 2542: TestLoadVerifierDefaultsMergeProjectOverrideAndSourceTracking asserts project authorized=false revokes global true and records source rows.",
+        "BrightOwl message 2542: TestLoadRejectsUnknownVerifierConfigKeys rejects unknown defaults.verifier.model."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged behavior has direct tests for merge/source tracking, validation, normalization, write/read round-trip, and unknown-key rejection.",
+      "evidence": [
+        "ScarletMarsh message 2539: config.go adds VerifierDefaults, merge, normalize, validate, and source-tracking helpers.",
+        "ScarletMarsh message 2539: config_test.go adds TestLoadVerifierDefaultsMergeProjectOverrideAndSourceTracking, TestLoadRejectsBadVerifierDefaults, TestWriteVerifierDefaultsRoundTrips, and TestLoadRejectsUnknownVerifierConfigKeys.",
+        "ScarletMarsh message 2539: go test ./internal/config -run 'Verifier|Defaults|Merge|Source|Validate|Unknown|Write' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2542",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload satisfies vorch-01 config-schema acceptance: exact files only, verifier defaults load/merge/normalize/round-trip, malformed values fail with named errors, and tests pass.",
+      "evidence": [
+        "BrightOwl message 2542: br show vorch-01 listed exact payload files internal/config/config.go and internal/config/config_test.go matching git diff --cached --name-status.",
+        "BrightOwl message 2542: git diff --cached --stat reported 2 files changed, 309 insertions, 4 deletions.",
+        "BrightOwl message 2542: git diff --cached --check produced no output.",
+        "BrightOwl message 2542: go test ./internal/config -run 'Verifier|Defaults|Merge|Source|Validate|Unknown' -count=1, go test ./internal/config -count=1, and go test ./... -count=1 passed.",
+        "BrightOwl message 2542: A17 schema surfaces are not staged in this config-only slice."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Evidence is sufficient for this config-schema slice: staged scope, formatter status, focused tests, package tests, and full repo tests were checked directly.",
+      "evidence": [
+        "ScarletMarsh message 2539: git diff --cached --stat reports only internal/config/config.go and internal/config/config_test.go.",
+        "ScarletMarsh message 2539: git diff --cached -U8 inspected the actual staged implementation and test hunks.",
+        "ScarletMarsh message 2539: focused internal/config tests, package tests, and go test ./... all passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2542",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice stays inside vorch-01: internal config schema and tests only.",
+      "evidence": [
+        "BrightOwl message 2542: git diff --cached --name-status showed only internal/config/config.go and internal/config/config_test.go.",
+        "BrightOwl message 2542: unrelated dirty worktree changes are unstaged; staged config files have no unstaged delta.",
+        "BrightOwl message 2542: no staged changes exist under internal/attestations, internal/backpressure, cmd/burpvalve, docs, or plans."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive operation surface; it only adds config schema, validation, normalization, merge/source tracking, and tests.",
+      "evidence": [
+        "ScarletMarsh message 2539: staged additions contain no os.Remove, RemoveAll, exec.Command, git reset, git clean, rm -rf, network, credential, token, or password matches.",
+        "ScarletMarsh message 2539: manual staged-diff inspection found no delete/reset/force/migration/external-send/spend/deploy behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2542",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The new verifier config data preserves merge/source integrity, rejects malformed values, normalizes repo-relative transcript paths, preserves condition model map entries, and round-trips through Write.",
+      "evidence": [
+        "BrightOwl message 2542: mergeVerifierDefaults copies bool/int pointer values, merges condition_models per key, and records noteVerifierSources for each verifier field.",
+        "BrightOwl message 2542: validateVerifierDefaults rejects invalid spawn_method, max_parallel_verifiers outside 1..32, absolute/traversing/empty transcript_dir, invalid transcripts enum, empty condition model keys, NUL in condition model values, and NUL in default_model.",
+        "BrightOwl message 2542: tests cover global/project precedence, project false overriding global true, path cleaning, field source rows, and write/read preservation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2542",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload has a governed security surface because it stores verifier authorization, spawn method, model aliases, read-only-tool preference, and transcript paths; implementation keeps it as validated config only.",
+      "evidence": [
+        "BrightOwl message 2542: VerifierDefaults fields are config data only and no changes are staged under cmd/burpvalve, internal/attestations, internal/backpressure, docs, or plans.",
+        "BrightOwl message 2542: validateVerifierDefaults restricts spawn_method, transcript_dir, and transcript retention enum.",
+        "BrightOwl message 2542: TestLoadRejectsBadVerifierDefaults covers invalid spawn_method, max_parallel bounds, absolute/traversal/empty transcript_dir, invalid transcripts, empty condition-model key, and NUL values.",
+        "BrightOwl message 2542: project authorized=false revokes global authorized=true."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No governed visual surface exists in this staged payload.",
+      "evidence": [
+        "ScarletMarsh message 2539: git diff --cached --name-status shows only internal/config/config.go and internal/config/config_test.go.",
+        "ScarletMarsh message 2539: staged diff contains no UI, TUI rendering, screenshot, CSS, layout, canvas, or browser-facing changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2539",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The only performance-adjacent surface is the verifier concurrency default, and staged validation bounds it to a small explicit range.",
+      "evidence": [
+        "ScarletMarsh message 2539: staged config.go adds MaxParallelVerifiers *int and validates it with max_parallel_verifiers between 1 and 32.",
+        "ScarletMarsh message 2539: staged tests include max parallel low/high cases and merge/source tracking for max_parallel_verifiers=4.",
+        "ScarletMarsh message 2539: no runtime verifier fanout, command execution, I/O loop, or algorithmic path is staged; go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2542",
+        "created_at": "2026-07-02T12:15:51.614282356Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The config schema represents human/verifier authorization preferences without itself taking autonomous action.",
+      "evidence": [
+        "BrightOwl message 2542: max_parallel_verifiers is advisory runtime guidance only and staged diff only adds config schema/tests.",
+        "BrightOwl message 2542: no staged code path spawns agents, sends mail, writes transcripts, or submits verifier responses.",
+        "BrightOwl message 2542: authorization_scope and authorized_at are metadata, and project authorized=false overrides global true."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T12:15:51.614282356Z"
+    }
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:dee0e0e163adcfb10fa8adb760542277372225c4916b9ae5886dc86d74bd7b7a",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "a2d6a243ba6bc3b40b6673abeeea500ad10102eb",
+  "created_at": "2026-07-02T10:54:23.434527109Z",
+  "feature": {
+    "id": "project-readiness-kit-land-21-docs-skill-refresh-jcm",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-21-docs-skill-refresh-jcm",
+    "source_bead": "project-readiness-kit-land-21-docs-skill-refresh-jcm",
+    "bead_ids": [
+      "project-readiness-kit-land-21-docs-skill-refresh-jcm"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-21-docs-skill-refresh-jcm"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-21-docs-skill-refresh-jcm"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged payload is one terminal land-21 docs and skill refresh: README/docs index/dogfooding findings/result-contract/skill docs/scaffold README template documentation. The added issue-draft and upstream-feedback docs are included because the staged docs index links them; no code, binaries, release assets, or beads state are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2455",
+        "created_at": "2026-07-02T10:51:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged documentation/skill refresh has been checked with the applicable mechanical lint/test surfaces and the docs-specific grep checks from the packet.",
+      "evidence": [
+        "Read backpressure/lint-rules.md; it requires applicable lint/style rules to be considered and distinguishes attestation review from executable burpvalve lint commands.",
+        "git diff --cached --name-status showed exactly the 14 paths in the packet, and git diff --cached --check exited 0.",
+        "go test ./... passed, including burpvalve/cmd/burpvalve, internal/attestations, internal/backpressure, internal/config, internal/ntm, and internal/scaffold.",
+        "The packet-required rg command over README.md docs skill/burpvalve plans/GOAL.md completed with expected historical/boundary hits for Dogfooding, Burpvalve product findings, beads_rust, project-readiness-kit, setup-command-project, v0.1.2, license/distribution, #13, and #14.",
+        "test -s docs/dogfooding-findings-2026-07.md docs/burpvalve-issue-drafts-2026-07.md docs/upstream-br-feedback-2026-07.md passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The docs refresh reuses existing documentation surfaces and template pairs without duplicating contradictory guidance.",
+      "evidence": [
+        "git diff --cached --name-status/stat matched the packet's 14 staged docs/template/skill paths; 1831 insertions and 30 deletions.",
+        "git diff --cached showed attestation/failed-report formatter guidance added to both templates/backpressure/... and internal/scaffold/templates/backpressure/... paired template copies with matching wording.",
+        "README.md and skill/burpvalve/SKILL.md both route to existing JSON/recovery commands rather than inventing a second command model."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged docs do not claim false completion or deterministic enforcement; they label drafts/local-only material and preserve verifier evidence requirements.",
+      "evidence": [
+        "docs/burpvalve-issue-drafts-2026-07.md starts with 'Local draft only. Do not file these issues before v0.1.2 lands.'",
+        "docs/upstream-br-feedback-2026-07.md says filing issues on Dicklesworthstone/beads_rust is outward-facing and waits for owner approval.",
+        "README.md and skill/burpvalve/SKILL.md document independent_required verifier policy and say not to fabricate subagent/verifier confirmation.",
+        "templates/backpressure/attestations/README.md and templates/log/backpressure/failed/README.md warn not to hand-edit generated evidence and to exclude generated JSON from broad formatters instead."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2455",
+        "created_at": "2026-07-02T10:51:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No governed one-function-one-test surface exists in this staged payload: it changes Markdown docs, skill instructions, and Markdown scaffold templates, not executable functions or behavior requiring a new nearby behavioral test.",
+      "evidence": [
+        "Read backpressure/one-function-one-test.md; it governs new or changed behavior requiring direct test coverage, not literal one-test-per-helper bookkeeping.",
+        "git diff --cached --name-status lists README.md, docs/*.md, skill/burpvalve/*.md, plans/GOAL.md, and Markdown scaffold/template README files only.",
+        "No Go source files or test files are staged in this land-21 payload; go test ./... still passed as a regression check."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged docs slice has passing whitespace/test evidence and the feature-specific CI probe identifies the intended payload hash, blocking only because the attestation is not yet staged.",
+      "evidence": [
+        "git diff --cached --check exited 0 on the staged payload.",
+        "go test ./... passed in /tmp/land21-stage.qcArvD across cmd/burpvalve and all internal packages.",
+        "go run ./cmd/burpvalve ci --feature project-readiness-kit-land-21-docs-skill-refresh-jcm reported staged_payload_hash sha256:dee0e0e163adcfb10fa8adb760542277372225c4916b9ae5886dc86d74bd7b7a and blocked only on missing attestation artifact backpressure/attestations/dee0e0e163adcfb10fa8adb760542277372225c4916b9ae5886dc86d74bd7b7a.json."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload records durable evidence and links the new evidence docs from the docs index.",
+      "evidence": [
+        "test -s docs/dogfooding-findings-2026-07.md passed in the staged snapshot.",
+        "docs/dogfooding-findings-2026-07.md records sources as Agent Mail reports, RusticDog observations, and the 2026-07 plan review round, with Burpvalve product findings and upstream br/bv findings sections.",
+        "docs/README.md links docs/dogfooding-findings-2026-07.md, docs/burpvalve-issue-drafts-2026-07.md, docs/upstream-br-feedback-2026-07.md, and docs/result-contract.md; a file-existence probe found those links present in the staged snapshot."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload is scoped to the land-21 docs/skill refresh plus linked draft documents needed by the staged docs index.",
+      "evidence": [
+        "git diff --cached --name-status showed exactly the 14 packet paths and no excluded staged payload paths in the ci plan.",
+        "go run ./cmd/burpvalve ci --feature project-readiness-kit-land-21-docs-skill-refresh-jcm listed the same 14 staged_payload_paths and no excluded_staged_paths.",
+        "git diff --cached -- docs/matt-pocock-skill-patterns.md docs/setup-pre-commit-patterns.md templates/log/README.md internal/scaffold/templates/log/README.md produced no output, matching the packet's no-staged-diff note.",
+        "docs/README.md newly links the added docs/burpvalve-issue-drafts-2026-07.md, docs/dogfooding-findings-2026-07.md, docs/upstream-br-feedback-2026-07.md, and modified docs/result-contract.md, explaining why those files are in scope."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed installer/config/beads docs preserve explicit confirmation and read-only boundaries for risky operations.",
+      "evidence": [
+        "README.md and skill/burpvalve/INSTALL.md state the installer prints a plan, names replacements, asks for final confirmation by default, defaults No, and says --yes is only for already intended locations.",
+        "README.md documents beads preflight as read-only and says it does not close beads, run br sync, stage files, commit files, or write attestations.",
+        "skill/burpvalve/SKILL.md documents config init as mutating only after guided confirmation, --force, or robot confirmation, and says verifier prompts are read-only and do not spawn/send/claim verification."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The docs protect evidence artifact integrity and clarify JSON result semantics without changing persisted data code.",
+      "evidence": [
+        "docs/result-contract.md defines shared status/fatal/partial_success/next_steps fields and distinguishes scaffold-only lint from command-output enforcement.",
+        "templates/backpressure/attestations/README.md and internal/scaffold/templates/backpressure/attestations/README.md say passing attestations are generated, indented JSON with a trailing newline and should not be hand-edited for formatters.",
+        "templates/log/backpressure/failed/README.md and internal/scaffold/templates/log/backpressure/failed/README.md give the same generated JSON guidance for blocked reports and reiterate blocked reports are not passing commit attestations.",
+        "go test ./... passed in the staged snapshot, covering unchanged runtime artifact/query behavior while docs/templates were refreshed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Security-governed documentation was inspected: private/proprietary distribution, authenticated private release installs, PATH/shim behavior, and verifier policy boundaries remain explicit and do not introduce secrets or permission bypasses.",
+      "evidence": [
+        "skill/burpvalve/SKILL.md metadata remains license: proprietary and distribution: forbidden, and README.md states the repository is private and marked proprietary in packaged skill metadata.",
+        "skill/burpvalve/INSTALL.md and README.md describe authenticated gh release download for private releases without embedding any token or secret value.",
+        "rg over staged docs/skill/template paths found security-boundary wording around PATH, private installs, verifier.kind policy, and permissions, but no staged auth-token/secret/password/API-key material.",
+        "README.md documents security-boundaries as prompt-level by default and says stronger security pressure requires structural checks, scanner fixtures, secret scanners, and permission design."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2455",
+        "created_at": "2026-07-02T10:51:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No governed visual-regression surface exists in this staged payload: there are no browser, screenshot, canvas, responsive layout, image, SVG, GIF, or rendered UI asset changes.",
+      "evidence": [
+        "Read backpressure/visual-regression.md; it governs screenshot, browser, responsive layout, canvas, and visual-diff work.",
+        "Staged path list contains only Markdown documentation/skill/template files.",
+        "Targeted staged diff grep for screenshot/browser/canvas/CSS/responsive/image/SVG/GIF/TUI/layout found only prose references such as the read-only terminal browser command and no changed rendered visual asset or UI layout surface."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2455",
+        "created_at": "2026-07-02T10:51:19Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No governed performance-budget surface exists in this staged payload: it does not change runtime code, benchmarks, bundle output, memory/latency-sensitive logic, or executable budget enforcement.",
+      "evidence": [
+        "Read backpressure/performance-budget.md; it governs latency, memory, token, cost, bundle-size, throughput, and benchmark thresholds.",
+        "Staged path list is documentation/skill/template Markdown only, with no executable code or benchmark files staged.",
+        "Targeted staged diff grep for performance-related terms found only prose/history references such as the original binary-size budget in plans/GOAL.md and orchestration latency notes in findings, not a changed performance surface."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2456",
+        "created_at": "2026-07-02T10:51:53Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The refreshed docs keep agent autonomy bounded by read-only recovery surfaces, explicit mutation confirmation, owner approval for outward-facing drafts, and independent verifier evidence rules.",
+      "evidence": [
+        "docs/burpvalve-issue-drafts-2026-07.md says not to file issues before v0.1.2 lands unless rel issue-hygiene work or a direct owner instruction authorizes it; docs/upstream-br-feedback-2026-07.md says upstream filing waits for owner approval.",
+        "README.md documents explain and attestations browse as read-only and states browse does not close beads, stage files, delete artifacts, repair files, or run commit gates.",
+        "skill/burpvalve/SKILL.md says verifier prompts are read-only and do not spawn native subagents, send NTM tasks, or claim verification happened; it also requires verifier.kind main_agent/ci/human only when manifest policy allows it."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T10:54:23.434527109Z"
+    }
+  ]
+}

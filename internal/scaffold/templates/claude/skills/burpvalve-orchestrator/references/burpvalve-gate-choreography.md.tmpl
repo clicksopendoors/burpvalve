@@ -1,0 +1,38 @@
+# Burpvalve Gate Choreography
+
+Use this sequence for each source-changing work unit. If the work unit is
+Beads-backed, the bead is the tracker issue for that work.
+
+## Verify Early, Gate Fast
+
+Use this queue pattern when multiple agents share one gate window:
+
+1. At park time, stage only the work-unit slice in the main tree or a temporary
+   worktree and compute the Burpvalve staged-payload hash.
+2. Mail verifier packets immediately, bind them to that hash, and wake verifier
+   panes after the durable mail exists.
+3. Keep `GATE-WINDOW` free while verdicts are pending.
+4. When the queue reaches the owner, confirm the index is empty, stage the same
+   slice, and confirm the staged hash still equals the verifier-bound hash.
+5. If the hash changed, stop and send a superseding packet. Do not reuse stale
+   verdicts.
+6. Hold the window only for mechanics: run the gate, stage the generated
+   attestation, commit, push once when required, close, release, and wake.
+
+## Gate Mechanics
+
+1. Claim the Beads issue when present and reserve exact files.
+2. Implement only the work-unit payload.
+3. Confirm the index is empty before staging.
+4. Stage the payload and confirm the staged hash matches current verifier
+   evidence.
+5. Assemble responses from actual verifier verdicts.
+6. Run `burpvalve commit --feature <work-unit-or-feature-id> --responses <file>`.
+7. If Burpvalve writes a passing attestation, stage only that attestation.
+8. Commit through the live hook with the same feature and responses.
+9. Push once when the repo protocol says each gated commit is published.
+10. Close the Beads issue when present, sync beads, release reservations, and
+    wake the next owner.
+
+Never use `--no-verify`. Never invent evidence. If the valve burps the work
+unit back, the blocked gate is a real finding, not a formatting problem.

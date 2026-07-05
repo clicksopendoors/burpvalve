@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:6f2f20af3261d55f1b01079c5ffcfd2467f0fc8874377ce18f16bcdfc76b1817",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "LilacGlacier",
+    "model": "gpt-5-codex"
+  },
+  "git_head_before_commit": "7bbc832ece1a7f80dc5d55aec6dbd7e130e9fd2e",
+  "created_at": "2026-07-03T15:07:29.005564755Z",
+  "feature": {
+    "id": "ifr2-plan-conversion",
+    "kind": "feature",
+    "name": "ifr2-plan-conversion",
+    "diff_cluster": "explicit:ifr2-plan-conversion"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is the approved issue-followups round-2 plan document only; IFR2 tracker records are already present in HEAD from the v0.1.3 tracker sync."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3106",
+        "evidence_ref": "Agent Mail 3106",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Docs-only staged payload is syntactically clean; no executable lint surface is staged.",
+      "evidence": [
+        "ScarletMarsh 3106: git diff --cached --name-status listed only A plans/issue-followups-round-2.md.",
+        "ScarletMarsh 3106: git diff --cached --check exited 0.",
+        "ScarletMarsh 3106: staged hash matched sha256:6f2f20af3261d55f1b01079c5ffcfd2467f0fc8874377ce18f16bcdfc76b1817."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload is a single plan file and is cleanly isolated from unstaged tracker/COS/log dirt.",
+      "evidence": [
+        "BrightOwl 3105: git diff --cached --name-status listed exactly A plans/issue-followups-round-2.md.",
+        "BrightOwl 3105: hash --staged matched sha256:6f2f20af3261d55f1b01079c5ffcfd2467f0fc8874377ce18f16bcdfc76b1817 with no hash-excluded staged payload.",
+        "BrightOwl 3105: git diff --cached --check passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The plan narrows ambiguity into conservative, testable contracts and stop rules rather than weak evidence claims.",
+      "evidence": [
+        "BrightOwl 3105: staged plan records strict owner/FuchsiaBear resolutions.",
+        "BrightOwl 3105: Unit A unknown-on-uncertainty, no staged_payload_all, explicit Unit C schema/split, audit-only adjudication, and absorption stop rules are present."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3106",
+        "evidence_ref": "Agent Mail 3106",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No code function, method, package, or test implementation is staged.",
+      "evidence": [
+        "ScarletMarsh 3106: git diff --cached --name-status listed only A plans/issue-followups-round-2.md.",
+        "ScarletMarsh 3106: Burpvalve hash JSON listed only the plan in staged_payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "For a planning-only landing, the document is self-contained, source-backed, sequenced, and testable.",
+      "evidence": [
+        "BrightOwl 3105: plan includes status, sources, binding decisions, unit contracts, file-touch map, sequencing, tests, and acceptance criteria.",
+        "BrightOwl 3105: br dep cycles reported no dependency cycles.",
+        "BrightOwl 3105: verifier prompts regenerated with the same hash and staged path."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3106",
+        "evidence_ref": "Agent Mail 3106",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The plan records the evidence and decision sources it relies on, and source anchors exist in repo docs.",
+      "evidence": [
+        "ScarletMarsh 3106: Source section cites issue drafts 3,7,8,9; findings A3,A15,A16,A17; FuchsiaBear 3042; owner ruling 3045.",
+        "ScarletMarsh 3106: source docs contain the referenced findings and issue drafts."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The payload lands only the approved plan document; implementation, tracker mutation, and release/source work are not included.",
+      "evidence": [
+        "BrightOwl 3105: only plans/issue-followups-round-2.md is staged.",
+        "BrightOwl 3105: HEAD .beads already contains IFR2 A/B/C1/C2/C3/D records.",
+        "BrightOwl 3105: plan says this staged plan does not authorize implementation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3106",
+        "evidence_ref": "Agent Mail 3106",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload adds a plan and contains no destructive operation or instruction to execute destructive work in this commit.",
+      "evidence": [
+        "ScarletMarsh 3106: staged stat is one markdown plan file.",
+        "ScarletMarsh 3106: Non-Goals include no automatic staging, unstaging, committing, or reservation management."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The plan claims are traceable to cited local source docs, owner rulings, and existing IFR2 tracker records.",
+      "evidence": [
+        "BrightOwl 3105: staged hash matched packet hash.",
+        "BrightOwl 3105: source references for issue draft 3/A3, 7/A15, 8/A16, 9/A17 were confirmed.",
+        "BrightOwl 3105: staged plan and HEAD .beads IFR2 records agree on the unit split and binding terms."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "This plan does not alter executable or security surfaces and sets conservative future-work boundaries.",
+      "evidence": [
+        "BrightOwl 3105: no executable code, hook, workflow, install script, credential, permission, or package artifact is staged.",
+        "BrightOwl 3105: Non-Goals exclude workflow engine behavior, Agent Mail sending, NTM spawning, automatic staging, and broad generated-directory exclusion."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3106",
+        "evidence_ref": "Agent Mail 3106",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No UI, TUI, screenshot, README demo, visual asset, or rendered terminal surface is staged.",
+      "evidence": [
+        "ScarletMarsh 3106: staged payload is exactly A plans/issue-followups-round-2.md.",
+        "ScarletMarsh 3106: no visual files or UI code are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3106",
+        "evidence_ref": "Agent Mail 3106",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No runtime code, binary, benchmarked path, or performance-sensitive configuration is staged.",
+      "evidence": [
+        "ScarletMarsh 3106: one markdown plan file is staged.",
+        "ScarletMarsh 3106: hash --staged listed only plans/issue-followups-round-2.md."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3105",
+        "evidence_ref": "Agent Mail 3105",
+        "created_at": "2026-07-03T15:07:29.005564755Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The plan preserves owner/orchestrator authority and keeps implementation behind separate quality-pass and gate steps.",
+      "evidence": [
+        "BrightOwl 3105: Status requires bead conversion before assignment and quality-pass ruling before implementation.",
+        "BrightOwl 3105: acceptance criteria require each implementation bead to have its own staged-slice verification and Burpvalve gate evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T15:07:29.005564755Z"
+    }
+  ]
+}

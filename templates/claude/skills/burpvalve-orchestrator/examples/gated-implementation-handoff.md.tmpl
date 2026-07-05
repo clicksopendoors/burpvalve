@@ -1,0 +1,17 @@
+# Example: Gated Implementation Handoff
+
+The implementer finishes a work unit and sends:
+
+```text
+Commit: abc1234 cos: add route selection
+Pushed: origin/main abc1234
+Attestation: backpressure/attestations/<hash>.json
+Verifier refs: BrightOwl 1001, ScarletMarsh 1002
+Tests: focused package tests and go test ./...
+Reservations released: GATE-WINDOW, cmd/burpvalve/main.go
+Next owner: LilacGlacier for ifr2-D
+```
+
+The orchestrator confirms the index is clear, wakes the next owner, and keeps
+the queue order visible. If the work unit is Beads-backed, the matching bead
+close includes the same durable refs.

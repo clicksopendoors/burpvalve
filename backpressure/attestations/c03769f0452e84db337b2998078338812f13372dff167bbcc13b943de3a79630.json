@@ -1,0 +1,413 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "0124dc836a7f979b4fe1d88b6e9e984a211a804d",
+  "created_at": "2026-07-05T12:04:45.494963752Z",
+  "feature": {
+    "id": "diff:.",
+    "kind": "feature",
+    "name": "staged changes in .",
+    "diff_cluster": "."
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single docs-only change: adds the D14 Spark gate-operator ritual section to ORCHESTRATOR.md. One file, one purpose."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged Markdown-only operating note is readable and scoped, and it does not claim or alter any executable lint enforcement.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "backpressure/lint-rules.md says rules are enforced only after a command or analyzer is named; this payload adds no lint command/analyzer and does not fake lint enforcement.",
+        "The added Markdown is a short heading plus four bullets with concrete nouns and no generated code or formatter-sensitive surface beyond normal Markdown prose."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The added section centralizes one Spark gate-operator ritual and does not introduce meaningful duplicated procedure text or parallel implementations.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "backpressure/dry.md covers repeated prompt text and duplicated behavior. The staged addition is a single new operating-standard section rather than repeated copies across files.",
+        "The bullets refer to existing gate concepts once, as a role checklist for Spark, instead of duplicating full verifier or commit-gate implementation instructions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli TMUX_PANE %146",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The Spark ritual reduces shortcut risk by explicitly forbidding the low-tier gate operator from waiving or reinterpreting verifier results and by requiring hard stops on ambiguity, hash mismatch, dirty index, failed tests, and fail/unknown cells.",
+      "evidence": [
+        "The staged text says Spark executes mechanics from prepared hash-bound handoffs, including index check, verifier begin, packet relay, cell wait, gate commit, attestation staging, second commit, push when required, bead close/sync, reservation release, and next wake.",
+        "The staged text says Spark never waives or reinterprets verifier results and never resolves ambiguity itself.",
+        "The hard-stop list includes hash mismatch, dirty index or peer dirt, verifier disagreement, any fail/unknown cell, test failure, and any state the handoff did not predict.",
+        "The purpose line frames Spark as cheap capacity for repeatable mechanics while expensive capacity stays on implementation and judgment cells, not as a way to bypass the fail-closed valve."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No executable function, helper, behavior implementation, or test surface is changed.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The staged payload is a docs-only ORCHESTRATOR.md addition. backpressure/one-function-one-test.md governs changed behavior that requires direct test coverage, not internal operating prose."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged operating note defines a concrete gate-completion ritual and hard-stop criteria for Spark-operated commits.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The section lists the gate ceremony steps: index check, named-file staging, verifier begin, packet relay, cell wait, gate commit, attestation staging/second commit, push when required, bead close/sync, reservation release, and next wake.",
+        "It also defines blockers that prevent claiming done: hash mismatch, dirty index/peer dirt, verifier disagreement, fail/unknown cell, test failure, and unpredicted state."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged text strengthens evidence requirements for Spark-operated gates.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The section requires fully prepared handoffs with exact file list, commit message, bead refs, verifier pane split, and expected hashes where known.",
+        "It requires Spark to register with Agent Mail and put its identity on the evidence trail."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload is limited to the owner-approved Spark gate-operator ritual and constrains Spark to repeatable mechanics.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "Only ORCHESTRATOR.md is staged, and the diff adds one section about Spark gate operation.",
+        "The section explicitly says Spark never resolves ambiguity itself and must report blockers to the orchestrator and halt, which prevents scope expansion by the low-tier operator."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The added operating standard governs risky gate operations by requiring prepared handoffs and fail-closed hard stops.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The staged text mentions commit, second commit, push when required, bead close/sync, and reservation release, so this condition is governed even though the payload itself performs no such operation.",
+        "Those actions are constrained to prepared hash-bound handoffs, and the text requires halting on mismatch, dirt, failed/unknown cells, test failure, or unpredicted state."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The section protects gate data integrity through hash-bound handoffs, exact file lists, expected hashes, attestation staging, and evidence identity.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The staged text requires prepared hash-bound handoffs and expected hashes where known.",
+        "It includes index check, named-file staging, cell wait, attestation staging, bead close/sync, and Agent Mail identity on the evidence trail."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged text does not expose secrets or local infrastructure and constrains Spark authority around gated operations.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The added lines contain no IP addresses, credentials, tokens, private hostnames, or local absolute paths.",
+        "Spark authority is bounded to prepared handoffs and must halt on unpredicted state rather than self-authorizing escalated actions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No UI, browser, screenshot, canvas, styling, or visual artifact surface is touched.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The only staged path is ORCHESTRATOR.md, a Markdown operating note with no rendered application surface."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged change is explicitly about capacity/cost control for gate operations and satisfies that budget intent.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "The section assigns Spark to a dedicated low-tier pane for repeatable gate mechanics.",
+        "It states the purpose is to let cheap capacity run repeatable mechanics while expensive capacity stays on implementation and judgment cells."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Spark H1",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli in NTM verifier pane, Spark H1 wake",
+        "separate_context": true,
+        "created_at": "2026-07-05T12:04:33.733415Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged section clearly defines what Spark may do independently and where it must stop.",
+      "evidence": [
+        "Packet inspected at /tmp/pkts-spark-h1.json; it contains 13 cells for feature diff:. with staged payload hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630.",
+        "Current staged payload verified with git diff --cached --name-status: only M ORCHESTRATOR.md is staged; .beads/issues.jsonl is modified but unstaged, and an untracked blocked report is not staged.",
+        "burpvalve hash --staged --json returned staged_payload_hash sha256:c03769f0452e84db337b2998078338812f13372dff167bbcc13b943de3a79630 and included_paths [ORCHESTRATOR.md], matching the packet binding.",
+        "Staged diff adds only the ORCHESTRATOR.md section \"Spark Gate-Operator Ritual (binds dogfooding D14; owner-approved 2026-07-05)\" at lines 88-107.",
+        "The added section says Spark executes prepared hash-bound gate handoffs, performs index/stage/verifier/gate/attestation/push/bead-close mechanics, never waives or reinterprets verifier results, and hard-stops on hash mismatch, dirty index, peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state.",
+        "Spark may execute prepared gate mechanics from hash-bound handoffs, but cannot waive or reinterpret verifier results and cannot resolve ambiguity.",
+        "The text requires escalation and halt on hash mismatch, dirty index/peer dirt, verifier disagreement, fail/unknown cells, test failure, or unpredicted state."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T12:04:45.494963752Z"
+    }
+  ]
+}

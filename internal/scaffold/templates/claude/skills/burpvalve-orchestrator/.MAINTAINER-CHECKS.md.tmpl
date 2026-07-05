@@ -1,0 +1,10 @@
+# Maintainer Checks
+
+- [ ] `jsm validate .claude/skills/burpvalve-orchestrator` passes on generated output.
+- [ ] `SKILL.md` frontmatter name matches `burpvalve-orchestrator`.
+- [ ] Parsed description stays under 500 characters.
+- [ ] Every linked reference, example, script, and self-test exists.
+- [ ] `.MAINTAINER-CHECKS.md` is not linked from `SKILL.md`.
+- [ ] Scripts use Python standard library only.
+- [ ] Mutating scripts default to dry-run and require `--write` or `--execute`.
+- [ ] No binary files are included in the generated package.

@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:9c076fa35311c892c8375fde6539c1e7c0a4aa8e0ecd84a678d6fc8f3998d7f5",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "0fc75d0b10e8e75403b0f2eabc402b0d69f4664a",
+  "created_at": "2026-07-02T08:23:51.208368514Z",
+  "feature": {
+    "id": "project-readiness-kit-land-14-verifier-prompt-generator-a52",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-14-verifier-prompt-generator-a52",
+    "source_bead": "project-readiness-kit-land-14-verifier-prompt-generator-a52",
+    "bead_ids": [
+      "project-readiness-kit-land-14-verifier-prompt-generator-a52"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-14-verifier-prompt-generator-a52"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-14-verifier-prompt-generator-a52"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged payload is one Phase 2 unit: land-14 verifier prompt generator. It contains only verifier prompts command/robot-help plumbing, the internal prompt packet generator, and direct tests. It intentionally excludes begin/submit ingestion, config defaults, transcript storage, runtime doctor, attestation query, beads, completion verification, and other later land units."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2412",
+        "evidence_ref": "agent-mail:2412",
+        "created_at": "2026-07-02T08:15:59Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The staged prompt-generator payload is formatted, whitespace-clean, and covered by focused command/backpressure tests plus the full suite.",
+      "evidence": [
+        "git diff --cached --name-status/stat matched the packet: cmd/burpvalve/main.go modified; cmd/burpvalve/verifier_test.go, internal/backpressure/verifier_prompts.go, and internal/backpressure/verifier_prompts_test.go added; 579 insertions.",
+        "git diff --cached --check exited 0.",
+        "go test ./internal/backpressure -run 'VerifierPrompt|Prompt|Profile' passed.",
+        "go test ./cmd/burpvalve -run 'Verifier|Prompt|Robots|Help' passed.",
+        "go test ./... passed across cmd/burpvalve and internal packages.",
+        "go run ./cmd/burpvalve verifier prompts --feature project-readiness-kit-land-14-verifier-prompt-generator-a52 --profile ntm --condition lint-rules --json produced schema_version=1, command='verifier prompts', profile='ntm', one lint-rules packet, and response_schema.verifier.separate_context=true."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice is narrowly the verifier prompt generator and contains no duplicate or unrelated implementation paths; generated packets preserve read-only instructions and unknown placeholder responses.",
+      "evidence": [
+        "git diff --cached --name-status showed exactly: M cmd/burpvalve/main.go; A cmd/burpvalve/verifier_test.go; A internal/backpressure/verifier_prompts.go; A internal/backpressure/verifier_prompts_test.go.",
+        "git diff --cached --check exited 0.",
+        "go run ./cmd/burpvalve verifier prompts --feature project-readiness-kit-land-14-verifier-prompt-generator-a52 --profile ntm --condition dry --json in an isolated staged temp repo emitted one packet with condition_id dry; prompt contained Do not fabricate and Read-only; response_schema had verifier.kind unknown, subagent_confirmed false, verdict unknown."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "D7 is preserved: authorization language is present only as delegation context, while generated response schemas remain unknown/unconfirmed until a real verifier supplies evidence.",
+      "evidence": [
+        "Inspected staged internal/backpressure/verifier_prompts.go: VerifierAuthorizationText includes Do not fabricate subagent confirmation; buildVerifierPromptPacket initializes verifier.kind unknown, subagent_confirmed false, verdict unknown, and placeholder evidence/message/next_action.",
+        "Full-packet command emitted schema_version=1, command=verifier prompts, profile=ntm, 13 packets, 4 staged_payload entries; first packet authorization matched Do not fabricate, response_schema verifier.kind=unknown, subagent_confirmed=false, verdict=unknown, and profile notes said the generator did not launch NTM/swarm.",
+        "git diff grep for spawn/launch/fabricate/subagent/authorization found only expected prompt-generator warnings and tests, not confirmation laundering."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The new generator and CLI surfaces have focused tests for packet construction, profile/filter behavior, errors, JSON/human output, and robot help.",
+      "evidence": [
+        "Inspected staged tests: internal/backpressure/verifier_prompts_test.go covers BuildVerifierPrompts policy/payload/response schema, profile normalization/condition filtering, and actionable errors.",
+        "Inspected staged cmd/burpvalve/verifier_test.go: covers verifier prompts JSON and human output plus unsupported profile and robot-help documentation.",
+        "In the isolated staged temp repo, go test ./internal/backpressure -run 'VerifierPrompt|Prompt|Profile' passed and go test ./cmd/burpvalve -run 'Verifier|Prompt|Robots|Help' passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged implementation is complete for unit 14: command registration, robot/help docs, core packet generation, and targeted/full tests are present and passing.",
+      "evidence": [
+        "git diff --cached --stat showed 4 staged files and 579 insertions, matching the packet's expected payload.",
+        "go run ./cmd/burpvalve verifier prompts --help in the isolated staged temp repo rendered the generator description and --condition, --feature, --json, --profile, and --root flags.",
+        "go test ./... passed in the isolated staged temp repo across cmd/burpvalve and all internal packages."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Generated packets carry concrete staged-payload, policy, success-criteria, read-only, and response-schema fields so verifier evidence can be returned without inventing confirmation.",
+      "evidence": [
+        "Full JSON command emitted top-level keys command, feature, notes, packets, profile, schema_version, staged_payload; packet keys included authorization, condition_file, condition_id, profile_notes, read_only_expectation, response_schema, staged_payload, success_criteria, and verifier_policy.",
+        "jq over /tmp/land14-prompts.json showed staged_payload count 4 with statuses modified/added for the four expected paths.",
+        "Response schema in /tmp/land14-dry.json contained condition_id dry, condition_file backpressure/dry.md, verifier_policy independent_required, verifier.kind unknown, subagent_confirmed false, verdict unknown, and placeholder evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is limited to the land-14 verifier prompts command, robot-help docs, and tests; later units are not implemented here.",
+      "evidence": [
+        "git diff --cached --name-status matched only cmd/burpvalve/main.go, cmd/burpvalve/verifier_test.go, internal/backpressure/verifier_prompts.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Inspected staged cmd/burpvalve/main.go: root adds newVerifierCommand; verifier subcommand only exposes prompts with root/feature/condition/profile/json flags and calls BuildVerifierPrompts.",
+        "Targeted staged-diff grep for verifier begin/submit, transcript, runtime doctor, config defaults, attestation browsing, beads, completion verification, and future surfaces found only expected verifier prompts/help/test references, not implementations."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2412",
+        "evidence_ref": "agent-mail:2412",
+        "created_at": "2026-07-02T08:15:59Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "No governed destructive-operation surface exists in this staged payload.",
+      "evidence": [
+        "The staged payload adds a read-only verifier prompts command and prompt generator; it does not run verifier agents, write response files, stage/unstage files, commit, submit attestations, deploy, migrate data, or mutate external systems.",
+        "Staged diff grep found no rm -rf, git reset, curl/wget/http call, deploy/production mutation, os.Remove, WriteFile, or other destructive command implementation in the payload.",
+        "Robot notes and command help state that burpvalve verifier prompts is read-only and does not spawn subagents."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Packet generation preserves staged payload entries, condition identity, condition files, verifier policies, profile normalization, and actionable errors without silently dropping requested filters.",
+      "evidence": [
+        "Inspected staged verifier_prompts.go: BuildVerifierPrompts normalizes profile, builds a pre-commit staged plan, errors for no feature/no staged payload/no matching condition, and copies staged payload into both set and packet objects.",
+        "jq over generated full JSON showed 13 packets and 4 staged_payload entries; jq over the dry-filtered JSON showed exactly 1 packet with condition_id dry and verifier_policy independent_required.",
+        "internal/backpressure verifier prompt tests passed; inspected tests include fake staged rename/delete/modify payload preservation and unsupported profile/no payload/ambiguous/missing-condition error cases."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The generator is read-only, emits path/status/policy metadata rather than staged blob contents or credentials, and explicitly forbids mutation/fabricated confirmation.",
+      "evidence": [
+        "Inspected staged verifier_prompts.go: BuildVerifierPrompts reads staged plan data and renders prompts via path/status/old_path fields; it does not open or embed arbitrary file contents in prompts.",
+        "Targeted staged-diff grep for credential/secret/password/token/api key/Bearer/content/excerpt/blob found no credential handling or staged-content embedding beyond fake test fixture content maps.",
+        "Robot notes and prompt text inspected in cmd/burpvalve/main.go and generated JSON state verifier prompts is read-only and does not spawn subagents; read_only_expectation says do not edit, stage, commit, or fabricate confirmation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2412",
+        "evidence_ref": "agent-mail:2412",
+        "created_at": "2026-07-02T08:15:59Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "No governed visual surface exists in this staged payload.",
+      "evidence": [
+        "Staged paths are Go CLI and internal backpressure files only: cmd/burpvalve/main.go, cmd/burpvalve/verifier_test.go, internal/backpressure/verifier_prompts.go, and internal/backpressure/verifier_prompts_test.go.",
+        "The staged diff contains no browser UI, CSS, screenshots, SVG/canvas, images, or visual demo assets."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prompt size is bounded by staged path/status metadata and enabled conditions; the command uses the existing pre-commit plan path and no new fanout, concurrency, or content-dumping loop.",
+      "evidence": [
+        "Generated full packet JSON from the isolated staged temp repo reported 13 packets and 4 staged_payload entries for the current slice, with no staged file excerpts in packet prompts.",
+        "Inspected staged renderVerifierPromptPacket: it writes feature/condition/policy/read-only fields and enumerates staged file path/status/old_path only.",
+        "go test ./... passed in the isolated staged temp repo; targeted command JSON generation completed successfully for full ntm profile and dry-filtered output."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2413",
+        "evidence_ref": "agent-mail:2413",
+        "created_at": "2026-07-02T08:21:12Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The generated handoff packets direct verifier behavior without claiming autonomous verification or launching subagents; they preserve the boundary between authorization to request verification and actual verifier evidence.",
+      "evidence": [
+        "Inspected verifierPromptProfileNotes: native/ntm/hermes/manual notes all state the generator did not spawn, launch, send, or verify and instruct the runtime/operator to preserve returned evidence.",
+        "Generated ntm JSON profile notes matched did not launch NTM or a swarm; response_schema remained unknown/unconfirmed until a verifier fills it.",
+        "Robot help notes in staged cmd/burpvalve/main.go say spawn read-only verifier subagents yourself when runtime permits and route real verifier output into response_schema; Do not fabricate subagent confirmation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:23:51.208368514Z"
+    }
+  ]
+}

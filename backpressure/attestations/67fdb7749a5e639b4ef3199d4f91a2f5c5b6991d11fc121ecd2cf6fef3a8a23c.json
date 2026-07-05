@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "MaroonCreek",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "40404f4093e4e7f06c6f67f85203290c2ca7fec5",
+  "created_at": "2026-07-05T14:15:56.914478932Z",
+  "feature": {
+    "id": "project-readiness-kit-osl-scrub-fixture-email-1f1b",
+    "kind": "feature",
+    "name": "project-readiness-kit-osl-scrub-fixture-email-1f1b",
+    "diff_cluster": "explicit:project-readiness-kit-osl-scrub-fixture-email-1f1b"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload implements D-OSL-20 scrub unit 1 by replacing tracked non-excluded test@example.com fixture residue with the owner-approved noreply address, plus the campaign tracker setup rows/dependencies required by the scrub brief; no local-path, policy-wording, or legacy-naming scrub edits are included."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:11:01.750569Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged scrub is formatter/lint clean at the diff level and does not alter lint rules or fake lint enforcement.",
+      "evidence": [
+        "CloudyEagle read Agent Mail message 3704 from MaroonCreek assigning scrub unit-1 mechanical/shared verification for feature project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "Packet cache inspected at /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/scrub-unit1-verifier-prompts.json; assigned cells are lint-rules, dry, destructive-operations, security-boundaries, visual-regression, and performance-budget.",
+        "burpvalve hash --staged --json returned staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c, matching the packet and response file binding.",
+        "git diff --cached --name-status shows staged modifications to .beads/issues.jsonl, cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, docs/decisions-2026-07-02-review-round.md, docs/flip-day-runbook.md, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Staged diff replaces tracked non-excluded test@example.com fixture email strings with michael-bltzr@users.noreply.github.com in Go test fixtures, and rewords docs references to legacy placeholder-email wording.",
+        "git diff --cached --check produced no output.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' produced no hits.",
+        "Staged .beads/issues.jsonl parsed successfully as JSONL with 196 records, including project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress.",
+        "Agent Mail message 3704 reports implementer evidence: go test ./... passed and the non-excluded tracked grep for test@example.com returned no hits after staged edits; this verifier did not rerun the full test suite.",
+        "backpressure/lint-rules.md says rules are enforced only after a command or analyzer is named. This payload changes test fixture strings, two docs references, and tracker rows; it adds no lint command/analyzer.",
+        "git diff --cached --check passed with no whitespace or patch formatting complaints."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:11:01.750569Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The repeated fixture email replacement is intentional scrub scope and does not introduce a worse duplicate implementation.",
+      "evidence": [
+        "CloudyEagle read Agent Mail message 3704 from MaroonCreek assigning scrub unit-1 mechanical/shared verification for feature project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "Packet cache inspected at /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/scrub-unit1-verifier-prompts.json; assigned cells are lint-rules, dry, destructive-operations, security-boundaries, visual-regression, and performance-budget.",
+        "burpvalve hash --staged --json returned staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c, matching the packet and response file binding.",
+        "git diff --cached --name-status shows staged modifications to .beads/issues.jsonl, cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, docs/decisions-2026-07-02-review-round.md, docs/flip-day-runbook.md, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Staged diff replaces tracked non-excluded test@example.com fixture email strings with michael-bltzr@users.noreply.github.com in Go test fixtures, and rewords docs references to legacy placeholder-email wording.",
+        "git diff --cached --check produced no output.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' produced no hits.",
+        "Staged .beads/issues.jsonl parsed successfully as JSONL with 196 records, including project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress.",
+        "Agent Mail message 3704 reports implementer evidence: go test ./... passed and the non-excluded tracked grep for test@example.com returned no hits after staged edits; this verifier did not rerun the full test suite.",
+        "backpressure/dry.md governs repeated strings and duplicated logic. The staged repeated string is the owner-approved noreply fixture identity replacing an existing repeated placeholder in independent test fixtures.",
+        "The payload does not add helper abstractions or duplicate logic; extracting a shared fixture constant across these unrelated tests would widen the scrub unit beyond the mechanical residue replacement."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged scrub removes the launch-blocking fixture email residue and records campaign tracker work without using the scrub as a shortcut around launch gates or verification.",
+      "evidence": [
+        "Agent Mail message 3703 binds unit 1 to staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c and describes the atomicity boundary as fixture-email scrub plus required tracker setup rows/dependencies.",
+        "git diff --cached shows test fixture email values changed from test@example.com to michael-bltzr@users.noreply.github.com and docs reworded to legacy placeholder email rather than retaining the literal fixture address.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' returned no output, matching the declared non-excluded public-tree scrub target.",
+        "The staged tracker keeps project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress and adds the other scrub units as open dependencies of the preflip gate, so the campaign is not falsely marked complete.",
+        "go test ./... passed after inspecting the staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "No production function or helper behavior is added; the changed test-fixture behavior remains covered by the modified existing tests and the full Go suite passes.",
+      "evidence": [
+        "The staged code changes are in *_test.go files and docs/tracker data; no non-test Go implementation file is staged.",
+        "Fixture setup lines in cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go now use the owner-approved noreply address.",
+        "go test ./... passed, including burpvalve/cmd/burpvalve and burpvalve/internal/backpressure where the staged test fixtures changed.",
+        "The docs and .beads edits introduce no executable behavior requiring a new direct behavior test."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The relevant done checks for this scrub unit are complete: staged diff inspected, fixture residue grep clean, staged JSONL parses, whitespace check clean, and go test ./... passed.",
+      "evidence": [
+        "git diff --cached --stat reports 9 staged files with 22 insertions and 18 deletions for the scrub unit.",
+        "git diff --cached --check exited clean.",
+        "git show :.beads/issues.jsonl | jq -c . \u003e/dev/null completed as staged-jsonl-ok.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' returned no output.",
+        "go test ./... passed: cmd/burpvalve, internal/backpressure, internal/scaffold and remaining packages completed successfully."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged scrub has concrete verifier evidence recorded for the changed surfaces and the response file is receiving hash-bound condition results.",
+      "evidence": [
+        "Agent Mail message 3703 provides the packet handoff, response path, staged payload hash, manifest hash, and implementer evidence commands.",
+        "Verifier independently inspected git status, git diff --cached --stat/name-status, the staged diff hunk, staged .beads JSON, and assigned condition files.",
+        "Verifier independently ran git grep and git grep --cached for test@example.com across non-excluded tracked surfaces; both returned no output.",
+        "Verifier independently ran go test ./..., which passed.",
+        "This response is being submitted with GrayCat/gpt-5 provenance against response file log/backpressure/responses/67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c.json."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload matches scrub unit 1 scope: fixture-email replacement plus campaign tracker setup/dependencies, without local-path, legacy-naming, policy-wording, release, or visibility changes.",
+      "evidence": [
+        "Packet feature paths list .beads/issues.jsonl, six test files, docs/decisions-2026-07-02-review-round.md, and docs/flip-day-runbook.md; git diff --cached --name-status matches those nine staged paths.",
+        "The staged code hunks only replace test@example.com fixture git config values with michael-bltzr@users.noreply.github.com in test files.",
+        "The staged docs hunks replace the literal test@example.com wording with legacy placeholder email / legacy placeholder-email wording while preserving D-OSL-10/runbook meaning.",
+        "Structured .beads comparison shows four scrub-unit beads added, no removed IDs, and preflip gate dependencies updated to include the four scrub units.",
+        "No staged path modifies release assets, GitHub workflow/config, SECURITY.md, README, license metadata, or repository visibility controls."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:11:01.750569Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No destructive operation is performed by this staged payload.",
+      "evidence": [
+        "CloudyEagle read Agent Mail message 3704 from MaroonCreek assigning scrub unit-1 mechanical/shared verification for feature project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "Packet cache inspected at /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/scrub-unit1-verifier-prompts.json; assigned cells are lint-rules, dry, destructive-operations, security-boundaries, visual-regression, and performance-budget.",
+        "burpvalve hash --staged --json returned staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c, matching the packet and response file binding.",
+        "git diff --cached --name-status shows staged modifications to .beads/issues.jsonl, cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, docs/decisions-2026-07-02-review-round.md, docs/flip-day-runbook.md, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Staged diff replaces tracked non-excluded test@example.com fixture email strings with michael-bltzr@users.noreply.github.com in Go test fixtures, and rewords docs references to legacy placeholder-email wording.",
+        "git diff --cached --check produced no output.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' produced no hits.",
+        "Staged .beads/issues.jsonl parsed successfully as JSONL with 196 records, including project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress.",
+        "Agent Mail message 3704 reports implementer evidence: go test ./... passed and the non-excluded tracked grep for test@example.com returned no hits after staged edits; this verifier did not rerun the full test suite.",
+        "The staged payload contains text/test fixture replacements and tracker setup rows only.",
+        "No staged delete, reset, force push, migration, deploy, external send, spend change, release mutation, repo visibility change, or production mutation is present."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged persistent tracker data remains parseable and consistent with the scrub campaign; no issue records are removed and the preflip gate now depends on the scrub units.",
+      "evidence": [
+        "git show :.beads/issues.jsonl | jq -c . \u003e/dev/null completed successfully, so the staged JSONL parses.",
+        "Structured comparison of HEAD vs staged .beads/issues.jsonl shows added IDs project-readiness-kit-osl-scrub-fixture-email-1f1b, project-readiness-kit-osl-scrub-legacy-naming-24ku, project-readiness-kit-osl-scrub-local-paths-612u, and project-readiness-kit-osl-scrub-policy-wording-zxnu, with no removed IDs.",
+        "The staged preflip gate record includes dependencies on all four scrub unit IDs, including project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "The staged fixture-email bead is in_progress and the other scrub unit beads are open, preserving campaign state rather than marking unverified work closed.",
+        "go test ./... passed after the staged test fixture changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:11:01.750569Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged scrub removes the legacy fixture email residue from tracked non-excluded public-tree files without adding secrets or private infrastructure.",
+      "evidence": [
+        "CloudyEagle read Agent Mail message 3704 from MaroonCreek assigning scrub unit-1 mechanical/shared verification for feature project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "Packet cache inspected at /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/scrub-unit1-verifier-prompts.json; assigned cells are lint-rules, dry, destructive-operations, security-boundaries, visual-regression, and performance-budget.",
+        "burpvalve hash --staged --json returned staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c, matching the packet and response file binding.",
+        "git diff --cached --name-status shows staged modifications to .beads/issues.jsonl, cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, docs/decisions-2026-07-02-review-round.md, docs/flip-day-runbook.md, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Staged diff replaces tracked non-excluded test@example.com fixture email strings with michael-bltzr@users.noreply.github.com in Go test fixtures, and rewords docs references to legacy placeholder-email wording.",
+        "git diff --cached --check produced no output.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' produced no hits.",
+        "Staged .beads/issues.jsonl parsed successfully as JSONL with 196 records, including project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress.",
+        "Agent Mail message 3704 reports implementer evidence: go test ./... passed and the non-excluded tracked grep for test@example.com returned no hits after staged edits; this verifier did not rerun the full test suite.",
+        "The replacement address is the owner-approved GitHub noreply identity referenced by D-OSL-10, not a credential or private service endpoint.",
+        "The staged non-excluded grep for test@example.com returned no hits, and the diff introduces no tokens, passwords, IP addresses, private hostnames, or local absolute paths outside existing .beads source_repo_path history."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:11:01.750569Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No UI, browser, screenshot, canvas, styling, or rendered visual surface is touched.",
+      "evidence": [
+        "CloudyEagle read Agent Mail message 3704 from MaroonCreek assigning scrub unit-1 mechanical/shared verification for feature project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "Packet cache inspected at /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/scrub-unit1-verifier-prompts.json; assigned cells are lint-rules, dry, destructive-operations, security-boundaries, visual-regression, and performance-budget.",
+        "burpvalve hash --staged --json returned staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c, matching the packet and response file binding.",
+        "git diff --cached --name-status shows staged modifications to .beads/issues.jsonl, cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, docs/decisions-2026-07-02-review-round.md, docs/flip-day-runbook.md, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Staged diff replaces tracked non-excluded test@example.com fixture email strings with michael-bltzr@users.noreply.github.com in Go test fixtures, and rewords docs references to legacy placeholder-email wording.",
+        "git diff --cached --check produced no output.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' produced no hits.",
+        "Staged .beads/issues.jsonl parsed successfully as JSONL with 196 records, including project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress.",
+        "Agent Mail message 3704 reports implementer evidence: go test ./... passed and the non-excluded tracked grep for test@example.com returned no hits after staged edits; this verifier did not rerun the full test suite.",
+        "The staged payload is Go test fixture text, Markdown prose, and Beads tracker data only; there is no frontend or visual artifact to inspect."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:11:01.750569Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No runtime performance-sensitive implementation surface is changed.",
+      "evidence": [
+        "CloudyEagle read Agent Mail message 3704 from MaroonCreek assigning scrub unit-1 mechanical/shared verification for feature project-readiness-kit-osl-scrub-fixture-email-1f1b.",
+        "Packet cache inspected at /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/scrub-unit1-verifier-prompts.json; assigned cells are lint-rules, dry, destructive-operations, security-boundaries, visual-regression, and performance-budget.",
+        "burpvalve hash --staged --json returned staged payload hash sha256:67fdb7749a5e639b4ef3199d4f91a2f5c5b6991d11fc121ecd2cf6fef3a8a23c, matching the packet and response file binding.",
+        "git diff --cached --name-status shows staged modifications to .beads/issues.jsonl, cmd/burpvalve/beads_close_test.go, cmd/burpvalve/beads_drift_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/e2e_test.go, docs/decisions-2026-07-02-review-round.md, docs/flip-day-runbook.md, internal/backpressure/core_test.go, and internal/backpressure/verifier_prompts_test.go.",
+        "Staged diff replaces tracked non-excluded test@example.com fixture email strings with michael-bltzr@users.noreply.github.com in Go test fixtures, and rewords docs references to legacy placeholder-email wording.",
+        "git diff --cached --check produced no output.",
+        "git grep --cached -n -I 'test@example.com' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*' produced no hits.",
+        "Staged .beads/issues.jsonl parsed successfully as JSONL with 196 records, including project-readiness-kit-osl-scrub-fixture-email-1f1b in_progress.",
+        "Agent Mail message 3704 reports implementer evidence: go test ./... passed and the non-excluded tracked grep for test@example.com returned no hits after staged edits; this verifier did not rerun the full test suite.",
+        "The staged Go changes alter git fixture user.email string literals in tests only; no production code path, dependency, loop, query, build artifact, or benchmark threshold changes.",
+        "The docs and tracker changes do not affect latency, memory, token/cost, bundle size, or throughput."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 5 (TMUX_PANE %146)",
+        "separate_context": true,
+        "created_at": "2026-07-05T14:15:56.914478932Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The scrub unit stays inside the owner-authorized D-OSL-20/D-OSL-10 preparation boundary and performs no outward-facing launch, release deletion, repo rename, public repo creation, or visibility action.",
+      "evidence": [
+        "D-OSL-10 in docs/decisions-2026-07-02-review-round.md names the owner-approved noreply address for public fixture email scrub.",
+        "Agent Mail message 3703 states this unit implements D-OSL-20 scrub unit 1 and limits scope to fixture-email scrub plus required tracker setup rows/dependencies.",
+        "git diff --cached shows only source test fixture values, scrub wording in docs, flip-day runbook wording, and .beads campaign tracker data changed.",
+        "No staged command output or file change performs public visibility changes, GitHub release deletion, private repository rename, public repository creation, PVR settings changes, or remote operations.",
+        "The preflip gate remains open in staged .beads data and now depends on the scrub units, so later launch actions remain gated."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T14:15:56.914478932Z"
+    }
+  ]
+}

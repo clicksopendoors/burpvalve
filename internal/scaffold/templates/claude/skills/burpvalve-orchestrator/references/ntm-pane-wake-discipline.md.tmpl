@@ -1,0 +1,29 @@
+# NTM Pane Wake Discipline
+
+NTM wakes route attention. They are not verifier verdicts and not evidence that
+work was reviewed.
+
+Before a wake:
+
+1. Run `ntm --robot-capabilities`.
+2. Run `ntm --robot-snapshot`.
+3. Confirm the pane index from the fresh snapshot.
+4. Mail the durable context first.
+5. Send a short wake that points to the mail message or thread.
+
+Use `scripts/pane_wake.py` to perform the capability and snapshot preflight
+before printing or executing a wake command.
+
+Keep wakes short. Put evidence, packet contents, and instructions in Agent Mail
+or committed docs, not in the terminal nudge.
+
+## Polling Standard
+
+- Use the runtime `Working (` marker for liveness. Treat a pane as idle only
+  after the marker is absent on two consecutive polls.
+- Confirm completion from the artifact the work promised to produce: a findings
+  file, verifier responses file, Agent Mail inbox or message, commit, or HEAD
+  state. The pane tail is never the completion signal.
+- Pollers must terminate loudly on completion, stall, or timeout with a recorded
+  result. They must not keep spinning silently after the monitored work has
+  finished or stopped progressing.

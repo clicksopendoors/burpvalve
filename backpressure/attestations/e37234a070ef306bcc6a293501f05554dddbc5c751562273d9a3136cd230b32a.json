@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:e37234a070ef306bcc6a293501f05554dddbc5c751562273d9a3136cd230b32a",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "d650b9a017bac0f8bec9b1d8f7492f18d4dc88ee",
+  "created_at": "2026-07-02T09:19:04.655617609Z",
+  "feature": {
+    "id": "project-readiness-kit-land-16-beads-delivery-preflight-6gy",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-16-beads-delivery-preflight-6gy",
+    "source_bead": "project-readiness-kit-land-16-beads-delivery-preflight-6gy",
+    "bead_ids": [
+      "project-readiness-kit-land-16-beads-delivery-preflight-6gy"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-16-beads-delivery-preflight-6gy"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-16-beads-delivery-preflight-6gy"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Phase 2 unit 16 adds the read-only Beads delivery preflight command and bead metadata plumbing for commit attestations, plus RusticDog message 2421's minimal attestation model/schema-doc expansion; NextSteps/ValidateShape and mutating bead closure behavior remain out of scope."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2426",
+        "evidence_ref": "agent-mail:2426",
+        "created_at": "2026-07-02T09:15:46Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "Staged Go payload is formatted, passes diff whitespace checks, and passes focused plus full test suites relevant to the bead preflight and attestation metadata changes.",
+      "evidence": [
+        "ScarletMarsh message 2426 verified git diff --cached --name-status/stat matched the seven staged files exactly: cmd/burpvalve/beads_test.go, cmd/burpvalve/commit_test.go, cmd/burpvalve/help_test.go, cmd/burpvalve/main.go, docs/attestation-schema.md, internal/attestations/attestations.go, internal/backpressure/artifacts.go.",
+        "ScarletMarsh message 2426 verified staged Go blobs were gofmt-clean and git diff --cached --check exited 0.",
+        "ScarletMarsh message 2426 verified focused command tests, internal backpressure/attestation tests, and go test ./... all exited 0."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The Beads preflight surface is explicitly dry-run/read-only; the only staged write behavior remains existing commit-gate attestation writing, now carrying bead metadata when requested.",
+      "evidence": [
+        "BrightOwl message 2425 verified the seven-path staged payload and git diff --cached --check exit 0.",
+        "BrightOwl message 2425 inspected cmd/burpvalve/main.go and found beadsPreflightReport mutating=false plus help text stating the command never closes beads, syncs Beads, stages files, commits, or writes attestation artifacts.",
+        "BrightOwl message 2425 ran a staged-temp fake-br probe; beads preflight --json returned status=ready, mutating=false, br_available=true, two bead IDs, and seven staged payload paths."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The feature does not let Beads metadata masquerade as verifier evidence; it records delivery bead IDs/rationale separately and still requires real verifier responses through the commit gate.",
+      "evidence": [
+        "BrightOwl message 2425 inspected internal/backpressure/artifacts.go and verified BuildArtifact writes bead IDs/rationale as artifact metadata while preserving verifier conditions from validated responses.",
+        "BrightOwl message 2425 inspected beads preflight next steps and found they still require real verifier prompts/evidence and exact staged-payload commit gating.",
+        "ScarletMarsh message 2426 independently agreed anti-reward-hacking=pass, citing read-only preflight behavior, explicit coupled-bead rationale, and tests preventing silent multi-bead bundling."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The changed behavior has focused behavioral tests for preflight, commit bead metadata, multiple-bead rationale, robot help, and attestation metadata round-trip/query.",
+      "evidence": [
+        "BrightOwl message 2425 inspected cmd/burpvalve/beads_test.go coverage for read-only preflight, missing br, rationale requirements, admin-only preflight, and invalid bead recovery.",
+        "BrightOwl message 2425 inspected cmd/burpvalve/commit_test.go additions for attestation bead metadata and multi-bead rationale rejection.",
+        "BrightOwl message 2425 verified focused command and internal package tests passed in the isolated staged repo."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged unit includes command registration/help, robot docs, bead preflight report behavior, commit metadata plumbing, docs, and passing focused/full tests.",
+      "evidence": [
+        "BrightOwl message 2425 verified git diff --cached --stat showed seven staged files and 636 insertions/36 deletions matching the packet.",
+        "BrightOwl message 2425 verified go run ./cmd/burpvalve beads preflight --help rendered --admin-only, --bead-rationale, --json, and the no-mutation delivery sequence text.",
+        "BrightOwl message 2425 verified go test ./... passed in the isolated staged repo."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2426",
+        "evidence_ref": "agent-mail:2426",
+        "created_at": "2026-07-02T09:15:46Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The governed surface is evidence/traceability for bead delivery. The staged payload records bead metadata in attestations and exposes a read-only preflight that tells agents how to preserve evidence instead of fabricating it.",
+      "evidence": [
+        "ScarletMarsh message 2426 inspected commit flags --bead and --bead-rationale and verified artifact construction serializes bead_ids and coupled_work_rationale.",
+        "ScarletMarsh message 2426 verified cmd/burpvalve/commit_test.go includes TestPreCommitRecordsBeadMetadataAndQueryFilters, covering attestation bead metadata and attestations list --bead filtering.",
+        "ScarletMarsh message 2426 verified cmd/burpvalve/beads_test.go requires multiple-bead rationale and reports next steps for running burpvalve commit with --bead metadata against the exact staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within unit 16 plus the authorized message-2421 expansion; excluded NextSteps/ValidateShape hunks are not staged.",
+      "evidence": [
+        "BrightOwl message 2425 verified Agent Mail message 2421 authorized only Artifact.BeadIDs, Artifact.CoupledWorkRationale, Feature.BeadIDs, and matching docs; packet 2423 repeated that ruling.",
+        "BrightOwl message 2425 verified the staged diff contains no NextSteps or ValidateShape hunks in internal/attestations/attestations.go and no next_steps docs section in docs/attestation-schema.md.",
+        "ScarletMarsh message 2426 independently agreed scope-control=pass, citing the seven-file staged payload and absence of bead closure mode or other later-unit behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed and satisfied: the Beads preflight command reasons about delivery ordering but does not run destructive or state-changing Beads/Git operations.",
+      "evidence": [
+        "BrightOwl message 2425 inspected buildBeadsPreflightReport and inspectBead: external commands are limited to exec.LookPath('br'), br show \u003cid\u003e --json, and git diff --cached --name-only.",
+        "BrightOwl message 2425 verified robot help says mutating is always false and the command never closes beads, runs br sync, stages files, commits files, or writes attestations.",
+        "BrightOwl message 2425 verified TestBeadsPreflightIsReadOnlyAndReportsDeliverySequence compares git status before/after and passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2426",
+        "evidence_ref": "agent-mail:2426",
+        "created_at": "2026-07-02T09:15:46Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The governed surface is structured bead metadata in reports and attestations. The staged code normalizes bead ids, preserves explicit rationale for coupled beads, and round-trips/query-tests the metadata.",
+      "evidence": [
+        "ScarletMarsh message 2426 verified normalizeCommitBeads trims/deduplicates bead ids, rejects empty or whitespace-containing ids, and requires --bead-rationale when multiple bead ids describe one staged payload.",
+        "ScarletMarsh message 2426 verified internal/backpressure/artifacts.go writes Artifact.BeadIDs, Artifact.CoupledWorkRationale, Feature.BeadIDs, and single-bead SourceBead consistently.",
+        "ScarletMarsh message 2426 verified internal/attestations/attestations.go adds only bead metadata fields and that command/internal tests for bead metadata passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed and satisfied: the br interaction is constrained to br show --json for explicit bead IDs, and the report exposes status/title/ID plus staged path names, not arbitrary command output or secrets.",
+      "evidence": [
+        "BrightOwl message 2425 inspected inspectBead and verified it invokes br show \u003cid\u003e --json with exec.Command arguments, parses structured JSON, and returns structured warnings on failure.",
+        "BrightOwl message 2425 inspected staged report fields and found bead IDs, admin flag, rationale, staged payload paths, bead summaries, warnings, and next steps, with no environment dumps, arbitrary file reads, or shell interpolation.",
+        "ScarletMarsh message 2426 independently agreed security-boundaries=pass, citing limited exec.Command use, rejection of malformed bead IDs, and no network/credential/destructive behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2426",
+        "evidence_ref": "agent-mail:2426",
+        "created_at": "2026-07-02T09:15:46Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no browser UI, canvas, image asset, screenshot/demo output, or TUI rendering surface governed by visual-regression. It changes CLI command/help behavior, tests, docs, and attestation metadata.",
+      "evidence": [
+        "ScarletMarsh message 2426 verified git diff --cached --name-status contained only Go CLI/test files plus docs/attestation-schema.md, with no visual assets or demo recordings staged.",
+        "ScarletMarsh message 2426 inspected cmd/burpvalve/help_test.go and found only robot-help assertions for beads preflight text, not Lip Gloss/Bubble Tea rendering or layout code.",
+        "ScarletMarsh message 2426 verified the staged payload does not touch docs/demos, README demo assets, image files, browser/frontend files, or terminal snapshot assets."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed and satisfied: preflight cost is proportional to explicitly supplied bead IDs plus one cached-diff name query; it adds no graph traversal, broad br listing, or concurrency/fanout work.",
+      "evidence": [
+        "BrightOwl message 2425 inspected buildBeadsPreflightReport and verified it loops over normalized user-supplied bead IDs, calls br show once per ID, and calls git diff --cached --name-only once for staged paths.",
+        "BrightOwl message 2425 ran a live two-bead preflight probe that completed successfully and reported seven staged paths.",
+        "BrightOwl message 2425 verified robot output does not perform automatic dependency graph traversal or broad Beads enumeration."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2425",
+        "evidence_ref": "agent-mail:2425",
+        "created_at": "2026-07-02T09:15:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The command gives agents an advisory delivery sequence without independently closing beads or claiming implementation evidence for admin-only work.",
+      "evidence": [
+        "BrightOwl message 2425 inspected beadsPreflightNextSteps and found normal flow tells agents to gather real verifier evidence, close beads only after work/evidence are ready, run br sync, stage intentional metadata, and rerun the final gate after staging attestations.",
+        "BrightOwl message 2425 verified admin-only flow tells users to record rationale, run br sync if metadata changed, and not fabricate implementation commit evidence for issue-only work.",
+        "BrightOwl message 2425 verified robot help and tests cover JSON preflight, admin-only staged-payload handling, and read-only flow documentation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T09:19:04.655617609Z"
+    }
+  ]
+}

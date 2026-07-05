@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""Append a dated dogfooding finding skeleton with explicit --write."""
+
+import argparse
+import datetime as dt
+from pathlib import Path
+
+
+def skeleton(kind, title):
+    today = dt.date.today().isoformat()
+    return (
+        f"### {kind}: {title}\\n\\n"
+        f"- Date: {today}\\n"
+        "- Context: TBD\\n"
+        "- Finding: TBD\\n"
+        "- Impact: TBD\\n"
+        "- Follow-up: TBD\\n\\n"
+    )
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Print or append a dated finding skeleton.")
+    parser.add_argument("--log", required=True, help="Existing findings log path")
+    parser.add_argument("--kind", default="Observation", help="Finding kind or prefix")
+    parser.add_argument("--title", required=True, help="Short finding title")
+    parser.add_argument("--write", action="store_true", help="Append to the log")
+    args = parser.parse_args()
+
+    path = Path(args.log)
+    if not path.exists() or not path.is_file():
+        raise SystemExit("findings log does not exist or is not a file: " + str(path))
+    text = path.read_text()
+    if "Finding" not in text and "Dogfood" not in text:
+        raise SystemExit("refusing unrecognized findings log: " + str(path))
+    entry = skeleton(args.kind, args.title)
+    if not args.write:
+        print("DRY-RUN: would append to " + str(path))
+        print(entry, end="")
+        return 0
+    with path.open("a") as fh:
+        fh.write(entry)
+    print("appended finding to " + str(path))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

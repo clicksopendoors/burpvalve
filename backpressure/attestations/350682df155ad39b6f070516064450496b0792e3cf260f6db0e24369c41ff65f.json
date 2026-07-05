@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "c6ac95e8d491a231652a4a1c724376fbdd1d9066",
+  "created_at": "2026-07-04T00:15:08.964955942Z",
+  "feature": {
+    "id": "project-readiness-kit-osl-license-metadata-flt",
+    "kind": "feature",
+    "name": "project-readiness-kit-osl-license-metadata-flt",
+    "diff_cluster": "explicit:project-readiness-kit-osl-license-metadata-flt"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is the corrected tracker-only slice for project-readiness-kit-osl-license-metadata-flt plus explicitly carried A25 tracker closure project-readiness-kit-5kg7; no source metadata files, generated failed reports, packets, or unrelated tracker rows are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "ScarletMarsh",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "ScarletMarsh",
+      "verdict": "pass",
+      "message": "Mechanical checks passed: corrected hash matches, staged path is only .beads/issues.jsonl, diff check/JSM validation/cycle check/full tests pass.",
+      "evidence": [
+        "Agent Mail 3564: corrected verdict pass for lint-rules on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "ScarletMarsh",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "ScarletMarsh",
+      "verdict": "pass",
+      "message": "Corrected tracker payload is not duplicative: exactly A25 plus license metadata row changes; public MIT metadata is represented once on LICENSE, README, and skill frontmatter.",
+      "evidence": [
+        "Agent Mail 3564: corrected verdict pass for dry on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "Prior broad tracker-sync problem is fixed; staged payload now matches the packet narrative: license-metadata closure plus explicitly disclosed A25 row.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for anti-reward-hacking on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "ScarletMarsh",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "ScarletMarsh",
+      "verdict": "not_applicable",
+      "message": "Tracker-only payload changes no production code, functions, or behavior tests.",
+      "evidence": [
+        "Agent Mail 3564: corrected verdict not_applicable for one-function-one-test on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "Narrowed tracker close is hash-bound, whitespace-clean, cycle-clean, public skill metadata validates, and repo tests pass.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for definition-of-done on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "Both staged tracker rows carry durable close evidence; license metadata evidence is independently supported by current files and validation output.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for evidence-log on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "Corrected two-row tracker payload is scoped to license metadata close plus explicitly disclosed A25 dirty tracker row; broad 29-row failure is gone.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for scope-control on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "ScarletMarsh",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "ScarletMarsh",
+      "verdict": "pass",
+      "message": "Staged payload is a .beads/issues.jsonl tracker export only, with no staged source/script/hook/delete/reset/force-push/external mutation instruction.",
+      "evidence": [
+        "Agent Mail 3564: corrected verdict pass for destructive-operations on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "Tracker provenance/accounting is acceptable after narrowing: only intended license close and explicitly carried A25 close row differ; graph cycles remain clean.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for data-integrity on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "No unverified security-reporting tracker closure remains staged; public MIT metadata surfaces validate and no auth/secrets/permissions/API behavior changes are staged.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for security-boundaries on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "ScarletMarsh",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "ScarletMarsh",
+      "verdict": "not_applicable",
+      "message": "Tracker JSONL only; no UI, TUI, demo rendering, CSS, screenshots, SVG output, or visual surface.",
+      "evidence": [
+        "Agent Mail 3564: corrected verdict not_applicable for visual-regression on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "ScarletMarsh",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "ScarletMarsh",
+      "verdict": "not_applicable",
+      "message": "Tracker JSONL only; no runtime code, algorithms, command behavior, package size, CI workload, or hot-path performance changes.",
+      "evidence": [
+        "Agent Mail 3564: corrected verdict not_applicable for performance-budget on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "model": "BrightOwl",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-04T00:15:08.964955942Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "BrightOwl",
+      "verdict": "pass",
+      "message": "Superseding packet explicitly discloses A25 tracker row and narrows away unauthorized bulk sync; staged close stays within stated gate authority.",
+      "evidence": [
+        "Agent Mail 3565: corrected verdict pass for autonomy-boundary on staged payload hash sha256:350682df155ad39b6f070516064450496b0792e3cf260f6db0e24369c41ff65f.",
+        "Corrected staged-vs-HEAD row diff contains exactly project-readiness-kit-5kg7 and project-readiness-kit-osl-license-metadata-flt.",
+        "Local checks: git diff --check -- .beads/issues.jsonl passed; br dep cycles --json returned no cycles; jsm validate skill/burpvalve --json passed; go test ./... passed before mechanical narrowing with no source changes after."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-04T00:15:08.964955942Z"
+    }
+  ]
+}

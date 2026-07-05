@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:2fe639451c17f25b7744d2469ba8ed80327be12a88242fc8fb517137555d4614",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "f717fee4828f0d5581a7c616338f1944bcfebf0e",
+  "created_at": "2026-07-02T03:56:39.570621067Z",
+  "feature": {
+    "id": "project-readiness-kit-land-04-planning-round-docs-f7b",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-04-planning-round-docs-f7b",
+    "diff_cluster": "explicit:project-readiness-kit-land-04-planning-round-docs-f7b"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is exactly the land-04 planning-round documentation unit: the binding 2026-07-02 D1-D12 decision record, the reviewed plan documents, the plans index, and the single docs index line for the new decision record. Later source, release, Beads, and unrelated documentation-refresh changes remain unstaged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior lint-rules pass still holds. The delta touched only the decisions doc and orchestrator-experience plan; no lint-command or lintconfig surface changed, and the staged payload remains docs/plans only with a clean staged whitespace check.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e 11 staged docs/plans paths only; no source, config, or hook files added in the delta.",
+        "git diff --cached --stat -\u003e 11 files changed, 2203 insertions(+), matching the delta packet's refreshed staged payload.",
+        "git diff --cached --check -\u003e no output."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior DRY pass still holds. The delta rewrites text in two docs; inspected arrow-related sections show no duplicated implementation logic or divergent repeated procedure introduced by the refresh.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e delta remains inside docs/decisions-2026-07-02-review-round.md and plans/orchestrator-experience.md plus the same planned docs set.",
+        "git show :docs/decisions-2026-07-02-review-round.md | sed -n '138,145p' -\u003e D10 is a single ordered prose workflow, not duplicated chains.",
+        "git show :plans/orchestrator-experience.md | sed -n '110,146p' -\u003e option text and migration discussion use prose plus symlink notation; no duplicate code or command logic."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Delta refresh fixes my prior anti-reward-hacking failure. The D10 instructional bare-arrow workflow chain is gone; remaining arrows are the allowed quoted hazard example in D4 and symlink notation in the orchestrator plan.",
+      "evidence": [
+        "git show :docs/decisions-2026-07-02-review-round.md | sed -n '138,145p' -\u003e D10 now says 'The standing workflow, in order: first discuss; then write detailed Markdown plans...; then convert...; only then assign work to agents.' No '-\u003e' chain remains.",
+        "git show :docs/decisions-2026-07-02-review-round.md | rg -n -- '-\u003e|workflow|arrow|redirection' -\u003e arrow occurrences are D4 quoted hazard example/rule lines 43-50 plus non-arrow D10 prose hit at line 142.",
+        "git show :plans/orchestrator-experience.md | rg -n -- '-\u003e|symlink|truth table|convert|orchestrator-mode' -\u003e remaining '-\u003e' occurrences are 'CLAUDE.md -\u003e AGENTS.md' symlink notation on lines 114 and 123; truth-table text uses prose, not arrows."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The refreshed staged land-04 payload remains planning/docs/index material only and contains no executable function or behavior implementation requiring nearby function-level test coverage under this condition.",
+      "evidence": [
+        "Delta `git diff --cached --name-status` still showed only docs and plans paths: docs/README.md, docs/decisions-2026-07-02-review-round.md, plans/README.md, and eight plans/*.md files.",
+        "Delta `git diff --cached --stat` showed 11 Markdown docs/plans files and 2203 insertions, with no Go/source/runtime files staged.",
+        "Prior independent `go test ./...` passed before this docs-only delta; the delta touched only staged Markdown files."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior definition-of-done pass still holds. The delta does not weaken acceptance gates; D10 now states the planning workflow as ordered prose and the orchestrator plan still preserves review/deferred-bead boundaries.",
+      "evidence": [
+        "git show :docs/decisions-2026-07-02-review-round.md | sed -n '138,145p' -\u003e D10 states: discuss, write Markdown plans, convert to detailed beads, then assign work.",
+        "git show :plans/orchestrator-experience.md | rg -n -- 'truth table|orchestrator-mode|convert' -\u003e migration truth-table work remains explicitly deferred/identified, not silently declared done.",
+        "git diff --cached --check -\u003e no output."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior evidence-log pass still holds. The delta resolves the anti-reward-hacking wording defect without weakening evidence requirements or verifier independence.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e only docs/plans staged; no evidence tooling behavior changed in the delta.",
+        "git show :docs/decisions-2026-07-02-review-round.md | rg -n -- 'workflow|arrow|redirection' -\u003e D4 preserves the quoted hazardous example and rule against bare arrow chains; D10 reference remains prose.",
+        "git diff --cached --check -\u003e no output."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior scope-control pass still holds. Delta packet scoped the refresh to two staged docs, and the current staged payload remains the same 11 docs/plans files with no excluded staged paths observed.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e docs/README.md, docs/decisions-2026-07-02-review-round.md, plans/README.md, and eight added plan files only.",
+        "git diff --cached --stat -\u003e 11 files changed, 2203 insertions(+).",
+        "git diff --cached --check -\u003e no output."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior destructive-operations pass still holds. The only shell-sensitive delta was the arrow-chain fix; the remaining arrow chain in D4 is quoted as a hazard example, while D10 no longer contains a pasteable redirection chain.",
+      "evidence": [
+        "git show :docs/decisions-2026-07-02-review-round.md | rg -n -- '-\u003e|workflow|arrow|redirection' -\u003e remaining arrows are in D4 quoted hazard example and D4 rule; D10 has no arrow chain.",
+        "git show :docs/decisions-2026-07-02-review-round.md | sed -n '40,52p' -\u003e D4 explicitly explains the shell redirection hazard and says bare arrow chains are a defect.",
+        "git show :docs/decisions-2026-07-02-review-round.md | sed -n '138,145p' -\u003e D10 workflow is ordered prose."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The refreshed staged payload still creates durable decision and plan records and indexes them coherently; the two-file delta is staged, whitespace-clean, and does not introduce secret-like data patterns.",
+      "evidence": [
+        "`git show :docs/decisions-2026-07-02-review-round.md | rg -n \"D1|D2|D3|D4|D5|D6|D7|D8|D9|D10|D11|D12\"` found all staged decision headings D1-D12 after the delta.",
+        "`git show :plans/README.md | rg -n \"orchestration-goal-prompt|orchestrator-experience|land-working-set|release-v0.1.2|issue-17-guided-lint-setup|verifier-orchestration|bead-closure-mode|open-source-launch\"` still found every staged plan indexed.",
+        "`git diff --cached --check` produced no output after the delta.",
+        "Staged-blob scan over `git diff --cached --name-only -- docs plans` found no `BEGIN PRIVATE`, AWS secret, token assignment, password, or api-key pattern."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prior security-boundaries pass still holds. The delta is documentation-only, does not introduce secret-like staged paths, and the remaining arrows are documentation examples/symlink notation rather than executable security-sensitive instructions.",
+      "evidence": [
+        "git diff --cached --name-only | rg -n -- '(^|/)(\\.env|id_rsa|id_dsa|id_ed25519|secret|secrets|credential|credentials|token|tokens|key|keys)(\\.|/|$)' -\u003e no output (rg exit 1, no matching staged path).",
+        "git diff --cached --name-status -\u003e only docs/ and plans/ paths staged.",
+        "git show :plans/orchestrator-experience.md | rg -n -- '-\u003e|symlink|truth table|convert|orchestrator-mode' -\u003e remaining arrows are symlink notation only in the refreshed plan."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The refreshed staged payload still has no UI, browser, layout, screenshot, canvas, or visual-diff governed surface.",
+      "evidence": [
+        "Delta `git diff --cached --name-status` listed only Markdown docs/plans changes and no frontend/UI/assets files.",
+        "The delta packet said only `docs/decisions-2026-07-02-review-round.md` and `plans/orchestrator-experience.md` were restaged; inspection confirmed remaining changes are Markdown text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The refreshed staged payload remains docs-only and introduces no runtime path, benchmarked behavior, bundle, memory, token, cost, throughput, or latency surface governed by the performance-budget condition.",
+      "evidence": [
+        "Delta `git diff --cached --stat` showed 11 Markdown docs/plans files and no source/runtime files staged.",
+        "The only delta-restaged files were `docs/decisions-2026-07-02-review-round.md` and `plans/orchestrator-experience.md`, both Markdown planning/decision docs."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:56:39.570621067Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The refreshed staged autonomy-policy surface still states independent-work boundaries, owner veto model, hard exceptions, and escalation points clearly rather than granting unbounded autonomy.",
+      "evidence": [
+        "`git show :docs/decisions-2026-07-02-review-round.md | rg -n \"D11|Hard exceptions|irreversible|outward-facing\"` showed D11 and hard exceptions remain in the staged decision doc after the delta.",
+        "`git show :plans/orchestration-goal-prompt.md | rg -n \"owner vetoes|Hard exceptions|irreversible|outward-facing|No fabricated evidence|never authorize|bypass|Immediate escalation\"` showed owner veto after the fact, hard exceptions, no fabricated evidence, never authorizing no-verify/hook bypass/evidence fabrication, and escalation triggers still hold.",
+        "`git show :plans/README.md | rg -n \"orchestration-goal-prompt|orchestrator-experience\"` still shows the autonomy/orchestrator plans indexed rather than hidden in chat."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:56:39.570621067Z"
+    }
+  ]
+}

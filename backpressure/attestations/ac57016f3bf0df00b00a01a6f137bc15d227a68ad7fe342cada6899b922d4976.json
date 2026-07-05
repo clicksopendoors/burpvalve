@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:ac57016f3bf0df00b00a01a6f137bc15d227a68ad7fe342cada6899b922d4976",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "WhiteGorge",
+    "model": "gpt-5-codex"
+  },
+  "git_head_before_commit": "e605cd821cc2ae4a9dc49524180f23e8c3d8f4c6",
+  "created_at": "2026-07-03T16:19:01.621147436Z",
+  "feature": {
+    "id": "project-readiness-kit-osl-license-packaging-dyo",
+    "kind": "feature",
+    "name": "project-readiness-kit-osl-license-packaging-dyo",
+    "source_bead": "project-readiness-kit-osl-license-packaging-dyo",
+    "bead_ids": [
+      "project-readiness-kit-osl-license-packaging-dyo"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-osl-license-packaging-dyo"
+  },
+  "bead_ids": [
+    "project-readiness-kit-osl-license-packaging-dyo"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload adds the MIT project license, third-party notices for the shipped binary dependency graph, and deterministic package validation/copying for those license files."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "pass",
+      "message": "Mechanical verifier passed lint-rules: staged package validation and full Go tests passed.",
+      "evidence": [
+        "Agent Mail 3194: git diff --cached --check exited 0 with no output.",
+        "Agent Mail 3194: scripts/package-skill_test.sh passed with package-skill license validation passed.",
+        "Agent Mail 3194: go test ./... passed across all packages, including cmd/burpvalve 77.192s and internal/scaffold 5.081s."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5-high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3195",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "High verifier passed dry: staged hash and paths match the packet with no extra staged files.",
+      "evidence": [
+        "Agent Mail 3195: go run ./cmd/burpvalve hash --staged --json matched sha256:ac57016f3bf0df00b00a01a6f137bc15d227a68ad7fe342cada6899b922d4976 and included exactly LICENSE, THIRD_PARTY_NOTICES.md, scripts/package-skill.sh, scripts/package-skill_test.sh.",
+        "Agent Mail 3195: git diff --cached --name-only checked against expected paths produced no extra paths.",
+        "Agent Mail 3195: git diff --cached --check exited 0 with no output."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5-high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3195",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "High verifier passed anti-reward-hacking: package behavior and validation prove archive inclusion and graph coverage rather than superficial repo-only files.",
+      "evidence": [
+        "Agent Mail 3195: git show :scripts/package-skill.sh found package script copies LICENSE and THIRD_PARTY_NOTICES.md into package_root before archive creation.",
+        "Agent Mail 3195: git show :scripts/package-skill_test.sh found validation for archive paths, yaml NOTICE text, go list -deps coverage, and missing dependency failure text.",
+        "Agent Mail 3195: temp HEAD plus staged patch verification ran scripts/package-skill_test.sh and go test ./..., both passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "pass",
+      "message": "Mechanical verifier passed one-function-one-test: package script changes have direct package validation coverage.",
+      "evidence": [
+        "Agent Mail 3194: staged scripts/package-skill.sh copies LICENSE and THIRD_PARTY_NOTICES.md into the package root when present.",
+        "Agent Mail 3194: staged scripts/package-skill_test.sh validates the archive contains burpvalve/LICENSE, burpvalve/THIRD_PARTY_NOTICES.md, burpvalve/VERSION, and burpvalve/scripts/bin/burpvalve.",
+        "Agent Mail 3194: the same test checks MIT License, yaml upstream NOTICE text, and that every non-standard go list -deps binary module appears in THIRD_PARTY_NOTICES.md; scripts/package-skill_test.sh passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5-high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3195",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "High verifier passed definition-of-done: bead acceptance for license, notices, binary graph coverage, yaml NOTICE, and archive inclusion is met.",
+      "evidence": [
+        "Agent Mail 3195: br show project-readiness-kit-osl-license-packaging-dyo --json showed acceptance requiring root LICENSE, third-party bundle covering shipped binary graph, yaml.v3 NOTICE content, archive extraction containing LICENSE/notices, deterministic package script handling, and no artifact license claim without contained license.",
+        "Agent Mail 3195: git show :LICENSE found MIT License, 2026 Burpvalve contributors copyright, permission grant, and warranty disclaimer.",
+        "Agent Mail 3195: go list -deps module/version rows compared against THIRD_PARTY_NOTICES.md dependency table produced empty diff after excluding local burpvalve module.",
+        "Agent Mail 3195: git show :THIRD_PARTY_NOTICES.md found yaml.v3 v3.0.1, Canonical NOTICE, cobra Apache-2.0, pflag BSD-3-Clause, and x/sys BSD-3-Clause entries; package validation and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "pass",
+      "message": "Mechanical verifier passed evidence-log: packet and response file identify the hash, paths, summary, and independent verification evidence.",
+      "evidence": [
+        "Agent Mail 3194: Agent Mail 3193 names feature, staged hash, response file log/backpressure/responses/ac57016f3bf0df00b00a01a6f137bc15d227a68ad7fe342cada6899b922d4976.json, and four staged paths.",
+        "Agent Mail 3194: verifier independently reproduced the staged hash, inspected the staged diff, ran scripts/package-skill_test.sh, and ran go test ./...."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5-high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3195",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "High verifier passed scope-control: staged payload is limited to license/notices/package validation files and contains no launch-scope expansion.",
+      "evidence": [
+        "Agent Mail 3195: git diff --cached --stat showed staged payload is four files: LICENSE, THIRD_PARTY_NOTICES.md, scripts/package-skill.sh, scripts/package-skill_test.sh; 367 insertions.",
+        "Agent Mail 3195: git diff --cached --name-status showed only A LICENSE, A THIRD_PARTY_NOTICES.md, M scripts/package-skill.sh, A scripts/package-skill_test.sh.",
+        "Agent Mail 3195: br show bead scope is license files/notices and release archive packaging; staged payload contains no feature code, visibility flip, go-install docs, Windows support claim, release metadata, or community-policy edits."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "pass",
+      "message": "Mechanical verifier passed destructive-operations: staged scripts do not add destructive repo or external operations.",
+      "evidence": [
+        "Agent Mail 3194: inspected staged scripts/package-skill.sh; it adds a loop copying LICENSE and THIRD_PARTY_NOTICES.md from repo root into a temporary package root if present and does not add destructive operations.",
+        "Agent Mail 3194: inspected staged scripts/package-skill_test.sh; it creates a temporary directory, packages/extracts the archive, validates contents, and removes only its own temp directory via trap cleanup.",
+        "Agent Mail 3194: no staged command deletes repo files, rewrites history, changes visibility, or touches release assets remotely."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "pass",
+      "message": "Mechanical verifier passed data-integrity: staged hash, paths, license text, and notice content are consistent.",
+      "evidence": [
+        "Agent Mail 3194: go run ./cmd/burpvalve hash --staged --json produced sha256:ac57016f3bf0df00b00a01a6f137bc15d227a68ad7fe342cada6899b922d4976 with included paths exactly LICENSE, THIRD_PARTY_NOTICES.md, scripts/package-skill.sh, and scripts/package-skill_test.sh.",
+        "Agent Mail 3194: git diff --cached --name-status showed exactly A LICENSE, A THIRD_PARTY_NOTICES.md, M scripts/package-skill.sh, A scripts/package-skill_test.sh.",
+        "Agent Mail 3194: git show :LICENSE begins with MIT License and Burpvalve contributors copyright.",
+        "Agent Mail 3194: git show :THIRD_PARTY_NOTICES.md grep confirmed Binary Dependency Graph, cobra, BSD deps, yaml.v3, Apache License text, and yaml upstream Canonical NOTICE text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5-high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3195",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "High verifier passed security-boundaries: staged packaging change remains local and introduces no credential, publication, or visibility surfaces.",
+      "evidence": [
+        "Agent Mail 3195: git show :scripts/package-skill.sh showed existing package build flow remains local build plus tar archive; staged change only copies LICENSE and THIRD_PARTY_NOTICES.md into package_root when present before tar creation.",
+        "Agent Mail 3195: git show :scripts/package-skill_test.sh uses mktemp, package-skill.sh, tar listing/extraction, grep, and go list; no network, credential, publication, chmod beyond existing binary packaging, or destructive repo operation is introduced.",
+        "Agent Mail 3195: staged diff over the four paths contained no token/secret handling, external upload/publish command, or repo visibility operation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "not_applicable",
+      "message": "Mechanical verifier marked visual-regression not applicable: no visual/UI/browser-rendered surface is staged.",
+      "evidence": [
+        "Agent Mail 3194: git diff --cached --name-status and git diff --cached --stat showed the payload is license text, third-party notices, and packaging shell scripts only."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5-medium",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3194",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-medium",
+      "verdict": "not_applicable",
+      "message": "Mechanical verifier marked performance-budget not applicable: no performance-governed runtime path or benchmark-sensitive code is staged.",
+      "evidence": [
+        "Agent Mail 3194: packaging script adds two conditional file copies and the validation script is test-only.",
+        "Agent Mail 3194: go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5-high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail message 3195",
+        "created_at": "2026-07-03T16:15:00Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "High verifier passed autonomy-boundary: owner decisions and closed dependencies authorize launch-prep license packaging only.",
+      "evidence": [
+        "Agent Mail 3195: br show bead showed dependencies osl-dependency-license-review-hfc and osl-decide-license-dv7 are closed; bead is launch-prep packaging only and explicitly forbids flipping visibility first or doing feature work.",
+        "Agent Mail 3195: git diff --cached --name-status showed staged payload limited to license/notices/package validation files; no GitHub visibility, release creation, push, external publication, or feature implementation paths staged.",
+        "Agent Mail 3195: temp HEAD plus staged patch scripts/package-skill_test.sh built and inspected a local temp archive only, with no publication or external-state change."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T16:19:01.621147436Z"
+    }
+  ]
+}

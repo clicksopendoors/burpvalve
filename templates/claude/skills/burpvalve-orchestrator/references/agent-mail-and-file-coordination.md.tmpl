@@ -1,0 +1,37 @@
+# Agent Mail And File Coordination
+
+Use Agent Mail for durable coordination and file reservations.
+
+## File Reservations
+
+Reserve exact paths or narrow globs before editing. Use the work-unit id as the
+reason; when the repo is Beads-backed, that is usually the bead id. Release
+reservations after commit, abort, or handoff.
+
+Reserve `GATE-WINDOW` only when the payload is ready to stage, verify, and gate.
+Before acquiring it, confirm `git diff --cached --quiet`.
+
+## Messages
+
+Use mail for durable context: claim notices, verifier packets, blocker reports,
+handoffs, and completion summaries. Agent Mail delivery does not wake a pane.
+After mailing an urgent packet, send a terminal wake to the target pane.
+
+## Contact Mesh Pre-Approval
+
+Immediately after Agent Mail registration, open or pre-approve the contact mesh
+the session is expected to use:
+
+- workers to orchestrator for reports, blockers, and completion summaries;
+- implementer to verifiers and verifiers to implementer when packet relay or
+  clarification is part of the gate;
+- verifiers to orchestrator for disagreements, blockers, and final references.
+
+Use `set_contact_policy open` or the repo's equivalent contact-policy macro
+when broad session contact is intended. Finished work must never sit
+undelivered behind predictable pending contact approval.
+
+## Handoffs
+
+A good handoff names commit hash, pushed state, attestation path, released
+reservations, remaining queue order, and the exact next owner to wake.

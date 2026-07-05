@@ -1,0 +1,175 @@
+# Orchestrator Operating Notes
+
+This file is for the agent coordinating work across other agents. It is not the
+coder contract and it does not restate the commit gate. Treat `AGENTS.md` as the
+source of truth for project rules, especially its Backpressure, Definition Of
+Done, Atomic Work And Commits, and File Coordination sections.
+
+## Mission Pattern
+
+Keep the project moving by turning accepted plans into small owned work items,
+watching the shared queue, and clearing coordination blockers. Prefer explicit
+handoffs over silent assumptions. When priorities conflict, preserve the
+smallest reversible state and ask for the narrowest human ruling that unblocks
+the graph.
+
+## Claude Route Relationship
+
+Claude can enter a Burpvalve repo through two explicit routes:
+
+- ordinary-agent route: `CLAUDE.md` points to `AGENTS.md`, so Claude follows the
+  same coding-agent contract as every other implementer;
+- orchestrator-skill route: `.claude/skills/burpvalve-orchestrator/SKILL.md` provides
+  coordinator procedure, with this file acting as repo-local sidecar notes when
+  present.
+
+When both the skill and this file exist, the skill is the procedural entry
+point for Claude orchestration. This file records project-specific operating
+preferences and links back to the canonical contract instead of replacing it.
+
+## Role Split
+
+- When the orchestrator route is active and worker agents are available, the
+  orchestrator coordinates only. It does not implement, edit docs, run verifier
+  feature-condition cells, or execute commit-gate payload work itself.
+- Orchestrator scope is triage, owner-decision capture, work routing, review,
+  gate-window operation, evidence and decision recording, Agent Mail
+  coordination, and pane wake discipline.
+- Workers are the implementers and checkers. Dispatch payload work and verifier
+  cells to worker agents, then preserve their actual evidence and provenance.
+
+## Model And Effort Tiering
+
+- Reasoning effort follows cell or task type, not the agent's role title, and
+  is chosen deliberately at spawn time instead of being left to runtime
+  defaults.
+- Use `xhigh` for an implementer on the serial critical path. Use `high` for
+  judgment-cell verifiers: `dry`, `anti-reward-hacking`, `scope-control`,
+  `security-boundaries`, and `definition-of-done`. Use `medium` for
+  mechanical-cell verifiers and lookup or inventory work.
+- Rationale from dogfooding C13: verifier effort burns the shared account
+  window the implementer needs, and observed verifier value-add concentrates
+  in judgment cells rather than mechanical cells.
+- Record each pane's model and effort in dispatch notes. Adjust a running pane
+  only between rounds, never mid-verification; for long mechanical phases,
+  respawn at the right tier instead of paying `xhigh` for lookups.
+
+## Conduct Rules
+
+- When git committing, never add co-authorship for Codex or Claude (no Co-Authored-By trailers for AI tools). Author is clicksopendoors only.
+- Never estimate or reference development time or timelines. Describe scope, sequencing, and blockers instead.
+
+## Tick Loop
+
+1. Inspect the tracker and current worktree state.
+1. Identify ready work, active reservations, and blocked handoffs.
+1. Assign or claim one atomic unit with a clear owner.
+1. Ensure file reservations and Agent Mail threads match the unit.
+1. Watch verifier, gate-window, and push handoffs until the unit is either
+   landed or explicitly blocked.
+1. Record durable decisions in the project docs or logs named by `AGENTS.md`.
+
+## Agent Mail Registration
+
+- Every sub-agent the orchestrator spawns or wakes, including NTM panes and
+  runtime-specific workers, must register with Agent Mail before starting
+  work. Use `ensure_project` plus `register_agent`, or `macro_start_session`,
+  with the repo's absolute path as the project key and with program, model, and
+  assigned work-unit or track in the task description.
+- Include this registration instruction in every dispatch brief and terminal
+  wake. A pane or worker that has not registered is not considered dispatched.
+- Registered identities are the audit reference for findings, verifier
+  verdicts, file reservations, and adjudications. Workers must report their
+  Agent Mail identity in completion messages so the orchestrator can record it
+  with the evidence.
+
+## Contact Mesh
+
+- Immediately after registering with Agent Mail, pre-approve the expected
+  communication mesh. At minimum, workers must be able to reach the
+  orchestrator; when verifier packets will be relayed, implementers and
+  verifiers must be able to message each other.
+- Use an open contact policy or an equivalent contact-policy macro for the
+  session's expected participants. Do this before dispatching work, not after a
+  finished report stalls behind pending approval.
+- Finished work must never sit undelivered because a predictable Agent Mail
+  contact request was left pending. Contact approval is coordination plumbing;
+  it is not verifier evidence.
+
+## Throughput
+
+- Monitor HEAD advancement, queue transitions, and dependency closures. Do not
+  leave ready agents parked after the commit they were waiting on lands.
+- Include the current queue order in every release wake and handoff message so
+  the next owner knows who follows them.
+- Treat a release wake as authorization for the next queued owner to take the
+  window after a step-zero index check. If the pane ahead is silent for a full
+  coordination tick after release, the next ready pane may self-promote
+  according to the recorded queue.
+- Use verify-early, gate-fast choreography in shared queues: send verifier
+  packets at park time, bind them to the staged-payload hash, and keep
+  `GATE-WINDOW` free while verdicts are pending.
+- Hold `GATE-WINDOW` only for mechanics: confirm the index is empty, stage the
+  payload, confirm the hash matches verified evidence, run the gate, commit,
+  push once when required, close, release, and wake.
+- If the staged hash changes when the turn arrives, send a superseding packet
+  instead of forcing stale evidence through the gate.
+
+## Monitoring Discipline
+
+- Never treat a pane tail or a single grep hit as completion evidence.
+- A pane is live while the runtime `Working (` marker is present. Treat it as
+  idle only after that marker is absent on two consecutive polls.
+- Completion is proven by the expected artifact: findings file, verifier
+  responses file, Agent Mail inbox or message, commit, or HEAD state named in
+  the handoff. The pane tail is not the completion signal.
+- Pollers must terminate loudly with a recorded result on completion, stall, or
+  timeout; they must not spin silently or leave the orchestrator idle.
+
+## Audit And Rollback Duties
+
+- Confirm each landed unit has a matching tracker item, commit, and evidence
+  trail.
+- If a gate, verifier, or human audit rejects a unit, preserve the failing
+  evidence and coordinate the smallest corrective follow-up.
+- Do not rewrite another agent's work unless the human explicitly authorizes
+  it. Prefer a new corrective unit when history is already published.
+- Before risky recovery, inspect the repository state and active reservations.
+
+{{if .Dogfood}}## Dogfood Findings
+
+Log every issue, complication, and workflow friction that appears while using
+this project. Use `docs/dogfooding-findings-YYYY-MM.md` unless the repo names a
+different findings log.
+
+Each entry should be numbered and reviewable:
+
+1. Title, context, and date.
+1. Why it matters.
+1. How-to-apply or proposed follow-up.
+
+Keep the entry factual. Record what happened, the evidence path or command when
+available, and the smallest next action. Do not treat the finding itself as
+approval to change scope, publish, rewrite history, or bypass the gate.
+
+{{end}}
+## Coordination Boundaries
+
+- Agent Mail is the durable coordination channel for ownership, handoffs, and
+  verifier replies.
+- NTM is useful for waking panes, reading live state, and running small
+  coordination swarms. It is not a substitute for the evidence rules in
+  `AGENTS.md`.
+- Beads describe work ownership and dependencies. Use the tracker graph to
+  avoid inventing duplicate work.
+- When Burpvalve asks for verifier evidence, preserve each verifier's actual
+  finding and provenance. Authorization to ask for verification is not itself
+  evidence.
+
+## Source Of Truth Links
+
+- Agent contract: `AGENTS.md`
+- Gate rules: `AGENTS.md#backpressure`
+- Completion contract: `AGENTS.md#definition-of-done`
+- Atomic commits: `AGENTS.md#atomic-work-and-commits`
+- Coordination rules: `AGENTS.md#file-coordination`

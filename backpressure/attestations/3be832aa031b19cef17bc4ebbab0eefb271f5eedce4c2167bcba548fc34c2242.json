@@ -1,0 +1,405 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5-medium"
+  },
+  "git_head_before_commit": "6066575abec9503bad4a64f45dfc7aebde09b5fb",
+  "created_at": "2026-07-03T19:07:22.565628168Z",
+  "feature": {
+    "id": "project-readiness-kit-cos-cli-tui-robot-route-3au3",
+    "kind": "feature",
+    "name": "project-readiness-kit-cos-cli-tui-robot-route-3au3",
+    "diff_cluster": "explicit:project-readiness-kit-cos-cli-tui-robot-route-3au3"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is one COS Unit 4 change: route choice exposed through CLI/TUI/robot/setup JSON surfaces, result contract docs, and regression tests; v2 adds only the verifier-caught robot-help documentation/test fix."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3326 with full-test addendum 3327",
+        "evidence_ref": "Agent Mail 3326",
+        "created_at": "2026-07-03T19:05:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the mechanical/data/TUI/performance/scope-adjacent surface for v2 hash 3be832 and found it passing.",
+      "evidence": [
+        "ScarletMarsh message 3326: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and path list, including cmd/burpvalve/help_test.go.",
+        "ScarletMarsh message 3326: git diff --cached --check had no output; focused cmd/charmui/scaffold route suites passed.",
+        "ScarletMarsh message 3326: direct robot help probes showed claude_route, repair adopt_claude_md, claude_route_source, and created/repaired/skipped/conflicts output docs.",
+        "ScarletMarsh message 3327: go test ./... passed for v2."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3326 with full-test addendum 3327",
+        "evidence_ref": "Agent Mail 3326",
+        "created_at": "2026-07-03T19:05:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the mechanical/data/TUI/performance/scope-adjacent surface for v2 hash 3be832 and found it passing.",
+      "evidence": [
+        "ScarletMarsh message 3326: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and path list, including cmd/burpvalve/help_test.go.",
+        "ScarletMarsh message 3326: git diff --cached --check had no output; focused cmd/charmui/scaffold route suites passed.",
+        "ScarletMarsh message 3326: direct robot help probes showed claude_route, repair adopt_claude_md, claude_route_source, and created/repaired/skipped/conflicts output docs.",
+        "ScarletMarsh message 3327: go test ./... passed for v2."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3326 with full-test addendum 3327",
+        "evidence_ref": "Agent Mail 3326",
+        "created_at": "2026-07-03T19:05:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the mechanical/data/TUI/performance/scope-adjacent surface for v2 hash 3be832 and found it passing.",
+      "evidence": [
+        "ScarletMarsh message 3326: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and path list, including cmd/burpvalve/help_test.go.",
+        "ScarletMarsh message 3326: git diff --cached --check had no output; focused cmd/charmui/scaffold route suites passed.",
+        "ScarletMarsh message 3326: direct robot help probes showed claude_route, repair adopt_claude_md, claude_route_source, and created/repaired/skipped/conflicts output docs.",
+        "ScarletMarsh message 3327: go test ./... passed for v2."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3326 with full-test addendum 3327",
+        "evidence_ref": "Agent Mail 3326",
+        "created_at": "2026-07-03T19:05:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the mechanical/data/TUI/performance/scope-adjacent surface for v2 hash 3be832 and found it passing.",
+      "evidence": [
+        "ScarletMarsh message 3326: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and path list, including cmd/burpvalve/help_test.go.",
+        "ScarletMarsh message 3326: git diff --cached --check had no output; focused cmd/charmui/scaffold route suites passed.",
+        "ScarletMarsh message 3326: direct robot help probes showed claude_route, repair adopt_claude_md, claude_route_source, and created/repaired/skipped/conflicts output docs.",
+        "ScarletMarsh message 3327: go test ./... passed for v2."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3326 with full-test addendum 3327",
+        "evidence_ref": "Agent Mail 3326",
+        "created_at": "2026-07-03T19:05:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the mechanical/data/TUI/performance/scope-adjacent surface for v2 hash 3be832 and found it passing.",
+      "evidence": [
+        "ScarletMarsh message 3326: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and path list, including cmd/burpvalve/help_test.go.",
+        "ScarletMarsh message 3326: git diff --cached --check had no output; focused cmd/charmui/scaffold route suites passed.",
+        "ScarletMarsh message 3326: direct robot help probes showed claude_route, repair adopt_claude_md, claude_route_source, and created/repaired/skipped/conflicts output docs.",
+        "ScarletMarsh message 3327: go test ./... passed for v2."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3326 with full-test addendum 3327",
+        "evidence_ref": "Agent Mail 3326",
+        "created_at": "2026-07-03T19:05:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the mechanical/data/TUI/performance/scope-adjacent surface for v2 hash 3be832 and found it passing.",
+      "evidence": [
+        "ScarletMarsh message 3326: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and path list, including cmd/burpvalve/help_test.go.",
+        "ScarletMarsh message 3326: git diff --cached --check had no output; focused cmd/charmui/scaffold route suites passed.",
+        "ScarletMarsh message 3326: direct robot help probes showed claude_route, repair adopt_claude_md, claude_route_source, and created/repaired/skipped/conflicts output docs.",
+        "ScarletMarsh message 3327: go test ./... passed for v2."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 3328; initial failure in 3322 fixed by v2",
+        "evidence_ref": "Agent Mail 3328",
+        "created_at": "2026-07-03T19:06:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "BrightOwl verified the judgment surface for v2 hash 3be832 and found it passing after the robot-help fix.",
+      "evidence": [
+        "BrightOwl message 3328: robot init help now documents claude_route and route output/source fields; robot repair help now documents claude_route, adopt_claude_md, and route output/source fields.",
+        "BrightOwl message 3328: help_test.go adds regression tests for init/repair robot-help route and adoption fields.",
+        "BrightOwl message 3328: hash --staged matched sha256:3be832aa031b19cef17bc4ebbab0eefb271f5eedce4c2167bcba548fc34c2242 and exactly nine packet paths; git diff --cached --check exited 0.",
+        "BrightOwl message 3328: focused cmd/charmui/scaffold suites and go test ./... -count=1 passed in a clean staged-copy checkout."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:07:22.565628168Z"
+    }
+  ]
+}

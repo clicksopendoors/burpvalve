@@ -1,0 +1,28 @@
+# Beads And Gate Window Operations
+
+Beads hold the tracker graph for Beads-backed work units. Git holds committed
+evidence. Agent Mail coordinates who may touch which files.
+
+## Bead Rules
+
+- Claim with `br update <id> --status in_progress`.
+- Close only when the commit, attestation, and verification refs exist.
+- Run `br sync --flush-only` after bead changes.
+- Do not use bead closure as a substitute for source verification.
+- Use work unit for generic delivery prose; use bead only for Beads/br tracker
+  issues, bead ids, `.beads/`, or Beads-specific closure behavior.
+
+## Gate Window Rules
+
+- One staged source payload at a time.
+- Confirm the index is empty before staging.
+- Do not stage over another agent's payload.
+- If a stale reservation blocks a ready turn, ask for owner or human ruling.
+- Release the window immediately after commit, abort, or unstage.
+- Include the current queue order in every release wake and handoff message.
+- A release wake authorizes the next queued owner to take the window after a
+  step-zero index check. If the pane ahead is silent for a full coordination
+  tick after release, the next ready pane may self-promote according to the
+  recorded queue.
+- Verifier packets should usually go out at park time. The window should be
+  held only for mechanics once hash-bound evidence is ready.

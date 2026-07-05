@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:ff344b4cbec33ea1d77fab3e768f4eae322123c1d8e5f042ad18882ef5f5815d",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "LilacGlacier",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "e01037d7bc100a61a1226731f230ec5b03e64d5f",
+  "created_at": "2026-07-02T21:58:52.880076263Z",
+  "feature": {
+    "id": "project-readiness-kit-oxp-prompt-bank-content-f6l",
+    "kind": "feature",
+    "name": "project-readiness-kit-oxp-prompt-bank-content-f6l",
+    "diff_cluster": "explicit:project-readiness-kit-oxp-prompt-bank-content-f6l"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload implements only the OXP canonical prompt-bank content for project-readiness-kit-oxp-prompt-bank-content-f6l."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged prompt-bank content slice is diff-clean, gofmt-clean, and passes focused plus full Go tests in an isolated staged-slice worktree.",
+      "evidence": [
+        "git diff --cached --check produced no output for the staged prompt-bank slice.",
+        "gofmt -l on cmd/burpvalve/prompts_test.go, internal/backpressure/prompt_bank.go, and internal/backpressure/prompt_bank_test.go printed no files; focused prompt tests and go test ./... passed in an isolated worktree."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prompt content is centralized in the prompt bank and does not duplicate large workflow dumps.",
+      "evidence": [
+        "Staged internal/backpressure/prompt_bank.go contains one promptBank slice with PromptDefinition entries and short bodies.",
+        "Searches for required prompt names and bootstrap terms found the content in the prompt bank, while CLI test changes only assert command behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The verifier prompts reinforce evidence and packet binding instead of self-certification.",
+      "evidence": [
+        "Staged verifier-bootstrap text instructs reading AGENTS and backpressure docs, macro_start_session, inbox polling, packet-priority, exact verdicts, and concrete read-only evidence.",
+        "Staged verifier-brief says never claim tests, file reads, subagent checks, pane wakes, or approvals not observed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The larger prompt bank has direct focused tests for required names, verifier-bootstrap content, stable listing, paste safety, and hostile rendering.",
+      "evidence": [
+        "Staged prompt_bank_test.go defines requiredPromptNames with all twelve required names and tests stable list metadata.",
+        "Verifier-bootstrap content tests and paste-safety hostile-rendering tests passed in focused internal and CLI test runs."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload satisfies the OXP prompt-bank bead requirements and passes targeted and full checks.",
+      "evidence": [
+        "The bead contract lists twelve required prompt names plus verifier-bootstrap onboarding requirements, paste-safety, and hostile rendering.",
+        "Clean staged snapshot checks confirmed twelve prompts including verifier-bootstrap, required onboarding text in show JSON, focused tests, and go test ./... all passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Verifier response records binding hash, staged paths, isolated worktree, focused/full commands, prompt list/show checks, and direct code inspection.",
+      "evidence": [
+        "Packet reproduction and git diff --cached --name-status observed exactly three staged files: prompts_test.go, prompt_bank.go, and prompt_bank_test.go.",
+        "Recorded checks include prompts list JSON, verifier-bootstrap show JSON, paste-safety grep, focused prompt tests, and go test ./... in an isolated staged-slice worktree."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice is limited to the packet-listed prompt-bank implementation and tests.",
+      "evidence": [
+        "git diff --cached --name-status showed only cmd/burpvalve/prompts_test.go, internal/backpressure/prompt_bank.go, and internal/backpressure/prompt_bank_test.go staged.",
+        "Unrelated scaffold and log work remained unstaged; staged-slice verification used keep-index stash and go test ./... ."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload changes embedded prompt definitions and tests only; it adds no filesystem mutation, process execution, mail sending, pane control, or export behavior.",
+      "evidence": [
+        "Staged prompt_bank.go appends PromptDefinition entries inside the in-memory promptBank slice.",
+        "Regex over staged diff for os.WriteFile, os.Mkdir, os.Remove, os.Rename, os.OpenFile, os.Create, and exec.Command found no new prompt-bank behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The prompt bank exposes expected stable prompt names and metadata, verifier-bootstrap renders required onboarding content, and hostile values remain literal data.",
+      "evidence": [
+        "prompts list --json returned all twelve stable names, including commit-choreography, verifier-bootstrap, verifier-brief, and verifier-packet-relay.",
+        "prompts show verifier-bootstrap --json produced required variables and body text containing AGENTS/backpressure, macro_start_session, contact confirmation, inbox polling, Packet-priority rule, verdict values, and schema pointer."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prompt rendering keeps hostile values as data and prompt bodies avoid shell-hazard patterns.",
+      "evidence": [
+        "Staged TestPromptBankPasteSafetyAndHostileRendering rejects prompt bodies containing arrow tokens or the reserved status token and renders hostile variable values literally across requiredPromptNames.",
+        "Clean snapshot grep found the reserved status token only in hostile test fixtures and assertions, not prompt bodies; focused tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No governed visual surface is present; the staged payload changes embedded CLI prompt content and tests only.",
+      "evidence": [
+        "git diff --cached --name-status lists only cmd/burpvalve/prompts_test.go, internal/backpressure/prompt_bank.go, and internal/backpressure/prompt_bank_test.go.",
+        "Staged hunks add no browser UI, CSS, canvas, Bubble Tea view, screenshots, VHS assets, terminal recording, or visual-rendering surface."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The change expands static embedded prompt data to twelve entries while runtime behavior remains bounded list/sort/scan/string replacement over a small in-memory bank.",
+      "evidence": [
+        "Staged diff adds PromptDefinition literals to the existing promptBank slice and adds no loops beyond existing ListPromptBank, ShowPrompt, and RenderPrompt behavior.",
+        "List JSON confirmed bank size is twelve; rendering uses existing declared-variable replacement; full go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:58:52.880076263Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Prompt content gives coordination guidance without converting Burpvalve into an autonomous actor; the command only renders prompt text.",
+      "evidence": [
+        "Verifier-bootstrap, verifier-brief, and verifier-packet-relay bodies tell agents to gather real evidence and not treat terminal wakes as verdicts.",
+        "No staged code path sends Agent Mail, spawns panes or subagents, or executes those instructions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:58:52.880076263Z"
+    }
+  ]
+}

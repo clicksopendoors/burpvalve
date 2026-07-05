@@ -1,0 +1,409 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "fbb070394fdd6c73067f7c4051a2f57cb8048630",
+  "created_at": "2026-07-04T16:31:37.347145008Z",
+  "feature": {
+    "id": "project-readiness-kit-oq1v",
+    "kind": "feature",
+    "name": "project-readiness-kit-oq1v",
+    "source_bead": "project-readiness-kit-oq1v",
+    "bead_ids": [
+      "project-readiness-kit-oq1v"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-oq1v"
+  },
+  "bead_ids": [
+    "project-readiness-kit-oq1v"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The final staged payload is one CI test bug fix plus its tracker closure: one Beads bug row and one test helper update for PATH-independent init tests."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Kuhn",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "evidence_ref": "subagent_notification:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Same as prior; final payload remains formatted, and executable lint is scaffold-only.",
+      "evidence": [
+        "Read-only verifier Kuhn rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "git diff --cached --check passed.",
+        "gofmt -l cmd/burpvalve/commit_test.go produced no output.",
+        "go run ./cmd/burpvalve lint exited 0 with status not_enforced and command_count 0."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Kuhn",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "evidence_ref": "subagent_notification:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Same as prior; helper centralizes the PATH fixture instead of duplicating it.",
+      "evidence": [
+        "Read-only verifier Kuhn rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "runBurpvalve and runBurpvalveWithInput both call testCommandEnv.",
+        "The closed Beads row is tracker metadata only and does not add duplicate logic."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Lovelace",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "evidence_ref": "subagent_notification:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "The final staged payload addresses the reported PATH-dependent test issue without replacing the CLI under test. Closing the bead adds a completion claim, but it does not claim remote CI passed.",
+      "evidence": [
+        "Read-only verifier Lovelace rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "burpvalve hash --staged --json includes only .beads/issues.jsonl and cmd/burpvalve/commit_test.go.",
+        "commit_test.go still runs the real CLI via go run ./cmd/burpvalve; the temp burpvalve executable is only added to child PATH.",
+        "Bead is now closed with close_reason \"Fixed CI init tests without requiring PATH burpvalve\"."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Kuhn",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "evidence_ref": "subagent_notification:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Same test coverage still applies; the Beads closure does not change runtime behavior.",
+      "evidence": [
+        "Read-only verifier Kuhn rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "Targeted go test ./cmd/burpvalve -run 'TestModesRouteThroughCore|TestCIModeValidatesCommittedAttestationInCleanCheckout|TestCICommitAuditsSpecifiedCommit|TestCICommitExplicitFeatureAuditsMultiClusterCommit|TestPreCommitRecordsBeadMetadataAndQueryFilters|TestLintMode' -count=1 passed.",
+        "Final local full suite passed under minimal PATH: go test ./... ."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Kuhn",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "evidence_ref": "subagent_notification:019f2ded-7ae1-7740-8047-6976e701aa45",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Final staged payload includes the tracker closure, which is the only material change since prior verification.",
+      "evidence": [
+        "Read-only verifier Kuhn reviewed AGENTS.md, backpressure/README.md, and requested condition files.",
+        "Final staged files are only .beads/issues.jsonl and cmd/burpvalve/commit_test.go; unstaged docs remain outside the payload.",
+        "Final package test passed under minimal PATH: ok burpvalve/cmd/burpvalve 57.972s.",
+        "Final full suite passed under minimal PATH: go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Lovelace",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "evidence_ref": "subagent_notification:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Evidence is available for the final staged payload hash. No remote CI result is claimed here.",
+      "evidence": [
+        "Read-only verifier Lovelace rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "Current run: go test ./cmd/burpvalve -count=1 passed: ok burpvalve/cmd/burpvalve 57.972s.",
+        "Current run: git diff --cached --check passed with no output.",
+        "Current run: minimal PATH go test ./... passed, including cmd/burpvalve 64.806s and internal/scaffold 2.949s."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Lovelace",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "evidence_ref": "subagent_notification:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Scope remains limited to the intended CI test fix plus tracker closure.",
+      "evidence": [
+        "Read-only verifier Lovelace rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "Staged paths remain exactly .beads/issues.jsonl and cmd/burpvalve/commit_test.go.",
+        "Staged stat remains small: 10 insertions across 2 files.",
+        "Unstaged docs changes still exist but are not included in the staged payload hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Halley",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "evidence_ref": "subagent_notification:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "No destructive-operation risk found in the final staged payload.",
+      "evidence": [
+        "Read-only verifier Halley rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "cmd/burpvalve/commit_test.go only adds a test-only temp burpvalve stub and child-process PATH.",
+        ".beads/issues.jsonl now adds project-readiness-kit-oq1v as closed with closed_at and close_reason; no delete, reset, deploy, or production mutation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Halley",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "evidence_ref": "subagent_notification:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Final staged Beads data is valid and the close-state change is coherent.",
+      "evidence": [
+        "Read-only verifier Halley rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "git show :.beads/issues.jsonl | jq -Rce 'fromjson' passed.",
+        "Duplicate ID check returned no duplicates.",
+        "git diff --cached --check passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Halley",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "evidence_ref": "subagent_notification:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "No security boundary change found.",
+      "evidence": [
+        "Read-only verifier Halley rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "PATH override is scoped to spawned test commands via cmd.Env; no global environment mutation.",
+        "Diff scan found no secrets, tokens, auth changes, PII handling, sandbox changes, or external API calls.",
+        "Closed bead metadata does not introduce a new security boundary."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Halley",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "evidence_ref": "subagent_notification:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "No visual surface is affected.",
+      "evidence": [
+        "Read-only verifier Halley rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "Staged payload remains Beads JSONL plus Go CLI tests only.",
+        "No UI, browser, screenshot, canvas, responsive layout, or visual asset changes.",
+        "Closed bead status has no visual relevance."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Halley",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "evidence_ref": "subagent_notification:019f2ded-d775-7552-8f6c-de5244d7677c",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "No production performance impact found.",
+      "evidence": [
+        "Read-only verifier Halley rechecked the final staged payload hash sha256:07127efb4d58cbb4a1043d51290e637d4f44b489bac5ae6bea565e6a2e323f2b.",
+        "Added cost is limited to test setup, one temp dir plus small executable stub per helper call.",
+        "Closed bead metadata has no runtime performance path.",
+        "Targeted test passed for final staged content: go test ./cmd/burpvalve -run TestModesRouteThroughCore -count=1 (ok, 1.791s)."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Lovelace",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "evidence_ref": "subagent_notification:019f2ded-a83a-7280-9925-0f556e8b36f3",
+        "created_at": "2026-07-04T16:30:37Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "The final staged payload does not claim verifier/subagent approval, alter production behavior, or perform unauthorized broader changes.",
+      "evidence": [
+        "Read-only verifier Lovelace rechecked backpressure/autonomy-boundary.md and the final staged payload.",
+        "The helper writes only under t.TempDir() and sets env only for test child processes.",
+        "No NTM, subagent, or human approval claim is added by the staged payload itself.",
+        "Closed bead is tracker state only; no commit, push, hook, CI, or dependency mutation is staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T16:31:37.347145008Z"
+    }
+  ]
+}

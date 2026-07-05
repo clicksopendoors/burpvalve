@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:3ef29285d66c4ecbc05e9920f02e30cc02c049516f52c610dae7515b5c517375",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "42eb5de4ada25956ab973e1e92f842940a22efdc",
+  "created_at": "2026-07-02T07:32:14.56085621Z",
+  "feature": {
+    "id": "project-readiness-kit-land-12-setup-init-readiness-lw2",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-12-setup-init-readiness-lw2",
+    "source_bead": "project-readiness-kit-land-12-setup-init-readiness-lw2",
+    "bead_ids": [
+      "project-readiness-kit-land-12-setup-init-readiness-lw2"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-12-setup-init-readiness-lw2"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-12-setup-init-readiness-lw2"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is the single land-12 unit: setup/init/repair readiness and repair behavior across the exact nine bead-listed files. No future verifier, attestations, beads, completion, or guided-lint command surfaces are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2394",
+        "evidence_ref": "git diff --cached checks, staged gofmt, focused tests, setup JSON, and go test ./... in Agent Mail reply 2394",
+        "created_at": "2026-07-02T07:25:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The staged payload is formatted, whitespace-clean, and covered by focused scaffold/CLI tests plus the full Go test suite.",
+      "evidence": [
+        "git diff --cached --name-status/stat matched the packet's nine staged files and 1251 insertions / 136 deletions.",
+        "git diff --cached --check exited 0.",
+        "Staged gofmt check using git show :path for all nine staged Go files produced no gofmt differences.",
+        "go test ./internal/scaffold -run 'Inspect|Apply|Repair|Setup|Init' passed: ok burpvalve/internal/scaffold.",
+        "go test ./cmd/burpvalve -run 'Init|Setup|Repair|Help|Git' passed: ok burpvalve/cmd/burpvalve.",
+        "go test ./... passed across cmd/burpvalve and internal packages."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed setup/init/repair code keeps shared behavior in helpers rather than parallel implementations.",
+      "evidence": [
+        "git diff --cached --name-status/stat matched the packet's 9 setup/init/repair files and 1251 insertions/136 deletions.",
+        "git show :cmd/burpvalve/main.go showed setup config consumption centralized through setupConfigSummary, configSettingValue, inspectOptionsFromConfig, and maybeAskGitInit/needsGitInitPrompt.",
+        "git show :internal/scaffold/apply.go and :internal/scaffold/repair.go showed shared ensureGitForHooks and orderedAgentsRepairHeadings reused across init and repair rather than copied paths."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload does not fake readiness: blocked setup and unsafe init states remain explicit rather than converted to superficial success.",
+      "evidence": [
+        "git show :internal/scaffold/inspect.go showed Report.Status becomes blocked when required checks are not ready, Fatal is derived from required blockers, and NextSteps are generated from real blocking checks.",
+        "Temp staged snapshot command `go run ./cmd/burpvalve setup --target $probe --json` returned rc=0 with schema_version=1, command=setup, status=blocked, readiness_severity=blocked, mutating=false, next_steps length 12, and target_children=none.",
+        "Temp staged snapshot command `go run ./cmd/burpvalve init --target $probe --force --json --no-beads --no-ntm hooks` returned partial_success with conflict path .git, fatal=true, and git_created=no instead of silently claiming hooks were ready.",
+        "ScarletMarsh independently agreed pass in Agent Mail message 2394, citing structured readiness output and hook-wiring tests that reduce false success around setup state."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "New setup/readiness, git-init, repair-heading, and report-schema behavior has direct nearby tests.",
+      "evidence": [
+        "git show :cmd/burpvalve/init_test.go showed TestInteractiveGitInitPromptConditions, TestInitHookWiringRequiresGitInitOrNoHooks, TestJSONInitAndRepairFailClosedWithoutForce, and robot git_init coverage.",
+        "git show :internal/scaffold/apply_test.go and :internal/scaffold/repair_test.go showed AGENTS repair/idempotency coverage, including ordered core sections and no unintended optional sections.",
+        "git show :internal/scaffold/inspect_test.go showed setup status/next_steps/readiness facts/repo-local fallback/config text coverage; staged snapshot `go test ./internal/scaffold -run 'Inspect|Apply|Repair|Setup|Init'` and `go test ./cmd/burpvalve -run 'Init|Setup|Repair|Help|Git'` both passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice is complete for the assigned setup/init/repair readiness behavior and passes focused plus full-suite verification in a staged snapshot.",
+      "evidence": [
+        "git diff --cached --check exited 0 on the real staged index.",
+        "In a temp tree built from HEAD plus `git diff --cached --binary`, `go test ./internal/scaffold -run 'Inspect|Apply|Repair|Setup|Init'` passed and `go test ./cmd/burpvalve -run 'Init|Setup|Repair|Help|Git'` passed.",
+        "In the same temp staged snapshot, `go test ./...` passed across all packages."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged result/report surfaces expose stable machine-readable evidence fields instead of prose-only status.",
+      "evidence": [
+        "git show :internal/scaffold/inspect.go showed Report fields schema_version, command, status, readiness_severity, command_path, repo_bin_path, hook_command_source, config, next_steps, mutating, fatal, and partial_success.",
+        "git show :internal/scaffold/apply.go and :internal/scaffold/repair.go showed ApplyResult/RepairResult structured status, config, next_steps, fatal, partial_success, created/repaired/preserved/conflicts outputs.",
+        "Temp staged snapshot `go run ./cmd/burpvalve setup --json` produced schema_version=1, command=setup, status=blocked, readiness_severity=blocked, check_count=15, mutating=false."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays inside unit-12 setup/init/repair readiness boundaries.",
+      "evidence": [
+        "git diff --cached --name-status listed only cmd/burpvalve/help_test.go, cmd/burpvalve/init_test.go, cmd/burpvalve/main.go, and internal/scaffold apply/inspect/repair files/tests.",
+        "git diff --cached --stat matched the packet's 9-file setup/init/repair stat exactly.",
+        "Future-surface grep over the staged diff for verifier, bead_ids, bead_rationale, completion verify, guided lint/lint wizard, --bead, attestations subcommands, and beads command found only an existing test phrase `expected runnable verifier planned change`, not staged future command behavior.",
+        "ScarletMarsh independently agreed pass in Agent Mail message 2394, citing the same nine staged paths and no future verifier/attestations/beads/completion/guided-lint command behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Init/repair file and hook mutations are gated; setup remains inspection-only.",
+      "evidence": [
+        "git show :cmd/burpvalve/main.go showed confirmScaffoldMutation rejects --json mutation without --force and noninteractive mutation without confirmation; maybeAskGitInit only runs for wizard flow and defaults false.",
+        "Temp staged snapshot `go run ./cmd/burpvalve init --target $probe --json log` returned rc=1 with `init --json will not change files without confirmation` and created_log=no.",
+        "Temp staged snapshot setup probe returned mutating=false and target_children=none; hook init without --git-init returned a .git conflict and git_created=no."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Generated scaffold writes preserve existing project content and expose partial success/conflicts instead of overwriting or hiding them.",
+      "evidence": [
+        "git show :internal/scaffold/apply.go showed createFileIfMissing preserves existing files, ensureAgentsFile appends only missing AGENTS sections, symlink AGENTS.md is preserved, and conflicts are recorded for directories/unsafe paths.",
+        "git show :internal/scaffold/repair.go showed repairAgentsFile uses ordered missing section detection and preserves symlinks or reports conflicts.",
+        "go test evidence includes TestApplyInitCreatesGeneratedTreeAndIsIdempotent, TestApplyInitPreservesExistingUserContent, TestApplyRepairCanRepairOnlyAgents, and TestApplyRepairOmitsSkippedAgentsSections passing in the staged snapshot."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed hook/path/file-write surface uses repo-local paths and constant git commands, preserves user hooks, and does not introduce credential material.",
+      "evidence": [
+        "git show :internal/scaffold/apply.go showed ensurePreCommitHook preserves legacy .git/hooks/pre-commit into .githooks/pre-commit.user before installing the dispatcher, and configureHooksPath rejects conflicting core.hooksPath values.",
+        "git show :internal/scaffold/inspect.go showed burpvalveToolCheck separates PATH command from repo-local fallback and detects git-ignored repo-local fallback via `git check-ignore -v -- bin/burpvalve` with a 5-second context timeout.",
+        "Credential scan `git diff --cached -- ... | rg -n 'secret|token|password|credential|PRIVATE|BEGIN PRIVATE|id_rsa|api[_-]?key|Authorization|Bearer'` returned no matches.",
+        "ScarletMarsh independently agreed pass in Agent Mail message 2394, citing explicit hook/git/file-write gating and no staged secret, auth, network, deploy, or permission-widening behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2394",
+        "evidence_ref": "git diff --cached checks, staged gofmt, focused tests, setup JSON, and go test ./... in Agent Mail reply 2394",
+        "created_at": "2026-07-02T07:25:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "No governed visual surface is present in this staged payload.",
+      "evidence": [
+        "Staged paths are Go CLI/scaffold files only: cmd/burpvalve/help_test.go, init_test.go, main.go, and internal/scaffold apply/inspect/repair sources and tests.",
+        "The staged diff changes CLI help/setup/init/repair readiness behavior and scaffold inspection/apply logic; it does not include browser UI, screenshots, CSS, canvas, SVG, images, or visual demo assets."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed setup inspection is bounded: it uses a fixed checklist and no new filesystem walk/concurrency fanout.",
+      "evidence": [
+        "git show :internal/scaffold/inspect.go showed Inspect adds a fixed sequence of checks and option-gated skips; no recursive walk was introduced for setup readiness.",
+        "Staged diff grep for added WalkDir/filepath.Walk/os.ReadDir/Glob/goroutine/go func/sync/parallel found no added traversal or concurrency fanout; added subprocess grep hits were git init/config and the Inspect git check-ignore probe.",
+        "Inspect subprocess probes in the staged code use context.WithTimeout(..., 5*time.Second) for git check-ignore, git config core.hooksPath, git status, and ntm capability checks; full staged snapshot `go test ./...` completed successfully."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:land-12 message 2395",
+        "evidence_ref": "git diff --cached inspections and staged-snapshot test/probe commands in Agent Mail reply 2395",
+        "created_at": "2026-07-02T07:28:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged CLI respects explicit user/robot authorization boundaries for mutations and git initialization.",
+      "evidence": [
+        "git show :cmd/burpvalve/main.go showed robots/init input exposes explicit confirm and git_init fields, while confirmScaffoldMutation blocks --json mutation without confirmation/force.",
+        "git show :cmd/burpvalve/main.go showed needsGitInitPrompt skips only when force, explicit git_init, no-hooks, or both hook pieces are skipped; otherwise wizard asks before git init and default is false.",
+        "Temp staged snapshot probes confirmed `init --json log` created no file without force, and `init --force --json hooks` in a non-git target produced a .git conflict unless --git-init is explicitly supplied."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:32:14.56085621Z"
+    }
+  ]
+}

@@ -1,0 +1,420 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:618aa4fc3357edcd1ba4649fdaf0c9c3036aefd563e374b6f37c634e6d91599d",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "7bc2172a3c92583a0b6afc78695c124c4db4abcc",
+  "created_at": "2026-07-02T04:43:10.729453831Z",
+  "feature": {
+    "id": "project-readiness-kit-land-main-go-staging-map-d7v",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-main-go-staging-map-d7v",
+    "source_bead": "project-readiness-kit-land-main-go-staging-map-d7v",
+    "bead_ids": [
+      "project-readiness-kit-land-main-go-staging-map-d7v"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-main-go-staging-map-d7v"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-main-go-staging-map-d7v"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged payload is exactly one planning artifact for bead project-readiness-kit-land-main-go-staging-map-d7v: log/landing-main-go-staging-map.md. It maps current cmd/burpvalve/main.go hunks/functions/blocks before Phase 2 source commits; no source code or bead DB changes are staged. The attestation file produced by Burpvalve is evidence for this same feature."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload is a documentation/log map only. It does not stage Go code, lint command configuration, formatter/static-analysis behavior, or lint-rule enforcement surface.",
+      "evidence": [
+        "git diff --cached --name-status \u0026\u0026 git diff --cached --stat -\u003e A log/landing-main-go-staging-map.md; 358 insertions; no source files staged.",
+        "git status --short -\u003e only staged entry is A log/landing-main-go-staging-map.md; cmd/burpvalve/main.go and other source changes are unstaged.",
+        "git diff --cached --check -\u003e no output.",
+        "sed -n '1,220p' backpressure/lint-rules.md -\u003e lint-rules is a policy wishlist unless exact executable lint_commands/analyzers are declared."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed map surface was inspected. The file intentionally centralizes split ownership instead of duplicating competing staging rules; repeated unit names and split notes are checklist structure, not divergent parallel logic.",
+      "evidence": [
+        "git show :log/landing-main-go-staging-map.md | sed -n '1,220p' and '221,420p' -\u003e one durable map with Unit Legend, Staging Rules, Known Cross-Unit Overlaps, Hunk Ledger, Symbol Ledger, No-Main-Go Units, and Verification Checklist.",
+        "Hunk Ledger range expansion command over staged file -\u003e all h1-h142 covered.",
+        "git show :log/landing-main-go-staging-map.md | rg -n 'exactly one planned owner|split|merge-pressure|sign-off|Do not stage all of hunk 88|source hunk not listed|blocker' -\u003e map states split rules, sign-off requirements, and blocker behavior for unmapped hunks.",
+        "sed -n '1,220p' backpressure/dry.md -\u003e condition targets duplicate logic/prompts/parallel implementations; inspected map consolidates ownership instead of creating parallel implementations."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The map's claims match the live staged/working facts checked by BrightOwl, with ScarletMarsh independently agreeing on pass: only the map is staged, the current main.go diff has the advertised stat and 142 hunks, hunk 88 is correctly called out as split-by-symbol, and the file does not authorize staging all source at once.",
+      "evidence": [
+        "BrightOwl message 2347: git diff --cached --name-status -\u003e A log/landing-main-go-staging-map.md only; staged file text says this commit must stage this map only and must not stage cmd/burpvalve/main.go or other source.",
+        "BrightOwl message 2347: git diff --stat -- cmd/burpvalve/main.go -\u003e 1 file changed, 3193 insertions(+), 352 deletions(-), 3545 changed lines, matching the staged map.",
+        "BrightOwl message 2347: git diff --unified=0 -- cmd/burpvalve/main.go | rg '^@@' | wc -l -\u003e 142, matching the staged map.",
+        "BrightOwl message 2347: hunk 88 is @@ -1300,6 +2189,1666 @@; staged map records h88 as current lines 2189-3854 split by symbol.",
+        "BrightOwl message 2347: filename typo resolution and no-main-go units are explicitly recorded.",
+        "ScarletMarsh message 2346 also returned anti-reward-hacking=pass and found no staged authorization for fabricated evidence, bypass, no-verify, or shortcut completion; relevant hits are prohibitions and sign-off requirements."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No product behavior, function, or test hunk is staged in this commit. The staged artifact is a planning/log map used to split later source commits; direct behavior test coverage will apply to those later source payloads.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e only A log/landing-main-go-staging-map.md.",
+        "git status --short -\u003e cmd/burpvalve/main.go and test files are present only as unstaged working-tree changes, not part of this staged payload.",
+        "git show :log/landing-main-go-staging-map.md | rg -n 'This commit must stage this map only|must not stage `cmd/burpvalve/main.go`|Verification Checklist' -\u003e map explicitly frames this as a map-only commit and names later verification checks.",
+        "sed -n '1,220p' backpressure/one-function-one-test.md -\u003e condition governs when new or changed behavior requires direct test coverage; no changed behavior is staged here."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged map includes concrete completion criteria for this map bead and later source splits: exact staged payload boundary, diff-stat/hunk-count checks, unit coverage, split sign-off rules, no-main-go units, and a verification checklist.",
+      "evidence": [
+        "git show :log/landing-main-go-staging-map.md | sed -n '1,120p' -\u003e Source Snapshot, Unit Legend, Staging Rules, Known Cross-Unit Overlaps, and rule that unlisted source hunks are blockers.",
+        "git show :log/landing-main-go-staging-map.md | rg -n '## Verification Checklist|git status --short|test -s|git diff --stat -- cmd/burpvalve/main.go|git diff --unified=0 -- cmd/burpvalve/main.go|go test ./...' -\u003e explicit checklist is present.",
+        "git show :log/landing-main-go-staging-map.md | rg -n 'unit 13 has no mapped|unit 20 has no mapped|Unit 9 is intentionally absent' -\u003e explicit done/non-scope boundaries for units without main.go ownership.",
+        "sed -n '1,220p' backpressure/definition-of-done.md -\u003e condition purpose covers checks, review, logs, commits, beads, deployment evidence, and known-risk notes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged log artifact records durable evidence and reconciliation instructions, and its central mechanical claims were independently checked against the current working-tree main.go diff.",
+      "evidence": [
+        "git show :log/landing-main-go-staging-map.md | wc -l \u0026\u0026 wc -c -\u003e 358 lines, 27640 bytes in the staged map artifact.",
+        "git diff --stat -- cmd/burpvalve/main.go and git diff --numstat -- cmd/burpvalve/main.go -\u003e 3193 insertions, 352 deletions, matching the map's Source Snapshot.",
+        "git diff --unified=0 -- cmd/burpvalve/main.go | rg '^@@' | wc -l -\u003e 142; Hunk Ledger expansion over the staged file reports all h1-h142 covered.",
+        "nl -ba cmd/burpvalve/main.go | sed -n '2189,3855p' | rg '^\\s*[0-9]+\\s+(func|type|var|const) ' -\u003e actual hunk-88 symbols include buildExplanation, explainJSON, newInitCommand, newRepairCommand, newCommitCommand, verifierPromptOptions, attestation query functions, beads preflight, and config functions; staged Symbol Ledger assigns these ranges by unit.",
+        "sed -n '1,220p' backpressure/evidence-log.md -\u003e condition purpose is recording command output, screenshots, preview URLs, curl results, CI links, benchmark output, or manual verification notes before closure."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2347, reply to [land-05a] verifier cells",
+        "evidence_ref": "commands/files inspected in Agent Mail message 2347",
+        "created_at": "2026-07-02T04:32:58Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within land-05a scope and correctly narrows later source ownership. BrightOwl and ScarletMarsh independently agreed: only the map is staged, all 142 current main.go hunks are covered, hunk 88 is split-by-symbol, overlap zones are named, and unit 13/unit 20 are marked as no-main-go units.",
+      "evidence": [
+        "BrightOwl message 2347: git diff --cached --name-status \u0026\u0026 git diff --cached --stat -\u003e only A log/landing-main-go-staging-map.md, 358 insertions.",
+        "BrightOwl message 2347: map includes Hunk 88/h88 split-by-symbol, unit 7 plus unit 16, unit 11 plus unit 12, unit 17 plus unit 19, no-main-go unit 13 and unit 20, and landing-mainggo -\u003e landing-main-go typo resolution.",
+        "BrightOwl message 2347: Hunk Ledger range expansion command -\u003e all h1-h142 covered.",
+        "BrightOwl message 2347: map prevents silent widening or unit merging with blocker/sign-off/bead-rationale text.",
+        "ScarletMarsh message 2346 also returned scope-control=pass and confirmed git diff --cached --name-only | wc -l returned 1 with only log/landing-main-go-staging-map.md staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2346, reply to [land-05a] verifier cells",
+        "evidence_ref": "staged-index inspection and commands listed in Agent Mail message 2346",
+        "created_at": "2026-07-02T04:32:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive operation surface: it is one added planning/log file and does not stage deletes, resets, force pushes, migrations, external sends, deploys, or production mutations.",
+      "evidence": [
+        "Read backpressure/destructive-operations.md: condition governs risky commands and irreversible changes such as deletes, resets, force pushes, data migrations, external sends, spend changes, deploys, and production mutations.",
+        "git diff --cached --name-status showed only A log/landing-main-go-staging-map.md; no staged D/R status and no source file staged.",
+        "git show :log/landing-main-go-staging-map.md is a staging map document; destructive-operation terms searched with rg were not present as executable instructions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2346, reply to [land-05a] verifier cells",
+        "evidence_ref": "staged-index inspection and commands listed in Agent Mail message 2346",
+        "created_at": "2026-07-02T04:32:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged map is the durable accounting artifact for later split commits and its internal accounting checks out against the current main.go diff shape.",
+      "evidence": [
+        "Read backpressure/data-integrity.md: condition governs persisted data, invariants, idempotency, rollback, backups, and audit trails; here the governed surface is the durable staging/accounting artifact.",
+        "git cat-file -s :log/landing-main-go-staging-map.md returned 27640 bytes, confirming a non-empty staged blob; git diff --cached --check -- log/landing-main-go-staging-map.md produced no output.",
+        "git diff --unified=0 -- cmd/burpvalve/main.go | rg '^@@' | wc -l returned 142, matching the staged map's Source Snapshot claim.",
+        "git diff --stat -- cmd/burpvalve/main.go returned 1 file changed, 3193 insertions(+), 352 deletions(-), matching the staged map's 3545-line diff claim.",
+        "git show :log/landing-main-go-staging-map.md | perl hunk-expansion check returned 'hunks covered: 1-142'.",
+        "git show :log/landing-main-go-staging-map.md lines 69 and 133 explicitly treat hunk 88 as split-by-symbol rather than one unit.",
+        "git show :log/landing-main-go-staging-map.md lines 82-99 list the expected overlap zones: unit 7 plus unit 16, unit 11 plus unit 12, unit 17 plus unit 19, plus the shared isInteractiveTerminal seam.",
+        "For each required owner, git show :log/landing-main-go-staging-map.md | rg -c 'unit N' returned hits: unit 7=16, unit 10=50, unit 11=40, unit 12=40, unit 13=4, unit 14=15, unit 15=20, unit 16=36, unit 17=34, unit 19=7, unit 20=3."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2346, reply to [land-05a] verifier cells",
+        "evidence_ref": "staged-index inspection and commands listed in Agent Mail message 2346",
+        "created_at": "2026-07-02T04:32:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "Per RusticDog's ruling in Agent Mail message 2349, use ScarletMarsh's not_applicable classification for this map-only payload and fold BrightOwl's credential scan into the evidence. The staged payload contains no auth, secrets, tenant isolation, PII, permission, sandbox, or external API behavior; it is a staging map document only.",
+      "evidence": [
+        "ScarletMarsh message 2346: Read backpressure/security-boundaries.md; condition governs auth, secrets, tenant isolation, PII, permission, sandbox, and external API safety.",
+        "ScarletMarsh message 2346: git diff --cached --name-status showed only A log/landing-main-go-staging-map.md and no source code staged.",
+        "ScarletMarsh message 2346: git show :log/landing-main-go-staging-map.md | rg -n -- 'secret|token|auth|PII|tenant|permission|sandbox' produced no security-sensitive staged behavior to evaluate; only general staging-map prose exists.",
+        "BrightOwl supplemental evidence from message 2347: git diff --cached --name-status -\u003e only A log/landing-main-go-staging-map.md; no hook, installer, config, or command source is staged in this commit.",
+        "BrightOwl supplemental evidence from message 2347: git show :log/landing-main-go-staging-map.md | rg -n -i 'secret|token|credential|password|PRIVATE|BEGIN PRIVATE|id_rsa|api[_-]?key|chmod|sudo|rm -rf|force push|git push|curl|http://|https://' -\u003e no matches (rg exit 1).",
+        "BrightOwl supplemental evidence from message 2347: future security-adjacent areas such as installCommandShim, responses-template, bead metadata, and config are mapped and bounded rather than staged here.",
+        "RusticDog ruling in Agent Mail message 2349: governed means the payload carries regulated content/behavior itself; reference-to is not governed; possibility-of-defect is not governed; diligence scans support not_applicable evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2346, reply to [land-05a] verifier cells",
+        "evidence_ref": "staged-index inspection and commands listed in Agent Mail message 2346",
+        "created_at": "2026-07-02T04:32:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no UI, browser, screenshot, responsive layout, canvas, or visual output surface.",
+      "evidence": [
+        "Read backpressure/visual-regression.md: condition governs screenshot, browser, responsive layout, canvas, and visual-diff checks for UI work.",
+        "git diff --cached --name-status showed only A log/landing-main-go-staging-map.md.",
+        "git show :log/landing-main-go-staging-map.md inspection found a text staging map for cmd/burpvalve/main.go ownership, not a visual/UI artifact."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2346, reply to [land-05a] verifier cells",
+        "evidence_ref": "staged-index inspection and commands listed in Agent Mail message 2346",
+        "created_at": "2026-07-02T04:32:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no runtime code or benchmark-affecting change; no latency, memory, token, cost, bundle-size, throughput, or benchmark budget is governed by this map-only commit.",
+      "evidence": [
+        "Read backpressure/performance-budget.md: condition governs latency, memory, token, cost, bundle-size, throughput, or benchmark thresholds.",
+        "git diff --cached --name-status showed only A log/landing-main-go-staging-map.md; no source code staged.",
+        "git show :log/landing-main-go-staging-map.md | rg -n -- 'latency|memory|budget|performance|throughput|benchmark' produced no staged performance-budget surface to evaluate."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2346, reply to [land-05a] verifier cells",
+        "evidence_ref": "staged-index inspection and commands listed in Agent Mail message 2346",
+        "created_at": "2026-07-02T04:32:09Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged map contains an autonomy-boundary surface and satisfies it by naming when later agents must stop for sign-off instead of independently merging or widening source commits.",
+      "evidence": [
+        "Read backpressure/autonomy-boundary.md: condition governs which actions agents may take independently, what requires explicit human approval, and what evidence must be presented before asking.",
+        "git show :log/landing-main-go-staging-map.md lines 70-77 require stopping before affected source commits when splits cannot be staged cleanly, prohibit silent unit merges, require bead rationale for signed-off merges, and treat unlisted hunks as blockers.",
+        "git show :log/landing-main-go-staging-map.md lines 87-96 explicitly require user sign-off before merging unit 7 plus unit 16 or unit 11 plus unit 12 source commits.",
+        "git show :log/landing-main-go-staging-map.md line 98 says the unit 17 plus unit 19 split is expected to be statement-level separable and proposes no merge."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:43:10.729453831Z"
+    }
+  ]
+}

@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:4ab47bf2b63b6c7e1a25c371d97ed73c31cc4660d72a5474fc2eb91ff2724c20",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "9d515f6ab641bed85d7843d8e7c119b7ff4e04be",
+  "created_at": "2026-07-02T07:07:25.933857166Z",
+  "feature": {
+    "id": "project-readiness-kit-land-11-config-foundation-eqf",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-11-config-foundation-eqf",
+    "diff_cluster": "explicit:project-readiness-kit-land-11-config-foundation-eqf"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is one atomic land-11 unit: config schema/load/merge/normalize/validate/write foundations, config show/init command, robot/help docs, and config-focused tests. The staged path list is exactly cmd/burpvalve/config_test.go, cmd/burpvalve/main.go, internal/config/config.go, and internal/config/config_test.go. Unit-12 setup/init/repair config consumption, unit-17 completion verification, help_test.go future hunks, bead metadata, attestation query, and verifier prompt surfaces are not staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2389: Re: [land-11] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2389 condition lint-rules",
+        "created_at": "2026-07-02T07:03:32.012096Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The staged config-foundation slice is formatter-clean and passes focused config package, config CLI/help, and full regression tests.",
+      "evidence": [
+        "git diff --cached --name-status showed exactly A cmd/burpvalve/config_test.go, M cmd/burpvalve/main.go, M internal/config/config.go, and M internal/config/config_test.go.",
+        "git diff --cached --check produced no output.",
+        "Staged Go blobs matched gofmt output.",
+        "go test ./internal/config -run Config|Merge|Normalize|Validate|Unknown passed; go test ./cmd/burpvalve -run Config|Help passed; go run ./cmd/burpvalve config --help passed; go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells",
+        "evidence_ref": "Agent Mail message 2390 condition dry",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged config foundation keeps parsing, validation, merging, source tracking, prompting, and write behavior in focused helpers. Test repetition is mostly table-style or shared fixture helpers, not duplicated production logic.",
+      "evidence": [
+        "git diff --cached --name-status/stat/check showed exactly the four expected files, 1511 insertions and 28 deletions, with no diff-check diagnostics.",
+        "internal/config/config.go uses shared Normalize, Validate, Write, Merge, SortedSources, and source-tracking helpers instead of parallel config parsers.",
+        "cmd/burpvalve/main.go splits config command behavior into runConfigShow, configView, runConfigInit, wizard helpers, strict JSON decode, and writeConfigInit without duplicate write paths.",
+        "Staged snapshot passed focused config tests and full go test ./... ."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells; ScarletMarsh message 2389 agreed pass on shared cell",
+        "evidence_ref": "Agent Mail message 2390 condition anti-reward-hacking",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload does not create superficial config success signals: unknown fields and invalid values are rejected, writes require explicit force/robot confirmation, and config show reports effective sources rather than hiding global/project precedence.",
+      "evidence": [
+        "internal/config strict JSON decode uses DisallowUnknownFields, single-object enforcement, normalization, and validation before accepting a file.",
+        "Robot config init requires scope and routes through writeConfigInit, which rejects missing force/confirmation and validates through bvconfig.Write before writing.",
+        "A staged-snapshot probe of config init without --force returned nonzero and did not create .burpvalve.json.",
+        "cmd/burpvalve/config_test.go covers merged defaults/source reporting, invalid config, and robot no-confirm refusing to write."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells",
+        "evidence_ref": "Agent Mail message 2390 condition one-function-one-test",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The new config API and CLI surfaces have direct tests for merge/source behavior, strict validation, init gating, wizard cancellation, file writes, robot input, and help/schema documentation.",
+      "evidence": [
+        "internal/config/config_test.go covers global/project merge, absent/global-only/project-only config, unknown keys, malformed JSON, versioned config, bad schema/shell/color/NUL path validation, and formatted writes.",
+        "cmd/burpvalve/config_test.go covers config --json, human config show, init force requirement, noninteractive file requirement, guided help, preserving skipped sections, cancellation, invalid files, scope gating, confirmed writes, robot writes, and robot schema help.",
+        "Staged snapshot passed focused internal/config and cmd/burpvalve Config|Help tests plus full go test ./... ."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells",
+        "evidence_ref": "Agent Mail message 2390 condition definition-of-done",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged index matches the land-11 config-foundation scope, has clean diff checks, and passes targeted plus full staged-snapshot verification.",
+      "evidence": [
+        "git diff --cached --name-only showed only cmd/burpvalve/config_test.go, cmd/burpvalve/main.go, internal/config/config.go, and internal/config/config_test.go.",
+        "git diff --cached --numstat showed 553/0 config_test.go, 651/21 main.go, 156/7 internal/config/config.go, and 151/0 internal/config/config_test.go.",
+        "Main.go staged hunk grep showed no cached setup/init/repair consumption or completion-verify hunks beyond the .beads default label inside config defaults.",
+        "Staged-snapshot verification passed git diff --cached --check, focused tests, config --help, and full go test ./... ."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells",
+        "evidence_ref": "Agent Mail message 2390 condition evidence-log",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The config command reports the evidence needed to understand config state: found/missing global and project paths, effective defaults, source attribution for each configured value, and robot help schemas/notes for mutating config init.",
+      "evidence": [
+        "configView emits schema_version, global/project paths and found flags, effective defaults, sorted sources, and override notes; human output prints values and sources.",
+        "internal/config SortedSources and source-note helpers make source reporting deterministic for config default fields.",
+        "Staged-snapshot robot help for config init produced config, confirm, scope, and target input fields plus validation/unknown-field and confirmation notes.",
+        "cmd/burpvalve/config_test.go asserts robot config init help documents schema and does not leak scaffold init notes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells; ScarletMarsh message 2389 agreed pass on shared cell",
+        "evidence_ref": "Agent Mail message 2390 condition scope-control",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within land-11 config foundation: config schema/load/write, config command/init, and config-focused tests. Future unit setup/readiness, completion verification, attestation query, bead metadata, and verifier prompt surfaces are not staged.",
+      "evidence": [
+        "git diff --cached --name-only showed only the four expected config-foundation files.",
+        "Boundary grep found no staged setup readiness, completion verify, attestations list/show, bead_ids, bead_rationale, verifier prompt, or --bead surfaces.",
+        "log/landing-condition-preanalysis.md identifies unit 11 payload as internal/config, config command/init hunks, cmd/burpvalve/config_test.go, and config help assertions; the staged paths match, with no help_test.go staged as noted in the packet.",
+        "Cached main.go hunks are robot config docs, config command/init implementation, and config option types, not setup/readiness or completion verification implementation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2389: Re: [land-11] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2389 condition destructive-operations",
+        "created_at": "2026-07-02T07:03:32.012096Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload has mutating config-write behavior, but no destructive-operation surface: no deletes, resets, force pushes, deploys, migrations, external sends, production changes, or irreversible operations are introduced.",
+      "evidence": [
+        "git diff --cached --name-status shows only one added test file and three modified source/test files, with no deleted or renamed paths.",
+        "Boundary grep over the staged diff found no rm -rf, git reset, deploy, production, curl, or external mutation behavior.",
+        "Config init write path is limited to the selected global config file or project .burpvalve.json and tests cover refusal to write without explicit force/confirmation or with invalid config.",
+        "Help text states config init writes only the selected config file and never runs setup, init, repair, completion install, or hook wiring."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells",
+        "evidence_ref": "Agent Mail message 2390 condition data-integrity",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged config data model preserves versioning, rejects malformed or unknown data, validates enum/path invariants, records source precedence, merges partial updates without dropping existing values, and formats writes deterministically.",
+      "evidence": [
+        "internal/config versioned File/Defaults structs use boolean pointer fields for explicit false preservation and Effective fields for found flags/source tracking.",
+        "Strict JSON decoding rejects unknown fields and non-object JSON; validation checks schema version, shell/color enums, NUL bytes in path fields, and writes normalized indented JSON with trailing newline.",
+        "cmd/burpvalve/config_test.go covers skipped wizard sections preserving existing values, missing config behavior preserving schema/version, partial file merge, and invalid config write refusal.",
+        "A staged-snapshot forced config-init probe wrote only after --force and produced JSON passing schema_version, command, status, scope, and shell checks."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells; ScarletMarsh message 2389 agreed pass on shared cell",
+        "evidence_ref": "Agent Mail message 2390 condition security-boundaries",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Security-boundaries is governed for this debatable config surface because it handles user/project paths and defaults that can influence later command behavior. The staged schema contains no credential fields, strict decoding rejects unknown secret-shaped keys, path validation rejects NUL bytes, and output is limited to config paths/defaults/sources.",
+      "evidence": [
+        "The staged schema fields are skills/bin paths, shell/color/confirm, completion paths, and scaffold booleans; no token/password/API-key/credential fields are present.",
+        "Secret-pattern grep over the staged diff produced no matches for secret, token, password, credential, PRIVATE, api key, Authorization, or Bearer.",
+        "Unknown fields are rejected and path-like fields are checked for NUL bytes before acceptance.",
+        "Staged-snapshot robot help notes include config JSON validation and unknown-field rejection; config tests verify invalid config does not write."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2389: Re: [land-11] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2389 condition visual-regression",
+        "created_at": "2026-07-02T07:03:32.012096Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no governed visual-regression surface: it changes config data structures, CLI config commands, and tests, not UI rendering, browser, screenshot, canvas, responsive layout, or visual assets.",
+      "evidence": [
+        "Staged paths are cmd/burpvalve/config_test.go, cmd/burpvalve/main.go, internal/config/config.go, and internal/config/config_test.go only.",
+        "Diff inspection found CLI text/help and JSON output behavior, not frontend or TUI rendering changes requiring screenshots.",
+        "Boundary grep found no visual, screenshot, browser, or canvas-governed changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2389: Re: [land-11] verifier packet — ScarletMarsh cells",
+        "evidence_ref": "Agent Mail message 2389 condition performance-budget",
+        "created_at": "2026-07-02T07:03:32.012096Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The staged payload does not introduce a governed performance-budget surface. Config load/merge/write paths are small local JSON operations and the CLI flow adds no concurrency, hot-path fanout, network calls, benchmarks, or broad scans.",
+      "evidence": [
+        "Diff inspection found no goroutines, WaitGroup/concurrency changes, network calls, benchmark changes, cache/memory-heavy structures, or latency budget changes.",
+        "internal/config/config.go adds local JSON decode/validation/merge/source sorting and write formatting over at most global plus project config files.",
+        "Focused config tests and full go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2390: Re: [land-11] verifier packet — BrightOwl cells",
+        "evidence_ref": "Agent Mail message 2390 condition autonomy-boundary",
+        "created_at": "2026-07-02T07:04:48.456395Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Config defaults can affect future agent behavior, so this cell is governed. The staged implementation constrains autonomy by requiring explicit force or robot confirm for writes, using a final interactive confirmation defaulting to No, and documenting that config init does not run setup/init/repair/completion/hook actions.",
+      "evidence": [
+        "config init help documents that it only writes the selected config file and does not run setup, init, repair, completion install, or hook wiring; it also documents --file/--force and robot confirm=true.",
+        "Robot scope/confirm handling, noninteractive wizard gating, and final confirmation prompt all route through writeConfigInit, which rejects writes without force/confirmation.",
+        "Staged-snapshot probes confirmed non-forced config init --json and robot confirm:false both returned nonzero and did not create the target .burpvalve.json.",
+        "config init -h in the staged snapshot showed confirmation defaulting to No, no setup/init/repair/completion/hook actions, and omitted fields are preserved."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T07:07:25.933857166Z"
+    }
+  ]
+}

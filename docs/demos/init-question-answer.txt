@@ -1,0 +1,27 @@
+$ burpvalve init
+
+Burpvalve init
+Answer a few questions, then Burpvalve will apply the scaffold.
+
+Install into which repo directory?
+> .
+
+Target: .
+
+Which pieces should Burpvalve set up?
+
+> [x] AGENTS.md operating contract - repo instructions for agents
+  [x] CLAUDE.md symlink - compatibility link to AGENTS.md
+  [x] docs/ - durable project knowledge
+  [x] plans/ - implementation plans and indexes
+  [x] log/ - work logs and failed backpressure reports
+  [x] backpressure/ - conditions and manifest
+  [x] backpressure attestations - tracked passing evidence
+  [x] pre-commit hook - runs commit gate and lint before git commit
+  [x] git hooksPath - points Git at .githooks/
+  [ ] repo-local bin/burpvalve - optional hook fallback
+  [x] tools/burpvalve docs - local replacement notes
+  [x] .beads - optional local task graph
+  [x] NTM bridge - optional coordination snapshot
+
+space toggles · a selects all · n selects none · enter runs init · esc cancels

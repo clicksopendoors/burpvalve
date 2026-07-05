@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8",
+  "manifest_hash": "sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "CoralGrove",
+    "model": "gpt-5.5-low"
+  },
+  "git_head_before_commit": "6df0acf165df206c8b61c29490f9366e8c7e25b2",
+  "created_at": "2026-07-05T17:17:56.361209859Z",
+  "feature": {
+    "id": "preflip-gate-closure-tracker",
+    "kind": "feature",
+    "name": "preflip-gate-closure-tracker",
+    "diff_cluster": "explicit:preflip-gate-closure-tracker"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single chore change: tracker export closing the preflip gate and old-release beads with evidence refs. One tracker export, one purpose."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:41Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: no executable lint commands are declared, but the tracker-only staged payload was inspected and git diff --cached --check passed.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:42Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: repeated close-reason/dependency JSONL structure is tracker export data, not duplicated runtime logic or parallel implementation.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:42Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: closure evidence is concrete and names command/results refs; the attestation records main_agent provenance under D-OSL-21 rather than implying independent verification.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:43Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: no code functions or behavior changed; this is a Beads tracker export only, so direct code test coverage is not triggered.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:43Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: the tracker records close the old-release and preflip-gate beads with evidence refs, dependency closure, br dep cycles empty note, and owner visibility authorization.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:43Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: close reasons preserve the evidence refs for old release deletion, re-audit, scrub commits, prefix rename, PVR deferral, and visibility authorization.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:44Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: the staged payload is exactly the handoff-specified .beads/issues.jsonl tracker export; untracked log residue was ignored and no other files were staged.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:45Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: this commit stages only tracker export data and performs no deletes, resets, force pushes, migrations, deploys, external sends, or production mutations.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:45Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: .beads/issues.jsonl parses as JSONL, br reads both affected records as closed, and the staged diff is limited to tracker record updates.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:46Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: no credentials, tokens, private keys, auth logic, tenant isolation, PII, or external API behavior are introduced by the staged tracker export.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:46Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "not_applicable",
+      "message": "Not applicable: no UI, browser, screenshot, responsive layout, canvas, image, or visual asset surface is changed.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:47Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "not_applicable",
+      "message": "Not applicable: no runtime implementation, algorithm, memory, latency, bundle, token, cost, or throughput surface is changed.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "main_agent_allowed",
+      "verifier": {
+        "kind": "main_agent",
+        "agent": "CoralGrove",
+        "model": "gpt-5.5-low",
+        "runtime": "codex-cli NTM pane (gate operator)",
+        "separate_context": true,
+        "created_at": "2026-07-05T17:17:47Z"
+      },
+      "subagent_confirmed": false,
+      "subagent_model": "gpt-5.5-low",
+      "verdict": "pass",
+      "message": "Pass: this is the orchestrator-provided Spark handoff under the D-OSL-21 main-agent verification policy; the response truthfully records main_agent provenance.",
+      "evidence": [
+        "Staged payload is exactly .beads/issues.jsonl for feature preflip-gate-closure-tracker.",
+        "Inspected staged tracker diff: burpvalve-08mt changes from open to closed with old-release deletion evidence; burpvalve-578h changes from open to closed with preflip gate evidence refs, br dep cycles empty note, and owner visibility authorization note.",
+        "JSONL parse check succeeded for 197/197 .beads/issues.jsonl rows.",
+        "br show burpvalve-08mt --json and br show burpvalve-578h --json read back both records as closed.",
+        "burpvalve lint --json reported not_enforced because no executable lint_commands are declared.",
+        "git diff --cached --check passed.",
+        "Staged payload hash sha256:8865f089d9c71137c2244e085e304e7ad39a228023ea28b2a032c5f11b4e09f8; manifest hash sha256:b8954905f3bc5e9ff936c7d9e97ff7b6adfecc541fbe3bbc6c9f08b6213c173b."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T17:17:56.361209859Z"
+    }
+  ]
+}

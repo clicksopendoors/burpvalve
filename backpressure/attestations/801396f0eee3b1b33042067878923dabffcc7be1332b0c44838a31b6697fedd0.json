@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:801396f0eee3b1b33042067878923dabffcc7be1332b0c44838a31b6697fedd0",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "MaroonCreek",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "d952dcef87c4c0e24dd27491f25967979d948b84",
+  "created_at": "2026-07-05T16:31:59.557077152Z",
+  "feature": {
+    "id": "project-readiness-kit-osl-scrub-legacy-naming-24ku",
+    "kind": "feature",
+    "name": "project-readiness-kit-osl-scrub-legacy-naming-24ku",
+    "diff_cluster": "explicit:project-readiness-kit-osl-scrub-legacy-naming-24ku"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged changes only scrub legacy project-readiness-kit naming in tracked non-excluded docs and tests for D-OSL-20 Unit 4, with semantic corrections for historical prose; .beads data and excluded evidence are not staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "Applicable lint/style rules were considered for the staged legacy-name scrub. backpressure/manifest.yaml has lint_commands: [], and burpvalve lint --json returned status not_enforced with no executable commands declared.",
+      "evidence": [
+        "Read git diff --cached for the staged payload hash sha256:801396f0eee3b1b33042067878923dabffcc7be1332b0c44838a31b6697fedd0.",
+        "Read backpressure/lint-rules.md and backpressure/manifest.yaml; lint_commands is empty.",
+        "Ran go run ./cmd/burpvalve lint --json; result status not_enforced, command_count 0, message no executable lint commands declared."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:27:48Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The refreshed legacy-naming scrub is repetitive by nature but does not add duplicate logic or a parallel implementation; repeated replacement strings are intentional examples/fixtures.",
+      "evidence": [
+        "Verified current staged payload hash with `go run ./cmd/burpvalve hash --staged --json`: sha256:801396f0eee3b1b33042067878923dabffcc7be1332b0c44838a31b6697fedd0.",
+        "Inspected `git diff --cached`: changes are targeted naming substitutions in docs and Go test fixtures, including neutral placeholders such as `\u003clegacy-prefix\u003e` and `legacy pre-Burpvalve` where preserving exact legacy text would be unsafe for launch scrub.",
+        "The staged Go files are test fixtures only; no helper, parser, branch, validation rule, loop, or production implementation is duplicated.",
+        "Repeated `burpvalve-*` examples remain local fixture/documentation values rather than shared behavior that should be extracted."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent judgment verifier pass for DRY on unit-4 refreshed staged hash.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3730 / thread project-readiness-kit-osl-scrub-legacy-naming-24ku"
+      },
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:27:48Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The refresh no longer optimizes only for a clean banned-literal grep; it also preserves the real historical meaning with neutral wording where blind replacement would mislead.",
+      "evidence": [
+        "The required grep `git grep --cached -n -I -E '(project-readiness-kit|Project Readiness Kit|PROJECT_READINESS_KIT|project readiness kit|clicksopendoors/project-readiness-kit)' -- ':!backpressure/attestations/*' ':!.beads/*' ':!log/*'` returned no hits.",
+        "A targeted consistency grep for prior failure patterns (`legacy `burpvalve``, `replacement for the legacy `burpvalve``, impossible `Original `burpvalve` ... predates the `burpvalve` name`, and `legacy `burpvalve-*` IDs`) returned no hits.",
+        "Inspected refreshed diff: prior misleading substitutions now read as `legacy pre-Burpvalve`, `legacy Beads ID prefix`, `Original readiness-kit goal file`, and `\u003clegacy-prefix\u003e-...` placeholders, preserving the scrub intent without pretending Burpvalve was the legacy name.",
+        "`go test ./...` passed after the refresh."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent judgment verifier pass for anti-reward-hacking on unit-4 refreshed staged hash.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3730 / thread project-readiness-kit-osl-scrub-legacy-naming-24ku"
+      },
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "No new production function or behavior is introduced by this staged payload; the code-side changes are test fixture/string expectation renames, and the directly affected Go packages pass their tests.",
+      "evidence": [
+        "git diff --cached --stat shows 16 modified docs/test files with 103 insertions and 103 deletions.",
+        "Inspected staged diffs for cmd/burpvalve/account_test.go, cmd/burpvalve/prompts_test.go, internal/backpressure/ownership_accounting_test.go, internal/backpressure/ownership_test.go, internal/backpressure/prompt_bank_test.go, and internal/backpressure/prompt_export_test.go; changes are fixture ID/string updates from legacy naming to burpvalve naming.",
+        "Ran go test ./cmd/burpvalve ./internal/backpressure; both packages passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:27:48Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The refreshed unit has the relevant verifier-side done evidence: current hash matched, staged diff inspected, residue and consistency greps are clean, diff/gofmt checks are clean, and tests pass. This does not claim the whole gate is complete until the remaining pane submits its cells.",
+      "evidence": [
+        "Bound to refreshed response file `log/backpressure/responses/801396f0eee3b1b33042067878923dabffcc7be1332b0c44838a31b6697fedd0.json`; initial read showed all 13 cells unknown for the new hash.",
+        "`go run ./cmd/burpvalve hash --staged --json` matched sha256:801396f0eee3b1b33042067878923dabffcc7be1332b0c44838a31b6697fedd0.",
+        "Inspected `git diff --cached` and `git diff --cached --stat` for the 16 staged paths.",
+        "`git diff --cached --check` returned no output; `gofmt -l` on the changed Go test files returned no files.",
+        "Required legacy-literal grep and targeted prior-failure consistency grep both returned no hits.",
+        "`go test ./...` passed for all packages."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent judgment verifier pass for definition-of-done on unit-4 refreshed staged hash, scoped to this pane's verifier cells.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3730 / thread project-readiness-kit-osl-scrub-legacy-naming-24ku"
+      },
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "Mechanical verification evidence is recorded in this response: staged diff inspection, condition/manifest inspection, staged grep, burpvalve lint result, and targeted Go test result.",
+      "evidence": [
+        "Read log/backpressure/responses/801396f0eee3b1b33042067878923dabffcc7be1332b0c44838a31b6697fedd0.json binding and condition hashes.",
+        "Read git diff --cached for README.md, docs, plans, cmd/burpvalve tests, and internal/backpressure tests.",
+        "git grep --cached -n project-readiness-kit over the staged changed files exited 1 with no matches.",
+        "Ran go run ./cmd/burpvalve lint --json; status not_enforced because no executable lint_commands are declared.",
+        "Ran go test ./cmd/burpvalve ./internal/backpressure; both packages passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:27:48Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The refreshed staged payload stays within unit-4 legacy-naming scrub scope and does not include the deferred Beads prefix rename or unrelated launch actions.",
+      "evidence": [
+        "`go run ./cmd/burpvalve hash --staged --json` lists 16 staged paths: README, docs/plans, and Go test fixture files only.",
+        "`git status --short` shows `.beads/issues.jsonl` modified but unstaged; `.beads/*`, `backpressure/attestations/*`, and `log/*` are not part of the refreshed staged hash.",
+        "`git diff --cached --stat` reports 16 files with balanced text substitutions (103 insertions, 103 deletions) and no new files, deletes, release artifacts, GitHub workflow/config changes, or remote/visibility controls.",
+        "The staged diff does not execute public repository creation, source repository rename, release deletion, visibility flip, About metadata update, or the disruptive Beads ID prefix rename."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent judgment verifier pass for scope-control on unit-4 refreshed staged hash.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3730 / thread project-readiness-kit-osl-scrub-legacy-naming-24ku"
+      },
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "The staged payload contains only modifications to tracked documentation and Go test files; no deletes, resets, force pushes, migrations, external sends, spending, deploys, or production mutations are present.",
+      "evidence": [
+        "git diff --cached --stat lists only modified tracked files; no deleted files or generated runtime paths are staged.",
+        "Read the staged diff; changes are legacy-name text replacements in docs and test fixtures.",
+        "Verifier actions were read-only except for burpvalve verifier submit writes to the bound responses file."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "No persisted data format, migration, idempotency, dedupe, backup, or audit-trail code is changed. The staged test fixture ID replacements are internally consistent in the affected assertions.",
+      "evidence": [
+        "git status showed .beads/issues.jsonl modified but not staged; the staged payload does not include Beads data mutation.",
+        "Inspected ownership and prompt test diffs; fixture IDs and expected strings were updated consistently from legacy names to burpvalve names.",
+        "Ran go test ./cmd/burpvalve ./internal/backpressure; both packages passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 6",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:27:48Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The refreshed legacy-naming scrub removes the targeted legacy literal from non-excluded staged content without adding secrets, credentials, IP addresses, local infrastructure, or permission changes.",
+      "evidence": [
+        "The required staged legacy-literal grep returned no hits outside excluded paths.",
+        "Inspected `git diff --cached`: changes are text fixture/doc naming substitutions and neutral placeholders; no credentials, token values, hostnames, IP addresses, private endpoints, or local machine paths are introduced by the staged diff.",
+        "A broad staged keyword scan found existing prose mentions of tokens/secrets/security concepts, but not newly added credential material in the staged diff.",
+        "No staged file changes authentication, authorization, tenant isolation, sandbox behavior, external API credentials, GitHub permissions, repository visibility, or security reporting controls."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent judgment verifier pass for security-boundaries on unit-4 refreshed staged hash.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3730 / thread project-readiness-kit-osl-scrub-legacy-naming-24ku"
+      },
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "Visual regression checks are not materially triggered: the staged payload has no UI, browser, responsive layout, canvas, image, or visual asset changes.",
+      "evidence": [
+        "git diff --cached --name-only lists README/docs/plans Markdown files and Go test files only.",
+        "No frontend, screenshot, browser, canvas, CSS, image, or visual asset paths are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "The staged payload does not alter runtime implementation, algorithms, I/O paths, bundle size, network behavior, or cost-bearing behavior; no performance budget threshold is implicated.",
+      "evidence": [
+        "git diff --cached shows documentation wording updates and Go test fixture string replacements only.",
+        "No production Go source files outside tests are staged.",
+        "Ran go test ./cmd/burpvalve ./internal/backpressure; both packages passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CrimsonSpring",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli NTM pane",
+        "separate_context": true,
+        "created_at": "2026-07-05T16:31:59.557077152Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "This verifier acted within the announced autonomy boundary: only the explicitly assigned mechanical cells for unit4-round2 were evaluated and submitted; CloudyEagle-owned judgment cells were not touched.",
+      "evidence": [
+        "Read the round announcement assigning CrimsonSpring all cells except dry, anti-reward-hacking, scope-control, security-boundaries, and definition-of-done.",
+        "Submitted only lint-rules, one-function-one-test, evidence-log, destructive-operations, data-integrity, visual-regression, performance-budget, and autonomy-boundary.",
+        "No implementation files were edited by this verifier; only the bound responses file was updated via burpvalve verifier submit."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T16:31:59.557077152Z"
+    }
+  ]
+}

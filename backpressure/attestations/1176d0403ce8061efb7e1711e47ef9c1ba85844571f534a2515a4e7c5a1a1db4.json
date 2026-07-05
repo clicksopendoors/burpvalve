@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:1176d0403ce8061efb7e1711e47ef9c1ba85844571f534a2515a4e7c5a1a1db4",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5-medium"
+  },
+  "git_head_before_commit": "131f58838afb2a6ef32dd206426a6fc4379f1b7a",
+  "created_at": "2026-07-02T16:25:18.102351334Z",
+  "feature": {
+    "id": "project-readiness-kit-lint-setup-probe-concurrency-tfu",
+    "kind": "feature",
+    "name": "project-readiness-kit-lint-setup-probe-concurrency-tfu",
+    "diff_cluster": "explicit:project-readiness-kit-lint-setup-probe-concurrency-tfu"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is exactly the setup inspect probe concurrency bead: internal/scaffold Inspect concurrency plus direct tests; unrelated worktree changes are unstaged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2705",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged Go scaffold changes are formatted, hash-bound, and mechanically clean for this lint/setup-probe slice.",
+      "evidence": [
+        "Verified current staged payload with git diff --cached --name-status: M internal/scaffold/inspect.go and M internal/scaffold/inspect_test.go only.",
+        "git diff --cached --check produced no output; gofmt -l on the two staged files produced no output in a temp staged-index snapshot.",
+        "In an isolated temp Git worktree from HEAD with the cached patch applied to its index, verifier prompts regenerated the expected staged hash sha256:1176d0403ce8061efb7e1711e47ef9c1ba85844571f534a2515a4e7c5a1a1db4 and manifest hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The implementation introduces one small concurrency helper and reuses existing inspect check functions instead of duplicating check semantics.",
+      "evidence": [
+        "BrightOwl verified inspectProbe/runInspectProbes wraps existing gitHooksPathCheck, burpvalveToolCheck/repoLocalBurpvalveFallbackCheck, gitDirtyCheck, and ntmCheck without duplicating their status logic.",
+        "BrightOwl verified the tool/fallback dependency remains in one probe, preserving fallback behavior.",
+        "Staged-snapshot go test ./... passed with only the staged payload applied."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The concurrent setup probes do not create fake readiness: probe results still come from the same check functions, failures remain independent checks, report ordering is preserved, and the report remains non-mutating.",
+      "evidence": [
+        "BrightOwl verified runInspectProbes only parallelizes preGit and postGit probe functions, then appends results by probe index into the existing report.Checks order.",
+        "BrightOwl verified TestInspectRunsIndependentSetupProbesConcurrently asserts statuses and exact check order after concurrent probe execution.",
+        "ScarletMarsh independently agreed the payload does not fake concurrency: the blocking runner proves actual overlap rather than just changing call-order expectations."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2705",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The concurrent setup probe behavior and stable output order are directly covered by tests.",
+      "evidence": [
+        "ScarletMarsh inspected staged internal/scaffold/inspect_test.go and found TestInspectRunsIndependentSetupProbesConcurrently with a blocking runner that only releases when watched independent probes both start.",
+        "The test asserts check-order stability so concurrent probe execution does not reorder the report.",
+        "Temp staged-index snapshot focused scaffold tests and focused scaffold/cmd tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload meets the setup-probe concurrency contract: the hash matches, only the two scaffold files are staged, concurrency/order/failure behavior is tested, race-targeted scaffold tests passed, and full staged-snapshot tests passed.",
+      "evidence": [
+        "git diff --cached --name-status: staged payload is exactly M internal/scaffold/inspect.go and M internal/scaffold/inspect_test.go.",
+        "BrightOwl reproduced staged hash sha256:1176d0403ce8061efb7e1711e47ef9c1ba85844571f534a2515a4e7c5a1a1db4.",
+        "Staged-snapshot commands passed: go test ./internal/scaffold ./cmd/burpvalve -run 'Test.*Inspect|Test.*SetupProbe|Test.*ConcurrentProbe' -count=1, go test -race ./internal/scaffold -run 'Test.*Inspect|Test.*SetupProbe|Test.*ConcurrentProbe' -count=1, and go test ./...."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2705",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Evidence is recorded with exact commands and observations, including the live dirty-worktree caveat avoided by using isolated staged-index snapshots.",
+      "evidence": [
+        "Packet 2702 supplied feature id, target staged hash, manifest hash, staged paths, and condition assignments.",
+        "ScarletMarsh independently regenerated the staged hash in a temp Git worktree with the cached patch applied to its index; it matched sha256:1176d0403ce8061efb7e1711e47ef9c1ba85844571f534a2515a4e7c5a1a1db4.",
+        "ScarletMarsh ran staged-index source inspection, diff check, gofmt check, focused scaffold tests, focused scaffold/cmd tests, and full go test ./... in a temp staged-index snapshot."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice is scoped to scaffold inspect probe concurrency and its tests; unrelated dirty worktree files are not part of the hash-bound payload.",
+      "evidence": [
+        "BrightOwl verified git diff --cached --stat is limited to internal/scaffold/inspect.go and internal/scaffold/inspect_test.go.",
+        "BrightOwl verified no lint runner, wizard, CLI prompt/state-machine, config, docs, or backpressure files are staged.",
+        "ScarletMarsh independently agreed staged paths are exactly the two scaffold inspect files."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed inspect surface remains read-only: the change parallelizes existing readiness probes but does not add write, repair, install, delete, package-manager, or hook mutation paths.",
+      "evidence": [
+        "BrightOwl verified Inspect still constructs a Report with Mutating false and runs path/stat checks plus read-only runner probes; no write calls were added in the staged diff.",
+        "BrightOwl verified runInspectProbes only executes probe.run functions and stores []Check results; write/repair code paths are not called from the new helper.",
+        "New goroutines are confined to internal/scaffold/inspect.go and inspect tests."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Report data integrity is preserved: concurrent probes write to a pre-sized result slice by index, appending happens after Wait, and tests assert stable check order plus set-equivalent runner calls where call order is intentionally concurrent.",
+      "evidence": [
+        "runInspectProbes creates results := make([][]Check, len(probes)); each goroutine assigns results[i]; Wait completes; Inspect appends checks by iterating results in order.",
+        "TestInspectCompleteFixtureWithReadOnlyCommands now sorts runner.Calls because command call order can vary, while TestInspectRunsIndependentSetupProbesConcurrently asserts report checkIDs remain exactly ordered.",
+        "Staged-snapshot go test -race ./internal/scaffold -run 'Test.*Inspect|Test.*SetupProbe|Test.*ConcurrentProbe' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The concurrency change does not widen command authority: it runs the same explicit git/ntm readiness probes through the existing Runner/Looker interfaces with existing per-check timeouts and without shell string execution.",
+      "evidence": [
+        "BrightOwl verified gitIgnored, gitHooksPathCheck, gitDirtyCheck, and ntmCheck still call runner.Run with explicit command/arg vectors and context timeouts; no shell or user-supplied command construction was added.",
+        "The only new production import is sync, and the helper bounds concurrent probe execution with a semaphore rather than adding new external commands.",
+        "ScarletMarsh independently agreed no new command names, services, network calls, auth flows, secret handling, or filesystem mutations were added."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2705",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload changes backend scaffold inspection concurrency and Go tests only: internal/scaffold/inspect.go and internal/scaffold/inspect_test.go. It does not touch browser UI, screenshots, responsive layout, canvas, image assets, terminal rendering, or any visual output surface.",
+      "evidence": [
+        "ScarletMarsh verified staged payload paths with git diff --cached --name-status and regenerated staged prompt hash in an isolated temp Git worktree.",
+        "ScarletMarsh inspected staged diff; changes are probe orchestration, fake runner synchronization, and tests for report/check order."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The intended performance improvement is bounded: independent probes can overlap, but concurrent work is capped at four active probes and dependent tool/fallback checks remain grouped to avoid extra work.",
+      "evidence": [
+        "runInspectProbes sets limit to len(probes) capped at 4 and uses a semaphore channel before running each probe.",
+        "preGitProbes groups hook-path separately from tool/fallback, and postGitProbes groups dirty separately from optional ntm, so only independent readiness checks are overlapped.",
+        "The blockingRunner test waits for both watched independent commands to start before release, proving the intended overlap would fail if probes were sequential."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2706",
+        "created_at": "2026-07-02T16:25:18.102351334Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Agent-facing setup output remains deterministic and inspect-only: JSON/human report order is preserved, optional NTM/fallback probe failures remain reported as checks rather than hidden blockers, and no lint runner or wizard behavior changes are staged.",
+      "evidence": [
+        "TestInspectRunsIndependentSetupProbesConcurrently asserts exact report check order across concurrent probes, including optional ntm after git-dirty.",
+        "Report PlannedChanges, Summary, Status, Fatal, PartialSuccess, NextSteps, and readiness facts are still computed only after all checks are appended in stable order.",
+        "git diff --cached --name-status shows only internal/scaffold inspect files are staged, so lint runner behavior and wizard prompt/state-machine behavior are not changed by this payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:25:18.102351334Z"
+    }
+  ]
+}

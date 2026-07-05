@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:8f2e2721bb8b6e38adc57b6ba3f63195a91da9e052b3d4d58638f8ed81c6ac8e",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "ca82a9cfae915d86e184e7ad83e38a72830e9567",
+  "created_at": "2026-07-04T23:42:06.687080555Z",
+  "feature": {
+    "id": "diff:.",
+    "kind": "feature",
+    "name": "staged changes in .",
+    "diff_cluster": "."
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single docs-only change: extends this repo's ORCHESTRATOR.md with the 2026-07-05 owner-ruled operating standards (polling standard, model/effort tiering, Agent Mail registration mandate, monitoring discipline additions). One file, one purpose."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Applicable docs/style surface was inspected. The staged payload is readable markdown operating-standard text with no fake lint enforcement, code, generated files, or analyzer changes; the lint-rules file names no executable markdown lint command beyond attestation consideration.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/lint-rules.md says a rule is enforced only after this file names the command or analyzer that checks it.",
+        "ORCHESTRATOR.md lines 31-101 add structured markdown headings and bullets; no code or lint command changes are staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:18Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged documentation adds local operating standards to a single orchestrator sidecar file. Some wording intentionally overlaps existing orchestration guidance, but it is consolidated into topic-specific sections for the active repo and does not introduce duplicated logic, parallel implementations, or copy-pasted tests.",
+      "evidence": [
+        "git diff --cached --name-status shows one staged file: ORCHESTRATOR.md modified.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md and no other staged payload paths.",
+        "The additions are grouped into distinct sections: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration.",
+        "The repeated concepts are intentional repo-local operating standards for the orchestrator, not executable duplicate behavior or alternate implementations."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:18Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged standards directly reduce superficial completion signals by requiring artifact-based polling, receipt confirmation, pane/model provenance, Agent Mail identities, and explicit timeout or dispatch decisions instead of trusting scrollback, wakes, or idle panes as success.",
+      "evidence": [
+        "Monitoring Discipline requires dispatching the next unblocked unit after every gate or explicitly recording why none is dispatchable.",
+        "The stale-scrollback rule says the artifact, not the pane tail, is the completion signal, and requires two idle polls plus verification against findings, responses, or inbox artifacts.",
+        "Receipt confirmation requires confirming sends or wakes via ntm tail or attention events, stating that an unconfirmed send is not a dispatch.",
+        "Model And Effort Tiering requires deliberate spawn-time effort selection, dispatch-note recording, and no mid-verification tier changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload is a repo-local operating-notes documentation edit, not executable function or behavior code. No function-level implementation surface exists for this condition to require direct test coverage.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/one-function-one-test.md governs new or changed behavior requiring direct test coverage.",
+        "Only ORCHESTRATOR.md is staged; no Go source, template contract, or executable behavior file is staged in this payload."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:18Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "For this docs-only ORCHESTRATOR.md edit, the done evidence is complete staged-surface review plus clean staged whitespace validation; no code tests are applicable to this payload.",
+      "evidence": [
+        "The packet staged_payload_hash is sha256:8f2e2721bb8b6e38adc57b6ba3f63195a91da9e052b3d4d58638f8ed81c6ac8e and lists only ORCHESTRATOR.md as modified.",
+        "git diff --cached --stat shows ORCHESTRATOR.md changed with 72 insertions and no other staged files.",
+        "Manual staged diff review covered all added sections: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration.",
+        "git diff --cached --check completed with no output, indicating no staged whitespace errors. No code tests were run because the payload is documentation-only and does not change executable code or templates."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed evidence-log surface was inspected. The additions strengthen artifact-based monitoring, NTM evidence capture, registered identity provenance, and completion evidence requirements.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/evidence-log.md asks agents to record evidence before closing work.",
+        "ORCHESTRATOR.md lines 36-40 require a background poller to watch concrete evidence artifacts and terminate with a result.",
+        "ORCHESTRATOR.md lines 50-54 say findings files, responses files, and inbox artifacts are completion signals, not pane tails.",
+        "ORCHESTRATOR.md lines 66-69 require before/after NTM snapshots and evidence recorded with the active bead or attestation notes.",
+        "ORCHESTRATOR.md lines 98-101 require Agent Mail identities to be recorded with evidence for findings, reservations, verifier provenance, and adjudications."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:18Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is scoped to the requested ORCHESTRATOR.md operating standards additions. It does not stage code, templates, hooks, Beads data, generated evidence, or unrelated documentation changes.",
+      "evidence": [
+        "The packet feature paths list only ORCHESTRATOR.md.",
+        "git diff --cached --name-status confirms only ORCHESTRATOR.md is staged.",
+        "The staged diff adds four operating-standard sections covering monitoring discipline, polling standard, model/effort tiering, and Agent Mail registration.",
+        "git status shows unstaged changes in .beads/issues.jsonl, docs/decisions-2026-07-02-review-round.md, and log/backpressure/failed/20260704T215635Z-blocked.json; those are not part of this staged payload hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive-operation surface: no staged deletes, resets, force pushes, migrations, external sends, spend changes, deploys, or production mutations. It only adds operating-standard documentation.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/destructive-operations.md governs risky commands and irreversible changes.",
+        "git diff --cached --name-status lists only M ORCHESTRATOR.md; no D entries or scripts are staged.",
+        "The added NTM guidance requires snapshot verification around state-changing NTM actions, but does not authorize destructive commands or irreversible changes."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an audit-trail/state-verification surface and satisfies it by requiring concrete completion artifacts, before/after NTM snapshots, and registered Agent Mail identities as audit references.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/data-integrity.md includes audit trails and persisted-state invariants in its governed scope.",
+        "ORCHESTRATOR.md lines 60-69 require receipt confirmation, HEAD-advance monitoring, and before/after NTM snapshots with evidence recorded for active beads or attestation notes.",
+        "ORCHESTRATOR.md lines 98-101 define registered identities as audit-trail references for findings, reservations, verifier provenance, and adjudications."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:18Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged documentation touches coordination and audit-boundary policy and narrows it by requiring Agent Mail registration, contact-mesh preapproval, provenance recording, and state verification. It introduces no secrets, auth flow, tenant/PII handling, sandbox permission, or external API behavior changes.",
+      "evidence": [
+        "Agent Mail Registration requires every codex sub-agent in the NTM session to register with project key /home/ubuntu/Projects/burpvalve before starting work and to include program, model, and assigned task description.",
+        "The contact-mesh rule requires pre-approving expected communication paths so finished work is not blocked behind pending contact approval.",
+        "The NTM evidence rule requires snapshot evidence before and after state-changing NTM actions and treats missing after-state as unverified.",
+        "The staged diff is documentation-only in ORCHESTRATOR.md and contains no credential values, credential storage changes, auth code, tenant or PII data handling, network client changes, or sandbox policy code."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no visual UI/browser/canvas/responsive layout surface; screenshot or visual-diff checks are not applicable to a markdown-only ORCHESTRATOR.md edit.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/visual-regression.md governs screenshot, browser, responsive layout, canvas, and visual-diff checks.",
+        "No frontend, CSS, rendering, screenshot, browser automation, image, or canvas files are staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has a governed token/cost/capacity surface and satisfies it by explicitly tiering model effort, protecting the shared account window, and avoiding xhigh spend for mechanical lookup work.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/performance-budget.md governs token, cost, throughput, and related thresholds.",
+        "ORCHESTRATOR.md lines 71-86 define xhigh/high/medium/lower effort tiers, explain shared account-window rationale, and require respawning at the right tier instead of paying xhigh for lookups.",
+        "ORCHESTRATOR.md lines 83-86 require recording model/effort in dispatch notes and changing running panes only between rounds."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:40:54.28836Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an autonomy-governed coordination surface and satisfies it by constraining orchestrator/worker roles, dispatch monitoring, pane promotion, contact policy, registration, and evidence provenance.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: ORCHESTRATOR.md.",
+        "git diff --cached --stat shows 72 insertions in ORCHESTRATOR.md; git diff --cached --name-status lists only M ORCHESTRATOR.md.",
+        "The staged diff is docs-only operating-standard text: Monitoring Discipline, Polling Standard, Model And Effort Tiering, and Agent Mail Registration sections.",
+        "backpressure/autonomy-boundary.md governs what agents may take independently and what evidence must be presented.",
+        "ORCHESTRATOR.md lines 8-29 constrain the Claude orchestrator role, prohibit self-implemented/verifier payload work, and require codex-produced verdicts for codex evidence.",
+        "ORCHESTRATOR.md lines 31-46 require dispatch/monitoring discipline and fresh ntm snapshot checks before wakes.",
+        "ORCHESTRATOR.md lines 55-69 define contact mesh, receipt confirmation, self-promotion, and NTM evidence rules.",
+        "ORCHESTRATOR.md lines 88-97 require Agent Mail registration before work and state an unregistered pane is not considered dispatched."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only ORCHESTRATOR.md operating standards additions; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-orchmd2.json"
+      },
+      "timestamp": "2026-07-04T23:42:06.687080555Z"
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:b027afbbd3866dc39a2b3b07f9f3aba0fce119dd0113b26888196445004c66b8",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "c09dfee15d3a43761cdf9035c95370e1c2b49a0e",
+  "created_at": "2026-07-03T23:05:26.211254484Z",
+  "feature": {
+    "id": "project-readiness-kit-osl-readme-docs-rewrite-skills-0u59",
+    "kind": "feature",
+    "name": "project-readiness-kit-osl-readme-docs-rewrite-skills-0u59",
+    "source_bead": "project-readiness-kit-osl-readme-docs-rewrite-skills-0u59",
+    "bead_ids": [
+      "project-readiness-kit-osl-readme-docs-rewrite-skills-0u59"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-osl-readme-docs-rewrite-skills-0u59"
+  },
+  "bead_ids": [
+    "project-readiness-kit-osl-readme-docs-rewrite-skills-0u59"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single OSL public-docs rewrite work unit: README restructure, source-grounded architecture refresh, security wording cleanup, findings C29 fold-in, and skill metadata alignment for the same pre-flip documentation bead."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533 plus refreshed implementer checks after c09dfee",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The docs/skill payload is mechanically clean for the configured lint surface, and the prior prompt-list test gap is fixed on current HEAD.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 reproduced the hash in an isolated temp clone, verified exactly the five packet paths, git diff --cached --check passed, jsm validate skill/burpvalve passed, and burpvalve lint --json returned status:not_enforced fatal:false command_count:0.",
+        "WhiteGorge refreshed after c09dfee with the same staged hash and ran go test ./..., which passed; no Go or runtime files are part of this staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3534",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Single coherent public-facing documentation rewrite; no duplicated competing implementation narrative in the staged slice.",
+      "evidence": [
+        "BrightOwl Agent Mail 3534 reconstructed the slice from /tmp/WhiteGorge-osl-readme-docs-rewrite-content.patch in an isolated temp clone and reproduced staged hash sha256:b027afbbd3866dc39a2b3b07f9f3aba0fce119dd0113b26888196445004c66b8 with exactly five paths.",
+        "BrightOwl reported git diff --cached --stat showed 5 files changed, consistent with a consolidation rewrite, and duplicate finding-ID check returned no duplicates."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3534",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The rewrite does not pretend the repo is already public-ready and keeps launch gates and not_enforced lint wording honest.",
+      "evidence": [
+        "BrightOwl Agent Mail 3534 inspected README and SECURITY staged content and found pre_public_launch status, MIT license, pinned install guidance, not_enforced lint explanation, visibility-flip gating, and PVR activation deferral.",
+        "BrightOwl scanned the staged docs for stale private/proprietary/main-ref install claims and found no obsolete private install or proprietary public-surface claims; go install hits were rejection guidance."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The payload changes docs and skill metadata/instructions only; no function or executable behavior requires a paired test.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 verified the reproduced staged path list contains only Markdown docs and skill/burpvalve/SKILL.md.",
+        "ScarletMarsh reported no .go, shell script, workflow, test, or runtime source file is part of the reproduced hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3534 plus refreshed implementer checks after c09dfee",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Relevant docs/skill checks and the refreshed full test suite pass on the current tree.",
+      "evidence": [
+        "BrightOwl Agent Mail 3534 reproduced the staged hash, git diff --cached --check passed, jsm validate skill/burpvalve passed, and burpvalve lint --json returned not_enforced/fatal false/command_count 0.",
+        "WhiteGorge refreshed after c09dfee with the same staged hash and ran go test ./..., which passed for all Go packages; jsm validate skill/burpvalve and burpvalve lint --json also passed/not_enforced as expected."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The packet supplied hash-bound artifacts and the verifier independently reproduced the hash; the implementer evidence wording about em dashes was corrected before gate reporting.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 verified the prompt packet had 13 condition IDs and reproduced staged hash sha256:b027afbbd3866dc39a2b3b07f9f3aba0fce119dd0113b26888196445004c66b8 from /tmp/WhiteGorge-osl-readme-docs-rewrite-content.patch.",
+        "ScarletMarsh found two added em dash headings in docs/dogfooding-findings-2026-07.md and noted this was an evidence-claim correction, not a failing rule; WhiteGorge did not repeat the no-em-dash claim in gate reporting."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3534",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload stays inside the named README/docs rewrite plus skill metadata/public-distribution surface.",
+      "evidence": [
+        "BrightOwl Agent Mail 3534 verified git diff --cached --name-status listed only README.md, SECURITY.md, docs/ARCHITECTURE.md, docs/dogfooding-findings-2026-07.md, and skill/burpvalve/SKILL.md.",
+        "BrightOwl inspected the staged diff and found README consolidation, SECURITY disclosure wording, and skill frontmatter metadata only, with no code, workflow, installer, tracker, or unrelated generated artifacts staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The reproduced payload is documentation and skill metadata/instructions and does not add destructive commands or bypass guidance.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 reported git diff --cached --numstat showed only text changes across the five packeted files.",
+        "ScarletMarsh found no scripts, hooks, binaries, workflows, installer implementation, executable permission surface, rm -rf, reset/checkout cleanup flows, or --no-verify bypass instructions in the staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload keeps public-launch metadata and findings-log numbering internally consistent for checked surfaces.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 found skill frontmatter license: MIT and distribution: public, README status/license badges, and SECURITY private reporting URL plus pre-flip activation gate.",
+        "ScarletMarsh duplicate-heading check for docs/dogfooding-findings-2026-07.md produced no duplicate IDs and confirmed C29/C30 and next marker C31 alignment."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3534",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The SECURITY surface gives a concrete GitHub security URL, avoids false activation claims, and keeps PVR activation bound to the visibility-flip gate.",
+      "evidence": [
+        "BrightOwl Agent Mail 3534 inspected staged SECURITY.md and found the GitHub security URL, public-exploit-issue warning, and private reporting activation/working-channel deferral before public visibility.",
+        "BrightOwl scanned the staged diff for secrets, destructive commands, or stale private/proprietary install claims and found only documentation/security/license/go-install-rejection additions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The payload is Markdown documentation and skill metadata text, with no UI layout, screenshots, CSS, image output, or TUI rendering surface.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 verified the reproduced staged path list contains README.md, SECURITY.md, docs/ARCHITECTURE.md, docs/dogfooding-findings-2026-07.md, and skill/burpvalve/SKILL.md only.",
+        "ScarletMarsh reported no staged image, stylesheet, template renderer, VHS tape, or terminal UI fixture is present."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3533",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The payload is docs-only and does not change runtime code, dependencies, binaries, workflows, network behavior, or performance-sensitive paths.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 3533 verified only documentation and skill metadata/instruction files are in the reproduced hash.",
+        "ScarletMarsh reported no go.mod, source package, installer script, CI workflow, benchmark, or binary-size-affecting artifact is in the reproduced hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3534",
+        "created_at": "2026-07-03T23:05:26.211254484Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The docs preserve human/owner control over launch and agent authority.",
+      "evidence": [
+        "BrightOwl Agent Mail 3534 inspected README and found JSON/robot command guidance, commit evidence requirements, explicit non-replacement of human review, and launch-gate limitations.",
+        "BrightOwl inspected skill/burpvalve/SKILL.md and docs/dogfooding-findings-2026-07.md and found the skill keeps human-vs-agent evidence boundaries while C29/C30 reinforce claim and tracker-mutation discipline."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T23:05:26.211254484Z"
+    }
+  ]
+}

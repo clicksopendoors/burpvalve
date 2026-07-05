@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:4d6481532944b05ffdd58a7f75ba303507ee11523d825d7e0a3072f4c10f47cc",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5-medium"
+  },
+  "git_head_before_commit": "372db528546ccffddc8aa4ed9243b03e4bc885da",
+  "created_at": "2026-07-02T14:40:11.82986859Z",
+  "feature": {
+    "id": "project-readiness-kit-lint-unit-e-detection-l7k",
+    "kind": "feature",
+    "name": "project-readiness-kit-lint-unit-e-detection-l7k",
+    "diff_cluster": "explicit:project-readiness-kit-lint-unit-e-detection-l7k"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged diff is exactly one Unit E feature slice: two new files, internal/backpressure/lint_detect.go and internal/backpressure/lint_detect_test.go, adding bounded Go and Node/Astro lint detection facts/candidate commands plus focused tests. No CLI wizard, manifest writer, config storage, CI parsing, or unrelated runtime changes are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 lint-rules",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The lint-detection rules are bounded and command-backed: Go candidates are standard Go commands only when go is available, Node candidates come only from exact existing allowed scripts, and generated/vendor directories are excluded.",
+      "evidence": [
+        "git diff --cached --name-status showed only A internal/backpressure/lint_detect.go and A internal/backpressure/lint_detect_test.go for this staged slice.",
+        "git show :internal/backpressure/lint_detect.go found nodeLintScriptNames limited to lint, test, typecheck, check, build, format:check; Go commands are go test ./..., go vet ./..., and gofmt check, proposed only when GoAvailable is true.",
+        "git show :internal/backpressure/lint_detect_test.go found tests for single Go root, exact Node scripts, polyglot, multi-node roots, excluded node_modules/vendor/dist/docs/demos/generated, missing Go, and package-manager lockfile selection.",
+        "Temporary staged snapshot focused lint-detect tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 dry",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged implementation factors repeated decisions into small helpers instead of duplicating detection logic across Go, Node, command generation, path normalization, and tests.",
+      "evidence": [
+        "BrightOwl inspected separate helpers DetectLintSetup, shouldSkipLintDetectionDir, detectNodeRoot, readLintPackageScripts, detectNodePackageManager, lintDetectionIsMultiRoot, lintDetectionCandidateCommands, lintCandidateCommand, nodeRunCommand, lintCommandIDPart, and normalizeDetectedRootPath.",
+        "BrightOwl found shared test helpers for tool lookup and root/command extraction rather than repeated extraction code in each test.",
+        "git diff --cached --check passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 anti-reward-hacking",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The implementation does not inflate lint coverage claims: it reports detection facts and candidate commands only from bounded first-increment evidence, and missing Go keeps facts without proposing non-runnable Go commands.",
+      "evidence": [
+        "BrightOwl checked the bead scope: bounded Go/Node detection, no CI parsing, no other languages, and no enforcement claim unless a command/analyzer runs.",
+        "BrightOwl verified CandidateCommands are derived only from detected Go roots with GoAvailable or exact Node package scripts; missing Go does not generate Go commands.",
+        "BrightOwl verified tests include missing-Go and exact-script assertions, including rejecting format when only format:check is allowed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 one-function-one-test",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The public detection behavior and important helper branches are covered by focused tests for every behavior named in the bead.",
+      "evidence": [
+        "BrightOwl verified tests for single Go root, single Node root exact scripts, Go+Node polyglot, multiple Node packages, excluded generated/vendor dirs, missing Go, and package manager lockfile selection.",
+        "The staged tests cover exact-script filtering, excluded directories, multi-root heuristic, missing Go path, and each lockfile manager case named in the bead.",
+        "Temporary staged snapshot focused lint-detect tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 definition-of-done",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice meets the Unit E done criteria: it adds non-mutating Go/Node detection, candidate command generation, exact-script and lockfile behavior, exclusions, multi-root flags, and focused tests; full tests pass in a staged snapshot.",
+      "evidence": [
+        "BrightOwl checked br show project-readiness-kit-lint-unit-e-detection-l7k --json against the implementation.",
+        "BrightOwl verified exported LintDetection/LintGoRoot/LintNodeRoot facts and DetectLintSetup candidate command generation.",
+        "Temporary staged snapshot focused lint-detect tests passed.",
+        "Temporary staged snapshot go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2618",
+        "evidence_ref": "Agent Mail message 2618 evidence-log",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The packet and staged code provide traceable evidence for the detector behavior, including staged payload hash, manifest hash, condition hashes, staged path details, and tests for the stated cases.",
+      "evidence": [
+        "ScarletMarsh verified staged_payload_hash sha256:4d6481532944b05ffdd58a7f75ba303507ee11523d825d7e0a3072f4c10f47cc and manifest_hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5 from the packet JSON.",
+        "Packet staged_payload_details lists both lint detection files as hash_included=true and generated=false.",
+        "ScarletMarsh ran focused tests and go test ./... in a clean index snapshot; direct worktree tests were not used because unrelated dirty cmd/burpvalve/main.go had build errors."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 scope-control",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays inside Unit E's bounded detection scope and does not implement deferred wizard flow, CI parsing, other languages, config storage, or file mutation.",
+      "evidence": [
+        "git diff --cached --name-status listed only the two new internal/backpressure lint detection files.",
+        "BrightOwl noted unrelated worktree changes were unstaged and not part of this packet's staged payload.",
+        "BrightOwl verified no CLI/wizard/config files are staged and no CI parser or Python/Rust detection is present."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2618",
+        "evidence_ref": "Agent Mail message 2618 destructive-operations",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The detector reads repo files and proposes commands as data; it does not execute candidate commands, write files, delete files, reset git state, send network requests, or perform external mutations.",
+      "evidence": [
+        "ScarletMarsh inspected staged code and found filepath.WalkDir, os.ReadFile, os.Stat, and exec.LookPath; no exec.Command, WriteFile, Remove/RemoveAll, git reset/clean, rm -rf, or network URL additions are present.",
+        "DetectLintSetup only builds LintDetection and CandidateCommands; candidate commands are strings inside lintconfig.Command, not executed by this code.",
+        "Tests write only to t.TempDir fixtures through existing test helpers."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 data-integrity",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The detection facts are deterministic and preserve relevant data: roots are normalized/sorted, package manager and lockfile are retained, exact scripts are retained in allowed order, and command IDs are sanitized.",
+      "evidence": [
+        "BrightOwl verified filepath.Abs/defaultRoot, filepath.WalkDir, filepath.Rel plus filepath.ToSlash normalization, sorting of GoRoots and NodeRoots, and normalized root paths using '.'.",
+        "BrightOwl verified detectNodePackageManager returns both manager and lockfile and lintCommandIDPart lowercases/sanitizes command ID components.",
+        "BrightOwl verified tests assert root paths, package manager lockfile selection, exact script list order, node root ordering, and generated/vendor exclusion."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2616",
+        "evidence_ref": "Agent Mail message 2616 security-boundaries",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed security surface was inspected. The code reads package metadata and lockfile presence but does not execute discovered scripts, mutate project files, read environment secrets, or cross into auth/tenant/PII behavior.",
+      "evidence": [
+        "BrightOwl's mutation/execution API scan found os.ReadFile and os.Stat plus command-string construction; no os.WriteFile/Create/Mkdir/Remove/Rename/Chmod/OpenFile or exec.Command Run/Start/Output calls are present.",
+        "BrightOwl verified LookPath only checks Go availability, while Node scripts are parsed as json.RawMessage keys and converted to candidate command strings, not run.",
+        "Temporary staged snapshot go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2618",
+        "evidence_ref": "Agent Mail message 2618 visual-regression",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no governed visual surface: it adds backend lint-detection logic and tests, not UI, screenshots, responsive layout, canvas, or visual-diff behavior.",
+      "evidence": [
+        "git diff --cached --name-status lists only internal/backpressure/lint_detect.go and internal/backpressure/lint_detect_test.go as new files.",
+        "backpressure/visual-regression.md governs screenshot, browser, responsive layout, canvas, and visual-diff checks; none of those surfaces are changed by this staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2618",
+        "evidence_ref": "Agent Mail message 2618 performance-budget",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The detector does a single repo WalkDir, skips known heavy/generated directories, reads only go.mod/package.json/lockfile metadata, and produces bounded candidate command slices. No unbounded command execution, network work, or concurrency fanout is introduced.",
+      "evidence": [
+        "DetectLintSetup uses filepath.WalkDir once over the root and shouldSkipLintDetectionDir skips .git, node_modules, vendor, dist, and docs/demos/generated, including nested prefixes.",
+        "The detector reads package.json files only when encountered, checks local lockfile names with os.Stat, sorts discovered roots, and appends a small fixed set of candidate commands per root/script.",
+        "Clean index snapshot passed go test ./...; focused detection tests include excluded generated/vendor dirs and multi-root behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2618",
+        "evidence_ref": "Agent Mail message 2618 autonomy-boundary",
+        "created_at": "2026-07-02T14:40:11.82986859Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged detector stays within autonomous discovery: it returns facts and candidate lint commands, marks multi-root repos as needing scoped setup, and does not apply config, install dependencies, or mutate project files without a later user/setup step.",
+      "evidence": [
+        "LintDetection includes GoRoots, NodeRoots, MultiRoot, NeedsScopedSetup, and CandidateCommands as data returned to callers.",
+        "lintDetectionIsMultiRoot sets NeedsScopedSetup for Go+Node or multiple roots, matching the approved direction that scoped lint setup becomes a first-class question rather than silently applying global commands.",
+        "No staged code writes backpressure/manifest.yaml, project config, package manager files, or hooks; command generation is advisory data only."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T14:40:11.82986859Z"
+    }
+  ]
+}

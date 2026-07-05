@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:ee1042a6fa3d7ab5b4af700d4cac70f74cdb9d3ce0a09d8b5ccdac714ee179ba",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "ScarletOwl",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "6a351e8e9ce81192ce07011f98928d1eeaee8955",
+  "created_at": "2026-07-03T19:47:35.179888649Z",
+  "feature": {
+    "id": "project-readiness-kit-lexicon-prompt-bank-skill-wording-r3rz",
+    "kind": "feature",
+    "name": "project-readiness-kit-lexicon-prompt-bank-skill-wording-r3rz",
+    "source_bead": "project-readiness-kit-lexicon-prompt-bank-skill-wording-r3rz",
+    "bead_ids": [
+      "project-readiness-kit-lexicon-prompt-bank-skill-wording-r3rz"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-lexicon-prompt-bank-skill-wording-r3rz"
+  },
+  "bead_ids": [
+    "project-readiness-kit-lexicon-prompt-bank-skill-wording-r3rz"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Lexicon prompt-bank/skill wording slice only: updates canonical prompt-bank content, prompt export expectations, Burpvalve skill wording, and orchestrator skill templates; preserves prompt IDs/names, prompt variables, feature x condition response contracts, command names, flags, schema fields, generated paths, Beads-specific vocabulary, and excludes tracker catch-up from this source commit."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 accepted lint and focused test evidence for the corrected hash.",
+      "evidence": [
+        "ScarletMarsh 3352: hash command reported corrected hash and exactly 18 prompt/skill/template paths; .beads was not included.",
+        "ScarletMarsh 3352: git diff --cached --check exited 0.",
+        "ScarletMarsh 3352: focused internal/backpressure, cmd/burpvalve Prompts, and internal/scaffold Template/Orchestrator/Skill tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 accepted the corrected staged payload as non-duplicative and scoped to the prompt-bank/skill wording slice.",
+      "evidence": [
+        "ScarletMarsh 3352: staged name-status shows only prompt tests, internal/backpressure prompt bank files, skill docs, and paired orchestrator skill templates.",
+        "ScarletMarsh 3352: unstaged peer/local scaffold route files are outside the staged hash and not used as pass evidence.",
+        "ScarletMarsh 3352: template parity loop printed no mismatches and no docs/prompts exports are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3353",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The lexicon pass does not create a superficial rename to bypass verifier semantics; it defines work unit/bead/seal vocabulary while preserving formal feature/condition contracts.",
+      "evidence": [
+        "BrightOwl 3353: hash command returned the corrected staged payload hash with exactly the 18 prompt-bank/skill/template paths from the corrected packet.",
+        "BrightOwl 3353: staged diff preserves stable prompt ids and variables; tests reject work-unit-conversion, seal-choreography, and work_unit variable renames.",
+        "BrightOwl 3353: staged-copy prompt export retained prompt ids and feature binding while adopting work unit and seal/attestation wording."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 accepted test coverage for the prompt-bank wording changes.",
+      "evidence": [
+        "ScarletMarsh 3352: prompt_bank.go changes are paired with prompt_bank_test.go and cmd/burpvalve/prompts_test.go updates.",
+        "ScarletMarsh 3352: TestPromptBankUsesLexiconWithoutRenamingContracts covers work-unit wording, seal/attestation wording, Beads vocabulary, and prompt ID/variable rename guards.",
+        "ScarletMarsh 3352: focused tests passed on the corrected staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3353",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The corrected payload satisfies the bead acceptance surface: prompt bank, prompt tests, skill wording, mirrored templates, response binding, and full test evidence are present.",
+      "evidence": [
+        "BrightOwl 3353: response file is bound to the corrected hash and manifest hash with tracker catch-up excluded.",
+        "BrightOwl 3353: git diff checks passed.",
+        "BrightOwl 3353: staged-copy focused tests and go test ./... all passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3353",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Evidence is durable enough for the corrected verifier cell and no pass is based only on implementer claims.",
+      "evidence": [
+        "BrightOwl 3353: hash-bound response file exists for ee1042a6fa3d7ab5b4af700d4cac70f74cdb9d3ce0a09d8b5ccdac714ee179ba.",
+        "BrightOwl 3353 records independent evidence for hash, staged path set, response binding, diff checks, mirror comparison, prompt checks, focused tests, and full tests."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3353",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The prior .beads scope failure is corrected; the current staged payload is atomic to the lexicon prompt-bank/skill wording slice.",
+      "evidence": [
+        "BrightOwl 3353: staged name-status listed only the 18 expected prompt-bank, skill, and template files.",
+        "BrightOwl 3353: .beads is absent from staged paths and unrelated docs/scaffold/template files are unstaged.",
+        "BrightOwl 3353: template mirror comparison produced no differences."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 found no destructive operation surface in the corrected staged payload.",
+      "evidence": [
+        "ScarletMarsh 3352: destructive/security grep found only protective no-bypass/no-no-verify language.",
+        "ScarletMarsh 3352: staged name-status contains no scripts, hooks, installer, shell execution, deletion logic, or permission-changing files."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 accepted stable contract/data integrity for the corrected prompt-bank slice.",
+      "evidence": [
+        "ScarletMarsh 3352: hash command confirmed corrected hash and no hash_excluded_staged_payload entries.",
+        "ScarletMarsh 3352: stable prompt IDs are preserved and the added test rejects renamed prompt IDs or work_unit variable renames.",
+        "ScarletMarsh 3352: canonical/internal template parity check found no mismatches."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 found no security-boundary expansion.",
+      "evidence": [
+        "ScarletMarsh 3352: payload is prompt wording, prompt tests, scaffold skill templates, and skill docs only.",
+        "ScarletMarsh 3352: no auth, network, permissions, credential, hook, or boundary-enforcement code is staged.",
+        "ScarletMarsh 3352: sensitive-term grep found no added risky instructions beyond protective gate language."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The corrected staged payload contains Go prompt strings/tests and Markdown skill/template wording only; no governed visual surface is staged.",
+      "evidence": [
+        "ScarletMarsh 3352: staged name-status and numstat confirmed the 18 corrected staged paths.",
+        "ScarletMarsh 3352: no UI renderer/style/image asset paths are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3352",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "ScarletMarsh 3352 found no performance-budget-sensitive surface.",
+      "evidence": [
+        "ScarletMarsh 3352: staged diff is small static prompt/template/test text changes only.",
+        "ScarletMarsh 3352: no hot path, loop, concurrency, cache, network, or large data path is staged.",
+        "ScarletMarsh 3352: focused tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3353",
+        "created_at": "2026-07-03T19:47:35.179888649Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload improves vocabulary without expanding agent autonomy or making optional coordination systems mandatory for every work unit.",
+      "evidence": [
+        "BrightOwl 3353: staged skill/prompt/template surfaces contain only conditional Beads/NTM wording.",
+        "BrightOwl 3353: staged prompt diff uses Beads issue id or another work-unit id when repo is not Beads-backed.",
+        "BrightOwl 3353: no new command path authorizes bypassing reservations, gates, or independent evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T19:47:35.179888649Z"
+    }
+  ]
+}

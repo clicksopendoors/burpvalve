@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:f37689ac2076bb8328cbfb45fd634e2d1c7cb5bde21c840f7392bd1f3de898e8",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "94be692246e7f3f22076a16cf5ca264401e1c1b1",
+  "created_at": "2026-07-04T17:14:54.065544527Z",
+  "feature": {
+    "id": "project-readiness-kit-osl-audit-github-surfaces-n5x",
+    "kind": "feature",
+    "name": "project-readiness-kit-osl-audit-github-surfaces-n5x",
+    "source_bead": "project-readiness-kit-osl-audit-github-surfaces-n5x",
+    "bead_ids": [
+      "project-readiness-kit-osl-audit-github-surfaces-n5x"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-osl-audit-github-surfaces-n5x"
+  },
+  "bead_ids": [
+    "project-readiness-kit-osl-audit-github-surfaces-n5x"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged payload is one docs decision update for the OSL GitHub-surfaces/runbook work: record approved launch scrub thresholds, About metadata, private repo rename target, old-release timing, and public Beads policy."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Docs payload has clean whitespace/style checks; executable lint remains scaffold-only.",
+      "evidence": [
+        "Read-only verifier Cicero confirmed staged payload hash sha256:f37689ac2076bb8328cbfb45fd634e2d1c7cb5bde21c840f7392bd1f3de898e8.",
+        "Staged files are exactly docs/decisions-2026-07-02-review-round.md and docs/flip-day-runbook.md.",
+        "git diff --cached --check passed.",
+        "go run ./cmd/burpvalve lint returned status not_enforced because no executable lint commands are declared."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "The decision updates consolidate owner rulings into the decision record and flip-day runbook without duplicating parallel procedures.",
+      "evidence": [
+        "Read-only verifier Cicero reviewed the staged docs diff.",
+        "Two docs files only; new content records approved launch decisions and mirrors them in the runbook.",
+        "No duplicate implementation path or second launch checklist was introduced."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Docs preserve launch gates and do not turn discussion notes into launch execution.",
+      "evidence": [
+        "Read-only verifier Cicero reviewed the staged docs diff.",
+        "Runbook still states it does not authorize launch, repo rename, release deletion, visibility change, or announcements by itself.",
+        "Old release deletion is reaffirmed as final pre-flip execution only."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Docs-only payload has no functions or behavior requiring code tests.",
+      "evidence": [
+        "Read-only verifier Cicero confirmed this is a docs-only staged payload.",
+        "No Go source, shell script, workflow, or product behavior file is staged.",
+        "No tests or remote CI were claimed for this docs-only gate."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Durable decisions are recorded in docs with pending inputs and completion evidence preserved.",
+      "evidence": [
+        "Read-only verifier Cicero read AGENTS.md, backpressure/README.md, manifest, and staged docs diff.",
+        "D-OSL-11 records About metadata; D-OSL-12 records public issue-surface threshold; D-OSL-13 records public Beads policy.",
+        "Flip-day runbook keeps pending inputs and completion evidence sections."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "The runbook continues to require concrete launch completion evidence.",
+      "evidence": [
+        "Read-only verifier Cicero reviewed evidence-log relevance in the staged runbook changes.",
+        "Runbook keeps final gate, private repo rename, old release deletion, PVR verification, About metadata, and anonymous verification transcript as completion evidence.",
+        "Local checks run: git diff --cached --check and go run ./cmd/burpvalve lint."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Scope is limited to launch decision and runbook documentation.",
+      "evidence": [
+        "Read-only verifier Cicero confirmed staged paths match requested docs only.",
+        "git diff --cached --name-only shows docs/decisions-2026-07-02-review-round.md and docs/flip-day-runbook.md.",
+        "No code, Beads, hooks, CI config, release assets, or GitHub state changes are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Destructive actions remain owner-gated and ordered; none are performed by this commit.",
+      "evidence": [
+        "Read-only verifier Cicero reviewed destructive-operation relevance in the staged docs diff.",
+        "Runbook still says no public repo creation, private repo rename, release deletion, visibility change, or announcement happens from the runbook alone.",
+        "Old release deletion remains delayed until the ordered final pre-flip step."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "The Beads policy preserves authoritative records while defining the scrub threshold.",
+      "evidence": [
+        "Read-only verifier Cicero reviewed D-OSL-13 and runbook step 11.",
+        "Policy keeps public .beads/ data after scrub and requires late bead-ID prefix rename.",
+        "Scrub targets include stale evidence and legacy project-readiness-kit IDs."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "The latest security threshold is explicit and mirrored in the decision record and runbook.",
+      "evidence": [
+        "Read-only verifier Cicero verified D-OSL-12 and D-OSL-13 permit lingo fork, Beads, NTM, Agent Mail, and agent workflow context.",
+        "Scrub targets remain secrets, tokens, credentials, IP addresses, hostnames, private network/local infrastructure, local absolute paths, legacy IDs, and stale evidence.",
+        "Linux/OS/kernel context is acceptable unless paired with sensitive infrastructure data.",
+        "Verifier found no secret-like concrete values in the staged diff."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "No visual surface is affected.",
+      "evidence": [
+        "Read-only verifier Cicero confirmed staged files are Markdown docs only.",
+        "No UI, screenshot, CSS, browser, generated image, demo asset, or visual surface changed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Docs-only payload has no runtime performance impact.",
+      "evidence": [
+        "Read-only verifier Cicero confirmed no runtime code, workflow execution behavior, bundle, latency, memory, or cost surface is changed.",
+        "No performance tests were needed or claimed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Cicero",
+        "model": "inherited-parent",
+        "runtime": "multi_agent_v1",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "evidence_ref": "subagent_notification:019f2e1d-707d-77f2-9a45-c4413981ec0f",
+        "created_at": "2026-07-04T17:14:11Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "inherited-parent",
+      "verdict": "pass",
+      "message": "Owner-gated launch actions remain gated and the docs do not authorize execution.",
+      "evidence": [
+        "Read-only verifier Cicero reviewed autonomy-boundary relevance in the staged docs diff.",
+        "Owner authorization remains required for launch, repo rename, release deletion, visibility, About metadata application, and publication actions.",
+        "This commit records decisions only; it does not perform external state changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T17:14:54.065544527Z"
+    }
+  ]
+}

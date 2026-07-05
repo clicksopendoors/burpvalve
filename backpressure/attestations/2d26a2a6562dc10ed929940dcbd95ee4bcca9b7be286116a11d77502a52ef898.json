@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:2d26a2a6562dc10ed929940dcbd95ee4bcca9b7be286116a11d77502a52ef898",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "8ab3fae7ef447993685e93e85f82625ff4de2b81",
+  "created_at": "2026-07-02T05:32:11.685979488Z",
+  "feature": {
+    "id": "project-readiness-kit-land-07-verifier-provenance-policy-sss",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-07-verifier-provenance-policy-sss",
+    "diff_cluster": "explicit:project-readiness-kit-land-07-verifier-provenance-policy-sss"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged diff is exactly the land-07 verifier provenance and policy model slice: ten mapped files for attestation verifier schema, manifest policy plumbing, response-template generation, docs, and focused tests. No bead metadata, stale guard, formatter, prompt-generator, query/TUI, staged-delete parser, lint-enforcement, or later-unit files are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged Go code/docs satisfy the applicable mechanical lint/style checks: staged blobs are gofmt-clean, diff check is clean, and the focused plus full Go test suite passed.",
+      "evidence": [
+        "ScarletMarsh read backpressure/lint-rules.md and verified the condition scope.",
+        "git diff --cached --name-status showed exactly the 10 land-07 staged paths listed in the packet.",
+        "git diff --cached --check over the staged paths produced no output.",
+        "For each staged Go blob, git show :\u003cpath\u003e piped through gofmt matched the staged content.",
+        "go test ./internal/attestations -run 'Verifier|Policy|Provenance|Response' passed.",
+        "go test ./internal/backpressure -run 'Verifier|Policy|Template|Artifact' passed.",
+        "go test ./cmd/burpvalve -run 'Response|Template|Verifier|Commit' passed.",
+        "go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2361",
+        "evidence_ref": "commands/files inspected in message 2361",
+        "created_at": "2026-07-02T05:28:05.861469Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The verifier provenance/policy implementation centralizes policy, kind, response normalization, and template plumbing instead of parallel per-call policy logic.",
+      "evidence": [
+        "BrightOwl verified exactly the 10 packet paths are staged, stat is 671 insertions and 61 deletions, and git diff --cached --check produced no diagnostics.",
+        "internal/attestations/attestations.go centralizes VerifierKind, VerifierPolicy, NormalizeVerifierPolicy, EffectiveVerifierKind, VerifierPolicyAllows, ValidVerifierPolicy, ValidVerifierKind, and VerifierPolicyRecovery.",
+        "internal/backpressure/artifacts.go centralizes response validation, artifact building, blocked-response normalization, responseTemplateVerifier, responseVerifier, and normalizeConditionPolicy around shared attestation helpers.",
+        "internal/backpressure/prompts.go sets VerifierPolicy with normalizeConditionPolicy rather than duplicating policy values.",
+        "WhiteGorge independently returned pass for dry with matching evidence that the policy/provenance helpers and response-template logic are not duplicated.",
+        "Targeted tests and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2361",
+        "evidence_ref": "commands/files inspected in message 2361",
+        "created_at": "2026-07-02T05:28:05.861469Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged policy model blocks the main reward-hacking path: main-agent evidence cannot satisfy default independent_required cells unless the manifest explicitly opts into main_agent_allowed.",
+      "evidence": [
+        "BrightOwl verified NormalizeVerifierPolicy defaults empty policy to independent_required.",
+        "BrightOwl verified VerifierPolicyAllows accepts independent_required only for independent_subagent, while main_agent_allowed explicitly allows main_agent or independent_subagent.",
+        "validateResponseCondition rejects verifier kinds that are not allowed by the normalized condition policy before a response can pass.",
+        "normalizeBlockedCondition turns unacceptable verifier evidence into unknown with recovery text instead of preserving a fake pass.",
+        "TestValidatePassingVerifierPolicyKinds covers main agent blocked by independent default, missing verifier metadata, unknown verifier kind, and invalid verifier kind cases.",
+        "TestRunPreCommitAcceptsMainAgentWhenManifestAllows and TestRunPreCommitBlocksMainAgentUnderIndependentPolicy prove explicit main_agent_allowed passes while default independent_required blocks main-agent evidence.",
+        "WhiteGorge independently returned pass for anti-reward-hacking and confirmed the response template emits all 13 cells as independent_required with verifier.kind unknown placeholders.",
+        "Targeted tests and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2361",
+        "evidence_ref": "commands/files inspected in message 2361",
+        "created_at": "2026-07-02T05:28:05.861469Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed verifier-policy/model behavior and response-template path have direct tests, including the risky policy-downgrade cases.",
+      "evidence": [
+        "BrightOwl identified staged tests: TestValidatePassingVerifierPolicyKinds, TestRunPreCommitAcceptsMainAgentWhenManifestAllows, TestRunPreCommitBlocksMainAgentUnderIndependentPolicy, TestBuildResponsesTemplateIncludesEveryCondition, TestLoadManifestRejectsInvalidVerifierPolicy, and TestCommitResponsesTemplateEmitsCurrentMatrix.",
+        "The attestation model test covers independent, main-agent, CI, human, optional, none, unknown, and invalid verifier kinds.",
+        "The backpressure artifacts tests cover explicit main_agent_allowed and default independent_required blocking.",
+        "The CLI response-template test decodes the template and asserts current matrix cells, independent_required verifier_policy, and verifier placeholders.",
+        "The core test rejects invalid verifier_policy values while loading manifests.",
+        "WhiteGorge independently returned pass for one-function-one-test with matching test-function evidence.",
+        "Focused package tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2360",
+        "evidence_ref": "commands/files inspected in message 2360",
+        "created_at": "2026-07-02T05:28:03.910389Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged land-07 slice meets the verifier packet completion bar for this cell: scope inspected, direct tests passed, full test suite passed, and response-template behavior was exercised read-only.",
+      "evidence": [
+        "WhiteGorge verified git diff --cached --name-status listed exactly the 10 packet paths.",
+        "git diff --cached --check produced no output.",
+        "go run ./cmd/burpvalve commit --responses-template --feature project-readiness-kit-land-07-verifier-provenance-policy-sss returned condition_count 13, all_policies independent_required, verifier_kinds unknown, and atomicity.one_feature_or_fix false.",
+        "go test ./... passed across cmd/burpvalve, internal/attestations, internal/backpressure, internal/buildbudget, internal/charmui, internal/cliui, internal/config, internal/ntm, and internal/scaffold.",
+        "BrightOwl independently returned pass for definition-of-done with matching scope, template, schema, docs, and tests evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload directly improves evidence quality by recording verifier policy and verifier provenance, preserving legacy subagent evidence, and generating response templates with explicit verifier placeholders.",
+      "evidence": [
+        "ScarletMarsh read backpressure/evidence-log.md and verified the condition scope.",
+        "internal/attestations/attestations.go adds verifier kind, verifier policy, verifier fields on conditions, effective verifier kind, policy acceptance, and recovery text.",
+        "internal/backpressure/artifacts.go adds condition_file, verifier_policy, verifier fields to response conditions, BuildResponsesTemplate, policy-aware response validation, responseVerifier, and artifact construction that records verifier provenance.",
+        "cmd/burpvalve/main.go adds --responses-template and robot schema for responses_template plus verifier response schema docs.",
+        "docs/attestation-schema.md documents verifier_policy, verifier.kind, legacy subagent_confirmed mapping, and reviewer discovery rules for unacceptable verifier evidence.",
+        "Focused tests and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2360",
+        "evidence_ref": "commands/files inspected in message 2360",
+        "created_at": "2026-07-02T05:28:03.910389Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within land-07 verifier provenance/policy and response-template boundary; no staged unit-6 parser, unit-8 stale guard, unit-10 explain/next_steps, unit-14 verifier prompt generator, unit-15 TUI/query, or unit-16 bead preflight surface was found.",
+      "evidence": [
+        "WhiteGorge verified git diff --cached --name-only returned only the 10 land-07 paths named in the packet.",
+        "internal/backpressure/core.go staged diff showed only ConditionSpec.VerifierPolicy and manifest verifier_policy validation, not staged-delete parser additions.",
+        "cmd/burpvalve/main.go staged diff showed --responses-template, robotCommitInput.responses_template, response schema docs, commitOptions.responsesTemplate, runCommitRobots propagation, and runPreCommit response-template branch.",
+        "WhiteGorge searched for excluded-unit symbols including StagedPayloadFile, parseGitNameStatus, stagedAttestationPaths, MarshalIndent, NextSteps, explain, lint_commands, verifier prompts, attestations browse/list, config init, repair, and setup; hits were only existing context or replaced doc text.",
+        "BrightOwl independently returned pass for scope-control and found no staged-delete parser, stale guard, formatter, lint enforcement, explain/result-contract, prompt generator, query/TUI, or bead/preflight hunks.",
+        "WhiteGorge noted a packet-quality issue: the suggested jq accessor .staged_payload.files was wrong because staged_payload is an array; this did not affect the verdict."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No destructive-operation surface exists in this staged payload: it changes verifier provenance/policy data structures, validation, response-template output, schema docs, and tests; it does not add deletes, resets, force pushes, deploys, migrations, external sends, or production mutations.",
+      "evidence": [
+        "ScarletMarsh read backpressure/destructive-operations.md and verified the condition scope.",
+        "git diff --cached --name-status showed 10 modified files and no staged D/R path status.",
+        "Search of the staged diff for rm -rf, git reset, force, deploy, production, MarshalIndent, stagedAttestationPaths, NextSteps, bead metadata, and attestation query/TUI surfaces found no destructive operation or out-of-scope destructive code.",
+        "The staged implementation adds policy/provenance validation and template generation; it does not add filesystem mutation beyond existing commit artifact flows."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload carries a governed data-integrity surface and satisfies it: verifier policy/provenance is normalized, validated, preserved into artifacts, and covered by focused tests for allowed and rejected cases.",
+      "evidence": [
+        "ScarletMarsh read backpressure/data-integrity.md and verified the condition scope.",
+        "attestations validation now calls validateVerifierPolicyForPassing, blocked validation rejects pass with unacceptable verifier evidence, common validation checks valid verifier policy/kind, and policy helper functions define allowed verifier kinds.",
+        "LoadResponses now requires a top-level conditions array; BuildArtifact writes VerifierPolicy and Verifier to artifact cells; blocked normalization preserves verifier policy and sets policy-aware recovery text.",
+        "core.go validates condition verifier_policy while loading the manifest, preventing invalid policy strings from entering the plan.",
+        "attestations tests cover independent, legacy, main_agent_allowed, ci_allowed, human_allowed, optional none, optional unknown blocked, missing verifier metadata blocked, and invalid kind rejected.",
+        "backpressure artifacts tests cover main_agent_allowed acceptance, independent policy blocking main-agent evidence, top-level conditions validation, and response-template provenance placeholders.",
+        "Focused tests and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2360",
+        "evidence_ref": "commands/files inspected in message 2360",
+        "created_at": "2026-07-02T05:28:03.910389Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload carries a governed security surface because it models verifier identity/provenance and evidence acceptance. The inspected code preserves the fabrication boundary: unacceptable verifier kinds/policies block, default policy stays independent_required, and the response template uses unknown placeholders rather than self-certifying evidence.",
+      "evidence": [
+        "WhiteGorge verified verifier provenance records kind, agent, model, runtime, separate_context, transcript_ref, evidence_ref, and created_at on condition cells.",
+        "validateCommon rejects invalid verifier_policy and invalid verifier kind; ValidatePassing calls validateVerifierPolicyForPassing.",
+        "artifacts response validation enforces VerifierPolicyAllows before accepting responses, normalizes unacceptable evidence to unknown in blocked reports, and records responseVerifier into artifacts.",
+        "docs/attestation-schema.md documents default independent_required and states main_agent, ci, human, none, or unknown are not enough under the default policy.",
+        "WhiteGorge found no staged credential material with a secret/token/password/private-key scan.",
+        "WhiteGorge found no new file deletion, subprocess, network, env-dump, or secret-handling surfaces in the staged main policy files; matches were policy/schema strings and VerifierPolicyAllows calls.",
+        "BrightOwl independently returned pass for security-boundaries under A14b and matched the fabrication-boundary evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no governed visual surface: no browser UI, screenshot, responsive layout, canvas, or visual-diff behavior is staged.",
+      "evidence": [
+        "ScarletMarsh read backpressure/visual-regression.md and verified the condition scope.",
+        "git diff --cached --name-status showed Go source/tests plus docs/attestation-schema.md, all for verifier provenance/policy and response-template behavior.",
+        "Search of staged diff for visual, screenshot, browser, and canvas found no visual-regression governed surface. TUI string hits in broader boundary searches are existing response collection functions receiving verifier fields, not a visual behavior change."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload does not introduce a declared performance budget or benchmark-governed surface; the changes are small policy/provenance validation, template generation, docs, and tests without new fanout, concurrency, network work, or large scans.",
+      "evidence": [
+        "ScarletMarsh read backpressure/performance-budget.md and verified the condition scope.",
+        "Search of the staged diff for benchmark, latency, memory, goroutine, time.Sleep, and context.WithTimeout found no performance-budget governed surface.",
+        "The staged code adds enum-style validation, response-template construction, and artifact field propagation; no new subprocess loops, network calls, concurrency, or broad filesystem scans are staged.",
+        "go test ./... passed; ScarletMarsh treated this as regression evidence, not a benchmark."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2359",
+        "evidence_ref": "staged diff, staged blobs, verifier packet, and test commands inspected in message 2359",
+        "created_at": "2026-07-02T05:27:26.991795Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload satisfies the autonomy-boundary surface: it does not let standing/init-time authorization count as per-cell evidence, and it requires verifier.kind to satisfy the manifest policy before a passing artifact is accepted.",
+      "evidence": [
+        "ScarletMarsh read backpressure/autonomy-boundary.md and verified the condition scope.",
+        "independent_required only allows verifier.kind independent_subagent; main_agent_allowed, ci_allowed, human_allowed, and optional have explicit limited allowances, and unknown is not accepted for optional passing artifacts.",
+        "responseTemplateVerifier emits verifier.kind unknown placeholders instead of fabricating subagent confirmation; responseVerifier maps legacy subagent_confirmed true to independent_subagent but otherwise defaults to verifier.kind none.",
+        "docs/attestation-schema.md documents that under independent_required, main_agent, ci, human, none, or unknown is not enough, and missing or unacceptable verifier evidence must be explained.",
+        "TestRunPreCommitBlocksMainAgentUnderIndependentPolicy and TestRunPreCommitAcceptsMainAgentWhenManifestAllows prove standing/main-agent evidence is blocked unless the manifest explicitly allows it.",
+        "The /tmp/land07-verifier-prompts.json packet for autonomy-boundary exists and carries verifier_policy independent_required."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T05:32:11.685979488Z"
+    }
+  ]
+}

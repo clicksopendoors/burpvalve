@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:8bc96a6a3d21edc7513d986ab0be7a4a50e0ffe68747898126d57385e040d7a2",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "04a4cbe2154a5083b853d69b66e6454313cb9838",
+  "created_at": "2026-07-04T22:01:45.133663893Z",
+  "feature": {
+    "id": "diff:docs",
+    "kind": "feature",
+    "name": "staged changes in docs",
+    "diff_cluster": "docs"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single docs-only change: records the five 2026-07-04 launch-input owner decisions (D-OSL-14 through D-OSL-18) in the decisions log. One file, one purpose, no code."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a78a335dec49e6773",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a78a335dec49e6773.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "The lint-rules condition is a policy wishlist with no executable lint commands declared in backpressure/manifest.yaml. The condition file explicitly states that rules are enforced only after the file names the command or analyzer that checks them. burpvalve lint confirms no executable lint commands are configured (status: not_enforced). For a docs-only change, there is no governed lint surface to inspect.",
+      "evidence": [
+        "git diff --cached --stat: docs/decisions-2026-07-02-review-round.md | 41 +++++++++++++++++++++++++++++++",
+        "burpvalve lint --json status: \"not_enforced\", message: \"no executable lint commands declared; lint-rules wishlist skipped\"",
+        "backpressure/manifest.yaml lint_commands: [] (empty list)",
+        "backpressure/lint-rules.md lines 17-18: rules are enforced only after this file names the command or analyzer that checks it"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a9ef85ab206539299",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a9ef85ab206539299.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "DRY condition is inapplicable to this staged feature. The staged payload is a docs-only change to docs/decisions-2026-07-02-review-round.md containing new decision records (D-OSL-14 through D-OSL-18). The DRY condition governs code-level duplication: copied code blocks, duplicated conditionals, repeated validation logic, duplicate API/client code, repeated helper functions, and near-identical tests. A decision record document contains no executable code, logic, conditionals, loops, error handling, or code abstractions. There is no governed surface to inspect.",
+      "evidence": [
+        "git diff --cached returned: docs/decisions-2026-07-02-review-round.md is the only staged file",
+        "git diff --cached output shows 44 added lines of decision-record text (D-OSL-14 through D-OSL-18), no executable code, no conditionals, no validation logic, no helper functions, no tests, no code abstractions",
+        "Content is purely documentation: decision records describing project policy, version selection, security reporting, and launch-prep authorization"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a9c57f53596100ac5",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a9c57f53596100ac5.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Staged change is documentation-only: owner-authored decision records D-OSL-14 through D-OSL-18. Anti-reward-hacking governs agent behavior patterns - agent shortcuts, fake completion metrics, internal contradictions in claims. Owner decisions are authoritatively binding project direction, not agent optimization subject to this condition. No agent is making success claims here; the document records binding owner rulings on launch scope, versioning, and security policy.",
+      "evidence": [
+        "git diff --cached shows modified docs/decisions-2026-07-02-review-round.md adding owner-authored decisions D-OSL-14 through D-OSL-18",
+        "Staged content appends decisions authored by the owner recording feature-complete declaration, bead-ID prefix naming, launch version (v0.2.0), security reporting channel, and local-path handling rules",
+        "Anti-reward-hacking condition file describes purpose as preventing agents from optimizing for superficial success signals while violating the real goal"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-ae3b1010463eab087",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/ae3b1010463eab087.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Condition is not applicable. The staged payload contains only documentation changes (additions to docs/decisions-2026-07-02-review-round.md recording owner decisions). The one-function-one-test condition governs new or changed behavior requiring direct test coverage. Documentation-only changes have no governed surface under this condition.",
+      "evidence": [
+        "git diff --cached output shows single staged file: docs/decisions-2026-07-02-review-round.md",
+        "Staged changes are documentation only (additions recording owner decisions D-OSL-14 through D-OSL-18)",
+        "No code files modified, no functions added or changed, no behavioral changes in staged payload",
+        "Condition file purpose governs code behavior and function test coverage, not documentation"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a4ce7dc77241a1b61",
+        "model": "claude-haiku-4-5-20251001",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a4ce7dc77241a1b61.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5-20251001",
+      "verdict": "not_applicable",
+      "message": "The staged payload is a docs-only change adding decision records to a durable decision document. The definition-of-done condition defines criteria for completed project work, not how decision documentation is recorded. The condition file itself contains only a purpose statement. Documentation updates recording owner decisions are not a governed surface under this condition.",
+      "evidence": [
+        "Staged change: git diff --cached shows modified docs/decisions-2026-07-02-review-round.md, adding new lines with owner decision records D-OSL-14 through D-OSL-18",
+        "Condition file content: backpressure/definition-of-done.md contains 3 lines total - a title and a purpose statement only, with no defined criteria",
+        "Feature classification: diff:docs (staged changes are documentation-only, not product feature or test code)",
+        "Staged content nature: decision records documenting owner rulings, not work output requiring done-criteria verification"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a5c3d777f4667c6ff",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a5c3d777f4667c6ff.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "The evidence-log condition governs what evidence agents must record when closing work (command output, test results, screenshots, CI links, etc.). The staged change is a docs-only addition that records owner decisions about launch parameters and authorization (D-OSL-14 through D-OSL-18). Owner decision documentation is not the surface governed by the evidence-log condition, which applies only to agent-recorded evidence at work closure.",
+      "evidence": [
+        "git diff --cached output shows only one modified file: docs/decisions-2026-07-02-review-round.md",
+        "Staged change adds new section 'OSL owner decisions, 2026-07-04 (launch-input round)' documenting owner rulings D-OSL-14 through D-OSL-18",
+        "Condition file purpose: define what evidence agents must record before closing work: command output, screenshots, preview URLs, curl results, CI links, benchmark output, or manual verification notes",
+        "Staged payload is owner decision documentation, not agent work-closure evidence"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a7b1cd3db607bb3b7",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a7b1cd3db607bb3b7.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Staged payload is a docs-only change recording owner decisions about launch scope and authorizations. The scope-control condition file contains only a purpose statement with no implemented rules. The staged change documents owner decisions establishing explicit scope boundaries rather than agent-driven scope expansion; there is no governed surface in the staged payload that the condition applies to.",
+      "evidence": [
+        "git diff --cached --name-only: only docs/decisions-2026-07-02-review-round.md is staged",
+        "git diff --cached output: staged change adds 41 lines documenting owner decisions D-OSL-14 through D-OSL-18 to decisions document",
+        "backpressure/scope-control.md contains only purpose statement (3 lines total): no implemented rules, no governance criteria",
+        "staged content analysis: all added lines are owner-authored decision documentation, not agent task expansion. D-OSL-14 explicitly states authorization boundaries: 'This does not authorize the visibility flip'"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a5e6f3bbd1fe75968",
+        "model": "claude-haiku-4-5-20251001",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a5e6f3bbd1fe75968.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5-20251001",
+      "verdict": "not_applicable",
+      "message": "Staged docs-only change contains no surface governed by destructive-operations condition. Documentation addition to decision record does not constitute a destructive operation.",
+      "evidence": [
+        "git diff --cached: single file modified (docs/decisions-2026-07-02-review-round.md), content-only additions spanning lines 405-446",
+        "Staged payload contains 41 new lines recording owner decisions D-OSL-14..D-OSL-18 (feature-complete declaration, bead-ID prefix, launch version v0.2.0, security reporting, historical comment cleanup)",
+        "No destructive operations present: no deletes, resets, force pushes, data migrations, external sends, spend changes, deploys, or production mutations in the staged diff"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-ac2f4ec66b66f178d",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/ac2f4ec66b66f178d.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Staged change is a documentation-only decision record. The data-integrity condition governs data systems (persisted data, migrations, idempotency, deduplication, rollback, backups, audit trails), not documentation. No governed surface to inspect.",
+      "evidence": [
+        "git diff --cached shows single file: docs/decisions-2026-07-02-review-round.md",
+        "git diff --cached contents: 41-line addition recording owner decisions D-OSL-14 through D-OSL-18 (decision document only)",
+        "backpressure/data-integrity.md purpose statement: define invariants for persisted data, migrations, idempotency, dedupe, rollback, backups, and audit trails",
+        "Staged payload governs no persisted data structures, migrations, idempotency code, deduplication logic, rollback mechanisms, backups, or audit trail systems"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-a544ebf3e685e5cbd",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/a544ebf3e685e5cbd.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Staged change is a docs-only decision record documenting security governance policies (vulnerability reporting channel, local-path removal requirements). The governed surface of security-boundaries is code/configuration that introduces auth, secrets, tenant isolation, PII, permission, or external API risk; a decision document about security processes does not introduce such a surface.",
+      "evidence": [
+        "git -C /home/ubuntu/Projects/burpvalve diff --cached shows a single staged file: docs/decisions-2026-07-02-review-round.md",
+        "Staged diff adds ~41 lines to the decision record, documenting five owner decisions (D-OSL-14 through D-OSL-18)",
+        "backpressure/security-boundaries.md contains only a purpose statement with no substantive rules (3 lines total)",
+        "Staged content includes two security-topic decisions: D-OSL-17 (security reporting channel policy, GitHub PVR, email non-disclosure), D-OSL-18 (removal of local-path residue from historical issue comments)",
+        "Staged content is purely documentation of owner decisions and process policies; it introduces no auth code, secrets, configurations, tenant-isolation logic, PII, permission models, or external API integrations"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-ac62a38cd686ec18c",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/ac62a38cd686ec18c.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Visual regression condition is not applicable to documentation-only changes. The staged payload adds decision records to docs/decisions-2026-07-02-review-round.md with no UI code, screenshots, browser changes, responsive layout, canvas, or visual-diff related changes. The condition governs UI work surfaces only.",
+      "evidence": [
+        "git diff --cached --stat returned: docs/decisions-2026-07-02-review-round.md | 41 insertions(+)",
+        "Staged change is a 41-line documentation addition recording owner decisions D-OSL-14 through D-OSL-18",
+        "No UI code, screenshots, browser changes, responsive layout, canvas, or visual-diff related code present in staged payload",
+        "Condition definition: 'Purpose: define screenshot, browser, responsive layout, canvas, and visual-diff checks for UI work.'"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-ae250a664c735ecfe",
+        "model": "claude-haiku-4-5-20251001",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/ae250a664c735ecfe.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5-20251001",
+      "verdict": "not_applicable",
+      "message": "Performance-budget condition is inapplicable to docs-only changes that record project decisions. No performance metrics, latency thresholds, bundle-size limits, or benchmark criteria are introduced or affected by documentation updates.",
+      "evidence": [
+        "git diff --cached output: modification to docs/decisions-2026-07-02-review-round.md only",
+        "Staged content: documentation recording owner decisions D-OSL-14 through D-OSL-18 for launch preparation",
+        "Condition file contents: defines purpose as 'latency, memory, token, cost, bundle-size, throughput, or benchmark thresholds' with no actual thresholds defined",
+        "No code, executables, or performance-affecting features in staged payload"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "claude-code-subagent-aee4096320e7cfa1d",
+        "model": "claude-haiku-4-5",
+        "runtime": "claude-code Agent tool, read-only general-purpose subagent, separate context",
+        "separate_context": true,
+        "transcript_ref": "/tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/tasks/aee4096320e7cfa1d.output",
+        "created_at": "2026-07-04T22:01:38Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "claude-haiku-4-5",
+      "verdict": "not_applicable",
+      "message": "Condition file defines purpose but contains no actual autonomy-boundary rules governing agent actions. Staged payload is a docs-only change recording owner decisions that the owner answered directly. Without concrete boundary definitions in the condition file, there is no governed surface to evaluate against this condition for a documentation change.",
+      "evidence": [
+        "git diff --cached output: staged change is modification of docs/decisions-2026-07-02-review-round.md recording owner decisions D-OSL-14 through D-OSL-18",
+        "Condition file backpressure/autonomy-boundary.md inspected: contains only title and purpose statement with no actual autonomy-boundary rule definitions",
+        "Condition file text: 'Purpose: define which actions agents may take independently, which actions require explicit human approval, and what artifact/evidence must be presented before asking.'",
+        "Feature is docs-only: single file modified is under docs/; the recorded decisions were answered directly by the owner in-session"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T22:01:45.133663893Z"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+# Verifier Fanout And Attestations
+
+Verifier packets bind a staged payload hash, manifest hash, condition file hash,
+and response schema. A verifier response is useful only when it is about the
+same staged hash.
+
+## Verdict Semantics
+
+- `pass`: governed surface exists and was inspected successfully.
+- `not_applicable`: no governed surface exists in this payload.
+- `fail`: the condition is violated.
+- `unknown`: the verifier could not determine the result.
+
+Authorization permits spawning or contacting verifiers. Authorization is never
+per-cell evidence.
+
+## Provenance
+
+Record the actual verifier agent, runtime, model, separate-context status, and
+message or transcript reference. Preserve dissent. If shared judgment cells
+disagree, hold the commit for adjudication instead of selecting the convenient
+verdict.
+
+## Effort Tiers
+
+Set verifier model and reasoning effort explicitly when spawning or relaying a
+packet. Do not rely on runtime defaults. Judgment-cell verifiers use `high` for
+`dry`, `anti-reward-hacking`, `scope-control`, `security-boundaries`, and
+`definition-of-done`. Mechanical-cell verifiers use `medium` for payload-scope
+checks, clearly not-governed conditions, lookup work, and inventory work.
+Medium-tier verifiers may return an escalation verdict when a cell needs the
+high-effort judgment lane.
+
+Record each pane's model and effort in dispatch notes. Adjust a running pane
+only between rounds, never mid-verification. For long mechanical phases,
+respawn at the right tier instead of spending critical-path `xhigh` capacity on
+lookups.
+
+## Seals And Attestations
+
+A seal is a Burpvalve attestation. Passing attestations live under
+`backpressure/attestations/`. They bind the payload hash and verifier evidence.
+Stage only the attestation requested by the gate; do not sweep unrelated
+generated files into the commit.

@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:bdde462c226769f002eaf42a2818a2ea630a2c38bde8d9f80946ac03fdf67e23",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5-codex"
+  },
+  "git_head_before_commit": "f3c4a46a8e50b1af66a601156ba0a59dab52e1ba",
+  "created_at": "2026-07-03T01:01:45.656579843Z",
+  "feature": {
+    "id": "dogfooding-findings-a23-c19-c20-c21",
+    "kind": "feature",
+    "name": "dogfooding-findings-a23-c19-c20-c21",
+    "diff_cluster": "explicit:dogfooding-findings-a23-c19-c20-c21"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is exactly one docs-only dogfooding findings-log update adding A23 and C19-C21 plus backlog and next-ID maintenance."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Docs-only staged payload is whitespace-clean, hash-bound, and paste-safety checked.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json matched sha256:bdde462c226769f002eaf42a2818a2ea630a2c38bde8d9f80946ac03fdf67e23 and included only docs/dogfooding-findings-2026-07.md.",
+        "git diff --cached --check exited 0.",
+        "Staged-text rg scan found the intended new headings and next-ID line; no new bare arrow/redirection findings appeared, and the only $status match is pre-existing B7 text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2980",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The docs-only update appends the requested findings and backlog rows directly in the existing findings log structure without adding a parallel log or unrelated abstraction.",
+      "evidence": [
+        "git diff --cached --name-status showed exactly one staged file: docs/dogfooding-findings-2026-07.md.",
+        "Diff inspection found A23, C19, C20, C21, D-backlog rows, and Log discipline next IDs; no code, config, workflow, or tracker state is staged.",
+        "Clean temp repo from HEAD plus only git diff --cached --binary reproduced staged hash sha256:bdde462c226769f002eaf42a2818a2ea630a2c38bde8d9f80946ac03fdf67e23 and manifest hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5; git diff --cached --check passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The new findings record limitations and process risks as candidates rather than claiming fixes.",
+      "evidence": [
+        "A23 states ci --commit does not yet provide universal historical parity.",
+        "C20 records the closed-before-commit violation instead of hiding it.",
+        "C19/C21 are process-fix/tooling-candidate entries, not implemented behavior claims."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no code, function, API, or test surface governed by this condition.",
+      "evidence": [
+        "git diff --cached --name-status shows only M docs/dogfooding-findings-2026-07.md.",
+        "go run ./cmd/burpvalve hash --staged --json confirms that single included path."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged doc contains the requested entries, backlog rows, and next-ID maintenance.",
+      "evidence": [
+        "git show :docs/dogfooding-findings-2026-07.md contains A23, C19, C20, and C21 sections.",
+        "The D-backlog table has rows for A23/C19/C20/C21.",
+        "The Log discipline line is updated to next: A24, B8, C22.",
+        "git diff --cached --numstat reports only the expected docs addition/update scope."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The new findings record source, observation, why it matters, and candidate status.",
+      "evidence": [
+        "A23 cites 2026-07-02 OXP closure pre-audit, WhiteGorge, Agent Mail 2942.",
+        "C19, C20, and C21 record the parallel-chain dogfooding context and process/tooling candidate outcomes.",
+        "The next-ID discipline line is updated to A24/B8/C22."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2980",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The staged payload stays within the requested dogfooding findings log scope and does not widen into implementation, tracker, or workflow edits.",
+      "evidence": [
+        "git diff --cached --stat reported only docs/dogfooding-findings-2026-07.md with 97 insertions and 1 deletion; .beads/issues.jsonl is dirty but unstaged and outside this payload.",
+        "Diff inspection confirmed A23 covers ci --commit historical multi-cluster audit gap, C19 covers .beads reservation duration, C20 covers closed-before-commit violation, C21 covers unstaged slice durability, and D-backlog/next-ID updates reference those same items.",
+        "Clean rg scan found the intended headings and next: A24; it also surfaced only pre-existing $status and harmless inline \u003csha\u003e/\u003cbead\u003e placeholders, with no new bare arrow chains or shell-redirection examples in the added text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload is documentation-only and contains no staged script, hook, command runner, or destructive command.",
+      "evidence": [
+        "C21 discusses stash/worktree slice loss as a finding and suggests durability practices, but does not add executable destructive operations.",
+        "git diff --cached --name-status confirms only the findings doc is staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged findings improve audit/process integrity records and preserve the single-path staged hash contract.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json verified the staged hash and single included path.",
+        "A23 documents historical audit coverage gaps, C20 documents bead closure state inconsistency before commit hash capture, and C21 documents unstaged slice durability risk.",
+        "No generated or hash-excluded staged paths are present."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The payload only records findings and backlog candidates; it does not modify security-sensitive behavior.",
+      "evidence": [
+        "git diff --cached -- docs/dogfooding-findings-2026-07.md shows docs-only finding updates.",
+        "The payload does not modify permissions, hooks, workflows, configs, installer behavior, network behavior, or authentication boundaries.",
+        "C21 mentions a later Agent Mail/Burpvalve helper candidate but does not implement or authorize one."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no UI, TUI rendering, screenshots, SVG/GIF output, or visual surface.",
+      "evidence": [
+        "git diff --cached --name-status lists only docs/dogfooding-findings-2026-07.md."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no runtime code, algorithms, tests, workflows, or command behavior that could affect performance.",
+      "evidence": [
+        "The staged hash includes only docs/dogfooding-findings-2026-07.md."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2983",
+        "created_at": "2026-07-03T01:01:45.656579843Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The findings improve auditability and name follow-up candidates, but do not expand agent authority or automate new actions.",
+      "evidence": [
+        "A23 is marked as an issue/follow-up candidate.",
+        "C19/C20/C21 are process-fix/tooling-candidate entries.",
+        "No config, hook, workflow, or code file is staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T01:01:45.656579843Z"
+    }
+  ]
+}

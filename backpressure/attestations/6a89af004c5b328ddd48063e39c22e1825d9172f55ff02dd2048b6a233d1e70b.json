@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:6a89af004c5b328ddd48063e39c22e1825d9172f55ff02dd2048b6a233d1e70b",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "ScarletOwl",
+    "model": "gpt-5-codex"
+  },
+  "git_head_before_commit": "e3464a48983c8d1017bc105d4d7af4897d961815",
+  "created_at": "2026-07-03T00:27:22.984384092Z",
+  "feature": {
+    "id": "project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq",
+    "kind": "feature",
+    "name": "project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq",
+    "source_bead": "project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq",
+    "bead_ids": [
+      "project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq"
+  },
+  "bead_ids": [
+    "project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload only closes the NTM peer-pane docs bead and updates docs/ntm-bridge.md with the calibrated guidance."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Staged docs/tracker payload satisfies applicable formatting and docs-policy checks.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh confirmed hash --staged matched the packet hash and included exactly .beads/issues.jsonl and docs/ntm-bridge.md.",
+        "ScarletMarsh confirmed git diff --cached --check, no unsafe workflow-chain arrow pattern in the staged doc, and TestNTMBridgePolicy passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged documentation adds one coherent peer-pane verification policy section without parallel implementations or repeated command recipes requiring extraction.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh inspected the docs diff covering peer-pane verification, identity and monitoring, costs and failure modes, and relationship to backpressure.",
+        "ScarletMarsh confirmed the staged payload is narrow: one tracker close line plus the docs update."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5.5-high",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "evidence_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "The docs reject treating coordination activity, pane count, terminal wakes, or orchestrator messages as verifier evidence.",
+      "evidence": [
+        "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "BrightOwl cited text saying pane count is not evidence quality and terminal wake is routing evidence only.",
+        "The staged docs require JSON verdicts bound to staged payload hash, manifest hash, and condition file hash with preserved per-cell evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed surface is policy documentation, not new Go functions; the existing scaffold policy test passes against the staged content.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh confirmed no Go source files are staged.",
+        "go test ./internal/scaffold -run TestNTMBridgePolicy -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5.5-high",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "evidence_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "The staged docs satisfy the bead acceptance criteria for calibrated peer-pane verifier guidance, and clean staged-slice checks passed.",
+      "evidence": [
+        "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "BrightOwl inspected the staged docs diff and bead acceptance criteria for peer-pane verification, native subagent validity, Burpvalve boundaries, identity discipline, disagreement protocol, and paste safety.",
+        "Clean staged-slice verification passed: git diff --cached --check, TestNTMBridgePolicy, and go test ./... in a temp clone with only this staged patch."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged policy strengthens evidence requirements for peer-pane verification and distinguishes routing/audit events from verifier evidence.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh cited staged docs requiring Agent Mail JSON verdicts bound to staged payload hash, manifest hash, and condition file hash, with terminal wakes as routing evidence only.",
+        "ScarletMarsh cited relationship-to-backpressure text that orchestrator messages and pane wakes are audit trail, not feature x condition evidence unless policy names that verifier actor and kind."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5.5-high",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "evidence_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "The staged slice is limited to NTM bridge documentation and the corresponding tracker close line.",
+      "evidence": [
+        "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "BrightOwl confirmed git diff --cached --name-status contains exactly .beads/issues.jsonl and docs/ntm-bridge.md, with unrelated worktree dirt unstaged.",
+        "The .beads staged change closes only project-readiness-kit-oxp-ntm-bridge-peer-pane-docs-0oq; docs changes stay within NTM/Agent Mail peer-pane guidance."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged docs keep verifier panes read-only and do not introduce destructive command guidance.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh cited text forbidding verifier panes from staging, editing, closing beads, submitting responses, or committing for the implementer.",
+        "ScarletMarsh confirmed the staged NTM commands are robot-readable observation/routing commands and no irreversible operation guidance was added."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload preserves hash-bound evidence and tracker integrity for the docs change.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh confirmed hash --staged matched the packet hash and listed exactly the packet paths.",
+        "ScarletMarsh confirmed the staged .beads diff changes only this bead from in_progress to closed with the intended close reason."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5.5-high",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "evidence_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "The documentation preserves Burpvalve, NTM, Agent Mail, and Beads boundaries without granting Burpvalve new operational authority.",
+      "evidence": [
+        "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "BrightOwl cited text saying Burpvalve owns contracts, prompts, evidence surfaces, and commit gates while Agent Mail, NTM, and Beads are coordination substrates.",
+        "The peer-pane discipline keeps verifier panes read-only and forbids staging, editing, closing beads, submitting responses, or committing for the implementer."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no UI, screenshot, browser, responsive layout, canvas, or visual-diff surface.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh confirmed only .beads/issues.jsonl and docs/ntm-bridge.md are staged.",
+        "ScarletMarsh confirmed no frontend assets, UI components, CSS, screenshots, or browser fixtures are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5-codex",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "evidence_ref": "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload changes policy docs and tracker state only, with no runtime performance surface.",
+      "evidence": [
+        "Agent Mail 2960 ScarletMarsh mechanical/shared verdict",
+        "ScarletMarsh confirmed only .beads/issues.jsonl and docs/ntm-bridge.md are staged.",
+        "ScarletMarsh confirmed the docs mention latency only as a coordination cost and do not change executable behavior or performance thresholds."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "peer-pane verifier",
+        "model": "gpt-5.5-high",
+        "runtime": "ntm peer pane via Agent Mail",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "evidence_ref": "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "created_at": "2026-07-03T00:27:22.984384092Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5-high",
+      "verdict": "pass",
+      "message": "The docs require identity and liveness checks, ambiguity stops, and escalation on conflicts rather than autonomous guessing or self-certification.",
+      "evidence": [
+        "Agent Mail 2959 BrightOwl judgment/high verdict",
+        "BrightOwl cited Identity And Monitoring requirements for ntm capabilities, snapshot, repo-session confirmation, pane identity confirmation, and post-send tail or attention checks.",
+        "The staged docs say ambiguous pane identity must stop for Agent Mail coordination, and conflicting verdicts or blockers hold the gate and escalate."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:27:22.984384092Z"
+    }
+  ]
+}

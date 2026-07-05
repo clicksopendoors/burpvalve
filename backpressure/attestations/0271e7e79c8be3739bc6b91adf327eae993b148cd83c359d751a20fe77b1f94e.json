@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:0271e7e79c8be3739bc6b91adf327eae993b148cd83c359d751a20fe77b1f94e",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "159770fa48c7a4d76338302725c2b858b9bc7ce1",
+  "created_at": "2026-07-02T03:21:18.700971716Z",
+  "feature": {
+    "id": "project-readiness-kit-land-03-track-live-gate-u3f",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-03-track-live-gate-u3f",
+    "diff_cluster": "explicit:project-readiness-kit-land-03-track-live-gate-u3f"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is exactly the land-03 Phase 0 bootstrap unit: track the live Burpvalve pre-commit hook, backpressure manifest and condition scaffold, evidence/log READMEs, and tools/burpvalve placeholder README. Later source, plan, release, and bead-state changes remain unstaged and are not part of this commit."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged scaffold declares lint-rules as an enabled backpressure condition while keeping executable lint enforcement explicit and non-faked. The hook invokes burpvalve lint after burpvalve commit, and burpvalve lint honestly reports scaffold-only/not_enforced because lint_commands is empty.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e 20 added land-03 scaffold files including .githooks/pre-commit, backpressure/lint-rules.md, and backpressure/manifest.yaml",
+        "git show :backpressure/manifest.yaml | rg -n \"id:|path:|enabled: true|lint_commands\" -\u003e lint-rules path backpressure/lint-rules.md enabled true; lint_commands: []",
+        "git show :backpressure/lint-rules.md -\u003e says setup should create a policy wishlist, not fake enforcement; a rule is enforced only after this file names the command or analyzer that checks it",
+        "git show :.githooks/pre-commit | rg -n \"go run ./cmd/burpvalve|BURPVALVE_FEATURE|BURPVALVE_RESPONSES|BURPVALVE_AGENT|BURPVALVE_MODEL|commit|lint\" -\u003e hook prefers go run ./cmd/burpvalve, forwards feature/responses/agent/model, runs commit, then runs lint",
+        "go run ./cmd/burpvalve lint -\u003e status not_enforced; command_count 0; skipped lint-rules-wishlist because no exact lint_commands entries are declared",
+        "git diff --cached --check -\u003e no output, exit 0"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is a scaffold registry plus short condition docs and README placeholders. I found no duplicated implementation logic, repeated validation branches, parallel helpers, or copied tests requiring extraction; repeated condition-doc shape is intentional scaffold structure.",
+      "evidence": [
+        "git diff --cached --stat -\u003e 20 files changed, 183 insertions",
+        "git diff --cached --name-status -\u003e one hook, one manifest, condition docs, and README placeholder files only",
+        "git show :backpressure/dry.md -\u003e DRY condition checks copied code blocks, duplicated conditionals/validation/error handling, duplicated helpers, and nearly identical tests",
+        "git show :.githooks/pre-commit -\u003e single compact hook path selection plus one COMMIT_ARGS construction block; no duplicated command-runner implementations observed",
+        "go test ./... -\u003e all packages passed in current tree"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged gate avoids pretending scaffold wishlist rules are executable enforcement, preserves explicit verifier evidence requirements, and separates failed reports from passing attestations. I did not find superficial success signals substituted for the real commit gate.",
+      "evidence": [
+        "git show :backpressure/lint-rules.md -\u003e explicitly says setup should create a policy wishlist, not fake enforcement; rules are enforced only after exact command/analyzer exists",
+        "go run ./cmd/burpvalve lint -\u003e status not_enforced and fatal false; skipped wishlist rather than claiming enforcement",
+        "git show :backpressure/attestations/README.md -\u003e passing attestation must bind staged payload hash, enabled conditions, subagent confirmations, verdicts, and messages",
+        "git show :log/backpressure/failed/README.md -\u003e blocked reports are not passing commit attestations and should not be treated as ready evidence",
+        "git show :.githooks/pre-commit -\u003e runs burpvalve commit before burpvalve lint"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload adds scaffold/backpressure docs and a shell hook, but no Go function or changed application behavior requiring nearby unit coverage under this placeholder condition. The condition file itself states that it exists to define future test granularity rather than literally require one test for every helper.",
+      "evidence": [
+        "git diff --cached --name-status showed 20 added scaffold files: .githooks/pre-commit, backpressure docs/manifest, log README files, and tools/burpvalve/README.md; no Go source or Go test files are staged.",
+        "sed -n '1,220p' backpressure/one-function-one-test.md showed only the scaffold policy text: title, purpose, and note that it should not literally require one test for every trivial helper forever.",
+        "go run ./cmd/burpvalve lint exited 0 with status not_enforced and message 'no executable lint commands declared; lint-rules wishlist skipped'."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Within this bootstrap gate commit, the staged files make the live definition-of-done mechanism reproducible: enabled conditions are tracked, the pre-commit hook runs commit verification before lint, and the attestation README defines passing evidence artifacts. No unmet DoD item was found for this scaffold slice.",
+      "evidence": [
+        "git show :backpressure/manifest.yaml -\u003e all 13 conditions are listed with enabled: true",
+        "git show :.githooks/pre-commit -\u003e runs \"${BURPVALVE[@]}\" commit \"${COMMIT_ARGS[@]}\" and then \"${BURPVALVE[@]}\" lint",
+        "git show :backpressure/attestations/README.md -\u003e successful feature or bug-fix commit must include JSON binding atomic work item, staged payload hash, enabled conditions, subagent confirmations, verdicts, and messages",
+        "git show :log/backpressure/failed/README.md -\u003e blocked reports are not passing commit attestations and should not be treated as ready evidence",
+        "go test ./... -\u003e ok for cmd/burpvalve, internal/backpressure, internal/scaffold, and remaining packages"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload creates tracked evidence locations for passing attestations and failed backpressure attempts, and distinguishes ready evidence from blocked reports. That satisfies the evidence-log condition for this live-gate scaffold slice.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e adds backpressure/attestations/README.md, log/README.md, and log/backpressure/failed/README.md",
+        "git show :backpressure/attestations/README.md -\u003e passing commit attestations live here and include atomic work item, staged payload hash, enabled backpressure conditions, subagent confirmations, verdicts, and messages",
+        "git show :log/backpressure/failed/README.md -\u003e local blocked-attempt reports live here and are not passing commit attestations",
+        "git show :backpressure/evidence-log.md -\u003e condition purpose is to define evidence agents must record before closing work",
+        "git show :backpressure/manifest.yaml | awk path check against index -\u003e no missing path output, exit 0"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is limited to the land-03 live-gate scaffold: hook, backpressure manifest/docs, log/evidence READMEs, and tools placeholder README. It matches the packet's 20-file scope and does not include later landing work in the index.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e exactly 20 added files matching the packet list",
+        "git diff --cached --stat -\u003e 20 files changed, 183 insertions",
+        "git diff --cached -- .githooks/pre-commit backpressure/manifest.yaml backpressure/attestations/README.md log/backpressure/failed/README.md tools/burpvalve/README.md -\u003e only live hook/manifest/evidence placeholder content in that focused slice",
+        "git show :tools/burpvalve/README.md -\u003e README-only directory is a placeholder, not a runnable command",
+        "git show :backpressure/scope-control.md -\u003e condition purpose is preventing agents from expanding tasks without approval"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged executable hook introduces a local commit/lint gate but does not stage destructive commands such as deletes, resets, force pushes, production deploys, migrations, or external mutation commands.",
+      "evidence": [
+        "git ls-files --stage .githooks/pre-commit -\u003e mode 100755 for the staged hook",
+        "git show :.githooks/pre-commit -\u003e set -euo pipefail; selects local burpvalve command; runs commit, lint, and optional .githooks/pre-commit.user only if executable",
+        "git show :.githooks/pre-commit | rg -n \"rm |rm -rf|reset --hard|push --force|kubectl delete|terraform destroy|DROP|curl|ssh|scp|token|secret|password|deploy|prod|sudo|chmod|chown\" -\u003e no output, exit 1",
+        "git diff --cached --summary -\u003e create mode 100755 .githooks/pre-commit plus create mode 100644 docs/README scaffold files; no deletes or mode rewrites of existing tracked files"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload creates the data/evidence locations without migrations or destructive data operations, and it separates passing attestations from blocked reports with explicit instructions not to hand-edit generated JSON evidence.",
+      "evidence": [
+        "git diff --cached --name-status showed added backpressure/attestations/README.md and log/backpressure/failed/README.md, with no deletes or modifications to existing persisted data.",
+        "git diff --cached -- backpressure/attestations/README.md log/backpressure/failed/README.md showed passing commit attestations belong under backpressure/attestations and blocked-attempt reports belong under log/backpressure/failed.",
+        "backpressure/attestations/README.md says generated attestation JSON should be excluded from broad formatters instead of hand-edited; log/backpressure/failed/README.md gives the same instruction for blocked reports."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged hook and docs do not introduce secrets, credentials, network calls, auth changes, tenant/PII behavior, or privilege escalation. The hook forwards only explicit BURPVALVE_* metadata values into the local burpvalve command.",
+      "evidence": [
+        "git diff --cached --name-only | rg -n \"(^|/)(secret|secrets|\\.env|id_rsa|credentials|token|password|key)(\\.|$|/)\" -\u003e no output, exit 1",
+        "git show :.githooks/pre-commit | rg -n \"BURPVALVE_FEATURE|BURPVALVE_RESPONSES|BURPVALVE_AGENT|BURPVALVE_MODEL\" -\u003e forwards only feature, responses, agent, and model flags",
+        "git show :.githooks/pre-commit | rg -n \"rm |rm -rf|reset --hard|push --force|kubectl delete|terraform destroy|DROP|curl|ssh|scp|token|secret|password|deploy|prod|sudo|chmod|chown\" -\u003e no output, exit 1",
+        "git show :backpressure/security-boundaries.md -\u003e condition concerns auth, secrets, tenant isolation, PII, permissions, sandbox, and external API safety rules",
+        "go test ./... -\u003e all packages passed in current tree"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No UI, browser, responsive layout, canvas, screenshot, or visual asset behavior is staged in this bootstrap payload.",
+      "evidence": [
+        "git diff --cached --name-status listed only scaffold docs, manifest, log README files, tools/burpvalve/README.md, and .githooks/pre-commit.",
+        "sed -n '1,220p' backpressure/visual-regression.md showed the condition concerns screenshot, browser, responsive layout, canvas, and visual-diff checks for UI work.",
+        "git diff --cached --stat showed 20 added scaffold files and no frontend/UI files."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload does not change runtime algorithms, bundle size, token/cost behavior, benchmarks, or throughput-sensitive code; it only adds bootstrap scaffold files and a simple pre-commit shell wrapper.",
+      "evidence": [
+        "git diff --cached --stat showed 183 insertions across scaffold files, with no Go source files staged.",
+        "sed -n '1,220p' backpressure/performance-budget.md showed the condition concerns latency, memory, token, cost, bundle-size, throughput, or benchmark thresholds.",
+        "sed -n '1,220p' .githooks/pre-commit showed the hook only resolves the local burpvalve command, forwards selected environment variables, runs commit, runs lint, then optional user hook."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T03:21:18.700971716Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload adds the autonomy-boundary placeholder and a local commit hook; it does not perform outward-facing, irreversible, spending, publishing, or deletion actions. The hook enforces local commit/lint checks before allowing user hook continuation.",
+      "evidence": [
+        "sed -n '1,220p' backpressure/autonomy-boundary.md showed the staged condition purpose is to define independent agent actions, human approval requirements, and evidence before asking.",
+        "sed -n '1,220p' .githooks/pre-commit showed local command selection only and then '${BURPVALVE[@]}' commit followed by '${BURPVALVE[@]}' lint; no network, publishing, deletion, spend, or external send command appears.",
+        "git diff --cached --name-status showed all staged paths are additions for local scaffold/backpressure/log/tool docs plus the local hook."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T03:21:18.700971716Z"
+    }
+  ]
+}

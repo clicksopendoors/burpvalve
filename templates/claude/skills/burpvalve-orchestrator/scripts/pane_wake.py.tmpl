@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""Preflight and optionally send an NTM pane wake."""
+
+import argparse
+import json
+import subprocess
+import sys
+
+
+def run(cmd):
+    return subprocess.run(cmd, check=True, text=True, capture_output=True)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Preflight NTM and print or execute a pane wake.")
+    parser.add_argument("--session", default="burpvalve", help="NTM session name")
+    parser.add_argument("--pane", required=True, help="Pane index from a fresh snapshot")
+    parser.add_argument("--message", required=True, help="Short wake message")
+    parser.add_argument("--execute", action="store_true", help="Actually send the wake")
+    args = parser.parse_args()
+
+    capabilities = run(["ntm", "--robot-capabilities"])
+    snapshot = run(["ntm", "--robot-snapshot"])
+    json.loads(capabilities.stdout)
+    json.loads(snapshot.stdout)
+
+    command = [
+        "ntm",
+        "--robot-send=" + args.session,
+        "--panes=" + args.pane,
+        "--msg=" + args.message,
+    ]
+    if not args.execute:
+        print("DRY-RUN: " + " ".join(command))
+        return 0
+    result = run(command)
+    sys.stdout.write(result.stdout)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

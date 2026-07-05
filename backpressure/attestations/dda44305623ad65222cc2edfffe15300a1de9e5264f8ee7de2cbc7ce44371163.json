@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:dda44305623ad65222cc2edfffe15300a1de9e5264f8ee7de2cbc7ce44371163",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "LilacGlacier",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "05d45b9c464c98db94af68ad643e2b6f244d2828",
+  "created_at": "2026-07-02T16:53:49.862308617Z",
+  "feature": {
+    "id": "project-readiness-kit-vorch-05-verifier-submit-ingestion-transcr-t1g",
+    "kind": "feature",
+    "name": "project-readiness-kit-vorch-05-verifier-submit-ingestion-transcr-t1g",
+    "diff_cluster": "explicit:project-readiness-kit-vorch-05-verifier-submit-ingestion-transcr-t1g"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload contains only VORCH-05 verifier submit ingestion/transcript files."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2727",
+        "evidence_ref": "Agent Mail 2727",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged Go submit-ingestion code is formatted, hash-bound, and mechanically clean for the lint/static-analysis surface.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2727 verified git diff --cached --name-status contained exactly the five VORCH-05 files and git diff --cached --check produced no output.",
+        "ScarletMarsh Agent Mail 2727 reproduced the verifier prompt staged hash sha256:dda44305623ad65222cc2edfffe15300a1de9e5264f8ee7de2cbc7ce44371163 and manifest hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5.",
+        "ScarletMarsh Agent Mail 2727 reported gofmt -l on the five payload files produced no output in a clean temp Git worktree."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Submit behavior is concentrated in one ingestion path with shared binding, provenance, evidence, transcript, merge, and lock helpers.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 inspected staged internal/backpressure/verifier_responses.go and found one RunVerifierSubmit pipeline calling validateSubmitBinding, validateSubmitInput, storeSubmitTranscript, and mergeVerifierResponse.",
+        "BrightOwl Agent Mail 2728 inspected focused tests covering the shared submit path, stale binding, evidence/provenance rejection, supplemental/adjudication merge, transcript handling, and concurrency."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The submit path rejects stale packet bindings, missing evidence, authorization-only evidence, missing provenance, invalid verifier kinds, and policy-disallowed verifier kinds.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 inspected validateSubmitBinding, validateSubmittedCondition, validateVerifierProvenance, validateVerdictEvidence, evidenceOnlyAuthorization, VerifierPolicyAllows, supplemental, and adjudication logic.",
+        "BrightOwl Agent Mail 2728 observed tests for stale hash, missing pass evidence, missing non-pass message, authorization-only evidence, and missing runtime provenance.",
+        "LilacGlacier staged-slice verification: go test ./internal/backpressure -run 'VerifierSubmit|Submit|Binding|Evidence|Authorization|Transcript|Lock|Concurrent' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2727",
+        "evidence_ref": "Agent Mail 2727",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The submit ingestion, binding, evidence validation, supplemental/adjudication merge, transcript storage, locking, and CLI paths have direct tests.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2727 inspected internal/backpressure/verifier_responses_test.go tests for one-condition update, stale binding, missing/authorization-only evidence, provenance, supplemental/adjudication merge, duplicate replacement warning, transcript summary, and concurrent primary/supplemental submit locking.",
+        "ScarletMarsh Agent Mail 2727 inspected cmd/burpvalve/verifier_test.go CLI tests for verifier submit updating bound responses, missing evidence rejection, transcript storage, and robot help documentation.",
+        "LilacGlacier staged-slice verification: go test ./internal/backpressure -run 'VerifierSubmit|Submit|Binding|Evidence|Authorization|Transcript|Lock|Concurrent' -count=1 passed.",
+        "LilacGlacier staged-slice verification: go test ./cmd/burpvalve -run 'VerifierSubmit|Submit|Rejection|Transcript|Robots|Help' -count=1 passed.",
+        "LilacGlacier staged-slice verification: go test -race ./internal/backpressure -run 'Lock|Concurrent|Submit' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The bead-required submit surface is present in staged CLI and core code, includes tests for binding, rejection, transcript, supplemental/adjudication, and concurrency behavior, and passes focused plus full staged-snapshot tests.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 checked the bead contract and confirmed staged CLI/core code implements verifier submit for bound response files, stale/auth-only rejection, order/atomicity preservation, transcripts, lock/atomic writes, and supplemental/adjudication support.",
+        "BrightOwl Agent Mail 2728 inspected cmd/burpvalve/main.go submit flags and stdin handling, including DisallowUnknownFields and RunVerifierSubmit invocation.",
+        "LilacGlacier staged-slice verification: go test ./cmd/burpvalve -run 'VerifierSubmit|Submit|Rejection|Transcript|Robots|Help' -count=1 passed.",
+        "LilacGlacier staged-slice verification: go test ./... passed with only the VORCH-05 five-file payload staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2727",
+        "evidence_ref": "Agent Mail 2727",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Evidence is explicit, command-bound, and includes packet/hash verification plus isolated staged-slice test reproduction.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2727 verified /tmp/vorch-05-prompts.json feature id, staged hash, manifest hash, and 13 condition packets including requested mechanical cells.",
+        "ScarletMarsh Agent Mail 2727 verified /tmp/vorch-05-packets-compact.json lists the same staged payload paths and submit commands with the same binding hashes.",
+        "ScarletMarsh Agent Mail 2727 ran staged source inspection, diff check, gofmt check, focused tests, race test, and full go test ./... in a clean temp Git worktree with the cached five-file patch applied."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload is limited to the verifier-submit ingestion surface and its tests/documented artifact schema support; no unrelated lint, release, or scaffold behavior is included.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 verified git diff --cached --name-status listed exactly cmd/burpvalve/main.go, cmd/burpvalve/verifier_test.go, internal/backpressure/artifacts.go, internal/backpressure/verifier_responses.go, and internal/backpressure/verifier_responses_test.go.",
+        "BrightOwl Agent Mail 2728 verified the requested judgment cells were bound to the same VORCH-05 feature and sha256:dda443... staged payload in /tmp/vorch-05-prompts.json."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2727",
+        "evidence_ref": "Agent Mail 2727",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed write surface is local verifier response/transcript artifact writing, bounded by binding checks, locking, and atomic response-file replacement.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2727 inspected RunVerifierSubmit binding checks for current staged payload hash, manifest hash, and condition file hash before writing.",
+        "ScarletMarsh Agent Mail 2727 inspected mergeVerifierResponse, writeResponsesAtomic, and withFileLock: response updates use a lock file with timeout and temp-file-plus-rename writes.",
+        "ScarletMarsh Agent Mail 2727 inspected storeSubmitTranscript/readTranscript and found optional local transcript writes under configured/default transcript directories with summary support; no external sends, network calls, migrations, force pushes, resets, or production mutations were added."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Persisted response updates are bound to current response-file hashes, update exactly one condition, preserve atomicity and unrelated conditions, merge supplemental/adjudication deterministically, and write under a lock via temp-file rename.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 inspected mergeVerifierResponse and found response-file binding validation, named-condition replacement only, primary replacement preserving existing supplemental/adjudication, deterministic supplemental merge by key with replacement warnings, and writeResponsesAtomic temp file plus os.Rename under withFileLock.",
+        "BrightOwl Agent Mail 2728 inspected tests asserting unrelated conditions remain unknown, atomicity message is preserved, stale binding blocks, supplemental/adjudication merge does not change another condition, duplicate supplemental is deterministically replaced, transcript ref is stored, and concurrent writes leave valid JSON.",
+        "LilacGlacier staged-slice verification: go test -race ./internal/backpressure -run 'Lock|Concurrent|Submit' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed security surface is local verifier-response ingestion; staged code rejects unknown stdin fields, enforces packet/file bindings and provenance before writes, and does not add network, API, secret, tenant, or PII handling.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 inspected cmd/burpvalve/main.go and found verifier submit stdin decoded with json.Decoder.DisallowUnknownFields and extra JSON rejected unless --transcript - explicitly consumes remaining stdin as transcript bytes.",
+        "BrightOwl Agent Mail 2728 inspected binding/provenance/transcript helpers and found writes gated by staged payload, manifest, condition file, and response-file binding checks; transcript storage uses generated hash-prefix/condition filenames under configured transcript dir.",
+        "BrightOwl Agent Mail 2728 verified no staged files add external APIs, auth stores, tenant/PII handling, or destructive shell execution surfaces."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2727",
+        "evidence_ref": "Agent Mail 2727",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No visual surface is governed by this backend/CLI/test payload.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2727 verified staged payload paths are Go backend/CLI/test files only: cmd/burpvalve/main.go, cmd/burpvalve/verifier_test.go, internal/backpressure/artifacts.go, internal/backpressure/verifier_responses.go, and internal/backpressure/verifier_responses_test.go.",
+        "ScarletMarsh Agent Mail 2727 inspected the staged diff and found verifier submit command wiring, JSON/robot help text, response ingestion/validation/merge logic, transcript storage, locks, and Go tests; no browser UI, screenshots, CSS/layout, canvas, image assets, or terminal styling/rendering changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2727",
+        "evidence_ref": "Agent Mail 2727",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The new submit path is bounded local file and JSON work, with explicit lock timeout and no unbounded parallelism or external calls.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2727 inspected RunVerifierSubmit and found it builds the existing plan, validates one submitted condition, optionally reads one transcript, and merges one response into one response file.",
+        "ScarletMarsh Agent Mail 2727 inspected withFileLock and found lock acquisition uses a deadline from lockTimeout, defaulting to 5 seconds, with 10ms sleeps between attempts and no unbounded wait loop.",
+        "ScarletMarsh Agent Mail 2727 inspected summarizeTranscript and found summary mode caps stored transcript content to the first 20 lines plus a truncation marker.",
+        "LilacGlacier staged-slice verification: go test -race ./internal/backpressure -run 'Lock|Concurrent|Submit' -count=1 passed.",
+        "LilacGlacier staged-slice verification: go test ./... passed with only the VORCH-05 five-file payload staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2728",
+        "evidence_ref": "Agent Mail 2728",
+        "created_at": "2026-07-02T16:53:49.862308617Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The payload makes independent verifier evidence explicit instead of self-certifying: it requires separate-context verifier provenance, rejects authorization-only evidence, preserves transcript/audit references, and supports supplemental/adjudication records without weakening primary policy.",
+      "evidence": [
+        "BrightOwl Agent Mail 2728 inspected validateVerifierProvenance, evidenceOnlyAuthorization, validateSupplementalVerifier, validateAdjudication, VerifierPolicyAllows, and TranscriptRef logic.",
+        "BrightOwl Agent Mail 2728 found submit requires verifier kind/model/runtime/separate_context, rejects D7/authorization-only evidence, policy-checks supplemental verifier kind, validates adjudication authority/summary/audit_ref/final_verdict, and records transcript_ref when supplied.",
+        "BrightOwl Agent Mail 2728 inspected robot/help contract stating evidence is required, authorization text alone is rejected, supplemental/adjudication merge without rewriting begin atomicity, and duplicate supplementals warn/replace."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T16:53:49.862308617Z"
+    }
+  ]
+}

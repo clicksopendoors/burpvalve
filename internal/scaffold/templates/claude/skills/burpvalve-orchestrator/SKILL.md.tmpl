@@ -1,0 +1,129 @@
+---
+name: burpvalve-orchestrator
+description: >-
+  Coordinate Burpvalve-gated multi-agent work units: Beads-backed tracking,
+  file reservations, verifier fanout, seals/attestations, gate windows, and
+  wake handoffs without manufacturing evidence.
+category: other
+tags:
+  - ctx-cli
+  - tool-git
+license: MIT
+distribution: public
+---
+
+# burpvalve-orchestrator
+
+> Core rule: coordinate evidence flow; do not manufacture evidence. Keep one atomic payload per gated commit. Terminal wakes route attention only and are never verifier verdicts.
+
+## Role Split
+
+When worker agents are available, the orchestrator does not implement, edit
+docs, run verifier cells, or execute commit-gate payload work itself. Its scope
+is triage, owner-decision capture, routing, review, gate-window operation,
+evidence recording, Agent Mail coordination, and pane wake discipline. Workers
+are the implementers and checkers; preserve their actual evidence and
+provenance.
+
+## Model And Effort Tiering
+
+Set model and reasoning effort deliberately at spawn time. Effort follows the
+cell or task type, not the role title: critical-path implementer work uses
+`xhigh`; judgment-cell verification uses `high` for `dry`,
+`anti-reward-hacking`, `scope-control`, `security-boundaries`, and
+`definition-of-done`; mechanical-cell verification plus lookup or inventory
+work uses `medium`. Record each pane's model and effort in dispatch notes.
+Adjust running panes only between rounds; for long mechanical phases, respawn
+at the right tier instead of spending `xhigh` on lookups.
+
+Use this skill when acting as the Claude orchestrator for a Burpvalve repo. It
+keeps the coordinator focused on work ownership, verifier fanout, the
+GATE-WINDOW queue, and durable handoffs while preserving the repo contract in
+`AGENTS.md`.
+
+Vocabulary: backpressure is the checks and evidence requirements that keep
+agents from self-certifying weak work; the valve is the fail-closed commit
+gate; a seal is a Burpvalve attestation; a work unit is the atomic work being
+checked; a bead is a Beads/br tracker issue, not the generic name for all work.
+
+## Quick Start
+
+1. Read `AGENTS.md`, `ORCHESTRATOR.md` when present, and the active work unit.
+2. Run `git status --short`, `git diff --cached --name-status`, and
+   `br ready --json` before assigning or staging work.
+3. Reserve files through Agent Mail before edits; reserve `GATE-WINDOW` only
+   when a staged payload is ready to verify and gate.
+4. Generate verifier packets for the exact staged payload, mail them, then wake
+   panes with a fresh snapshot.
+5. Gate, commit, push once when required, close the Beads issue when present
+   with refs, release reservations, and wake the next queued owner.
+6. When git committing, never add co-authorship for Codex or Claude (no Co-Authored-By trailers for AI tools). Author is clicksopendoors only.
+7. Never estimate or reference development time or timelines. Describe scope, sequencing, and blockers instead.
+
+## Decision Tables
+
+| Situation | Action | Hold When |
+|---|---|---|
+| New implementation work unit | Assign one owner and reserve exact files | Dependencies are not closed |
+| Shared file hot spot | Ask for a narrow hunk handoff | The index already contains another payload |
+| Gate window needed | Confirm index empty, then reserve `GATE-WINDOW` | Another holder has an active turn |
+| Verification needed | Fan out hash-bound packets | Packets do not match current staged hash |
+| Commit complete | Push once if repo protocol requires it | Attestation is missing or invalid |
+
+| Verifier Pattern | Use When | Evidence Rule |
+|---|---|---|
+| Native subagent | Runtime can read repo and run evidence commands | Record actual runtime and model |
+| Peer-pane relay | Native tooling is weak or provenance matters | Mail packet, wake pane, cite message id |
+| Manual verifier | Human or external verifier replies | Preserve their exact verdict and reason |
+
+| Hold Condition | Required Coordinator Response |
+|---|---|
+| Shared judgment-cell disagreement | Stop the gate and ask for adjudication |
+| Staged hash changed after packets | Regenerate packets and responses |
+| Unowned staged paths | Identify owner or unstage before proceeding |
+| Gate writes seal/attestation | Stage only that attestation and rerun commit |
+
+| Script | Default | Explicit Mutation |
+|---|---|---|
+| `scripts/pane_wake.py` | Preflight and print planned wake | `--execute` sends the wake |
+| `scripts/attestation_summary.py` | Read and summarize attestation JSON | None |
+| `scripts/append_finding.py` | Print a dated finding skeleton | `--write` appends to a findings log |
+
+## Coordinator Loop
+
+1. Observe: read mail, work-unit or Beads state, git status, reservations, and
+   current queue.
+2. Decide: pick the next unblocked work unit and name the owner, payload, and
+   gate order.
+3. Verify: require hash-bound, condition-specific evidence from separate
+   contexts.
+4. Commit: let Burpvalve write or validate the attestation; never bypass the
+   hook.
+5. Handoff: release reservations, wake the next owner, and record durable refs.
+
+## Reference Map
+
+| Need | Resource |
+|---|---|
+| Commit gate choreography | [references/burpvalve-gate-choreography.md](references/burpvalve-gate-choreography.md) |
+| Verifier fanout and attestations | [references/verifier-fanout-and-attestations.md](references/verifier-fanout-and-attestations.md) |
+| Agent Mail and file coordination | [references/agent-mail-and-file-coordination.md](references/agent-mail-and-file-coordination.md) |
+| NTM pane wake discipline | [references/ntm-pane-wake-discipline.md](references/ntm-pane-wake-discipline.md) |
+| Beads and gate windows | [references/beads-and-gate-window-operations.md](references/beads-and-gate-window-operations.md) |
+| Worked gated handoff | [examples/gated-implementation-handoff.md](examples/gated-implementation-handoff.md) |
+| Worked disagreement hold | [examples/verifier-disagreement-hold.md](examples/verifier-disagreement-hold.md) |
+| Worked gate-window release | [examples/gate-window-release.md](examples/gate-window-release.md) |
+| Wake helper | [scripts/pane_wake.py](scripts/pane_wake.py) |
+| Attestation summary helper | [scripts/attestation_summary.py](scripts/attestation_summary.py) |
+| Findings-log helper | [scripts/append_finding.py](scripts/append_finding.py) |
+| Operating self-test | [SELF-TEST.md](SELF-TEST.md) |
+
+## Anti-Patterns
+
+| Avoid | Do Instead |
+|---|---|
+| Treating authorization as verifier evidence | Require per-cell evidence |
+| Leaving staged work in the shared index | Gate promptly or unstage and hand off |
+| Waking panes without mail context | Mail the packet first, then wake |
+| Combining unrelated work units in one commit | Split payloads before verifier packets |
+| Closing Beads issues without commit and attestation refs | Close with durable refs and sync |

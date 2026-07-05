@@ -1,0 +1,393 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:79f6f66e8855890220f5766e2bbe53ce6ee57109e330d5008350bace9e3b1af6",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "139b6b5be77e77b508daf9fa5f2e6f1b18d4c0fd",
+  "created_at": "2026-07-02T10:13:17.714586545Z",
+  "feature": {
+    "id": "project-readiness-kit-land-19-arrow-chain-sanitization-ibp",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-19-arrow-chain-sanitization-ibp",
+    "source_bead": "project-readiness-kit-land-19-arrow-chain-sanitization-ibp",
+    "bead_ids": [
+      "project-readiness-kit-land-19-arrow-chain-sanitization-ibp"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-land-19-arrow-chain-sanitization-ibp"
+  },
+  "bead_ids": [
+    "project-readiness-kit-land-19-arrow-chain-sanitization-ibp"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged slice is exactly land-19: D4/#16 arrow-chain sanitization for agent-facing prose and printed CLI output. It stages the README arrow rewrites, the single installCommandShim error-string rewrite, two named docs notes that are part of the land-19 payload and contain sanitized ladder examples, and the deterministic-backpressure reference ladder rewrite. Other bead-listed paths were swept but not staged because their remaining arrows are allowed symlink notation or there is no matching disallowed arrow text; unrelated docs refresh hunks remain deferred to land-21."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2442",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged land-19 slice is formatted, passes diff whitespace checks, and passes focused plus full tests relevant to shim/install/help behavior.",
+      "evidence": [
+        "ScarletMarsh message 2442: git diff --cached --name-status and --stat matched the packet exactly: README.md, cmd/burpvalve/main.go, docs/matt-pocock-skill-patterns.md, docs/setup-pre-commit-patterns.md, and skill/burpvalve/references/deterministic-backpressure.md; 577 insertions and 17 deletions.",
+        "ScarletMarsh verified git diff --cached --check exited 0 and the staged cmd/burpvalve/main.go blob was gofmt-clean.",
+        "ScarletMarsh verified bash -n install.sh, go test ./cmd/burpvalve -run 'Shim|Install|Help', and go test ./... exited 0."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice removes bare arrow-chain examples through localized prose/numbered-list rewrites and one CLI error wording change, without duplicating sanitization logic or adding parallel policy text.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached --name-status/stat matched the packet: README.md, cmd/burpvalve/main.go, two new docs, and deterministic-backpressure.md; 5 files, 577 insertions, 17 deletions.",
+        "BrightOwl verified README and deterministic-backpressure convert arrow-chain ladders to prose/numbered lists, and main.go changes only installCommandShim's error string from '-\u003e' to 'pointing to'.",
+        "BrightOwl verified git diff --cached | rg '^\\\\+.*-\u003e ' produced no output."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload fixes the visible arrow-chain defect rather than exempting it, and the added docs reinforce real checks, explicit evidence, and no fake or aspirational gates.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached showed the two README arrow-chain examples were rewritten as prose and a numbered ladder, not hidden inside a different shell/prose workflow chain.",
+        "BrightOwl found guidance in docs/matt-pocock-skill-patterns.md and docs/setup-pre-commit-patterns.md such as 'Do not add aspirational commands', 'never add fake commands', and 'Do not let prose policies masquerade as deterministic gates'.",
+        "BrightOwl verified the staged snapshot arrow sweep left only allowed symlink notation and fenced architecture graph hits.",
+        "ScarletMarsh message 2442 independently agreed pass, citing the main.go CLI string rewrite, README/reference ladder rewrites, no added arrow text in the staged diff, and guidance against fake deterministic claims and silent fixes."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The only code behavior change is the installCommandShim error message, and existing shim/install/help tests cover that command surface; added docs do not introduce functions.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached -- cmd/burpvalve/main.go showed one line changed in installCommandShim: the symlink creation failure now says 'pointing to' instead of using '-\u003e'.",
+        "BrightOwl verified go test ./cmd/burpvalve -run 'Shim|Install|Help' passed in a HEAD-plus-cached-diff staged snapshot.",
+        "BrightOwl verified go test ./... passed in the staged snapshot."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged slice has matching path/stat evidence, whitespace check, arrow sweep, targeted test, shell syntax check, and full test evidence.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached --check exited 0 on the staged payload.",
+        "BrightOwl verified a staged snapshot arrow sweep returned only the allowed symlink/fenced-graph hits listed in the packet.",
+        "BrightOwl verified bash -n install.sh passed in the staged snapshot.",
+        "BrightOwl verified go test ./cmd/burpvalve -run 'Shim|Install|Help' and go test ./... both passed in the staged snapshot."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2442",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed surface is documentation and CLI output that should make the arrow-chain rule and future backpressure ladder easier to audit.",
+      "evidence": [
+        "ScarletMarsh message 2442: README.md staged diff removes two fenced arrow-chain workflow examples and rewrites them as prose sentences without bare '-\u003e' workflow chains.",
+        "ScarletMarsh verified README.md and skill/burpvalve/references/deterministic-backpressure.md staged diffs replace the arrow-chain maturity ladder with numbered lists: Written/Prose rule, Attestation, Command, CI gate, Structural invariant.",
+        "ScarletMarsh found docs/matt-pocock-skill-patterns.md adds durable notes that blocked-attempt reports should point to relevant artifacts, conditions should move from prose to executable evidence, and agents should not let prose policies masquerade as deterministic gates.",
+        "ScarletMarsh found docs/setup-pre-commit-patterns.md adds durable notes to run burpvalve lint and report exact evidence, and to prefer explicit evidence over silent fixes.",
+        "ScarletMarsh verified git diff --cached | rg '^\\\\+.*-\u003e ' produced no output."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is limited to the arrow-chain sanitization/documentation slice, and the omitted bead paths are not staged because their remaining arrows are allowed or unrelated.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached --name-status showed exactly README.md, cmd/burpvalve/main.go, docs/matt-pocock-skill-patterns.md, docs/setup-pre-commit-patterns.md, and skill/burpvalve/references/deterministic-backpressure.md.",
+        "BrightOwl verified git diff --cached -- install.sh skill/burpvalve/INSTALL.md skill/burpvalve/SKILL.md plans/bead-closure-mode.md produced no staged diff.",
+        "BrightOwl verified the staged snapshot arrow sweep classified skill/burpvalve/SKILL.md, skill/burpvalve/INSTALL.md, install.sh, and README.md line 113 as symlink notation; README.md architecture arrows are inside a fenced text graph.",
+        "ScarletMarsh message 2442 independently agreed pass and confirmed cmd/burpvalve/main.go has only the shim error-text line staged, while the two new docs are directly relevant research/pattern notes."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed docs were inspected: the staged guidance keeps destructive or risky automation explicit, opt-in, and approval-backed; no destructive command behavior was added.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached showed no staged changes to install.sh, hook scripts, CI files, or destructive command execution paths.",
+        "BrightOwl found docs/setup-pre-commit-patterns.md explicitly says auto-fix should be opt-in, rerun burpvalve commit after auto-fix changes staged payload, and do not auto-install dependencies or auto-format staged files unless opted in.",
+        "BrightOwl found skill/burpvalve/references/deterministic-backpressure.md preserved guidance not to quietly add dependencies, change CI, tighten destructive-operation gates, or block new classes of work without user approval."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2442",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no governed persisted-data, migration, rollback, dedupe, backup, or audit-log storage surface.",
+      "evidence": [
+        "ScarletMarsh message 2442: git diff --cached --name-status shows README/docs/skill-reference docs plus cmd/burpvalve/main.go only.",
+        "ScarletMarsh verified cmd/burpvalve/main.go staged diff changes only the symlink error message from 'create command shim %s -\u003e %s' to 'create command shim %s pointing to %s'.",
+        "ScarletMarsh found no staged files touch internal/attestations, internal/backpressure artifact writing, manifest parsing, config persistence, database files, migrations, or serialized data schemas."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "No governed security-boundary surface is changed by this staged slice under A14b: guidance that refers to security-adjacent practices influences future behavior, but influence is not carriage.",
+      "evidence": [
+        "BrightOwl message 2443: git diff --cached changed arrow wording/docs only; no auth, secret handling, tenant isolation, permission model, scanner configuration, dependency lockfile, or hook execution code changed.",
+        "BrightOwl verified the new setup-pre-commit note discusses hook/dependency patterns only as design guidance; active hook behavior remains unstaged and unchanged.",
+        "ScarletMarsh message 2442 risk-grep diligence found security-adjacent terms only in opt-in or approval-gated documentation; no token/secret/password/credential handling was introduced.",
+        "ScarletMarsh verified cmd/burpvalve/main.go staged diff only changes an error message and does not add command execution, file writes, auth, permissions, or network behavior.",
+        "RusticDog ruling message 2445: security-boundaries is not_applicable per A14b because the staged payload contains no executable behavior, auth, secrets, permissions, hook execution, or dependency changes; documentation references to security-adjacent practices are excluded from governed status."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2442",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no browser UI, screenshot, image/canvas asset, TUI layout, responsive layout, or visual-diff surface.",
+      "evidence": [
+        "ScarletMarsh message 2442: git diff --cached --name-status shows markdown docs plus one Go CLI error-string change only.",
+        "ScarletMarsh verified the staged payload does not touch docs/demos, README rendered media, image files, browser/frontend files, terminal snapshot assets, Bubble Tea views, or Lip Gloss layout code.",
+        "ScarletMarsh verified the README changes are prose and numbered-list replacements for arrow chains, not visual asset or layout changes."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2442",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no governed performance-budget surface.",
+      "evidence": [
+        "ScarletMarsh message 2442: cmd/burpvalve/main.go staged diff changes only a fail() message in installCommandShim.",
+        "ScarletMarsh verified the added docs are static markdown files and do not introduce executable runtime behavior.",
+        "ScarletMarsh verified go test ./... exited 0; pre-analysis for unit 19 marked PERF=-."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2443",
+        "created_at": "2026-07-02T10:13:17.714586545Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged docs keep agent/tool autonomy bounded by explicit confirmation, verified commands, and no silent dependency/hook/auto-fix changes.",
+      "evidence": [
+        "BrightOwl message 2443: docs/setup-pre-commit-patterns.md says to detect tooling, add only real checks, ask which checks should block commits/CI, and not auto-install developer dependencies or auto-format staged files without approval.",
+        "BrightOwl found docs/matt-pocock-skill-patterns.md says not to auto-install editor-specific hooks or language dependencies without explicit user approval, and to keep command model split by inspect/mutate/verify/publish.",
+        "BrightOwl found skill/burpvalve/references/deterministic-backpressure.md retains agent guidance to inspect with JSON/config commands and apply mutations only with explicit flags or robot JSON confirm=true."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T10:13:17.714586545Z"
+    }
+  ]
+}

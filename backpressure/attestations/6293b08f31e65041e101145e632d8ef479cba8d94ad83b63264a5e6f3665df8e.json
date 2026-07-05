@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:6293b08f31e65041e101145e632d8ef479cba8d94ad83b63264a5e6f3665df8e",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "EmeraldBrook",
+    "model": "gpt-5-medium"
+  },
+  "git_head_before_commit": "66e127d6658454db85cae73b91f98771ce739a9b",
+  "created_at": "2026-07-02T17:09:10.700177551Z",
+  "feature": {
+    "id": "project-readiness-kit-lint-wizard-flow-yz1",
+    "kind": "feature",
+    "name": "project-readiness-kit-lint-wizard-flow-yz1",
+    "diff_cluster": "explicit:project-readiness-kit-lint-wizard-flow-yz1"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload contains only the guided lint init wizard flow and its tests."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2736",
+        "evidence_ref": "Agent Mail message 2736",
+        "created_at": "2026-07-02T17:02:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged lint-init wizard code is formatted, diff-check clean, and keeps executable lint setup explicit rather than fake enforcement.",
+      "evidence": [
+        "ScarletMarsh message 2736: git diff --cached --check exited clean.",
+        "ScarletMarsh message 2736: gofmt -l on cmd/burpvalve/lint_init.go and lint_init_test.go printed no files in an isolated staged-slice worktree.",
+        "ScarletMarsh message 2736: inspected lint_init.go and confirmed declined scoped setup is metadata plus warnings; executable commands still flow through LintManifestUpdate.",
+        "ScarletMarsh message 2736: focused lint-init wizard tests passed in an isolated staged-slice worktree."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Wizard logic is factored through shared plan/build/apply helpers instead of duplicating write and preview behavior.",
+      "evidence": [
+        "BrightOwl message 2733: inspected buildLintInitResult, applyLintInitWrites, collectLintInitWizardPlan, lintInitWizardCommands, lintInitCoverageData, and lintInitDetectionCoverage.",
+        "BrightOwl message 2733: buildLintInitResult and applyLintInitWrites share command proposal, coverage, and recommendation helpers rather than separate mutation logic."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The wizard does not let reduced lint coverage masquerade as full coverage.",
+      "evidence": [
+        "BrightOwl message 2733: collectLintInitWizardPlan asks scoped-root question only when Detection.NeedsScopedSetup, defaults Yes, records DeclinedRoots/DeclinedAt on decline, switches to repo-root commands only, and final write confirmation defaults false.",
+        "BrightOwl message 2733: lintInitRecommendations says proposed commands must be reviewed and run before treating coverage as enforced; lintInitDetectionCoverage marks declined roots partial.",
+        "BrightOwl message 2733: tests assert declined scoped setup warning and persisted lint_coverage declined_roots/declined_at, accepted polyglot coverage, and default-No no mutation."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The prompt/model control-flow changes have nearby tests covering the acceptance-critical wizard states.",
+      "evidence": [
+        "BrightOwl message 2733: treated one-function-one-test as governed because the payload is prompt/model control flow.",
+        "BrightOwl message 2733: tests cover detect no-mutation, write confirmation, robot confirmation, declined scoped coverage, accepted polyglot coverage, single-root no scoped question, final No-default cancel no-mutation, and preview content.",
+        "ScarletMarsh message 2736: staged tests add declined scoped setup, accepted scoped setup, single-root, and final confirmation No/cancel no-mutation coverage."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload implements the guided lint init scope, reduced-coverage, No-default confirmation, and no-install/no-project-script-edit requirements with focused and full tests passing.",
+      "evidence": [
+        "BrightOwl message 2733: bead requires scoped setup prompts for multi-root/polyglot repos, skipped scoped questions for single-root, durable declined coverage, final confirmation default No, no dependency installs/project script edits, and tests for accepted/declined/cancel flows.",
+        "BrightOwl message 2733: inspected lint_init.go and confirmed scoped prompt/default Yes, per-command required/timeout/scope/run-dir/serial prompts, final write confirmation default No, reduced coverage data, and repo-root-only command selection on decline.",
+        "BrightOwl message 2733: clean staged snapshot focused lint-init wizard tests passed and full go test ./... passed."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2736",
+        "evidence_ref": "Agent Mail message 2736",
+        "created_at": "2026-07-02T17:02:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Verifier evidence is recorded with hash binding, staged-path confirmation, code inspection, and command results.",
+      "evidence": [
+        "ScarletMarsh message 2736: read /tmp/lint-wizard-verifier-prompts.json and confirmed staged hash sha256:6293b08f31e65041e101145e632d8ef479cba8d94ad83b63264a5e6f3665df8e, manifest hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5, and 13 condition packets.",
+        "ScarletMarsh message 2736: independently regenerated verifier prompts and got the same staged and manifest hashes with only the two lint_init paths hash-included.",
+        "ScarletMarsh message 2736: git diff --cached --name-status/stat showed exactly two files and 541 insertions/6 deletions.",
+        "ScarletMarsh message 2736: full go test ./... passed in an isolated staged-slice worktree."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload is scoped to the lint init wizard only.",
+      "evidence": [
+        "BrightOwl message 2733: git diff --cached --name-status and --stat showed only cmd/burpvalve/lint_init.go and cmd/burpvalve/lint_init_test.go, 541 insertions and 6 deletions.",
+        "BrightOwl message 2733: verifier packet binds the lint-wizard feature paths to sha256:6293b08f31e65041e101145e632d8ef479cba8d94ad83b63264a5e6f3665df8e."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed mutation surface is limited to existing Burpvalve manifest/recommendation write helpers and remains gated by explicit confirmation.",
+      "evidence": [
+        "BrightOwl message 2733: searched staged lint_init.go for os.WriteFile, WriteLint/PlanLint, package.json, npm, go get, exec, and Command; no os.WriteFile, exec.Command, dependency install, or package.json/script write appears.",
+        "BrightOwl message 2733: runLintInit writes only when --write is active and confirmed by force/robotConfirm or interactive confirmation; otherwise it returns confirmation_required or cancelled before mutation."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Declined scope data is durable and structured in lint_coverage only after confirmed write, while preview/cancel paths leave the manifest unchanged.",
+      "evidence": [
+        "BrightOwl message 2733: lintInitCoverageData carries DeclinedRoots/DeclinedAt into LintManifestUpdate; lintInitDetectionCoverage sets status partial and exposes unchecked/declined roots.",
+        "BrightOwl message 2733: declined scoped setup test verifies manifest contains lint_coverage, declined_roots, web, and declined_at after confirmed write; cancel/default-No test verifies manifest unchanged.",
+        "BrightOwl message 2733: git diff --cached --check reported no whitespace or patch-format errors."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged wizard only reads local detection results and writes Burpvalve-owned files after confirmation; it does not add network access, secrets handling, external API calls, package installation, or tenant/PII surfaces.",
+      "evidence": [
+        "BrightOwl message 2733: searched lint_init.go for DetectLintSetup, WriteLintManifestUpdate, WriteLintRulesRecommendationsUpdate, exec, http, token, secret, package.json, scripts; code uses local DetectLintSetup and Burpvalve write helpers with no exec/http/token/secret handling or project script edit path.",
+        "BrightOwl message 2733: only cmd/burpvalve/lint_init.go and cmd/burpvalve/lint_init_test.go are staged, so no package/project config files or CI hooks are directly modified."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2736",
+        "evidence_ref": "Agent Mail message 2736",
+        "created_at": "2026-07-02T17:02:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No governed visual-regression surface is present in this staged payload.",
+      "evidence": [
+        "ScarletMarsh message 2736: visual-regression governs screenshot, browser, responsive layout, canvas, and visual-diff checks for UI work.",
+        "ScarletMarsh message 2736: staged payload is limited to Go CLI lint-init prompt/control-flow code and Go tests, with no browser UI, canvas, CSS, responsive layout, image, or visual-diff surface.",
+        "ScarletMarsh message 2736: prompt behavior changes are covered by lint-init tests rather than visual regression tooling."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The wizard adds linear prompt/preview work over detected candidate commands and roots, with no unbounded concurrency or expensive background execution.",
+      "evidence": [
+        "BrightOwl message 2733: loops are linear over detected commands/roots and no command execution path is added to the wizard.",
+        "BrightOwl message 2733: clean staged snapshot focused lint-init wizard tests passed quickly after reproducing the packet hash."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2733",
+        "evidence_ref": "Agent Mail message 2733",
+        "created_at": "2026-07-02T17:00:49Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The wizard requires explicit user confirmation for writes, defaults final confirmation to No, does not self-install dependencies or edit project scripts/configs, and records reduced scope instead of silently asserting complete coverage.",
+      "evidence": [
+        "BrightOwl message 2733: --write requires force/robotConfirm or interactive confirmation; JSON/noninteractive write without confirmation fails closed; cancelled confirmation returns no-files-changed.",
+        "BrightOwl message 2733: final wizard prompt \"Write these lint setup changes?\" has Default false.",
+        "BrightOwl message 2733: tests cover confirmation-required robot/nonrobot paths, final No-default cancel no-mutation, and durable reduced coverage for declined scoped setup."
+      ],
+      "next_action": "none",
+      "timestamp": "2026-07-02T17:09:10.700177551Z"
+    }
+  ]
+}

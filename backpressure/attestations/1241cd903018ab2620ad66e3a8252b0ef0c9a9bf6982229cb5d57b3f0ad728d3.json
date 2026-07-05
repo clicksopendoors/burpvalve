@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:1241cd903018ab2620ad66e3a8252b0ef0c9a9bf6982229cb5d57b3f0ad728d3",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "26a4882383f1964c78730d923714c26ea532c540",
+  "created_at": "2026-07-02T08:48:45.891339893Z",
+  "feature": {
+    "id": "project-readiness-kit-land-15-attestation-query-tui-dau",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-15-attestation-query-tui-dau",
+    "diff_cluster": "explicit:project-readiness-kit-land-15-attestation-query-tui-dau"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Phase 2 unit 15 only adds read-only attestation query/list/show/latest/browse surfaces and their tests; verifier orchestration, beads preflight, completion, config, and commit mutation surfaces remain out of scope."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2417",
+        "evidence_ref": "agent-mail:2417",
+        "created_at": "2026-07-02T08:43:41Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The staged attestation query/TUI payload is formatted, whitespace-clean, and covered by focused attestation tests plus the full suite.",
+      "evidence": [
+        "ScarletMarsh message 2417 verified git diff --cached --name-status/stat matched the packet: added cmd/burpvalve/attestations_test.go, cmd/burpvalve/attestations_tui.go, cmd/burpvalve/attestations_tui_test.go, internal/attestations/query.go; modified cmd/burpvalve/main.go; 1569 insertions.",
+        "ScarletMarsh message 2417 verified git diff --cached --check exited 0 and a staged gofmt check over all five staged Go files produced no differences.",
+        "ScarletMarsh message 2417 ran go test ./internal/attestations, go test ./cmd/burpvalve -run 'Attestations|Browse|TUI|Latest|Show|List' -count=1, and go test ./...; all passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is confined to attestation query/list/show/latest/browse surfaces and uses read-only artifact scanning plus non-mutating CLI output.",
+      "evidence": [
+        "BrightOwl message 2418 verified git diff --cached --name-status showed exactly A cmd/burpvalve/attestations_test.go, A cmd/burpvalve/attestations_tui.go, A cmd/burpvalve/attestations_tui_test.go, M cmd/burpvalve/main.go, A internal/attestations/query.go.",
+        "BrightOwl message 2418 verified git diff --cached --check exited 0.",
+        "BrightOwl message 2418 found no os.WriteFile, os.Remove, os.Mkdir, git add, git commit, staging, deletion, or repair path in the new query commands; robot help says attestation query commands are read-only and never repair, stage, or delete artifacts."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The query/TUI surface summarizes recorded artifact verdicts and verifier provenance without turning authorization or query output into new verification evidence.",
+      "evidence": [
+        "BrightOwl message 2418 inspected internal/attestations/query.go and found Record exposes condition_verdicts with condition id/file/verdict/verifier policy/verifier kind/agent/model only, derived from existing artifacts.",
+        "BrightOwl message 2418 ran go run ./cmd/burpvalve attestations list --json --limit 1 in an isolated staged repo and found existing artifact summaries had no top-level evidence/message/next_action fields, so list output is not laundering cell evidence.",
+        "ScarletMarsh message 2417 independently passed anti-reward-hacking, citing structured JSON errors for malformed/ambiguous/missing refs, provenance fields, and noninteractive browse guidance to use list --json."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The new behavior has focused behavioral coverage at the CLI/TUI boundary; package query functions are exercised through those command tests.",
+      "evidence": [
+        "BrightOwl message 2418 read backpressure/one-function-one-test.md and confirmed it asks for nearby behavioral test coverage, not a literal test for every trivial helper.",
+        "BrightOwl message 2418 inspected cmd/burpvalve/attestations_test.go coverage for list/show/latest JSON and human output, status/feature/bead/limit filters, malformed artifacts, not_found/ambiguous/malformed show errors, and robot help schema.",
+        "BrightOwl message 2418 inspected cmd/burpvalve/attestations_tui_test.go coverage for list/detail/help rendering, movement/filtering/detail behavior, warnings/empty/narrow/no-color rendering, non-interactive browse fallback, and root help."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The unit-15 implementation includes command registration, stable robot docs, JSON and human query commands, TUI browse behavior, and passing focused/full tests.",
+      "evidence": [
+        "BrightOwl message 2418 verified git diff --cached --stat showed 5 staged files and 1569 insertions matching the packet source.",
+        "BrightOwl message 2418 ran go test ./cmd/burpvalve -run 'Attestations|Browse|TUI|Latest|Show|List' and go test ./... in an isolated staged temp repo; both passed.",
+        "BrightOwl message 2418 ran go run ./cmd/burpvalve attestations --help and verified read-only attestation help with browse, latest, list, and show subcommands."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The query surface preserves evidence discoverability through stable record metadata, artifact paths, payload hashes, condition verdict summaries, malformed parse warnings, and JSON-first agent guidance.",
+      "evidence": [
+        "BrightOwl message 2418 verified robot help output included condition_verdicts and parse_warnings fields, plus the instruction to use --json instead of scraping human tables.",
+        "BrightOwl message 2418 ran go run ./cmd/burpvalve attestations list --json --limit 1 and received schema_version=1 plus one record with path, payload_hash, feature_ids, and condition_verdicts.",
+        "BrightOwl message 2418 inspected tests that verify malformed artifacts remain listed with parse_warnings and show malformed artifacts returns JSON error code malformed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within unit 15 attestation query/TUI scope and does not add later verifier, config, completion, lint wizard, bead closure, or runtime doctor surfaces.",
+      "evidence": [
+        "BrightOwl message 2418 verified git diff --cached --name-status matched the five packet-listed paths only.",
+        "BrightOwl message 2418 inspected cmd/burpvalve/main.go staged hunks and found they add newAttestationsCommand, list/show/latest/browse subcommands, robot docs, and print helpers only.",
+        "ScarletMarsh message 2417 independently passed scope-control and found no verifier begin/submit implementation, verifier prompt generator changes, beads command implementation, completion verification, config defaults, commit-gate mutation, or attestation writing path."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2417",
+        "evidence_ref": "agent-mail:2417",
+        "created_at": "2026-07-02T08:43:41Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "No governed destructive-operation surface exists in this staged payload; the commands read and display attestation artifacts only.",
+      "evidence": [
+        "ScarletMarsh message 2417 verified the staged implementation uses os.ReadFile, os.Stat, filepath.WalkDir, JSON unmarshal, filtering, sorting, and display logic, with no os.WriteFile, os.Remove, mkdir repair path, git mutation, deploy, migration, external send, or production mutation implementation.",
+        "ScarletMarsh message 2417 verified robot help notes state attestation query commands are read-only and never repair, stage, or delete artifacts.",
+        "ScarletMarsh message 2417 ran go run ./cmd/burpvalve attestations browse in a noninteractive verifier environment; it exited 2 with guidance to use list --json and did not render or mutate a TUI session."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Artifact records are normalized from existing attestation/blocked-report files with validation, deterministic sorting, explicit filtering, unambiguous show resolution, and malformed-artifact handling.",
+      "evidence": [
+        "BrightOwl message 2418 inspected internal/attestations/query.go: scan walks only backpressure/attestations and log/backpressure/failed; validateRecordShape requires schema_version, artifact_kind, staged_payload_hash, manifest_hash, and feature.id; sortRecords orders newest created_at first with path tie-breaker.",
+        "BrightOwl message 2418 inspected matchingRecords/ShowArtifact and verified empty refs, missing refs, ambiguous refs, and malformed records produce structured ShowError codes instead of guessing.",
+        "BrightOwl message 2418 verified focused CLI tests cover newest-first latest/list, path and hash-prefix show, status/feature/bead/limit filters, malformed list records, and ambiguous/missing/malformed JSON errors."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The query layer is read-only, scans only governed artifact directories, and exposes summaries suitable for agents instead of dumping arbitrary repository files or hidden evidence content.",
+      "evidence": [
+        "BrightOwl message 2418 inspected internal/attestations/query.go and verified filepath.WalkDir bases are backpressure/attestations and log/backpressure/failed, and non-.json entries are skipped.",
+        "BrightOwl message 2418 staged grep showed os.ReadFile only for artifact reads and no write/delete/process execution paths in the query/list/show/latest/browse implementation.",
+        "ScarletMarsh message 2417 independently passed security-boundaries, verifying ShowArtifact resolves only against scanned records, returns ambiguous_ref for ambiguous references, tests malformed/ambiguous/missing refs, and found no secrets, credentials, HTTP/curl/wget, deploy, sudo, permission widening, or external API behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed: this slice adds a terminal TUI. The staged tests inspect rendered output, layout width, narrow/detail views, warnings, empty state, and no-color output.",
+      "evidence": [
+        "BrightOwl message 2418 read backpressure/visual-regression.md and resolved VIS=D as governed because cmd/burpvalve/attestations_tui.go adds a UI browse surface.",
+        "BrightOwl message 2418 inspected attestation TUI rendering: width is clamped, list/detail widths are computed, strings are trimmed with lipgloss.Width, and non-color mode uses plain styles.",
+        "BrightOwl message 2418 ran go test ./cmd/burpvalve -run 'TestAttestationBrowserRendersListDetailAndHelp|TestAttestationBrowserWarningsEmptyNarrowAndNoColor|TestAttestationsBrowseNonInteractiveDoesNotStartTUI' -v; it passed and tests assert max TUI line widths and absence of ANSI escapes in no-color render."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The implementation uses bounded artifact-directory scans, explicit limit support, no new concurrency/fanout, and TUI rendering proportional to visible rows rather than unbounded terminal output.",
+      "evidence": [
+        "BrightOwl message 2418 inspected internal/attestations/query.go and verified scan walks only two artifact directories; List applies filters, stable sorting, and opts.Limit slicing when Limit \u003e 0.",
+        "BrightOwl message 2418 inspected TUI renderList and verified visible rows are min(len(filtered), max(4, height-8)); output strings are trimmed to calculated widths.",
+        "BrightOwl message 2418 verified focused command tests and go test ./... passed in the isolated staged repo; go run ./cmd/burpvalve attestations list --json --limit 1 returned schema_version=1 with one record."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "agent-mail:2418",
+        "evidence_ref": "agent-mail:2418",
+        "created_at": "2026-07-02T08:46:21Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Governed: non-interactive behavior affects agent-safe operation. The staged command guides agents to JSON and fails browse quickly outside an interactive terminal.",
+      "evidence": [
+        "BrightOwl message 2418 read backpressure/autonomy-boundary.md and resolved AUTO=D as governed because attestation browse/list/show/latest guide agent operation.",
+        "BrightOwl message 2418 inspected runAttestationsBrowse: if stdin/stdout are not interactive, it returns an error telling agents/scripts to use burpvalve attestations list --json.",
+        "BrightOwl message 2418 verified TestAttestationsBrowseNonInteractiveDoesNotStartTUI passed; robot help says agents should use --json and query commands are read-only."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T08:48:45.891339893Z"
+    }
+  ]
+}

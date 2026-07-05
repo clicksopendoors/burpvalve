@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.x'
+      - run: go test ./...
+      - run: make build
+      - name: Validate skill package
+        run: |
+          if command -v jsm >/dev/null 2>&1; then
+            jsm validate skill/burpvalve
+          else
+            echo "jsm not installed; skipped jsm validate"
+          fi

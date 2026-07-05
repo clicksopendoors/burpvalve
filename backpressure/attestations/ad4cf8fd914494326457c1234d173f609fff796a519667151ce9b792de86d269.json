@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:ad4cf8fd914494326457c1234d173f609fff796a519667151ce9b792de86d269",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "RubyReef",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "92740f2814693e05a414f36228d12a9c1760e42a",
+  "created_at": "2026-07-04T23:22:04.100708733Z",
+  "feature": {
+    "id": "project-readiness-kit-lzze",
+    "kind": "feature",
+    "name": "project-readiness-kit-lzze",
+    "diff_cluster": "explicit:project-readiness-kit-lzze"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged changes only state the orchestrator no-self-execution role split across orchestrator route templates, the orchestrator skill, mirrors, and focused scaffold contract tests for project-readiness-kit-lzze."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Applicable lint/style surface was inspected: the staged payload adds markdown template text plus a narrow Go contract test. The added test follows existing helper/table conventions and does not add fake lint enforcement.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/lint-rules.md says rules are enforced only after the file names the command or analyzer; this condition is an attestation that applicable lint/style rules were considered.",
+        "internal/scaffold/template_contract_test.go lines 445-500 adds TestOrchestratorRouteTemplatesCarryRoleSplit using existing readTemplate, renderOrchestratorTemplateBody, and assertContainsAll helpers.",
+        "templates/ORCHESTRATOR.md.tmpl lines 30-39, templates/CLAUDE.md.orchestrator.tmpl lines 5-9, and templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl lines 19-26 are plain markdown additions."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:20:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The only repetition is the established top-level/internal scaffold template mirror and mirrored user-facing route guidance; the new contract test avoids copy-pasted assertions by using shared needle slices and loops.",
+      "evidence": [
+        "git diff --cached --name-status lists only seven staged files: the top-level orchestrator route templates, their internal/scaffold mirrors, and internal/scaffold/template_contract_test.go.",
+        "templates/ORCHESTRATOR.md.tmpl and internal/scaffold/templates/ORCHESTRATOR.md.tmpl receive the same Role Split section to keep the shipped template and embedded scaffold template aligned, matching the repo's existing mirror pattern.",
+        "templates/CLAUDE.md.orchestrator.tmpl and internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl receive the same short route-level instruction because either generated surface must stand alone for Claude routing.",
+        "TestOrchestratorRouteTemplatesCarryRoleSplit defines orchestratorNeedles, routeNeedles, and skillNeedles once, then loops across mirrored paths rather than duplicating nearly identical test bodies."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:20:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged guidance reduces reward-hacking risk by explicitly forbidding orchestrator self-implementation/self-verification and by requiring worker evidence and provenance; the test checks concrete template text rather than superficial completion labels.",
+      "evidence": [
+        "The Role Split text states that the orchestrator does not implement, edit docs, run verifier feature-condition cells, or execute commit-gate payload work itself when workers are available.",
+        "The skill template states that workers are the implementers and checkers and instructs the orchestrator to preserve their actual evidence and provenance.",
+        "The CLAUDE route template limits the session to triage, decision capture, routing, review, gate operation, evidence recording, Agent Mail coordination, and pane wakes, preventing pane wake or coordination activity from being treated as verifier evidence.",
+        "TestOrchestratorRouteTemplatesCarryRoleSplit asserts these exact role-split phrases across ORCHESTRATOR, CLAUDE route, and skill templates."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload changes orchestrator route template behavior and includes direct contract-test coverage for the new role-split text in all affected route templates.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/one-function-one-test.md requires changed behavior to have appropriate direct test coverage rather than literal one-test-per-helper coverage.",
+        "internal/scaffold/template_contract_test.go lines 447-466 assert ORCHESTRATOR role-split content in both public and internal templates.",
+        "internal/scaffold/template_contract_test.go lines 469-482 assert CLAUDE.md.orchestrator role-split route content in both public and internal templates.",
+        "internal/scaffold/template_contract_test.go lines 484-499 assert burpvalve-orchestrator SKILL.md role-split content in both public and internal templates."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:20:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "For this documentation/template feature, the done state is concrete: all intended template surfaces are staged, mirrored scaffold copies are covered by a new contract test, whitespace checks are clean, and the focused contract test passes.",
+      "evidence": [
+        "git diff --cached --name-status shows the complete packet surface: internal/scaffold/template_contract_test.go plus top-level and internal/scaffold copies of CLAUDE.md.orchestrator.tmpl, ORCHESTRATOR.md.tmpl, and burpvalve-orchestrator/SKILL.md.tmpl.",
+        "TestOrchestratorRouteTemplatesCarryRoleSplit asserts the Role Split/Hard role split wording across the two ORCHESTRATOR templates, two CLAUDE route templates, and two orchestrator skill templates.",
+        "git diff --cached --check completed with no output, indicating no staged whitespace errors.",
+        "go test ./internal/scaffold -run TestOrchestratorRouteTemplatesCarryRoleSplit -count=1 passed with output: ok burpvalve/internal/scaffold 0.015s."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed evidence surface was inspected. The staged role split strengthens evidence handling by requiring the orchestrator to dispatch implementation/checking to workers and preserve their actual evidence and provenance rather than manufacturing or replacing it.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/evidence-log.md asks agents to record evidence before closing work.",
+        "templates/ORCHESTRATOR.md.tmpl lines 35-39 define orchestrator evidence/decision recording scope and require preserving worker evidence/provenance.",
+        "templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl lines 21-26 state workers are implementers/checkers and their actual evidence and provenance must be preserved."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:20:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload is tightly limited to documenting and testing the orchestrator role split across the existing orchestrator route templates; it does not modify unrelated runtime, verifier, Agent Mail, Beads, or gate behavior.",
+      "evidence": [
+        "git diff --cached --stat shows 109 insertions across seven staged files, all in orchestrator route templates or internal/scaffold/template_contract_test.go.",
+        "No staged paths modify cmd/, internal/backpressure/, Agent Mail integration, Beads data, git hooks, package metadata, or runtime gate logic.",
+        "The template edits add only role-split guidance to CLAUDE.md.orchestrator.tmpl, ORCHESTRATOR.md.tmpl, and burpvalve-orchestrator/SKILL.md.tmpl in both top-level and internal/scaffold copies.",
+        "Existing unstaged files shown by git status, such as .beads/issues.jsonl and ORCHESTRATOR.md, are not part of the packet's staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive-operation surface: no staged deletes, resets, force-push instructions, data migrations, external sends, spend changes, deploys, or production mutations. It only adds orchestrator role-split guidance and matching contract tests.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/destructive-operations.md governs risky commands and irreversible changes.",
+        "git diff --cached --name-status lists seven M entries only; no D entries or destructive scripts are staged.",
+        "The added text restricts orchestrator behavior; it does not authorize destructive repository or production operations."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an audit/provenance surface and satisfies it by preserving worker evidence/provenance and keeping orchestrator scope limited to routing, review, gate operation, evidence, and decision recording.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/data-integrity.md includes audit trails in its governed scope.",
+        "templates/ORCHESTRATOR.md.tmpl lines 35-39 include evidence and decision recording in orchestrator scope and require preserving actual evidence and provenance.",
+        "templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl lines 23-26 likewise scopes evidence recording and provenance preservation for the skill route."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:20:16Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged change touches a governed coordination/permission surface and narrows it: orchestrator authority is limited to coordination while implementation and verifier cells are routed to workers with preserved provenance; no secrets, auth flows, tenant isolation, PII, sandbox, or external API behavior is changed.",
+      "evidence": [
+        "ORCHESTRATOR.md.tmpl Role Split says the orchestrator coordinates only and does not implement, edit docs, run verifier feature-condition cells, or execute commit-gate payload work itself when workers are available.",
+        "The skill template repeats that workers are the implementers and checkers and requires preserving actual evidence and provenance, which constrains the permission/provenance boundary around verifier evidence.",
+        "The CLAUDE orchestrator route text routes implementation and checking to worker agents and keeps this session to triage, decision capture, routing, review, gate operation, evidence recording, Agent Mail coordination, and pane wakes.",
+        "The staged diff contains no credential material, auth/secret handling code, tenant/PII data handling, sandbox permission changes, network clients, or external API integrations."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no visual UI/browser/canvas/responsive layout surface; screenshot or visual-diff checks are not applicable to markdown templates and a Go contract test.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/visual-regression.md governs screenshot, browser, responsive layout, canvas, and visual-diff checks.",
+        "No frontend, CSS, rendering, screenshot, browser automation, or image/canvas files are staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no material runtime performance, memory, token, cost, bundle-size, throughput, or benchmark surface. It adds static template text and small string-presence contract tests only.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/performance-budget.md governs latency, memory, token, cost, bundle-size, throughput, and benchmark thresholds.",
+        "The Go change is a static template contract test over text content; no hot path, dependency, benchmarked code, or bundle artifact is staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:19:49.429552Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an autonomy-governed coordination surface and satisfies it by explicitly constraining orchestrator autonomy: when workers are available, the orchestrator coordinates only and does not implement, edit docs, run verifier cells, or execute payload work itself.",
+      "evidence": [
+        "Agent Mail message 3626 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is seven modified files: internal/scaffold/template_contract_test.go, internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl, templates/CLAUDE.md.orchestrator.tmpl, templates/ORCHESTRATOR.md.tmpl, templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl.",
+        "git diff --cached --stat shows 109 insertions across those seven files; no staged deletions, renames, binary files, generated attestations, or external configuration changes.",
+        "Public templates match their internal/scaffold mirrors: cmp reported ORCHESTRATOR_TEMPLATES_MATCH, CLAUDE_ORCHESTRATOR_TEMPLATES_MATCH, and ORCHESTRATOR_SKILL_TEMPLATES_MATCH.",
+        "backpressure/autonomy-boundary.md governs which actions agents may take independently and what artifact/evidence must be presented before asking.",
+        "templates/ORCHESTRATOR.md.tmpl lines 32-39 define the orchestrator as coordination-only and route implementation/checking to worker agents.",
+        "templates/CLAUDE.md.orchestrator.tmpl lines 5-9 says the Claude route coordinates only and must not implement, edit docs, run verifier cells, or execute payload work when worker agents are available.",
+        "templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl lines 21-26 repeats the worker/orchestrator split for the skill entry point."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-lzze; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3626; packet /tmp/pkts-project-readiness-kit-lzze-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:22:04.100708733Z"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# Example: Verifier Disagreement Hold
+
+Two verifiers review `security-boundaries`.
+
+- Verifier A: `pass`, because validation rejects unsafe input.
+- Verifier B: `fail`, because the payload expands a governed auth surface.
+
+The orchestrator does not choose the convenient verdict. The correct action is:
+
+1. Hold the commit.
+2. Preserve both verdicts in the thread.
+3. Ask the authorized adjudicator for a ruling.
+4. If the payload changes, regenerate packets for the new staged hash.
+5. Record the adjudication reference in the response artifact when supported.

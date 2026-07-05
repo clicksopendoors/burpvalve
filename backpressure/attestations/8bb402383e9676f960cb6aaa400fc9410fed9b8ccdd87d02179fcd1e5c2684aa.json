@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:8bb402383e9676f960cb6aaa400fc9410fed9b8ccdd87d02179fcd1e5c2684aa",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "e79595d79299ac4bd03c6c8598fa867ffb5f0574",
+  "created_at": "2026-07-03T22:21:46.579377967Z",
+  "feature": {
+    "id": "project-readiness-kit-cos-throughput-doctrine-jyua",
+    "kind": "feature",
+    "name": "project-readiness-kit-cos-throughput-doctrine-jyua",
+    "source_bead": "project-readiness-kit-cos-throughput-doctrine-jyua",
+    "bead_ids": [
+      "project-readiness-kit-cos-throughput-doctrine-jyua"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-cos-throughput-doctrine-jyua"
+  },
+  "bead_ids": [
+    "project-readiness-kit-cos-throughput-doctrine-jyua"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged changes promote one COS throughput doctrine into orchestrator templates, generated skill references, prompt-bank entries, and matching tests."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3512",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the staged Go/template payload is syntactically clean and focused prompt-bank/scaffold tests pass.",
+      "evidence": [
+        "Agent Mail 3512: staged hash matched sha256:8bb402383e9676f960cb6aaa400fc9410fed9b8ccdd87d02179fcd1e5c2684aa with exactly the nine packeted prompt/scaffold paths.",
+        "Agent Mail 3512: git diff --cached --check exited 0.",
+        "Agent Mail 3512: go test ./internal/backpressure -run 'PromptBank|PromptExport' -count=1 and go test ./internal/scaffold -run 'Template|Orchestrator|Claude|Skill|Prompt|Throughput|GateOperator' -count=1 passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl found one throughput doctrine added across established prompt/template surfaces with mirrored scaffold copies and no competing queue model.",
+      "evidence": [
+        "Agent Mail 3515: reconstructed the patch-backed slice in an isolated temp clone and reproduced hash sha256:8bb402383e9676f960cb6aaa400fc9410fed9b8ccdd87d02179fcd1e5c2684aa.",
+        "Agent Mail 3515: mirror checks passed for ORCHESTRATOR.md.tmpl and both generated skill reference template pairs.",
+        "Agent Mail 3515: git diff --cached --stat showed one compact slice: nine files, 201 insertions, 18 deletions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl verified the doctrine moves verification earlier without creating a shortcut around verification.",
+      "evidence": [
+        "Agent Mail 3515: new doctrine preserves hash-bound verifier packets, superseding packets on hash changes, real verifier evidence, and explicit operator escalation.",
+        "Agent Mail 3515: gate-operator-brief renders instructions to run gate mechanics only, avoid implementation claims, stage only named payload or attestation, and escalate instead of judging.",
+        "Agent Mail 3515: commit-choreography renders the verify-early variant: hash at park time, mail packets, keep the window free, reconfirm hash, and supersede stale evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl verified the prompt-bank and scaffold doctrine additions are covered by focused tests.",
+      "evidence": [
+        "Agent Mail 3515: prompt_bank_test.go adds gate-operator-brief to requiredPromptNames and asserts rendered prompt content.",
+        "Agent Mail 3515: template_contract_test.go adds TestOrchestratorTemplateCarriesThroughputDoctrine and TestClaudeOrchestratorSkillReferencesThroughputDoctrine.",
+        "Agent Mail 3515: focused internal/backpressure and internal/scaffold tests passed in the isolated temp clone."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl verified the packet hash, focused tests, prompt rendering, and template mirrors; EmeraldBrook restaged the same slice and confirmed the live hash before gate.",
+      "evidence": [
+        "Agent Mail 3515: patch-backed verification reproduced hash sha256:8bb402383e9676f960cb6aaa400fc9410fed9b8ccdd87d02179fcd1e5c2684aa and git diff --cached --check passed.",
+        "Agent Mail 3515: focused tests and prompt rendering checks passed.",
+        "EmeraldBrook restaged the same nine files after WhiteGorge released the stale gate reservation; go run ./cmd/burpvalve hash --staged --json returned the same sha256:8bb402383e9676f960cb6aaa400fc9410fed9b8ccdd87d02179fcd1e5c2684aa."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3512",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified the packet lists the staged paths, condition packets, and no hidden generated exclusions.",
+      "evidence": [
+        "Agent Mail 3512: /tmp/cos-throughput-verifier-prompts.json contained hash sha256:8bb402..., 13 packets, and expected condition ids.",
+        "Agent Mail 3512: git diff --cached --name-status listed exactly the prompt-bank, ORCHESTRATOR template, generated skill reference, and template test paths.",
+        "Agent Mail 3512: hash_excluded_staged_payload was empty."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl verified the slice stays within COS throughput doctrine and does not touch unrelated surfaces.",
+      "evidence": [
+        "Agent Mail 3515: staged path list was limited to prompt bank, prompt tests, scaffold contract tests, ORCHESTRATOR template, and two generated skill reference template pairs.",
+        "Agent Mail 3515: SKILL.md.tmpl was not staged; bulk doctrine remains in references.",
+        "Agent Mail 3515: no production gate execution, tracker state, release docs, or unrelated skill package surfaces were staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3512",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "ScarletMarsh found no destructive command addition; the only bypass-looking token is an explicit prohibition.",
+      "evidence": [
+        "Agent Mail 3512: git diff --cached --stat showed nine prompt-bank/scaffold-template files only.",
+        "Agent Mail 3512: scan for TODO/FIXME/password/secret/token/rm -rf/--no-verify/chmod +x/0o755 found only the safety sentence Never use --no-verify.",
+        "Agent Mail 3512: no staged path is a script, hook, release installer, or executable permission surface."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3512",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "ScarletMarsh verified root and embedded template copies match and prompt-bank command output exposes the new prompt and verify-early content.",
+      "evidence": [
+        "Agent Mail 3512: cmp checks passed for ORCHESTRATOR.md.tmpl and both generated skill reference template pairs.",
+        "Agent Mail 3512: prompts list showed commit-choreography and gate-operator-brief.",
+        "Agent Mail 3512: prompts show checks found verify-early and gate-operator guardrail text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl verified the payload adds operating guidance and prompt text without expanding secret, auth, network, permission, or destructive-command capability.",
+      "evidence": [
+        "Agent Mail 3515: staged files are Go prompt/test files and Markdown template files; no installer, hook, auth, network, or command runner implementation files are staged.",
+        "Agent Mail 3515: staged doctrine contains explicit stop/escalation and no-fabrication language.",
+        "Agent Mail 3515: gate-operator-brief renders instructions to run only exact commands and stop on scope, reservation, hash, test, verifier-evidence, or unexpected-staging problems."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3512",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "not_applicable",
+      "message": "ScarletMarsh verified the staged payload has no governed visual UI, image, SVG, CSS, layout, or terminal rendering surface.",
+      "evidence": [
+        "Agent Mail 3512: git diff --cached --name-status listed only .go and .md.tmpl paths under internal/backpressure, internal/scaffold/templates, and templates.",
+        "Agent Mail 3512: no staged file is an image, CSS file, TUI renderer, VHS tape, or generated visual artifact."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3512",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "not_applicable",
+      "message": "ScarletMarsh verified the payload adds static prompt/template text and tests with no runtime performance-sensitive surface.",
+      "evidence": [
+        "Agent Mail 3512: git diff --cached --stat showed only prompt-bank, scaffold-template, and test edits, with no new dependency files or runtime execution path outside prompt/template lookup.",
+        "Agent Mail 3512: focused internal/backpressure and internal/scaffold tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "evidence_ref": "Agent Mail 3515",
+        "created_at": "2026-07-03T22:21:46.579377967Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5",
+      "verdict": "pass",
+      "message": "BrightOwl verified queue self-promotion and gate-operator authority are constrained by release wakes, recorded queue, silence, step-zero checks, and escalation.",
+      "evidence": [
+        "Agent Mail 3515: ORCHESTRATOR and gate-window reference text tie self-promotion to a release wake, recorded queue, silent pane ahead, and step-zero index check.",
+        "Agent Mail 3515: gate-operator-brief says do not claim implementation work and escalate rather than judge.",
+        "Agent Mail 3515: prompt output includes explicit stops for hash/test/verifier/scope/reservation/unexpected-staging problems."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T22:21:46.579377967Z"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# bv (beads viewer) local config and caches
+.bv/
+# br doctor per-run artifacts
+.doctor/
+# NTM runtime state
+.ntm/
+# Local Burpvalve verifier response scratch
+log/backpressure/responses/
+
+# Local build outputs
+bin/
+dist/
+coverage.out
+skill/burpvalve/scripts/bin/

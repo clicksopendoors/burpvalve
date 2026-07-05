@@ -1,0 +1,450 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:1c8c6f2495c37efc50eaede503a8fa50bcca5d4d121769631a8832863e478cb1",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "RubyReef",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "4d6fd2b2c7db1f7dacdcecdb293b30c98d42221c",
+  "created_at": "2026-07-04T23:11:51.679344442Z",
+  "feature": {
+    "id": "project-readiness-kit-j97h",
+    "kind": "feature",
+    "name": "project-readiness-kit-j97h",
+    "diff_cluster": "explicit:project-readiness-kit-j97h"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged changes only mandate Agent Mail registration at sub-agent dispatch in ORCHESTRATOR templates, dispatch/wake prompt-bank entries, and focused contract tests for project-readiness-kit-j97h."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Applicable lint/style surface was inspected: the staged payload changes Go prompt-bank string literals, adds table-driven Go tests, and adds markdown template text. The added code follows existing local patterns and does not add fake lint enforcement.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/lint-rules.md says rules are enforced only after the file names the command or analyzer; this condition is an attestation that applicable lint/style rules were considered.",
+        "internal/backpressure/prompt_bank.go lines 146-266 keep existing promptBank entry structure and strings.TrimSpace body pattern while changing prompt text only.",
+        "internal/backpressure/prompt_bank_test.go lines 194-275 add TestPromptBankDispatchPromptsRequireAgentMailRegistration as a table-driven test using existing ShowPrompt and strings.Contains patterns."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:10:03Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The repeated Agent Mail registration wording is intentional standalone prompt/template guidance; each changed prompt is independently pasted or dispatched, and the new tests consolidate prompt assertions into a table rather than duplicating test logic.",
+      "evidence": [
+        "git diff --cached --stat shows 152 insertions and 7 deletions across five packet paths: prompt_bank.go, prompt_bank_test.go, template_contract_test.go, and two ORCHESTRATOR.md.tmpl roots.",
+        "internal/backpressure/prompt_bank.go updates multiple independently usable prompt bodies so each dispatched prompt carries the Agent Mail registration requirement without depending on external context.",
+        "internal/backpressure/prompt_bank_test.go adds TestPromptBankDispatchPromptsRequireAgentMailRegistration as a table of prompt cases instead of separate copy-pasted tests.",
+        "templates/ORCHESTRATOR.md.tmpl and internal/scaffold/templates/ORCHESTRATOR.md.tmpl receive the same Agent Mail Registration section to keep the public template and embedded scaffold template aligned."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:10:03Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload strengthens real coordination evidence: it requires Agent Mail registration before work starts, treats unregistered panes as undispatched, and requires identities in completion/verdict messages rather than accepting terminal wakes or anonymous reports as sufficient.",
+      "evidence": [
+        "The orchestrator template says every sub-agent spawned or woken must register with Agent Mail before starting work and that a pane or worker that has not registered is not considered dispatched.",
+        "The prompt-bank verifier-packet-relay prompt says the mail and wake must instruct the verifier to register and that a pane that has not registered is not considered dispatched.",
+        "The verifier-bootstrap and verifier-standby prompts require ensure_project plus register_agent or macro_start_session before work starts and require reporting the Agent Mail identity.",
+        "The packet-not-received-status prompt requires an unregistered recipient to register first and include the Agent Mail identity in the reply."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload changes prompt/template behavior and includes direct nearby contract coverage for the new Agent Mail registration requirements.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/one-function-one-test.md requires changed behavior to have appropriate direct test coverage rather than literal one-test-per-helper coverage.",
+        "internal/backpressure/prompt_bank_test.go lines 175-186 extend TestVerifierBootstrapWouldOnboardFreshVerifier to assert ensure_project/register_agent, assigned work unit, and Agent Mail identity text.",
+        "internal/backpressure/prompt_bank_test.go lines 194-275 cover marching-orders, orchestrator-tick, packet-not-received-status, verifier-packet-relay, and verifier-standby-brief registration wording.",
+        "internal/scaffold/template_contract_test.go lines 418-443 add TestOrchestratorTemplateCarriesAgentMailRegistrationMandate for both public and internal ORCHESTRATOR templates."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:10:03Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload adds explicit completion/audit expectations around Agent Mail registration and identity reporting, with focused prompt-bank and scaffold-template test coverage. This verifier inspected staged content only and did not claim runtime test execution.",
+      "evidence": [
+        "The orchestrator template defines actionable completion/audit expectations: unregistered panes are not considered dispatched, and workers must report Agent Mail identities in completion messages.",
+        "The verifier-bootstrap and verifier-standby prompt bodies require registration before work starts and identity reporting in completion/verdict contexts.",
+        "internal/backpressure/prompt_bank_test.go adds TestPromptBankDispatchPromptsRequireAgentMailRegistration covering marching-orders, orchestrator-tick, packet-not-received-status, verifier-packet-relay, and verifier-standby-brief.",
+        "internal/scaffold/template_contract_test.go adds TestOrchestratorTemplateCarriesAgentMailRegistrationMandate over both ORCHESTRATOR template roots, covering the new heading and required registration/identity strings."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed evidence surface was inspected. The staged payload strengthens evidence logging by requiring Agent Mail identities in completion/verdict messages and treating registered identities as audit references for findings, verifier verdicts, reservations, and adjudications.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/evidence-log.md asks agents to record evidence before closing work.",
+        "internal/backpressure/prompt_bank.go lines 210-220 require verifiers to report their Agent Mail identity in completion and verdict messages so it becomes the audit reference.",
+        "templates/ORCHESTRATOR.md.tmpl lines 54-57 state registered identities are the audit reference for findings, verifier verdicts, file reservations, and adjudications."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:10:03Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within project-readiness-kit-j97h: Agent Mail registration mandates in dispatch/verifier prompts and orchestrator templates, with focused test coverage only.",
+      "evidence": [
+        "git diff --cached --name-status lists only internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, and two ORCHESTRATOR.md.tmpl paths.",
+        "The prompt-bank changes only alter existing coordination prompt bodies to require Agent Mail registration, project key, and identity reporting.",
+        "The orchestrator-template changes only add an Agent Mail Registration section before the existing Contact Mesh section in the two mirrored template roots.",
+        "No product CLI behavior outside prompt text, no tracker mutation, no release metadata, and no unrelated documentation path appears in the staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive-operation surface: no staged deletes, resets, force-push instructions, data migrations, external sends, spend changes, deploys, or production mutations. It only changes prompt/template registration guidance and tests.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/destructive-operations.md governs risky commands and irreversible changes.",
+        "git diff --cached --name-status lists five M entries only; no D entries or destructive scripts are staged.",
+        "The added text concerns Agent Mail registration and audit identity reporting, not destructive repository or production operations."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an audit-trail surface and satisfies it by making Agent Mail registration identities explicit, durable audit references for verifier findings, reservations, adjudications, and completion messages.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/data-integrity.md includes audit trails in its governed scope.",
+        "templates/ORCHESTRATOR.md.tmpl lines 54-57 require registered identities as audit references and require workers to report their Agent Mail identity in completion messages.",
+        "internal/backpressure/prompt_bank.go lines 210-220 and 247-251 require registration/identity reporting in verifier bootstrap and packet relay prompts."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:10:03Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload touches identity/audit guidance around Agent Mail registration, but it does not broaden access, change contact policy behavior, expose secrets, alter auth, or touch tenant/PII/sandbox/external API logic.",
+      "evidence": [
+        "The orchestrator template requires sub-agents to register with Agent Mail using ensure_project plus register_agent or macro_start_session, with repo absolute path, program, model, and assigned work-unit or track in task description.",
+        "The same section says registered identities are the audit reference for findings, verifier verdicts, file reservations, and adjudications.",
+        "The prompt-bank changes add registration and identity reporting requirements to coordination prompts but do not modify Agent Mail implementation, credentials, authorization checks, or file-reservation logic.",
+        "The staged payload changes only Go prompt text/tests and markdown templates; no secrets, PII handling, auth, tenant isolation, sandbox, or external API code is modified."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no visual UI/browser/canvas/responsive layout surface; screenshot or visual-diff checks are not applicable to Go prompt text, Go tests, and markdown templates.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/visual-regression.md governs screenshot, browser, responsive layout, canvas, and visual-diff checks.",
+        "No frontend, CSS, rendering, screenshot, browser automation, or image/canvas files are staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no material runtime performance, memory, token, cost, bundle-size, throughput, or benchmark surface. It changes static prompt strings/templates and adds small string-presence tests.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/performance-budget.md governs latency, memory, token, cost, bundle-size, throughput, and benchmark thresholds.",
+        "The Go changes are static prompt body literals and table-driven tests; no hot path, dependency, benchmarked code, or bundle artifact is staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:11:18.503229Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an autonomy-governed coordination surface and satisfies it by requiring spawned/woken agents to register before work starts, use the repo absolute path as project key, and report identities for audit.",
+      "evidence": [
+        "Agent Mail message 3624 from RubyReef delivered packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json and was acknowledged by CloudyEagle.",
+        "Current staged payload is five modified files: internal/backpressure/prompt_bank.go, internal/backpressure/prompt_bank_test.go, internal/scaffold/template_contract_test.go, internal/scaffold/templates/ORCHESTRATOR.md.tmpl, templates/ORCHESTRATOR.md.tmpl.",
+        "git diff --cached --stat shows 152 insertions and 7 deletions across those five files; no staged deletes, renames, binary files, generated attestations, or external configuration changes.",
+        "The public ORCHESTRATOR template matches its internal/scaffold mirror: cmp reported ORCHESTRATOR_TEMPLATES_MATCH.",
+        "backpressure/autonomy-boundary.md governs which actions agents may take independently and what evidence must be presented before asking.",
+        "templates/ORCHESTRATOR.md.tmpl lines 47-53 say every sub-agent the orchestrator spawns or wakes must register before starting work and that an unregistered pane/worker is not considered dispatched.",
+        "internal/backpressure/prompt_bank.go lines 160-163, 247-251, and 262-266 add the same registration-before-work requirement to orchestrator-tick, verifier-packet-relay, and verifier-standby-brief prompts."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical/shared-cell verification for project-readiness-kit-j97h; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "Agent Mail message 3624; packet /tmp/pkts-project-readiness-kit-j97h-cloudyeagle.json"
+      },
+      "timestamp": "2026-07-04T23:11:51.679344442Z"
+    }
+  ]
+}

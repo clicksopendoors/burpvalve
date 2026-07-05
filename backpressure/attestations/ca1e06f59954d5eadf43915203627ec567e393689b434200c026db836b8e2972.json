@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:ca1e06f59954d5eadf43915203627ec567e393689b434200c026db836b8e2972",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "2cdc1cec2570572bdfb230ceaac53e0f67cbc2e2",
+  "created_at": "2026-07-02T06:16:45.725025754Z",
+  "feature": {
+    "id": "project-readiness-kit-land-09-lint-enforcement-exposure-hdc",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-09-lint-enforcement-exposure-hdc",
+    "diff_cluster": "explicit:project-readiness-kit-land-09-lint-enforcement-exposure-hdc"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "The staged diff is exactly the land-09 lint enforcement-level exposure slice: internal/backpressure/lint.go, internal/backpressure/lint_test.go, and the lint no-op/malformed-manifest tests in cmd/burpvalve/commit_test.go. It exposes honest not_enforced/scaffold-only lint evidence, command-backed enforcement metadata, and malformed/unsupported lint_commands blocked JSON without staging guided lint setup, run_directory execution support, concurrency, main.go, core.go, or unit-10 recovery-contract fields."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2378",
+        "evidence_ref": "current staged payload inspection plus delta2 test run",
+        "created_at": "2026-07-02T06:13:29.269298Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "No-op lint is reported as not_enforced, command-backed lint exposes enforcement metadata, malformed lint_commands including unsupported run_directory block, and the staged Go is formatter-clean.",
+      "evidence": [
+        "Current git diff --cached --name-status shows exactly cmd/burpvalve/commit_test.go, internal/backpressure/lint.go, and internal/backpressure/lint_test.go staged.",
+        "Current git diff --cached --stat matches the delta2 packet: 3 files changed, 273 insertions, 20 deletions.",
+        "Current staged grep shows LintStatusNotEnforced, Enforced, EvidenceStrength, EnforcementLevel, lint_commands shape checks, and unsupported run_directory tests present.",
+        "git diff --cached --check produced no output and staged Go blobs matched gofmt output.",
+        "go test ./internal/backpressure -run 'Lint|Coverage|Enforcement|Manifest', go test ./cmd/burpvalve -run 'Lint|Malformed|Commit', and go test ./... passed against the current staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2379",
+        "evidence_ref": "current staged diff, staged blobs, condition file, and staged-snapshot tests",
+        "created_at": "2026-07-02T06:14:07.680236Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The current payload keeps the lint shape guard in one implementation path, uses table-driven malformed-manifest tests, and does not introduce duplicated parallel validation or command-execution logic requiring extraction.",
+      "evidence": [
+        "git diff --cached --name-status, --stat, and --check showed exactly the three land-09 files staged, 273 insertions and 20 deletions, and no whitespace diagnostics.",
+        "validateLintManifestShape calls validateLintCommandShape, and unsupported keys are rejected by a single default branch.",
+        "Malformed config cases, including unsupported run_directory, are handled through one table in TestRunLintRejectsMalformedConfig.",
+        "The CLI malformed-manifest cases are table-driven in TestLintModeMalformedManifestReturnsBlockedJSON.",
+        "A temporary staged snapshot built from HEAD plus git diff --cached --binary passed the focused lint tests and go test ./..."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2375",
+        "evidence_ref": "delta re-check commands/files inspected in message 2375",
+        "created_at": "2026-07-02T06:11:31.891536Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The previous false-success path is fixed: unsupported lint command keys now block before command execution instead of producing enforced pass evidence.",
+      "evidence": [
+        "validateLintCommandShape now has a default branch returning an unsupported-key error for unknown lint_commands fields.",
+        "A staged-snapshot probe with run_directory: src under a lint command exited non-zero with status blocked, message lint_commands[0].run_directory is not supported, enforced false, command_count 0, and evidence_strength none.",
+        "Staged-snapshot focused lint tests and go test ./... passed.",
+        "ScarletMarsh independently passed anti-reward-hacking for the same delta in Agent Mail message 2374."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2375",
+        "evidence_ref": "delta re-check commands/files inspected in message 2375",
+        "created_at": "2026-07-02T06:11:31.891536Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The unknown-key regression coverage is present at both unit and CLI levels.",
+      "evidence": [
+        "TestRunLintRejectsMalformedConfig includes an unknown key case with run_directory: subdir and expects run_directory is not supported.",
+        "TestLintModeMalformedManifestReturnsBlockedJSON is table-driven and covers unsupported run_directory: src, requiring blocked JSON and stderr containing the unsupported-key message.",
+        "A staged-snapshot probe confirms unsupported run_directory returns blocked JSON instead of enforced pass evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2375",
+        "evidence_ref": "delta re-check commands/files inspected in message 2375",
+        "created_at": "2026-07-02T06:11:31.891536Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The land-09 blocker is resolved, the staged payload remains the three-file lint enforcement slice, and targeted plus full tests pass.",
+      "evidence": [
+        "git diff --cached --name-status, --stat, and --check showed the staged payload remains cmd/burpvalve/commit_test.go, internal/backpressure/lint.go, and internal/backpressure/lint_test.go with no diagnostics.",
+        "Unsupported lint command keys return is not supported; expected id, command, required, paths, and timeout_seconds.",
+        "The prior failing run_directory staged-snapshot probe now blocks.",
+        "The staged-snapshot full suite go test ./... passed across all packages."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2378",
+        "evidence_ref": "current staged payload inspection plus delta2 test run",
+        "created_at": "2026-07-02T06:13:29.269298Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The payload makes lint evidence explicit by distinguishing scaffold-only/no enforcement from command-output enforcement, and malformed or unsupported lint manifest shapes produce blocked results instead of ambiguous evidence.",
+      "evidence": [
+        "No-command lint evidence fields are set to EvidenceStrength none and EnforcementLevel scaffold-only.",
+        "Executable lint paths set Enforced true, EvidenceStrength command-output, and EnforcementLevel required-and-optional-commands.",
+        "The staged diff includes tests requiring no-op lint not to print burpvalve lint passed.",
+        "The staged diff includes tests requiring unsupported run_directory to return blocked JSON/stderr.",
+        "Delta2 focused and full tests passed against the same staged payload."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2374",
+        "evidence_ref": "delta re-check commands/files inspected in message 2374",
+        "created_at": "2026-07-02T06:11:18.554866Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The delta remains inside land-09 scope: lint enforcement exposure and lint-local manifest shape validation. It rejects unsupported run_directory rather than implementing guided lint setup, run_directory execution, presets, concurrency, main.go changes, or result-contract fields.",
+      "evidence": [
+        "git diff --cached --name-status and --stat show the same three staged files, with 273 insertions and 20 deletions total.",
+        "lint.go staged changes are LintResult enforcement fields, not_enforced status, YAML lint_commands shape validation, unsupported-key rejection, and summary display for not enforced.",
+        "lint_test.go and commit_test.go staged changes test no-op not_enforced evidence, malformed lint_commands, and unsupported run_directory rejection.",
+        "Boundary grep found no cmd/burpvalve/main.go changes, no run_directory execution support, no goroutine or WaitGroup concurrency work, no VerifierPolicy work, and no schema_version/fatal/next_steps/bead_ids/bead_rationale fields.",
+        "BrightOwl independently passed scope-control in Agent Mail message 2371 before the delta, and the delta only tightened unsupported-key rejection."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2378",
+        "evidence_ref": "current staged payload inspection",
+        "created_at": "2026-07-02T06:13:29.269298Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The current staged payload has no destructive-operation surface.",
+      "evidence": [
+        "git diff --cached --name-status shows three modified files only, with no deleted or renamed paths.",
+        "Current staged grep found no rm -rf, git reset, force, deploy, production, or other destructive-operation changes.",
+        "The staged diff modifies lint result reporting, lint manifest validation, and tests only."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2375",
+        "evidence_ref": "delta re-check commands/files inspected in message 2375",
+        "created_at": "2026-07-02T06:11:31.891536Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Structured lint evidence is integrity-safe for unsupported per-command keys: unsupported keys are rejected before evidence can be marked enforced.",
+      "evidence": [
+        "A staged-snapshot probe with run_directory: src returned JSON status blocked, enforced false, command_count 0, evidence_strength none, and no command result claiming pass.",
+        "Unknown key rejection happens while walking YAML nodes before LoadManifest and executable command construction.",
+        "The unit test fixture covers unsupported run_directory in lint_commands and expects run_directory is not supported."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2375",
+        "evidence_ref": "delta re-check commands/files inspected in message 2375",
+        "created_at": "2026-07-02T06:11:31.891536Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The command-execution boundary issue is resolved: unsupported execution-shaping lint keys are rejected before any lint command runs.",
+      "evidence": [
+        "validateLintCommandShape rejects unsupported keys by default, including execution-shaping keys such as run_directory.",
+        "A staged-snapshot probe with run_directory: src returned blocked JSON and stderr with run_directory is not supported.",
+        "command_count stayed 0 in the probe, so the declared command was not run as enforced evidence.",
+        "The CLI regression test covers unsupported run_directory: src and requires blocked JSON/stderr.",
+        "ScarletMarsh independently passed security-boundaries for the same delta in Agent Mail message 2374."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2378",
+        "evidence_ref": "current staged payload inspection",
+        "created_at": "2026-07-02T06:13:29.269298Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The current payload has no UI, browser, screenshot, canvas, responsive-layout, or visual-diff surface.",
+      "evidence": [
+        "Current staged paths are cmd/burpvalve/commit_test.go, internal/backpressure/lint.go, and internal/backpressure/lint_test.go only.",
+        "Current staged grep for visual, screenshot, browser, and canvas found no governed visual-regression changes.",
+        "The staged diff is CLI/core lint logic and tests, not rendering or visual output code."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2379",
+        "evidence_ref": "current staged diff, staged blobs, condition file, and staged-snapshot tests",
+        "created_at": "2026-07-02T06:14:07.680236Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The payload changes lint status/schema reporting and a YAML shape guard; it does not add new lint fanout, concurrency, background workers, or broader command orchestration, and existing per-command timeout handling remains bounded.",
+      "evidence": [
+        "git diff --cached --numstat and --shortstat showed the current payload is limited to 55/1 in commit_test.go, 133/16 in lint.go, and 85/3 in lint_test.go.",
+        "RunLint still builds one executable command list and iterates it sequentially.",
+        "The delta adds shape validation before LoadManifest and metadata fields, not new fanout or parallel execution.",
+        "Staged-snapshot grep found no goroutine, sync, errgroup, worker, or parallel constructs; only timeout-related matches appeared.",
+        "A temporary staged snapshot passed the focused lint tests and full go test ./..."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail message 2378",
+        "evidence_ref": "current staged payload inspection",
+        "created_at": "2026-07-02T06:13:29.269298Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "not_applicable",
+      "message": "The current payload changes lint enforcement reporting and manifest validation only; it does not alter agent authority, human approval, or authorization policy.",
+      "evidence": [
+        "Current staged paths do not include AGENTS.md, CLAUDE.md, installer files, approval prompts, verifier authorization text, or permission policy files.",
+        "Current staged grep found no authorization, approval, permission, or sandbox-policy changes.",
+        "Unsupported run_directory is rejected rather than adding a new agent-controlled execution-directory capability."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T06:16:45.725025754Z"
+    }
+  ]
+}

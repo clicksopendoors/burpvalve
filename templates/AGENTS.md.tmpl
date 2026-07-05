@@ -1,0 +1,109 @@
+# Agent Operating Contract
+
+## Project Purpose
+
+TBD. Replace this with the concrete purpose of the project in 2-4 sentences.
+
+## Agent Startup
+
+1. Read this file.
+{{if .Beads}}1. Run `br ready --json` before inventing work.
+{{end}}{{if .Backpressure}}1. Check `/backpressure/README.md` before calling work done.
+{{end}}{{if .StartupRecordLine}}1. {{.StartupRecordLine}}
+{{end}}
+{{if .Orchestrator}}Orchestrators should read `ORCHESTRATOR.md` first, then return here for the canonical agent gate, Definition of Done, and file-coordination rules.
+
+{{end}}{{if .ClaudeOrchestratorRoute}}Claude orchestrator route users should read `.claude/skills/burpvalve-orchestrator/SKILL.md` for coordinator procedure, then return here for the canonical coding-agent contract.{{if .Orchestrator}} `ORCHESTRATOR.md` is supplemental project-local coordinator guidance, not a replacement for this file.{{end}}
+
+{{end}}
+## Commands
+
+- Build: TBD
+- Test: TBD
+- Lint: TBD
+- Run locally: TBD
+
+{{if .Beads}}## Beads
+
+- Use `br ready --json` to find work.
+- Use `br list --json` to inspect the full issue graph.
+- Use `br update <id> --status in_progress` when claiming work.
+- Use `br close <id> --reason "..."`
+- Run `br sync --flush-only` before committing `.beads/` changes.
+- Close delivery beads through the Burpvalve gate so the bead close, `.beads/issues.jsonl`, verifier evidence, attestation, and commit describe the same staged payload. Admin-only `.beads/` housekeeping may batch when no delivery payload is staged.
+- `br dep cycles` must be empty.
+- Never run bare `bv`; use robot flags such as `bv --robot-triage`, `bv --robot-next`, or `bv --robot-insights`.
+
+{{end}}## Taking Orders And Handoffs
+
+- Treat owner, maintainer, and active orchestrator assignments as scoped work orders. If the instruction conflicts with this file or tracked decisions, stop and ask for the smallest ruling that unblocks the work.
+{{if .Beads}}- Claim the bead before implementation, keep status current, and use the bead id in coordination messages, reservations, verifier packets, and close reasons.
+{{end}}- Announce shared-file scope before editing files that other active agents may touch. Reserve only the paths you intend to change and release reservations promptly when you hand off or stop.
+- Do not widen unclear requirements into adjacent features, cleanup, or refactors. Record blockers and decisions in the durable place named for this repo.
+
+## Atomic Work And Commits
+
+- One feature{{if .Beads}}, one bead{{end}}, one commit.
+- One bug, one fix, one commit.
+- Do not combine two features, two fixes, or a feature plus a fix in the same commit.
+- When git committing, never add co-authorship for Codex or Claude (no Co-Authored-By trailers for AI tools). Author is clicksopendoors only.
+- Never estimate or reference development time or timelines. Describe scope, sequencing, and blockers instead.
+{{if .AtomicPlanLine}}- {{.AtomicPlanLine}}
+{{end}}- {{.AtomicSplitLine}}
+
+{{if .Backpressure}}## Burpvalve Gate Choreography
+
+- Stage only the files owned by the current atomic payload. If the index already contains unrelated staged paths, resolve ownership before running the gate.
+- Run the verifier/gate against the staged slice, keep responses honest and bound to the current payload, and never use bypass flags to force a commit through.
+- If the gate writes an attestation, stage exactly that generated artifact with the payload and rerun the commit so history contains the evidence it validated.
+- Treat failures, unknown verdicts, and verifier disagreements as blockers until resolved. Do not rewrite verifier findings to fit the desired outcome.
+
+## Verifier Work
+
+- Verifiers are read-only reviewers for the exact staged payload and condition cell they are assigned.
+- Verdicts need concrete evidence. Authorization to request verification is never evidence that a condition passed.
+- Preserve each verifier's actual verdict, provenance, and evidence. If two trusted verifiers disagree, hold the commit and escalate instead of choosing the convenient answer.
+
+{{end}}
+{{if .NTM}}## NTM Session Naming
+
+Use the repo basename as the base session name. Use labels only for variants:
+
+- Base session: `<repo-name>`
+- Labeled session: `<repo-name>--frontend`
+- Labeled session: `<repo-name>--backend`
+
+Before state-changing NTM commands, check `ntm --robot-capabilities` and verify state with `ntm --robot-snapshot`.
+
+NTM is an optional top-level coordination bridge, not the default verifier fanout for feature x condition cells. If you use NTM, keep reviewer/coordinator swarms small (2-10 agents), preserve per-cell evidence{{if .Docs}}, and follow `/docs/ntm-bridge.md`{{end}}.
+
+{{end}}{{if .Verifier}}## Verifier Orchestration
+
+Standing verifier authorization permits spawning read-only verifier subagents for backpressure checks. It is never per-cell evidence. Every feature x condition cell still needs real verifier output, provenance, and evidence for the current staged payload. Do not fabricate subagent confirmation.
+
+{{end}}{{if .Backpressure}}## Backpressure
+
+Backpressure rules live in `/backpressure/`. A task is not done because an agent says it is done; it is done when the relevant checks have accepted the artifact or the blocker is explicit.
+
+Before committing feature work, run the backpressure verifier. The verifier must confirm every active backpressure condition for every changed feature, or attach a failure/blocker message for each unmet condition.
+
+{{end}}## Definition Of Done
+
+- Relevant checks run and results recorded.
+{{if .Backpressure}}- Backpressure verifier has a complete feature x condition matrix.
+{{end}}{{if .Beads}}- Bead closed or blocker recorded.
+{{end}}- Files committed when appropriate.
+- Remaining risks or follow-ups named.
+
+{{if .DocsPlansLogs}}## Docs, Plans, And Logs
+
+{{range .DocsPlansLogBullets}}- {{.}}
+{{end}}{{if .PromoteDurableLine}}- {{.PromoteDurableLine}}
+{{end}}
+{{end}}## Uncertainty
+
+If a requirement is unclear, stop before widening scope.{{if .UncertaintyRecordLine}} {{.UncertaintyRecordLine}}{{end}} Ask for the smallest clarification that unblocks progress. Do not silently replace a hard requirement with an easier one.
+
+## File Coordination
+
+Prefer small, scoped edits. Before editing files that another active agent may touch, coordinate through the project issue tracker or the configured agent-mail/file-reservation workflow. Do not revert changes you did not make unless the human explicitly asks for that.

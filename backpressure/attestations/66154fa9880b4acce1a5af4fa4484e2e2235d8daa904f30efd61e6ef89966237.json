@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5-codex"
+  },
+  "git_head_before_commit": "0a6deb7decf1e105aface5897909de9cd473a7f2",
+  "created_at": "2026-07-03T00:48:54.391579582Z",
+  "feature": {
+    "id": "project-readiness-kit-oxp-option-b-install-surfaces-idu",
+    "kind": "feature",
+    "name": "project-readiness-kit-oxp-option-b-install-surfaces-idu",
+    "source_bead": "project-readiness-kit-oxp-option-b-install-surfaces-idu",
+    "bead_ids": [
+      "project-readiness-kit-oxp-option-b-install-surfaces-idu"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-oxp-option-b-install-surfaces-idu"
+  },
+  "bead_ids": [
+    "project-readiness-kit-oxp-option-b-install-surfaces-idu"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload implements exactly the option-B ORCHESTRATOR.md install-surface wiring for bead project-readiness-kit-oxp-option-b-install-surfaces-idu, plus its tracker state; no unrelated source changes are staged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2974",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Refreshed against the current staged hash; formatting and focused command/help/config/TUI checks still pass for the option-B install-surface payload.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json returned staged_payload_hash sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 and listed the unchanged ten staged paths.",
+        "git diff --cached --check exited 0.",
+        "go test ./cmd/burpvalve -run 'Init|Repair|Setup|TUI|Robots|Help|Orchestrator|Config' -count=1 passed.",
+        "Prior same-hash delta checks in message 2967 passed go test ./internal/charmui -run 'InitWizard|ScaffoldWizard' -count=1 and go test ./internal/scaffold -run 'Apply|Repair|Inspect|Orchestrator|Config|Target' -count=1."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2972",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The refreshed staged payload still reuses the existing scaffold/config/wizard paths rather than adding a parallel installer path; the delta only adds the missing hidden-selection guard and tests.",
+      "evidence": [
+        "Diff inspection for the v2 staged payload found option-B behavior still wired through existing runInit/runRepair, scaffold target normalization, InspectOptions, ApplyRepairWithOptions, and InitWizardResult paths.",
+        "The v2 delta adds normalizeHiddenSelections() and an applyInitWizardResult guard instead of introducing a separate ORCHESTRATOR.md installer flow.",
+        "Clean temp repo from HEAD plus only git diff --cached --binary reproduced staged hash sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 and manifest hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5; focused cmd/scaffold/charmui tests and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2968",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The prior hidden-selection path is now blocked in both the TUI model and final option application, preserving the exact opt-in rule.",
+      "evidence": [
+        "internal/charmui/init_wizard.go adds normalizeHiddenSelections(), clearing result.Orchestrator when both result.Beads and result.NTM are false.",
+        "The wizard Update path calls normalizeHiddenSelections() after space toggles, select-all, and select-none, then clamps the cursor.",
+        "cmd/burpvalve/main.go guards final application with opts.orchestrator = result.Orchestrator \u0026\u0026 (result.Beads || result.NTM), so stale hidden values cannot drive target selection."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2968",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The previously missing regression coverage is now present for both TUI model normalization and final init-option suppression.",
+      "evidence": [
+        "internal/charmui/init_wizard_test.go adds TestInitWizardClearsHiddenOrchestratorSelection for the selected-then-hidden state.",
+        "cmd/burpvalve/init_test.go adds TestInitWizardResultSuppressesHiddenOrchestratorSelection for final option suppression.",
+        "Clean staged-slice focused tests passed for cmd/burpvalve and internal/charmui."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2968",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The delta closes the TUI acceptance gap, and the staged payload is verified against the new binding hash.",
+      "evidence": [
+        "Clean temp repo from HEAD plus only git diff --cached --binary reproduced staged hash sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 and manifest hash sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5.",
+        "Clean staged-slice checks passed: git diff --cached --check; focused cmd/scaffold/charmui tests; go test ./....",
+        "Diff inspection confirms non-interactive option-B surfaces remain staged, and the delta adds the missing TUI final-state guard and tests without widening scope."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2974",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Refreshed against the current staged hash; the payload carries direct regression tests and robot/help surfaces for the option-B rule, including the hidden-selection fix.",
+      "evidence": [
+        "Current staged hash confirmed as sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 with no hash-excluded staged payload paths.",
+        "cmd/burpvalve/init_test.go includes tests for config opt-in/off, repair config opt-in, setup required reporting, robots explicit target, and hidden TUI suppression.",
+        "internal/charmui/init_wizard_test.go includes tests for unchecked visibility with Beads/NTM and clearing hidden orchestrator selection.",
+        "go test ./cmd/burpvalve -run 'Init|Repair|Setup|TUI|Robots|Help|Orchestrator|Config' -count=1 passed against the current staged hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2967",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The delta stays inside the option-B install-surface scope and only fixes the TUI hidden-selection edge case plus tests.",
+      "evidence": [
+        "git diff --cached --name-status shows only the ten option-B packet paths, including .beads/issues.jsonl, cmd/burpvalve, internal/charmui, and internal/scaffold files.",
+        "The new delta is limited to normalizeHiddenSelections, the applyInitWizardResult guard, and their regression tests.",
+        "go run ./cmd/burpvalve hash --staged --json matched the new packet hash sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 and listed no generated/hash-excluded payload paths."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2974",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Refreshed against the current staged hash; init/repair mutation remains opt-in and hidden TUI state can no longer silently request ORCHESTRATOR.md.",
+      "evidence": [
+        "cmd/burpvalve/main.go guards applyInitWizardResult with opts.orchestrator = result.Orchestrator \u0026\u0026 (result.Beads || result.NTM), so hidden UI state cannot become a scaffold mutation.",
+        "internal/charmui/init_wizard.go normalizeHiddenSelections clears result.Orchestrator when both Beads and NTM are false after checkbox toggles/select-all/select-none.",
+        "internal/scaffold/repair_test.go proves default repair does not create ORCHESTRATOR.md and targeted repair does.",
+        "git diff --cached --check exited 0; focused cmd/burpvalve tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2972",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The refreshed staged payload preserves typed config/scaffold state and now suppresses hidden stale TUI state before it can affect target selection.",
+      "evidence": [
+        "setup still uses inspectOptionsFromConfig(effectiveConfig.File.Defaults.Init), preserving existing scaffold bool defaults while adding RequireOrchestrator from defaults.init.orchestrator == orchestrator-md.",
+        "Repair defaults use defaults.repair.orchestrator through the typed config model and target normalization, not ad hoc string parsing.",
+        "The v2 delta adds normalizeHiddenSelections() and opts.orchestrator = result.Orchestrator \u0026\u0026 (result.Beads || result.NTM), with tests proving hidden TUI state is cleared/suppressed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2967",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The delta narrows mutation authority by preventing a hidden TUI value from becoming an install action; it adds no external execution, trust expansion, or config-validation relaxation.",
+      "evidence": [
+        "cmd/burpvalve/main.go applyInitWizardResult now requires Orchestrator plus either Beads or NTM before setting opts.orchestrator.",
+        "internal/charmui/init_wizard.go normalization clears hidden Orchestrator state locally in the TUI model after relevant toggles.",
+        "git diff --cached --check exited 0 and focused cmd/scaffold/charmui tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2967",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Delta preserves and strengthens governed TUI behavior: hidden ORCHESTRATOR.md selection is cleared when Beads and NTM are both false.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json returned staged_payload_hash sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 with the same ten staged paths as the packet.",
+        "internal/charmui/init_wizard.go shows normalizeHiddenSelections clears result.Orchestrator when both result.Beads and result.NTM are false, and Update calls it after checkbox toggles, select-all, and select-none.",
+        "internal/charmui/init_wizard_test.go shows TestInitWizardClearsHiddenOrchestratorSelection for the hidden selection case.",
+        "Focused internal/charmui and cmd/burpvalve tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2974",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "Refreshed against the current staged hash; the payload remains selection logic, TUI visibility/normalization, tests, and tracker state, with no governed performance surface.",
+      "evidence": [
+        "git diff --cached --stat for sha256:66154fa9880b4acce1a5af4fa4484e2e2235d8daa904f30efd61e6ef89966237 shows 388 insertions/63 deletions across the same ten CLI/scaffold/TUI/test/tracker paths.",
+        "The semantic delta adds hidden ORCHESTRATOR.md selection normalization and guard; it adds no new dependency, IO loop, network call, benchmark path, bundle, memory, throughput, latency, or cost-sensitive runtime surface.",
+        "Focused cmd/burpvalve tests passed; no performance-budget rule is defined for these paths."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5.5 high",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "transcript_ref": "Agent Mail 2968",
+        "created_at": "2026-07-03T00:48:54.391579582Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5.5 high",
+      "verdict": "pass",
+      "message": "The final UI state now controls whether the orchestrator target can be applied, so hidden stale selection no longer crosses the explicit-user-choice boundary.",
+      "evidence": [
+        "normalizeHiddenSelections clears result.Orchestrator whenever both Beads and NTM are false, matching the rule that the checkbox only applies when visible under those selections.",
+        "applyInitWizardResult independently suppresses hidden stale selection with result.Orchestrator \u0026\u0026 (result.Beads || result.NTM).",
+        "The new cmd and charmui tests assert this suppression directly, and the clean full suite passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-03T00:48:54.391579582Z"
+    }
+  ]
+}

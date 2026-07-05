@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:765cda42017ef7921e4a58ad15152c745ddda2f0e18736c2fc549158006262aa",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "LilacGlacier",
+    "model": "gpt-5"
+  },
+  "git_head_before_commit": "2858846f54221f7af379fb51507f1f5883f0e28b",
+  "created_at": "2026-07-02T21:32:42.365306958Z",
+  "feature": {
+    "id": "project-readiness-kit-oxp-prompts-command-api-6lv",
+    "kind": "feature",
+    "name": "project-readiness-kit-oxp-prompts-command-api-6lv",
+    "diff_cluster": "explicit:project-readiness-kit-oxp-prompts-command-api-6lv"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload implements only the OXP prompts command API and JSON contract for project-readiness-kit-oxp-prompts-command-api-6lv."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Staged Go prompt-command payload is formatted and passes focused plus full Go tests in an isolated staged-slice worktree.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 regenerated packets for staged payload sha256:765cda42017ef7921e4a58ad15152c745ddda2f0e18736c2fc549158006262aa, confirmed git diff --cached --check and gofmt had no issues, and ran focused tests plus go test ./... in an isolated staged-slice worktree."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Prompt metadata and rendering behavior are centralized, with CLI code acting as a thin adapter.",
+      "evidence": [
+        "BrightOwl Agent Mail 2808 inspected staged prompt_bank.go and main.go and found prompt metadata/rendering centralized in the backpressure prompt-bank API with list/show delegating to that API, plus package and CLI tests covering the behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The command cannot earn superficial success by confusing canonical templates with verifier packets or executing shell-looking variable content.",
+      "evidence": [
+        "BrightOwl Agent Mail 2808 inspected the staged prompts command/help and prompt rendering, confirmed required-variable and unknown-prompt failures, and reproduced hostile variable rendering as literal text."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "New prompt-bank behavior and CLI surfaces have direct focused tests.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 inspected staged prompts_test.go and prompt_bank_test.go and confirmed coverage for list/show JSON, required-variable errors, unknown prompts, literal hostile rendering, stable listing, and robot help distinction; focused tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload satisfies the current bead contract and the claimed evidence reproduced on a staged-only snapshot.",
+      "evidence": [
+        "BrightOwl Agent Mail 2808 checked the bead acceptance criteria, reproduced the staged payload hash, and confirmed focused tests, direct CLI probes, git diff --cached --check, and go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Verifier response records reproducible staged hash, path set, isolated test commands, and direct CLI observations.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 recorded packet reproduction, exact four-file staged path set, isolated staged-slice worktree evidence, CLI observations, and full go test ./... for payload sha256:765cda42017ef7921e4a58ad15152c745ddda2f0e18736c2fc549158006262aa."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Payload stays within the list/show embedded prompt API and JSON contract.",
+      "evidence": [
+        "BrightOwl Agent Mail 2808 confirmed the staged path set is only main.go, prompts_test.go, prompt_bank.go, and prompt_bank_test.go; no scaffold, export, docs/prompts, agent-mail, NTM, pane, dependency, or manifest files are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The prompt list/show implementation is read-only and does not create prompt files, alter repo config, spawn processes, or trigger orchestration.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 inspected staged main.go and prompt_bank.go and found stdout/JSON rendering only, with no filesystem, git, process, network, mail, pane, or NTM mutation path; prompt list/show did not create repo-local prompt files."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Prompt output data is stable and constrained.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 confirmed prompts list --json output, exact show --json key set of body/name/variables/version, literal hostile-value rendering, required-variable error text, unknown-prompt valid-name guidance, and tests asserting the same contract."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Hostile variable content is treated as literal text and no shell or external execution boundary is added.",
+      "evidence": [
+        "BrightOwl Agent Mail 2808 inspected prompt_bank.go and found strings.ReplaceAll rendering only, no shell/template execution/eval/subprocess/network/credential/filesystem path, and hostile values preserved literally by tests and direct probes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains CLI command/help/JSON behavior and in-memory prompt-bank code only; no visual surface is introduced.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 confirmed staged paths are only CLI and backpressure Go files, with no browser, CSS, canvas, TUI layout, screenshots, VHS assets, HTML, or visual rendering code."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Implementation is bounded to static embedded prompt data, linear scans over a tiny prompt/variable set, and no filesystem/network/process calls.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 inspected prompt_bank.go, confirmed one prompt with three variables from prompts list --json, and ran full go test ./... in the isolated staged-slice worktree."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T21:32:42.365306958Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The new command exposes prompt text but does not spawn agents, send mail, move panes, mutate scaffolds, or treat prompt text as verifier evidence.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2810 inspected robot/human help and staged code, confirming burpvalve prompts is distinct from burpvalve verifier prompts and contains no agent-mail, NTM, pane, native-subagent, or verifier-submit call path."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T21:32:42.365306958Z"
+    }
+  ]
+}

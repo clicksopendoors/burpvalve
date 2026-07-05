@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:07693e14c8e4d1dd4152ce14240fb9150debf991dbe52b8fd1b9b44ac55edf67",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "932abfc1438d465a9b434106074ace91e9eea8da",
+  "created_at": "2026-07-02T23:01:17.028785715Z",
+  "feature": {
+    "id": "project-readiness-kit-oxp-burpvalve-bead-hook-forwarding-9ns",
+    "kind": "feature",
+    "name": "project-readiness-kit-oxp-burpvalve-bead-hook-forwarding-9ns",
+    "source_bead": "project-readiness-kit-oxp-burpvalve-bead-hook-forwarding-9ns",
+    "bead_ids": [
+      "project-readiness-kit-oxp-burpvalve-bead-hook-forwarding-9ns"
+    ],
+    "diff_cluster": "explicit:project-readiness-kit-oxp-burpvalve-bead-hook-forwarding-9ns"
+  },
+  "bead_ids": [
+    "project-readiness-kit-oxp-burpvalve-bead-hook-forwarding-9ns"
+  ],
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged changes implement only BURPVALVE_BEAD hook forwarding parse rules plus tracker closure."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged hook-forwarding payload passes focused hook/env tests, full staged-only Go tests, and git diff check.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 verified staged hash 07693e14, git diff --cached --check, focused go test ./cmd/burpvalve -run 'Bead|BeadRationale|Hook|Env|Duplicate|Comma|Empty' -count=1, full go test ./..., and rg evidence for hook parser strings in all three hook copies."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The parser block is duplicated only across required live/template copies and tested uniformly.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 inspected all three hook diffs, confirmed root and embedded templates match exactly, and verified live hook has the same bead-forwarding behavior despite a distinct command-discovery preamble."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Hook forwarding preserves the existing multi-bead rationale gate and does not invent evidence.",
+      "evidence": [
+        "BrightOwl Agent Mail 2898 inspected git diff and tests showing BURPVALVE_BEAD maps to repeated --bead flags, BURPVALVE_BEAD_RATIONALE maps to --bead-rationale, and multiple IDs without rationale still fail through existing commit validation."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Direct tests cover all new hook environment behaviors.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 inspected hook_env tests covering all three hook copies, empty-token rejection, duplicate dedupe/warning, rationale forwarding, and fall-through to existing commit validation; focused staged-only tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload satisfies the bead acceptance criteria and includes tracker closure.",
+      "evidence": [
+        "BrightOwl Agent Mail 2898 verified br show acceptance, parser blocks in live/root/embedded hook copies, hook_env tests for all three copies, bash -n checks, focused tests, and full go test ./... in a clean staged snapshot."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Verifier evidence records the staged hash, exact staged file list, static inspection, and staged-only test evidence.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 recorded git diff --cached --name-status, staged hash 07693e14, focused and full staged-only test commands, and static inspection results."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Staged changes are limited to hook env forwarding, tests, and this bead's tracker closure.",
+      "evidence": [
+        "BrightOwl Agent Mail 2898 verified git diff --cached --name-status exactly matched .beads/issues.jsonl, .githooks/pre-commit, cmd/burpvalve/hook_env_test.go, internal/scaffold/templates/githooks/pre-commit, and templates/githooks/pre-commit."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The hook change only parses env metadata and forwards it to existing commit/lint gates.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 inspected all three staged hook diffs, confirmed commit then lint sequence remains, empty tokens exit before commit, and no rm/reset/force-push/deploy/network operations were added."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The parser preserves bead ID order after trim/dedupe, rejects malformed empty tokens, forwards rationale separately, and includes tracker closure in the staged hash.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 inspected IFS comma splitting, trimming, BURPVALVE_BEAD_EMPTY_TOKEN, BURPVALVE_BEAD_DUPLICATE, repeated --bead first-seen order, expected argv tests, and .beads closure diff."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Bead values are passed as argv data through COMMIT_ARGS without eval or shell-built command strings.",
+      "evidence": [
+        "BrightOwl Agent Mail 2898 inspected shell trimming, empty-token failure before commit, duplicate skip, COMMIT_ARGS array forwarding, existing commit/lint paths only, and bash -n for all three hook copies."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "No governed visual-regression surface exists in this staged payload.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 verified staged paths are .beads/issues.jsonl, shell hook files, and a Go test file only; output changes are plain stderr diagnostics, not visual/TUI rendering."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "ScarletMarsh",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The hook parser adds only a small linear pass over supplied bead tokens before existing commit/lint work.",
+      "evidence": [
+        "ScarletMarsh Agent Mail 2897 inspected token splitting and duplicate loop over supplied bead IDs, noted no large scan/network/persistent process, and verified focused/full tests passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T22:51:17.223133386Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The hook forwards only explicit operator-provided env metadata and does not choose beads or rationale autonomously.",
+      "evidence": [
+        "BrightOwl Agent Mail 2898 verified absent env preserves behavior, malformed env exits before commit, multi-bead-without-rationale does not auto-supply a rationale, and clean staged full go test ./... passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T23:01:17.028785715Z"
+    }
+  ]
+}

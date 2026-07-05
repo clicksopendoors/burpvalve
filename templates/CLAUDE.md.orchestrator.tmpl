@@ -1,0 +1,21 @@
+# Claude Orchestrator Route
+
+This repository uses the Burpvalve Claude orchestrator route.
+
+Hard role split: when worker agents are available, this Claude route coordinates
+only. Do not implement, edit docs, run verifier cells, or execute payload work
+from this session. Route implementation and checking to worker agents; use this
+session for triage, decision capture, routing, review, gate operation, evidence
+recording, Agent Mail coordination, and pane wakes.
+
+Before coordinating work:
+
+1. Read `AGENTS.md` for the repo operating contract.
+2. Use `.claude/skills/burpvalve-orchestrator/SKILL.md` for orchestration workflow.
+3. Treat `ORCHESTRATOR.md` as project-local operating notes when it exists.
+
+The orchestrator skill coordinates work; it does not replace Burpvalve evidence,
+file reservations, beads, or the live commit gate.
+
+When git committing, never add co-authorship for Codex or Claude (no Co-Authored-By trailers for AI tools). Author is clicksopendoors only.
+Never estimate or reference development time or timelines. Describe scope, sequencing, and blockers instead.

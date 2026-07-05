@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:32a56dd1eebc599b3b4579adb3c46cda3916518bc47b18892b350c134a56d463",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "gpt-5.5"
+  },
+  "git_head_before_commit": "2411d3dba3e9d33dbd50788a5e0e6f566795e7bd",
+  "created_at": "2026-07-02T04:12:31.998053138Z",
+  "feature": {
+    "id": "project-readiness-kit-land-05-import-beads-state-e2s",
+    "kind": "feature",
+    "name": "project-readiness-kit-land-05-import-beads-state-e2s",
+    "diff_cluster": "explicit:project-readiness-kit-land-05-import-beads-state-e2s"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Staged payload is exactly the land-05 administrative tracker import: only .beads/issues.jsonl is staged, produced from the current Beads state, preserving historical and current tracker records as history rather than implementation evidence. Source, docs, release, binary, and unrelated working-tree changes remain unstaged."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload is tracker-state JSONL only. I found no lint/style implementation, lint command configuration, formatter/static-analysis rule, or code surface governed by lint-rules in this staged diff.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e only M .beads/issues.jsonl is staged.",
+        "git diff --cached --stat -- .beads/issues.jsonl -\u003e 1 file changed, 13 insertions(+).",
+        "go run ./cmd/burpvalve lint -\u003e status not_enforced, command_count 0, message 'no executable lint commands declared; lint-rules wishlist skipped'.",
+        "sed -n '1,220p' backpressure/lint-rules.md -\u003e lint-rules is a policy wishlist unless exact executable lint_commands/analyzers are declared."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed tracker-state surface was inspected. The 13 added JSONL records are self-contained beads/decisions; repeated launch/gate wording is intentional issue context, not duplicated implementation logic or divergent parallel behavior.",
+      "evidence": [
+        "comm -13 \u003c(git show HEAD:.beads/issues.jsonl | jq -r .id | sort) \u003c(git show :.beads/issues.jsonl | jq -r .id | sort) -\u003e 13 added IDs: land-04, land-05, OSL decisions/tasks, OXP tasks, VORCH tasks.",
+        "added-record summary command -\u003e added rows are issue records with labels such as land/open-source-launch/oxp/vorch and statuses closed/in_progress/open; no source code or helper implementation is staged.",
+        "sed -n '1,220p' backpressure/dry.md -\u003e condition targets copied code blocks, duplicated logic/validation/prompts, and premature abstractions; inspected staged rows do not introduce implementation duplication."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged tracker import is consistent with its own claims: it explicitly says it is tracker-state history, not proof that historical work landed in this git history. I did not find a shortcut claim that old historical beads are delivery evidence for later commits.",
+      "evidence": [
+        "git show :.beads/issues.jsonl | jq -r 'select(.id==\"project-readiness-kit-land-05-import-beads-state-e2s\") | .description' | rg -n 'not as proof|forbids rewriting|Stage the Beads JSONL exactly|Historical closed beads|Fresh `land:` beads|No later landing commit|administrative tracker import' -\u003e land-05 states tracker state is not proof of landed code, forbids rewriting/renaming, preserves historical records, and says later commits may cite only fresh land beads.",
+        "comm-added-ID check -\u003e added records include historical/current planning state and current land records; land-05 is in_progress, not falsely closed.",
+        "git show :.beads/issues.jsonl | jq -c land-04 close record + git rev-parse HEAD -\u003e land-04 close reason's commit equals current HEAD 2411d3dba3e9d33dbd50788a5e0e6f566795e7bd.",
+        "sed -n '1,260p' backpressure/anti-reward-hacking.md -\u003e condition purpose is preventing superficial success signals, fake completion patterns, metric gaming, and requiring evidence."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload is a Beads tracker-state JSONL import only; it introduces no new or changed executable behavior requiring nearby behavioral tests under this condition.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e M .beads/issues.jsonl only",
+        "git diff --cached --numstat -- .beads/issues.jsonl -\u003e 13 insertions, 0 deletions",
+        "sed backpressure/one-function-one-test.md -\u003e condition is about direct test coverage for new or changed behavior"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged tracker import defines done surfaces explicitly for the active land-05 bead and imported plan beads; land-05 is still in_progress and does not claim completion before the commit lands.",
+      "evidence": [
+        "git show :.beads/issues.jsonl | jq -c 'select(.id==\"project-readiness-kit-land-05-import-beads-state-e2s\") | {id,title,status,description,acceptance_criteria,labels}' -\u003e land-05 status is in_progress and description lists acceptance criteria: only .beads/issues.jsonl staged, produced by br sync --flush-only, administrative tracker import, later delivery beads are current land beads.",
+        "added-record summary command -\u003e project-readiness-kit-land-05-import-beads-state-e2s has status in_progress; project-readiness-kit-land-04-planning-round-docs-f7b is the only added closed land record.",
+        "sed -n '1,220p' backpressure/definition-of-done.md -\u003e condition purpose covers checks, review, logs, commits, beads, PRs, deployment evidence, and risk notes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged import is honest about tracker evidence: it imports tracker history rather than turning historical beads into proof. The new land-04 close evidence names the actual current HEAD commit and an attestation that exists in HEAD.",
+      "evidence": [
+        "git show :.beads/issues.jsonl | jq -c 'select(.id==\"project-readiness-kit-land-04-planning-round-docs-f7b\") | {id,title,status,closed_at,close_reason,labels}' -\u003e land-04 is closed with close_reason naming commit 2411d3dba3e9d33dbd50788a5e0e6f566795e7bd and attestation backpressure/attestations/2fe639451c17f25b7744d2469ba8ed80327be12a88242fc8fb517137555d4614.json.",
+        "git rev-parse HEAD -\u003e 2411d3dba3e9d33dbd50788a5e0e6f566795e7bd.",
+        "git cat-file -e HEAD:backpressure/attestations/2fe639451c17f25b7744d2469ba8ed80327be12a88242fc8fb517137555d4614.json \u0026\u0026 echo attestation-present-in-HEAD -\u003e attestation-present-in-HEAD.",
+        "git show :.beads/issues.jsonl | jq -r 'select(.id==\"project-readiness-kit-land-05-import-beads-state-e2s\") | .description' | rg -n 'not as proof|administrative tracker import|not manual JSON editing' -\u003e land-05 says tracker state is not proof of landed code and must be treated as administrative tracker import."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays inside the declared land-05 scope: exactly one tracker-state file is staged, with 13 inserted JSONL records and no source/docs/binary/release payload.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e M .beads/issues.jsonl only.",
+        "git diff --cached --stat -- .beads/issues.jsonl -\u003e .beads/issues.jsonl | 13 +++++++++++++; 1 file changed, 13 insertions(+).",
+        "git show :.beads/issues.jsonl | wc -l -\u003e 32; staged JSONL parse check wrote 32 parsed rows to /tmp/land-05-jsonl-check-brightowl.out.",
+        "comm-added-ID check -\u003e 13 added IDs, all tracker records for land-04/land-05 and current OSL/OXP/VORCH plan beads.",
+        "sed -n '1,220p' backpressure/scope-control.md -\u003e condition purpose is preventing task expansion without approval."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged tracker-state surface contains future decision beads that discuss release deletion and public visibility, but this commit itself stages only .beads/issues.jsonl and does not perform or authorize an immediate destructive operation.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e only M .beads/issues.jsonl is staged.",
+        "added-record summary command -\u003e OSL rows are open decision/task beads; project-readiness-kit-osl-decide-old-releases-m28 is status open, not closed/executed, and land-05 remains in_progress.",
+        "git show :.beads/issues.jsonl | jq -r added rows | rg -n -i 'private|release|delete|visibility' -\u003e matches are future launch/owner-decision wording, not executed shell commands in this staged commit.",
+        "sed -n '1,220p' backpressure/destructive-operations.md -\u003e condition governs risky commands and irreversible changes such as deletes, resets, force pushes, external sends, spend changes, deploys, and production mutations."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged tracker-state data is valid JSONL, has no dependency cycles, and represents the land-05 administrative import as tracker history rather than implementation proof.",
+      "evidence": [
+        "git show :.beads/issues.jsonl | wc -l -\u003e 32",
+        "git show :.beads/issues.jsonl | jq -c . \u003e/tmp/land-05-jsonl-check-whitegorge.out -\u003e jq_ok",
+        "br dep cycles -\u003e no dependency cycles detected",
+        "jq summary over staged blob -\u003e count=32; statuses=closed:20,in_progress:1,open:11",
+        "land-05 staged description says: imports existing Beads tracker state as tracker history, not proof of landed code"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "BrightOwl",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The governed security/privacy surface was inspected. The staged tracker import does not expose secret material; secret-related matches are audit threshold prose or future launch gating language, and public-launch beads keep visibility/security work gated behind owner decisions and anonymous verification.",
+      "evidence": [
+        "git show :.beads/issues.jsonl | rg -n 'secret|token|credential|password|PRIVATE|BEGIN PRIVATE|id_rsa|api[_-]?key' -\u003e matches were policy/plan text such as 'secrets/tokens/creds always block' and launch private/public wording; no private key, password, credential value, or token blob observed.",
+        "added-row secret scan with jq+rg -\u003e matches appear in OSL owner-decision/audit-threshold records and launch constraints, not as credential material.",
+        "git show :.beads/issues.jsonl | jq -c added-record summaries -\u003e OSL security-sensitive work is open decision/task state, not executed visibility flip or external publication.",
+        "sed -n '1,220p' backpressure/security-boundaries.md -\u003e condition governs auth, secrets, tenant isolation, PII, permissions, sandbox, and external API safety."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no UI, browser, screenshot, layout, canvas, or visual asset surface; it is only .beads/issues.jsonl tracker state.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e M .beads/issues.jsonl only",
+        "sed backpressure/visual-regression.md -\u003e condition governs screenshot/browser/responsive/canvas/visual-diff checks"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no runtime, benchmark, latency, memory, bundle-size, throughput, token, or cost surface; it is a 13-line tracker-state import.",
+      "evidence": [
+        "git diff --cached --stat -- .beads/issues.jsonl -\u003e 1 file changed, 13 insertions",
+        "git diff --cached --name-only | rg code/docs/runtime path pattern -\u003e no output for staged paths beyond .beads/issues.jsonl",
+        "sed backpressure/performance-budget.md -\u003e condition governs latency, memory, token, cost, bundle-size, throughput, or benchmarks"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "WhiteGorge",
+        "model": "gpt-5",
+        "runtime": "codex-cli",
+        "separate_context": true,
+        "created_at": "2026-07-02T04:12:31.998053138Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged tracker state stays within the authorized administrative import: it stages only .beads/issues.jsonl, records land-05 as in_progress tracker history, and does not perform or claim external/outward actions.",
+      "evidence": [
+        "git diff --cached --name-status -\u003e M .beads/issues.jsonl only",
+        "git status --short shows only .beads/issues.jsonl staged; other worktree changes are unstaged/untracked and outside this payload",
+        "jq staged land-05 record -\u003e title land: 05 import historical beads state, status in_progress, labels admin/beads/commit-05/land/phase-1",
+        "land-05 staged description says to stage Beads JSONL exactly as tracker state and not as proof of landed code"
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-02T04:12:31.998053138Z"
+    }
+  ]
+}

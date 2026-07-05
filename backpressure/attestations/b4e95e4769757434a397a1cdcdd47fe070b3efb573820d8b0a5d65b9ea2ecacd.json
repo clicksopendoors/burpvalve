@@ -1,0 +1,444 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:b4e95e4769757434a397a1cdcdd47fe070b3efb573820d8b0a5d65b9ea2ecacd",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "0c638fd2931fda44e39f0b78e368a0fb86a49938",
+  "created_at": "2026-07-04T23:45:14.436731132Z",
+  "feature": {
+    "id": "diff:docs",
+    "kind": "feature",
+    "name": "staged changes in docs",
+    "diff_cluster": "docs"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Single docs-only change: records owner decision D-OSL-19 (launch-scope amendment adding the five orchestrator-context template beads before the preflip gate) in the decisions log. One file, one purpose."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "Applicable docs/style surface was inspected. The staged payload is a concise markdown decision entry with no fake lint enforcement, code, generated files, or analyzer changes; the lint-rules file names no executable markdown lint command beyond attestation consideration.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/lint-rules.md says a rule is enforced only after this file names the command or analyzer that checks it.",
+        "docs/decisions-2026-07-02-review-round.md lines 445-455 add a single D-OSL-19 heading and explanatory paragraph in the existing decision-log style."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged documentation adds one concise decision-log entry. Its references to four beads are intentional decision scope, not duplicated implementation or repeated policy text that should be extracted.",
+      "evidence": [
+        "git diff --cached --name-status shows one staged file: docs/decisions-2026-07-02-review-round.md modified.",
+        "git diff --cached --stat shows 12 insertions in that single docs file.",
+        "The staged hunk adds only D-OSL-19, a launch-scope amendment naming four orchestrator-experience template beads.",
+        "The entry summarizes the decision once and does not add duplicate code, duplicate tests, parallel docs sections, or repeated validation logic."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The entry reduces reward-hacking risk by preventing a superficial feature-complete declaration from excluding required orchestrator-context work; it names exactly what must land before the preflip gate and explicitly prevents reopening unrelated feature work.",
+      "evidence": [
+        "D-OSL-19 states that four orchestrator-experience template beads join launch scope and must land before the preflip gate.",
+        "The named beads cover C5 polling standard, contact-mesh pre-approval, Agent Mail registration mandate at dispatch, and orchestrator no-self-execution role split.",
+        "The entry ties the decision to first-time Burpvalve users receiving pre-built orchestrator context with documented polling, contact-mesh, registration, and role-split rules.",
+        "The final sentence states: No other feature work is reopened by this amendment."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload is a durable decision-log documentation edit, not executable function or behavior code. No function-level implementation surface exists for this condition to require direct test coverage.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/one-function-one-test.md governs new or changed behavior requiring direct test coverage.",
+        "Only docs/decisions-2026-07-02-review-round.md is staged; no Go source, template contract, or executable behavior file is staged in this payload."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "For this docs-only D-OSL-19 decision-log update, the done evidence is complete staged diff review and clean staged whitespace validation; no code tests are applicable because no executable code or templates changed.",
+      "evidence": [
+        "The packet staged_payload_hash is sha256:b4e95e4769757434a397a1cdcdd47fe070b3efb573820d8b0a5d65b9ea2ecacd and lists only docs/decisions-2026-07-02-review-round.md as modified.",
+        "git diff --cached --stat shows docs/decisions-2026-07-02-review-round.md changed with 12 insertions and no other staged files.",
+        "Manual staged diff review covered the full D-OSL-19 entry and its relation to nearby D-OSL-14 launch-scope text.",
+        "git diff --cached --check completed with no output, indicating no staged whitespace errors. No code tests were run because the payload is documentation-only."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The governed evidence-log surface was inspected. The change records D-OSL-19 as durable owner-decision evidence and names the exact beads/rules brought into launch scope.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/evidence-log.md asks agents to record evidence before closing work.",
+        "docs/decisions-2026-07-02-review-round.md lines 445-455 record D-OSL-19 and list nc0z, fg5l, j97h, and lzze as launch-scope orchestrator-context template beads.",
+        "The entry explicitly states no other feature work is reopened by the amendment, making the decision auditable in /docs rather than chat-only."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged payload stays within the requested D-OSL-19 decision-log update and explicitly bounds launch-scope expansion to four named orchestrator-context template beads, with no unrelated staged paths or feature reopenings.",
+      "evidence": [
+        "The packet feature id is diff:docs and its staged payload lists only docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --name-status confirms only docs/decisions-2026-07-02-review-round.md is staged.",
+        "D-OSL-19 amends D-OSL-14 only by adding four named orchestrator-experience template beads before the preflip gate.",
+        "The staged decision explicitly says no other feature work is reopened by the amendment; unstaged .beads/issues.jsonl and log/backpressure/failed changes are not part of this payload hash."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload contains no destructive-operation surface: no staged deletes, resets, force pushes, migrations, external sends, spend changes, deploys, or production mutations. It only records a docs decision.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/destructive-operations.md governs risky commands and irreversible changes.",
+        "git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md; no D entries or scripts are staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an audit-trail surface and satisfies it by recording the owner launch-scope amendment as a durable decision in /docs with specific included beads and an explicit scope boundary.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/data-integrity.md includes audit trails in its governed scope.",
+        "docs/decisions-2026-07-02-review-round.md lines 445-455 add D-OSL-19 to the existing decisions record, naming the four orchestrator-experience template beads and preserving the “no other feature work” boundary."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "GrayCat",
+        "model": "gpt-5",
+        "runtime": "codex-cli NTM pane 4",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:20Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "The staged decision touches coordination/audit boundary scope by requiring Agent Mail registration and contact-mesh orchestrator context before launch, and it narrows release expectations without introducing secrets, auth code, tenant/PII handling, sandbox policy, or external API behavior changes.",
+      "evidence": [
+        "D-OSL-19 names project-readiness-kit-fg5l contact-mesh pre-approval and project-readiness-kit-j97h Agent Mail registration mandate at dispatch as launch-scope requirements.",
+        "The decision requires first public release context to include documented contact-mesh and registration rules for first-time Burpvalve users.",
+        "The staged change is a docs-only addition to docs/decisions-2026-07-02-review-round.md and does not modify executable code, credentials, auth flows, sandbox permissions, tenant isolation, PII handling, or external API clients.",
+        "The amendment is limited to landing pre-built orchestrator context before the preflip gate and does not authorize the visibility flip or unrelated security surface changes."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no visual UI/browser/canvas/responsive layout surface; screenshot or visual-diff checks are not applicable to a markdown-only decision-log edit.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/visual-regression.md governs screenshot, browser, responsive layout, canvas, and visual-diff checks.",
+        "No frontend, CSS, rendering, screenshot, browser automation, image, or canvas files are staged."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "not_applicable",
+      "message": "The staged payload has no runtime latency, memory, token, cost, bundle-size, throughput, or benchmark surface. It records launch scope only and does not change model tiering, performance thresholds, dependencies, or executable behavior.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/performance-budget.md governs latency, memory, token, cost, bundle-size, throughput, and benchmark thresholds.",
+        "The diff is one markdown decision entry; it does not stage code, benchmark data, dependency changes, or runtime configuration."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "not_applicable",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "CloudyEagle",
+        "model": "gpt-5-codex",
+        "runtime": "codex-cli NTM pane 5",
+        "separate_context": true,
+        "created_at": "2026-07-04T23:43:40.83791Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5-codex",
+      "verdict": "pass",
+      "message": "The staged payload has an autonomy-governed launch-scope surface and satisfies it by recording the owner amendment that four specific orchestrator-context template beads must land before the preflip gate while no other feature work is reopened.",
+      "evidence": [
+        "BronzeDeer orchestrator verifier round 2 named packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json for CloudyEagle mechanical cells.",
+        "Current staged payload is exactly one modified file: docs/decisions-2026-07-02-review-round.md.",
+        "git diff --cached --stat shows 12 insertions in docs/decisions-2026-07-02-review-round.md; git diff --cached --name-status lists only M docs/decisions-2026-07-02-review-round.md.",
+        "The staged diff is docs-only decision-log text recording D-OSL-19 launch-scope amendment for orchestrator-context templates.",
+        "backpressure/autonomy-boundary.md governs which actions agents may take independently and which require explicit human approval.",
+        "docs/decisions-2026-07-02-review-round.md lines 445-455 records the owner amendment to D-OSL-14 as D-OSL-19, names exactly four included beads, requires them before preflip, and states no other feature work is reopened."
+      ],
+      "next_action": "",
+      "adjudication": {
+        "authority": "CloudyEagle",
+        "summary": "Independent mechanical-cell verification for docs-only D-OSL-19 decision-log addition; no disagreement adjudication requested.",
+        "final_verdict": "pass",
+        "audit_ref": "BronzeDeer pane request; packet /tmp/claude-1000/-home-ubuntu-Projects-burpvalve/b1270f8b-8cb6-495a-b5eb-683a6ca02cdf/scratchpad/pkts-dosl19.json"
+      },
+      "timestamp": "2026-07-04T23:45:14.436731132Z"
+    }
+  ]
+}
