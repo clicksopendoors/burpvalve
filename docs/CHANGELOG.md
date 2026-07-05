@@ -3,8 +3,8 @@
 This is a synthesized, agent-facing changelog for the full history of
 `burpvalve`.
 
-Scope window: project inception on 2026-06-20 through the v0.2.0 private launch
-release preparation on 2026-07-05.
+Scope window: project inception on 2026-06-20 through the v0.2.1 patch release
+preparation on 2026-07-05.
 
 This document was rebuilt from git history, GitHub release metadata,
 `.beads/issues.jsonl`, and the working tree. The v0.1.2 section was written
@@ -12,12 +12,15 @@ from the live landing sequence, committed attestations, and GitHub issue
 records rather than prior-release reconstruction. The v0.1.3 section was
 written from the post-v0.1.2 dogfooding and release-prep chain. The v0.2.0
 section was written from the private open-source launch preparation chain.
+The v0.2.1 section was written from the post-launch anonymous verification
+fix-forward.
 It is intentionally organized by landed capabilities, not raw diff order.
 
 ## Version Timeline
 
 | Version | Kind | Date | Summary |
 |---------|------|------|---------|
+| v0.2.1 | Patch | 2026-07-05 | Fixes `burpvalve init --force --json` when the optional `br` Beads tool is absent; Beads setup now skips gracefully with a JSON-visible notice. |
 | v0.2.0 | Release | 2026-07-05 | Private launch release with MIT licensing, public skill metadata, licensed archives, scrubbed public-facing docs, SECURITY reporting policy, public install defaults, Claude/orchestrator route support, ownership accounting, and final pre-flip gate evidence. |
 | v0.1.3 | Release | 2026-07-03 | Ships the guided lint setup, verifier orchestration, Beads close/drift flow, prompt bank and prompt export surfaces, orchestrator target/config work, commit evidence helpers, hook recovery hints, NTM bridge docs, skill prompt-bank refactor, and dogfood-mode findings prompt. |
 | v0.1.2 | Release | 2026-07-02 | Dogfoods Burpvalve on its own landing sequence, tracks the live gate scaffold and attestations, adds verifier provenance/policy, improves setup/lint/recovery evidence, handles staged deletes, and removes source-tracked release artifacts. |
@@ -27,6 +30,14 @@ It is intentionally organized by landed capabilities, not raw diff order.
 | [`abf3234`](https://github.com/clicksopendoors/burpvalve/commit/abf3234f6d517330a2565cfe6d27a62f94bdea5b) | Commit | 2026-06-20 | Renamed the human-approval condition to autonomy boundary in the plan. |
 | [`bd617e0`](https://github.com/clicksopendoors/burpvalve/commit/bd617e03eddbfdf10e2bb34c54d90274210b30b7) | Commit | 2026-06-20 | Added the final compile and commit-gate verification bead. |
 | [`fb1d62f`](https://github.com/clicksopendoors/burpvalve/commit/fb1d62fc11072af3183091119140e2c4383c43a9) | Commit | 2026-06-20 | Initialized the original planning state and Beads state. |
+
+## v0.2.1 - Missing Beads Tool Patch
+
+This patch release fixes a post-launch anonymous verification finding: `init
+--force --json` failed when the optional `br` Beads tool was not installed.
+Burpvalve now skips `.beads` setup with a clear notice when `br` is absent,
+while preserving the existing Beads initialization and verification behavior
+when `br` is available.
 
 ## v0.2.0 - Private Launch Release
 

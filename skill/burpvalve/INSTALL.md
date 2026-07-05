@@ -33,7 +33,7 @@ macOS on amd64 and arm64.
 
 ```bash
 repo="${BURPVALVE_REPO:-clicksopendoors/burpvalve}"
-version="${BURPVALVE_VERSION:-v0.2.0}"
+version="${BURPVALVE_VERSION:-v0.2.1}"
 skills_dir="${BURPVALVE_SKILLS_DIR:-$HOME/skills}"
 bin_dir="${BURPVALVE_BIN_DIR:-$HOME/.local/bin}"
 tmp="$(mktemp -d)"
@@ -83,7 +83,7 @@ install from the local archive:
 
 ```bash
 repo="${BURPVALVE_REPO:-clicksopendoors/burpvalve}"
-version="${BURPVALVE_VERSION:-v0.2.0}"
+version="${BURPVALVE_VERSION:-v0.2.1}"
 skills_dir="${BURPVALVE_SKILLS_DIR:-$HOME/skills}"
 bin_dir="${BURPVALVE_BIN_DIR:-$HOME/.local/bin}"
 tmp="$(mktemp -d)"

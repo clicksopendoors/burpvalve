@@ -34,7 +34,7 @@ archives for Linux and macOS on amd64 and arm64.
 Download the installer for the pinned release, inspect it, then run it:
 
 ```bash
-version="v0.2.0"
+version="v0.2.1"
 tmp="$(mktemp -d)"
 
 curl -fsSL "https://raw.githubusercontent.com/clicksopendoors/burpvalve/${version}/install.sh" \
@@ -54,7 +54,7 @@ If you accept the tradeoff of piping a remote installer into a shell, use the
 same pinned tag:
 
 ```bash
-version="v0.2.0"
+version="v0.2.1"
 curl -fsSL "https://raw.githubusercontent.com/clicksopendoors/burpvalve/${version}/install.sh" | \
   bash -s -- \
     --repo clicksopendoors/burpvalve \
@@ -78,7 +78,7 @@ installs where `--skills-dir` and `--bin-dir` are already explicit.
 Pinned install:
 
 ```bash
-bash install.sh --repo clicksopendoors/burpvalve --version v0.2.0
+bash install.sh --repo clicksopendoors/burpvalve --version v0.2.1
 ```
 
 Local archive install:

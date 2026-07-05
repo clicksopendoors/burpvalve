@@ -1,7 +1,7 @@
 # burpvalve
 
 ![Status](https://img.shields.io/badge/status-pre_public_launch-555)
-![Release](https://img.shields.io/badge/release-v0.2.0-2ea44f)
+![Release](https://img.shields.io/badge/release-v0.2.1-2ea44f)
 ![CI](https://github.com/clicksopendoors/burpvalve/actions/workflows/ci.yml/badge.svg?branch=main)
 ![Go](https://img.shields.io/badge/go-1.25-00ADD8)
 ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -17,7 +17,7 @@ Agents build pressure. Burpvalve makes them earn the release.
 Use a pinned release tag:
 
 ```bash
-version="v0.2.0"
+version="v0.2.1"
 tmp="$(mktemp -d)"
 
 curl -fsSL "https://raw.githubusercontent.com/clicksopendoors/burpvalve/${version}/install.sh" \
