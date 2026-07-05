@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "tool": "burpvalve",
+  "tool_version": "0.1.0",
+  "artifact_kind": "passing",
+  "staged_payload_hash": "sha256:b3977d0d1c2dafd148436a58800dd79fe1d8a09f8e9c4b2b58db26509f1368c5",
+  "manifest_hash": "sha256:00e2a9854cb8dcbdde3e942841f405f13b196fd8b3ebe884380dd9f8c0fc8df5",
+  "condition_order": [
+    "lint-rules",
+    "dry",
+    "anti-reward-hacking",
+    "one-function-one-test",
+    "definition-of-done",
+    "evidence-log",
+    "scope-control",
+    "destructive-operations",
+    "data-integrity",
+    "security-boundaries",
+    "visual-regression",
+    "performance-budget",
+    "autonomy-boundary"
+  ],
+  "generated_by": {
+    "agent": "codex",
+    "model": "unspecified"
+  },
+  "git_head_before_commit": "a27e962eac677bb957648060218af2372003e1d1",
+  "created_at": "2026-07-05T18:40:47.981397899Z",
+  "feature": {
+    "id": "burpvalve-mfuc-public-mirror",
+    "kind": "feature",
+    "name": "burpvalve-mfuc-public-mirror",
+    "diff_cluster": "explicit:burpvalve-mfuc-public-mirror"
+  },
+  "atomicity": {
+    "one_feature_or_fix": true,
+    "message": "Public mirror payload is only the phase-1 manifest revert: remove launch-window main_agent_allowed policy overrides so public main also restores independent verification."
+  },
+  "conditions": [
+    {
+      "condition_id": "lint-rules",
+      "condition_file": "backpressure/lint-rules.md",
+      "condition_file_hash": "sha256:186cdcf0d4aa924f7866b41a765582c133412272ee21b7f898388b6d339b6165",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: lint remains scaffold-only and no fake executable lint enforcement was introduced.",
+      "evidence": [
+        "go run ./cmd/burpvalve lint completed with status not_enforced and fatal false.",
+        "Manifest has lint_commands: [].",
+        "git diff --cached --check passed."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "dry",
+      "condition_file": "backpressure/dry.md",
+      "condition_file_hash": "sha256:6100f150fd737b5a8e23ce15b7a785c8ce5ba9453c9caa13f57a64f0320a180c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Galileo",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-c983-7f10-a190-51d07b4c390b",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: staged change removes repeated verifier_policy entries without introducing duplicate policy machinery.",
+      "evidence": [
+        "Staged diff is 13 deletions only in backpressure/manifest.yaml.",
+        "Staged path list contains only backpressure/manifest.yaml."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "anti-reward-hacking",
+      "condition_file": "backpressure/anti-reward-hacking.md",
+      "condition_file_hash": "sha256:e522618ed30c172a2968e1544a3f8d182745ae0eb0f88c66828cc0fbd52f127c",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Galileo",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-c983-7f10-a190-51d07b4c390b",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: Burpvalve canonical hash matches the assigned artifact, and the change removes the prior main_agent_allowed relaxation rather than gaming evidence requirements.",
+      "evidence": [
+        "go run ./cmd/burpvalve hash --staged --json produced sha256:b3977d0d1c2dafd148436a58800dd79fe1d8a09f8e9c4b2b58db26509f1368c5.",
+        "Staged payload includes only backpressure/manifest.yaml.",
+        "Diff removes 13 verifier_policy: main_agent_allowed entries."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "one-function-one-test",
+      "condition_file": "backpressure/one-function-one-test.md",
+      "condition_file_hash": "sha256:0373558985ee60c25702c4be201e0c3ed9f462b3d143dc0e70d6b979911521bb",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "Not applicable: staged payload changes only backpressure/manifest.yaml and no Go source, functions, behavior implementation, or tests are staged.",
+      "evidence": [
+        "Staged path list is exactly backpressure/manifest.yaml."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "definition-of-done",
+      "condition_file": "backpressure/definition-of-done.md",
+      "condition_file_hash": "sha256:acfb8399b0fcf548ff4a575adb7b19dd7cd52209e2675ac16fa124090264b4b1",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Galileo",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-c983-7f10-a190-51d07b4c390b",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: required read-only checks completed and the canonical staged payload hash matches the assigned artifact.",
+      "evidence": [
+        "Burpvalve hash matched sha256:b3977d0d1c2dafd148436a58800dd79fe1d8a09f8e9c4b2b58db26509f1368c5.",
+        "git diff --cached --check passed.",
+        "go run ./cmd/burpvalve lint returned not_enforced because lint_commands is empty, expected scaffold behavior."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "evidence-log",
+      "condition_file": "backpressure/evidence-log.md",
+      "condition_file_hash": "sha256:542ed0e81d617f7cb2e2eaf9c147bfbbb53996d7bdb4a7c15902ea04f894ecb7",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: verifier report records hash, staged paths, diff scope, and command results.",
+      "evidence": [
+        "Verifier evidence includes Burpvalve hash, staged path list, diff scope, lint result, and test result.",
+        "No generated attestation or response file was edited by the verifier subagent."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "scope-control",
+      "condition_file": "backpressure/scope-control.md",
+      "condition_file_hash": "sha256:7cf6b49470310ce519fe4c7bf8d3f8a8773221ce0b18d0caaab669959bc84b62",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Galileo",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-c983-7f10-a190-51d07b4c390b",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: scope is tightly limited to the public mirror manifest policy revert.",
+      "evidence": [
+        "git status --short showed only M backpressure/manifest.yaml.",
+        "Diff stat is 1 file changed, 13 deletions."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "destructive-operations",
+      "condition_file": "backpressure/destructive-operations.md",
+      "condition_file_hash": "sha256:a916f4439d20eeb757746205e589c4f28406d59e32b3e15fa8469626d94dff30",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: diff contains only manifest policy-line deletions and no destructive operation is staged.",
+      "evidence": [
+        "No deletes of files, resets, force pushes, migrations, deploys, external sends, or production mutations are staged."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "data-integrity",
+      "condition_file": "backpressure/data-integrity.md",
+      "condition_file_hash": "sha256:489c2c4f2b086a587535e43d9272b32b24497ed31ab80a412a78299b5732c24e",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: staged manifest loads into a valid Burpvalve plan, tests pass, and the condition registry remains intact.",
+      "evidence": [
+        "go run ./cmd/burpvalve verifier begin --feature burpvalve-mfuc-public-mirror --json loaded the staged manifest and produced a valid plan.",
+        "go test ./... passed.",
+        "The condition registry still contains the same enabled condition IDs and paths."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "security-boundaries",
+      "condition_file": "backpressure/security-boundaries.md",
+      "condition_file_hash": "sha256:6fe12307366c9cfc15fae334c0d4dcb8af82b94a1e4262169cfd042a62286c80",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Galileo",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-c983-7f10-a190-51d07b4c390b",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: no secrets, auth, permissions, sandbox, or external API boundary changes detected; removing main_agent_allowed falls back to stricter independent_required.",
+      "evidence": [
+        "NormalizeVerifierPolicy(\"\") returns independent_required.",
+        "Staged change only removes explicit relaxed verifier policy lines."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "visual-regression",
+      "condition_file": "backpressure/visual-regression.md",
+      "condition_file_hash": "sha256:5089b45ae58bb60d98f054f0d0f8842caf585fae46ef3950bcd814d8f750a7b3",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "Not applicable: no UI, CSS, screenshots, browser behavior, terminal rendering, images, or visual surface changed.",
+      "evidence": [
+        "Staged payload is manifest-only metadata."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "performance-budget",
+      "condition_file": "backpressure/performance-budget.md",
+      "condition_file_hash": "sha256:e0303b00ec230a7cd4df803c9a42d652b0f9b9eef8e0150c83464b53495b5d43",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "not_applicable",
+      "message": "Not applicable: manifest-only metadata deletion does not add runtime code, loops, IO, network calls, memory use, bundle size, or benchmarkable behavior.",
+      "evidence": [
+        "Staged payload is manifest-only metadata."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    },
+    {
+      "condition_id": "autonomy-boundary",
+      "condition_file": "backpressure/autonomy-boundary.md",
+      "condition_file_hash": "sha256:403e1bafb172bce43c40adf533011b6d424f34838d88b09a2c39fc450b595d34",
+      "verifier_policy": "independent_required",
+      "verifier": {
+        "kind": "independent_subagent",
+        "agent": "Ramanujan",
+        "model": "gpt-5",
+        "runtime": "multi_agent_v1 read-only verifier",
+        "separate_context": true,
+        "transcript_ref": "multi_agent_v1 019f3391-f677-7df0-8a77-674e60a2f284",
+        "evidence_ref": "public mirror phase-1 verifier result in current Codex transcript",
+        "created_at": "2026-07-05T18:40:42Z"
+      },
+      "subagent_confirmed": true,
+      "subagent_model": "gpt-5",
+      "verdict": "pass",
+      "message": "Pass: staged change removes main_agent_allowed policy overrides from all conditions and tightens autonomous authority.",
+      "evidence": [
+        "Diff removes verifier_policy: main_agent_allowed from all 13 conditions.",
+        "No new autonomous permissions are introduced."
+      ],
+      "next_action": "",
+      "timestamp": "2026-07-05T18:40:47.981397899Z"
+    }
+  ]
+}
