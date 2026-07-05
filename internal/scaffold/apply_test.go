@@ -577,20 +577,20 @@ func TestApplyInitReportsBeadsDoctorFailureAsConflict(t *testing.T) {
 	}
 }
 
-func TestApplyInitReportsMissingBRAsConflict(t *testing.T) {
+func TestApplyInitSkipsBeadsWhenBRMissing(t *testing.T) {
 	root := t.TempDir()
 	result, err := ApplyInitWithOptions(root, applyOptions(t, successfulBeadsRunner(), fakeLooker{}))
-	if err == nil {
-		t.Fatal("expected missing br conflict error")
+	if err != nil {
+		t.Fatalf("ApplyInit returned error: %v", err)
 	}
-	if len(result.Conflicts) == 0 {
-		t.Fatalf("expected missing br conflict: %#v", result)
+	if len(result.Conflicts) != 0 {
+		t.Fatalf("missing br should not be a conflict: %#v", result)
 	}
-	if !strings.Contains(result.Conflicts[0].Message, "br executable unavailable") {
-		t.Fatalf("unexpected conflict: %#v", result.Conflicts)
+	if !contains(result.Skipped, ".beads (br executable not found on PATH)") {
+		t.Fatalf("missing br should be reported as skipped: %#v", result.Skipped)
 	}
-	if result.Status != "partial_success" || !result.Fatal || !result.PartialSuccess || len(result.NextSteps) == 0 {
-		t.Fatalf("missing structured recovery fields: %#v", result)
+	if result.Status != "applied" || result.Fatal || result.PartialSuccess || len(result.NextSteps) != 0 {
+		t.Fatalf("missing br should be nonfatal: %#v", result)
 	}
 }
 

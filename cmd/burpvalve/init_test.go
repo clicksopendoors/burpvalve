@@ -2,8 +2,10 @@ package main
 
 import (
 	"burpvalve/internal/charmui"
+	"bytes"
 	"encoding/json"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -58,6 +60,76 @@ func TestInitSupportsPartialSetupOptOutFlags(t *testing.T) {
 			t.Fatalf("skip flags should not run br or ntm commands: %#v", result.Commands)
 		}
 	}
+}
+
+func TestInitJSONSkipsBeadsWhenBRMissing(t *testing.T) {
+	repoRoot := findRepoRoot(t)
+	target := t.TempDir()
+	run(t, target, "git", "init", "-q")
+	goPath, err := exec.LookPath("go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	binDir := t.TempDir()
+	gitPath, err := exec.LookPath("git")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(gitPath, filepath.Join(binDir, "git")); err != nil {
+		t.Fatal(err)
+	}
+	writeExecutable(t, filepath.Join(binDir, "burpvalve"), "#!/bin/sh\nif [ \"$1\" = \"--version\" ]; then echo test-burpvalve; fi\nexit 0\n")
+
+	cmd := exec.Command(goPath, "run", "./cmd/burpvalve", "init", "--target", target, "--force", "--json", "--no-ntm")
+	cmd.Dir = repoRoot
+	cmd.Env = testEnvWithPath(binDir)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err = cmd.Run()
+	if err != nil {
+		t.Fatalf("init without br should skip beads, not fail: %v\nstdout=%s\nstderr=%s", err, stdout.String(), stderr.String())
+	}
+	if stderr.Len() != 0 {
+		t.Fatalf("json init should not write stderr on br skip:\n%s", stderr.String())
+	}
+	var result struct {
+		Status    string   `json:"status"`
+		Fatal     bool     `json:"fatal"`
+		Skipped   []string `json:"skipped"`
+		Conflicts []struct {
+			Path string `json:"path"`
+		} `json:"conflicts"`
+		Commands []string `json:"commands"`
+	}
+	if err := json.Unmarshal(stdout.Bytes(), &result); err != nil {
+		t.Fatalf("decode init result: %v\n%s", err, stdout.String())
+	}
+	if result.Status != "applied" || result.Fatal || len(result.Conflicts) != 0 {
+		t.Fatalf("missing br should be a nonfatal skip: %#v", result)
+	}
+	if _, err := os.Lstat(filepath.Join(target, ".beads")); !os.IsNotExist(err) {
+		t.Fatalf("missing br should not create .beads, err=%v", err)
+	}
+	if !containsString(result.Skipped, ".beads (br executable not found on PATH)") {
+		t.Fatalf("json skipped output should report br absence: %#v", result.Skipped)
+	}
+	for _, command := range result.Commands {
+		if strings.HasPrefix(command, "br ") {
+			t.Fatalf("missing br path should not run br commands: %#v", result.Commands)
+		}
+	}
+}
+
+func testEnvWithPath(path string) []string {
+	env := os.Environ()
+	for i, entry := range env {
+		if strings.HasPrefix(entry, "PATH=") {
+			env[i] = "PATH=" + path
+			return env
+		}
+	}
+	return append(env, "PATH="+path)
 }
 
 func TestInitSupportsSelectedTargets(t *testing.T) {

@@ -11,7 +11,7 @@ import (
 
 func ensureBeads(root string, runner Runner, looker Looker, result *ApplyResult) error {
 	if _, err := looker.LookPath("br"); err != nil {
-		result.Conflicts = append(result.Conflicts, ApplyConflict{Path: ".beads", Message: "br executable unavailable; cannot initialize or verify beads"})
+		result.Skipped = append(result.Skipped, ".beads (br executable not found on PATH)")
 		return nil
 	}
 	if _, err := os.Stat(filepath.Join(root, ".beads")); err != nil {
