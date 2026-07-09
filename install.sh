@@ -11,11 +11,12 @@ Usage:
 Options:
   --repo OWNER/REPO       GitHub repository to download from.
   --version VERSION       Release tag to install. Defaults to latest.
-  --skills-dir DIR        Directory that contains skill folders. Defaults to ~/skills.
-  --bin-dir DIR           Directory for command shims. Defaults to ~/.local/bin.
+  --skills-dir DIR        Directory that contains skill folders. Defaults to config or ~/skills.
+  --bin-dir DIR           Directory for the burpvalve command. Defaults to config or ~/.local/bin.
   --from-archive PATH     Install from a local release tarball instead of GitHub.
+  --robots                Read install options as JSON from stdin and print JSON result.
   --yes                   Use defaults without prompting.
-  --no-shims              Do not create the burpvalve command shim.
+  --no-shims              Compatibility alias: do not install the burpvalve command.
   -h, --help              Show this help.
 
 Environment:
@@ -33,10 +34,11 @@ EOF
 repo="${BURPVALVE_REPO:-clicksopendoors/burpvalve}"
 version="${BURPVALVE_VERSION:-latest}"
 skills_dir="${BURPVALVE_SKILLS_DIR:-}"
-bin_dir="${BURPVALVE_BIN_DIR:-$HOME/.local/bin}"
+bin_dir="${BURPVALVE_BIN_DIR:-}"
 from_archive=""
 assume_yes=0
 install_shims=1
+robots_mode=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -60,6 +62,10 @@ while [[ $# -gt 0 ]]; do
       from_archive="${2:?missing value for --from-archive}"
       shift 2
       ;;
+    --robots)
+      robots_mode=1
+      shift
+      ;;
     --yes)
       assume_yes=1
       shift
@@ -80,6 +86,105 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+apply_robots_input() {
+  if [[ "$robots_mode" -ne 1 ]]; then
+    return
+  fi
+  if ! command -v python3 >/dev/null 2>&1; then
+    echo "--robots requires python3 to parse stdin JSON" >&2
+    exit 2
+  fi
+  local robot_body
+  robot_body="$(cat)"
+  local assignments
+  if ! assignments="$(ROBOT_JSON="$robot_body" python3 - <<'PY'
+import json
+import os
+import shlex
+import sys
+
+try:
+    data = json.loads(os.environ.get("ROBOT_JSON", ""))
+except Exception as exc:
+    print(f"parse robots JSON: {exc}", file=sys.stderr)
+    sys.exit(2)
+if not isinstance(data, dict):
+    print("robots JSON must be an object", file=sys.stderr)
+    sys.exit(2)
+
+mapping = {
+    "repo": "repo",
+    "version": "version",
+    "skills_dir": "skills_dir",
+    "bin_dir": "bin_dir",
+    "from_archive": "from_archive",
+}
+for key, var in mapping.items():
+    value = data.get(key)
+    if value is None:
+        continue
+    if not isinstance(value, str):
+        print(f"robots field {key} must be a string", file=sys.stderr)
+        sys.exit(2)
+    print(f"{var}={shlex.quote(value)}")
+for key, var in (("confirm", "assume_yes"), ("yes", "assume_yes"), ("no_shims", "install_shims")):
+    if key not in data:
+        continue
+    value = data[key]
+    if not isinstance(value, bool):
+        print(f"robots field {key} must be a boolean", file=sys.stderr)
+        sys.exit(2)
+    if key == "no_shims":
+        print(f"{var}={'0' if value else '1'}")
+    elif value:
+        print(f"{var}=1")
+PY
+)"; then
+    exit 2
+  fi
+  eval "$assignments"
+  if [[ "$assume_yes" -ne 1 ]]; then
+    echo "robots install requires confirm=true" >&2
+    exit 2
+  fi
+}
+
+install_config_path() {
+  if [[ -n "${BURPVALVE_CONFIG:-}" ]]; then
+    echo "$BURPVALVE_CONFIG"
+    return
+  fi
+  local base="${XDG_CONFIG_HOME:-$HOME/.config}"
+  echo "$base/burpvalve/config.json"
+}
+
+config_default() {
+  local key="$1"
+  local path
+  path="$(install_config_path)"
+  if [[ ! -f "$path" ]]; then
+    return
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - "$path" "$key" <<'PY'
+import json
+import sys
+
+path, key = sys.argv[1], sys.argv[2]
+try:
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+except Exception:
+    sys.exit(0)
+value = data.get("defaults", {}).get(key, "")
+if isinstance(value, str):
+    print(value)
+PY
+  else
+    sed -n 's/.*"'$key'"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$path" | head -n 1
+  fi
+}
+
 detect_os() {
   case "$(uname -s)" in
     Linux) echo "linux" ;;
@@ -97,7 +202,23 @@ detect_arch() {
 }
 
 default_skills_dir() {
+  local configured
+  configured="$(config_default skills_dir)"
+  if [[ -n "$configured" ]]; then
+    echo "$configured"
+    return
+  fi
   echo "$HOME/skills"
+}
+
+default_bin_dir() {
+  local configured
+  configured="$(config_default bin_dir)"
+  if [[ -n "$configured" ]]; then
+    echo "$configured"
+    return
+  fi
+  echo "$HOME/.local/bin"
 }
 
 prompt_skills_dir() {
@@ -134,14 +255,14 @@ confirm_install_plan() {
     echo "Existing skill: none" >&2
   fi
   if [[ "$install_shims" -eq 1 ]]; then
-    echo "Command shim: $shim_path -> $dest/scripts/bin/burpvalve" >&2
+    echo "Command executable: $shim_path" >&2
     if [[ -e "$shim_path" || -L "$shim_path" ]]; then
-      echo "Existing shim: replace $shim_path" >&2
+      echo "Existing command: replace $shim_path" >&2
     else
-      echo "Existing shim: none" >&2
+      echo "Existing command: none" >&2
     fi
   else
-    echo "Command shim: skipped (--no-shims)" >&2
+    echo "Command executable: skipped (--no-shims)" >&2
   fi
   echo >&2
 
@@ -242,6 +363,48 @@ download_release_assets() {
   exit 1
 }
 
+persist_install_config() {
+  local path
+  path="$(install_config_path)"
+  mkdir -p "$(dirname "$path")"
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - "$path" "$skills_dir" "$bin_dir" <<'PY'
+import json
+import os
+import sys
+
+path, skills_dir, bin_dir = sys.argv[1], sys.argv[2], sys.argv[3]
+data = {}
+if os.path.exists(path):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            existing = json.load(fh)
+        if isinstance(existing, dict):
+            data = existing
+    except Exception:
+        data = {}
+data.setdefault("schema_version", 1)
+defaults = data.setdefault("defaults", {})
+if isinstance(defaults, dict):
+    defaults["skills_dir"] = skills_dir
+    defaults["bin_dir"] = bin_dir
+else:
+    data["defaults"] = {"skills_dir": skills_dir, "bin_dir": bin_dir}
+tmp = path + ".tmp"
+with open(tmp, "w", encoding="utf-8") as fh:
+    json.dump(data, fh, indent=2, sort_keys=False)
+    fh.write("\n")
+os.replace(tmp, path)
+PY
+    return
+  fi
+  if [[ -f "$path" ]]; then
+    echo "python3 not found; leaving existing config unchanged at $path" >&2
+    return
+  fi
+  printf '{\n  "schema_version": 1,\n  "defaults": {\n    "skills_dir": "%s",\n    "bin_dir": "%s"\n  }\n}\n' "$skills_dir" "$bin_dir" > "$path"
+}
+
 sha256_file() {
   local path="$1"
   if command -v sha256sum >/dev/null 2>&1; then
@@ -282,6 +445,10 @@ cleanup() {
 }
 trap cleanup EXIT
 
+apply_robots_input
+if [[ -z "$bin_dir" ]]; then
+  bin_dir="$(default_bin_dir)"
+fi
 prompt_skills_dir "$(default_skills_dir)"
 
 if [[ -n "$from_archive" ]]; then
@@ -326,12 +493,36 @@ rm -rf "$backup"
 
 if [[ "$install_shims" -eq 1 ]]; then
   mkdir -p "$bin_dir"
-  ln -sfn "$dest/scripts/bin/burpvalve" "$shim_path"
+  rm -f "$shim_path"
+  cp "$dest/scripts/bin/burpvalve" "$shim_path"
+  chmod 0755 "$shim_path"
+fi
+
+persist_install_config
+
+if [[ "$robots_mode" -eq 1 ]]; then
+  python3 - "$dest" "$skills_dir" "$bin_dir" "$shim_path" "$(install_config_path)" "$install_shims" <<'PY'
+import json
+import sys
+
+dest, skills_dir, bin_dir, command_path, config_path, install_command = sys.argv[1:]
+print(json.dumps({
+    "schema_version": "burpvalve.install.v1",
+    "status": "installed",
+    "skill_dir": dest,
+    "skills_dir": skills_dir,
+    "bin_dir": bin_dir,
+    "command_path": command_path if install_command == "1" else "",
+    "command_installed": install_command == "1",
+    "config_path": config_path,
+}, separators=(",", ":")))
+PY
+  exit 0
 fi
 
 echo "Installed burpvalve skill to $dest"
 if [[ "$install_shims" -eq 1 ]]; then
-  echo "Installed command shims to $bin_dir"
+  echo "Installed command executable to $shim_path"
   echo "Verify with: $shim_path --version"
   case ":$PATH:" in
     *":$bin_dir:"*)

@@ -28,6 +28,14 @@ Do not fabricate verifier or subagent confirmation. If a deterministic check is
 not wired yet and no read-only verifier actually ran for the current staged
 payload, record the blocker instead of claiming a pass.
 
+`burpvalve gate run` can collapse the mechanical gate ceremony when an
+orchestrator or human supplies a prepared, hash-bound handoff. It does not make
+prose policy deterministic by itself: the command still requires real verifier
+responses, exact stage paths, and a current staged-payload hash. In v1, a
+skipped `executable_conditions` phase means no extra condition command ran; add
+explicit `lint_commands`, CI jobs, or later executable-condition configuration
+before treating a policy as command-backed evidence.
+
 ## First Questions
 
 Ask only the questions needed for the requested scope. For a broad setup, ask:

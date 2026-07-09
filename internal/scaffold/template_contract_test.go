@@ -68,10 +68,13 @@ func TestClaudeOrchestratorSkillPackageContract(t *testing.T) {
 		"references/agent-mail-and-file-coordination.md.tmpl",
 		"references/ntm-pane-wake-discipline.md.tmpl",
 		"references/beads-and-gate-window-operations.md.tmpl",
+		"references/orchestrator-toolbox.md.tmpl",
 		"examples/gated-implementation-handoff.md.tmpl",
 		"examples/verifier-disagreement-hold.md.tmpl",
 		"examples/gate-window-release.md.tmpl",
 		"scripts/pane_wake.py.tmpl",
+		"scripts/poll_worker.py.tmpl",
+		"scripts/poll_round.py.tmpl",
 		"scripts/attestation_summary.py.tmpl",
 		"scripts/append_finding.py.tmpl",
 		"SELF-TEST.md.tmpl",
@@ -170,7 +173,7 @@ esac
 `)
 	calls := filepath.Join(tmp, "ntm-calls.txt")
 	env := append(os.Environ(), "PATH="+fakeBin+string(os.PathListSeparator)+os.Getenv("PATH"), "NTM_CALLS="+calls)
-	for _, rel := range []string{"pane_wake.py", "attestation_summary.py", "append_finding.py"} {
+	for _, rel := range []string{"pane_wake.py", "poll_worker.py", "poll_round.py", "attestation_summary.py", "append_finding.py"} {
 		script := materializeScriptTemplate(t, root, tmp, filepath.ToSlash(filepath.Join(base, rel+".tmpl")), rel)
 		cmd := exec.Command("python3", script, "--help")
 		cmd.Env = env
@@ -197,6 +200,29 @@ esac
 	}
 	if strings.Contains(callLog, "--robot-send=burpvalve") {
 		t.Fatalf("pane_wake sent wake without --execute:\n%s", callLog)
+	}
+
+	workerArtifact := filepath.Join(tmp, "worker-report.json")
+	cmd = exec.Command("python3", filepath.Join(tmp, "poll_worker.py"), "--pane", "8", "--artifact", workerArtifact)
+	cmd.Env = env
+	output, err = cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("poll_worker dry-run failed: %v\n%s", err, output)
+	}
+	if !strings.Contains(string(output), `"event": "dry_run"`) || !strings.Contains(string(output), `"event": "poll"`) {
+		t.Fatalf("poll_worker dry-run output missing structured events:\n%s", output)
+	}
+
+	responses := filepath.Join(tmp, "responses.json")
+	writeFile(t, tmp, "responses.json", `{"conditions":[{"condition_id":"lint-rules","verdict":"unknown","subagent_confirmed":false}]}`)
+	cmd = exec.Command("python3", filepath.Join(tmp, "poll_round.py"), "--responses", responses)
+	cmd.Env = env
+	output, err = cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("poll_round dry-run failed: %v\n%s", err, output)
+	}
+	if !strings.Contains(string(output), `"event": "dry_run"`) || !strings.Contains(string(output), `"pending_count": 1`) {
+		t.Fatalf("poll_round dry-run output missing structured pending count:\n%s", output)
 	}
 
 	findings := filepath.Join(tmp, "findings.md")
@@ -279,8 +305,12 @@ func TestRequiredTemplateHeadings(t *testing.T) {
 			"pre-approve the expected",
 			"Finished work must never sit undelivered",
 			"## Monitoring Discipline",
-			"runtime `Working (` marker",
+			"scripts/poll_worker.py",
+			"scripts/poll_round.py",
+			"full busy-marker list",
 			"The pane tail is not the completion signal",
+			"## Spark Gate-Operator Ritual",
+			"## Lane Commits",
 			"## Audit And Rollback Duties",
 			"## Coordination Boundaries",
 			"## Source Of Truth Links",
@@ -387,10 +417,17 @@ func TestClaudeOrchestratorSkillNTMReferenceIncludesPollingStandard(t *testing.T
 	body := readTemplate(t, root, "templates/claude/skills/burpvalve-orchestrator/references/ntm-pane-wake-discipline.md.tmpl")
 	for _, want := range []string{
 		"## Polling Standard",
-		"runtime `Working (` marker",
+		"full busy-marker list",
 		"absent on two consecutive polls",
 		"The pane tail is never the completion signal",
 		"Pollers must terminate loudly",
+		"Waiting for",
+		"background terminal",
+		"`esc to interrupt`",
+		"`scripts/poll_worker.py`",
+		"`scripts/poll_round.py`",
+		"30+ minutes",
+		"do-not-resubmit-earlier-round warning",
 	} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("ntm-pane-wake-discipline.md.tmpl missing %q", want)
@@ -408,10 +445,125 @@ func TestClaudeOrchestratorSkillAgentMailReferenceIncludesContactMesh(t *testing
 		"implementer to verifiers and verifiers to implementer",
 		"set_contact_policy open",
 		"undelivered behind predictable pending contact approval",
+		"## Identity Churn",
+		"register fresh",
+		"Re-open contact policy",
+		"state continuity from the prior identity",
 	} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("agent-mail-and-file-coordination.md.tmpl missing %q", want)
 		}
+	}
+}
+
+func TestClaudeOrchestratorSkillToolboxReferenceIncludesRequiredCommands(t *testing.T) {
+	root := repoRoot(t)
+	body := readTemplate(t, root, "templates/claude/skills/burpvalve-orchestrator/references/orchestrator-toolbox.md.tmpl")
+	for _, want := range []string{
+		"# Orchestrator Toolbox",
+		"bv --robot-triage",
+		"br update <id> --status in_progress",
+		"ntm --robot-snapshot",
+		"ntm --robot-tail",
+		"ntm --robot-send",
+		"--msg-file",
+		"N:<model>:<effort>",
+		"PID-diff identification",
+		"config-default swap workaround",
+		"restore the default",
+		"macro_start_session",
+		"set_contact_policy open",
+		"respond_contact",
+		"file_reservation_paths",
+		"burpvalve verifier begin",
+		"burpvalve verifier prompts --json",
+		"burpvalve verifier submit",
+		"kind",
+		"agent",
+		"model",
+		"runtime",
+		"separate_context",
+		"scripts/poll_worker.py",
+		"scripts/poll_round.py",
+		"Working (",
+		"consecutive quiet",
+		"auto-wake",
+	} {
+		if !strings.Contains(body, want) {
+			t.Fatalf("orchestrator-toolbox.md.tmpl missing %q", want)
+		}
+	}
+}
+
+func TestOrchestratorTemplatesCarrySparkRitualAndLaneOverride(t *testing.T) {
+	root := repoRoot(t)
+	orchestratorNeedles := []string{
+		"## Spark Gate-Operator Ritual",
+		"dedicated low-tier pane",
+		"hash-bound handoffs",
+		"Spark escalates instead of judging",
+		"Hash mismatch",
+		"dirty index or peer dirt",
+		"verifier disagreement",
+		"any fail or unknown cell",
+		"test failure",
+		"unpredicted state",
+		"exact file list",
+		"verifier pane split",
+		"responses file",
+		"## Lane Commits",
+		"One bead, one commit remains the default worker rule",
+		"Only the orchestrator may authorize a lane commit",
+		"orchestrator-authorized lane",
+		"Do not weaken",
+		"Round-bound verifier announcements",
+		"do-not-resubmit-earlier-round warning",
+		"full busy-marker list",
+		"`Waiting for background terminal`",
+		"`esc to interrupt`",
+		"30+ minute blocker threshold",
+		"auto-resume",
+		"Re-verify the index at action time",
+		"config-default swap workaround",
+		"identity churn",
+	}
+	for _, rel := range []string{
+		"templates/ORCHESTRATOR.md.tmpl",
+		"internal/scaffold/templates/ORCHESTRATOR.md.tmpl",
+	} {
+		body := readTemplate(t, root, rel)
+		rendered, err := renderOrchestratorTemplateBody(body, orchestratorTemplateData{})
+		if err != nil {
+			t.Fatalf("render %s: %v", rel, err)
+		}
+		assertContainsAll(t, rel, string(rendered), orchestratorNeedles...)
+	}
+}
+
+func TestGateChoreographyReferenceCarriesSparkRitual(t *testing.T) {
+	root := repoRoot(t)
+	needles := []string{
+		"## Spark Gate-Operator Ritual",
+		"prepared and hash-bound",
+		"exact file list and commit message",
+		"verifier pane split",
+		"responses file",
+		"packet message ids",
+		"Re-check the index and worktree state at action time",
+		"Stage only the named files",
+		"wait for all cells to be confirmed",
+		"stage only the generated attestation",
+		"Hard stops",
+		"hash mismatch",
+		"dirty index or peer dirt",
+		"fail or unknown cell",
+		"does not reinterpret evidence",
+	}
+	for _, rel := range []string{
+		"templates/claude/skills/burpvalve-orchestrator/references/burpvalve-gate-choreography.md.tmpl",
+		"internal/scaffold/templates/claude/skills/burpvalve-orchestrator/references/burpvalve-gate-choreography.md.tmpl",
+	} {
+		assertContainsAll(t, rel, readTemplate(t, root, rel), needles...)
 	}
 }
 
@@ -496,6 +648,34 @@ func TestOrchestratorRouteTemplatesCarryRoleSplit(t *testing.T) {
 		"internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl",
 	} {
 		assertContainsAll(t, rel, readTemplate(t, root, rel), skillNeedles...)
+	}
+}
+
+func TestClaudeOrchestratorRouteTemplatesCarryOptionalPXPACKBoundary(t *testing.T) {
+	root := repoRoot(t)
+	needles := []string{
+		"PXPACK",
+		"optional",
+		"context assistance",
+		"Live instructions",
+		"outrank",
+		"Burpvalve-generated",
+		"`factsheet.txt`",
+		"`source-map.md`",
+		"`manifest.json`",
+		"burpvalve pxpack",
+		"--orchestrator --check <packet-dir>",
+		"PXPIPE is only the image-lane renderer",
+		"verifier evidence",
+	}
+
+	for _, rel := range []string{
+		"templates/CLAUDE.md.orchestrator.tmpl",
+		"internal/scaffold/templates/CLAUDE.md.orchestrator.tmpl",
+		"templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl",
+		"internal/scaffold/templates/claude/skills/burpvalve-orchestrator/SKILL.md.tmpl",
+	} {
+		assertContainsAll(t, rel, readTemplate(t, root, rel), needles...)
 	}
 }
 

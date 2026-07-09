@@ -52,6 +52,15 @@ const (
 	VerifierPolicyOptional            VerifierPolicy = "optional"
 )
 
+type AtomicityMode string
+
+const (
+	AtomicityModeSingle AtomicityMode = "single"
+	AtomicityModeLane   AtomicityMode = "lane"
+)
+
+const LaneAuthorizationKindOrchestrator = "orchestrator"
+
 type Artifact struct {
 	SchemaVersion        int          `json:"schema_version"`
 	Tool                 string       `json:"tool"`
@@ -86,8 +95,20 @@ type Feature struct {
 }
 
 type Atomicity struct {
-	OneFeatureOrFix bool   `json:"one_feature_or_fix"`
-	Message         string `json:"message"`
+	Mode            AtomicityMode `json:"mode,omitempty"`
+	OneFeatureOrFix bool          `json:"one_feature_or_fix"`
+	Message         string        `json:"message"`
+	Lane            *LaneBinding  `json:"lane,omitempty"`
+}
+
+type LaneBinding struct {
+	LaneID            string     `json:"lane_id"`
+	BeadIDs           []string   `json:"bead_ids"`
+	Rationale         string     `json:"rationale"`
+	AuthorizedBy      string     `json:"authorized_by"`
+	AuthorizationRef  string     `json:"authorization_ref"`
+	AuthorizationKind string     `json:"authorization_kind"`
+	CreatedAt         *time.Time `json:"created_at,omitempty"`
 }
 
 type Verifier struct {
@@ -153,8 +174,8 @@ func (a Artifact) ValidatePassing(expected ExpectedBinding) error {
 	if a.ArtifactKind != ArtifactPassing {
 		return fmt.Errorf("artifact kind %q is not %q", a.ArtifactKind, ArtifactPassing)
 	}
-	if !a.Atomicity.OneFeatureOrFix {
-		return errors.New("passing artifact must confirm one atomic feature or bug fix")
+	if err := a.validatePassingAtomicity(); err != nil {
+		return err
 	}
 	if len(a.ConditionOrder) == 0 {
 		return errors.New("condition order is required")
@@ -176,6 +197,79 @@ func (a Artifact) ValidatePassing(expected ExpectedBinding) error {
 		if !seen[id] {
 			return fmt.Errorf("missing condition cell %q", id)
 		}
+	}
+	return nil
+}
+
+func (a Artifact) validatePassingAtomicity() error {
+	switch a.Atomicity.Mode {
+	case "", AtomicityModeSingle:
+		if !a.Atomicity.OneFeatureOrFix {
+			return errors.New("passing artifact must confirm one atomic feature or bug fix")
+		}
+		if a.Atomicity.Lane != nil {
+			return errors.New("single-work-unit artifact must not include atomicity lane")
+		}
+		if a.Feature.Kind == "lane" {
+			return errors.New("single-work-unit artifact must not use lane feature kind")
+		}
+		return nil
+	case AtomicityModeLane:
+		return a.validatePassingLaneAtomicity()
+	default:
+		return fmt.Errorf("passing artifact has invalid atomicity mode %q", a.Atomicity.Mode)
+	}
+}
+
+func (a Artifact) validatePassingLaneAtomicity() error {
+	lane := a.Atomicity.Lane
+	if a.Atomicity.OneFeatureOrFix {
+		return errors.New("lane artifact must not confirm one_feature_or_fix")
+	}
+	if lane == nil {
+		return errors.New("lane artifact must include atomicity.lane")
+	}
+	if strings.TrimSpace(lane.LaneID) == "" {
+		return errors.New("lane artifact requires lane_id")
+	}
+	if len(nonEmptyStrings(lane.BeadIDs)) < 2 {
+		return errors.New("lane artifact requires at least two bead_ids")
+	}
+	if !sameStrings(nonEmptyStrings(a.BeadIDs), nonEmptyStrings(lane.BeadIDs)) {
+		return errors.New("lane artifact bead_ids must match atomicity lane bead_ids")
+	}
+	if !sameStrings(nonEmptyStrings(a.Feature.BeadIDs), nonEmptyStrings(lane.BeadIDs)) {
+		return errors.New("lane feature bead_ids must match atomicity lane bead_ids")
+	}
+	if a.Feature.Kind != "lane" {
+		return errors.New("lane artifact requires feature kind lane")
+	}
+	if a.Feature.ID != lane.LaneID {
+		return fmt.Errorf("lane artifact feature id %q does not match lane_id %q", a.Feature.ID, lane.LaneID)
+	}
+	if a.Feature.DiffCluster != "lane:"+lane.LaneID {
+		return fmt.Errorf("lane artifact feature diff_cluster %q does not match lane %q", a.Feature.DiffCluster, lane.LaneID)
+	}
+	if strings.TrimSpace(a.CoupledWorkRationale) == "" || strings.TrimSpace(a.CoupledWorkRationale) != strings.TrimSpace(lane.Rationale) {
+		return errors.New("lane artifact coupled_work_rationale must match atomicity lane rationale")
+	}
+	if strings.TrimSpace(lane.Rationale) == "" {
+		return errors.New("lane artifact requires lane rationale")
+	}
+	if strings.TrimSpace(lane.AuthorizedBy) == "" {
+		return errors.New("lane artifact requires lane authorized_by")
+	}
+	if strings.TrimSpace(lane.AuthorizationRef) == "" {
+		return errors.New("lane artifact requires lane authorization_ref")
+	}
+	if strings.TrimSpace(lane.AuthorizationKind) == "" {
+		return errors.New("lane artifact requires lane authorization_kind")
+	}
+	if strings.TrimSpace(lane.AuthorizationKind) != LaneAuthorizationKindOrchestrator {
+		return fmt.Errorf("lane artifact authorization_kind %q is not %q", lane.AuthorizationKind, LaneAuthorizationKindOrchestrator)
+	}
+	if strings.TrimSpace(a.Atomicity.Message) == "" {
+		return errors.New("lane artifact requires atomicity message")
 	}
 	return nil
 }

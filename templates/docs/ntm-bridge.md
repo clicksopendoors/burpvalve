@@ -36,4 +36,12 @@ NTM reviewers may help coordinate or batch review work, but they do not remove t
 - `not_applicable`, `fail`, and `unknown` still require messages and evidence;
 - the tracked attestation remains the source of truth for commit readiness.
 
+Burpvalve owns contracts, prompts, evidence surfaces, and commit gates. Agent
+Mail, NTM, and Beads are coordination substrates. Burpvalve generally does not
+own Agent Mail coordination. The narrow exception is `burpvalve gate run`,
+which may release Agent Mail file reservations through MCP only when the
+prepared handoff explicitly authorizes that cleanup phase. That release is
+post-gate handoff cleanup, not verifier evidence and not permission to send
+arbitrary coordination mail.
+
 When in doubt, use read-only verifier subagents for verifier cells and use NTM only for top-level orchestration.

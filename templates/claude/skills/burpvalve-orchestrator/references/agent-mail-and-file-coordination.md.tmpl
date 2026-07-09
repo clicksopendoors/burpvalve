@@ -31,6 +31,14 @@ Use `set_contact_policy open` or the repo's equivalent contact-policy macro
 when broad session contact is intended. Finished work must never sit
 undelivered behind predictable pending contact approval.
 
+## Identity Churn
+
+After any MCP reset, token loss, or identity change, register fresh before
+resuming work. Re-open contact policy, approve expected pending contacts, and
+state continuity from the prior identity in reports, verifier verdicts, and
+handoffs. Do not let a valid report become invisible because the new identity
+is outside the contact mesh.
+
 ## Handoffs
 
 A good handoff names commit hash, pushed state, attestation path, released

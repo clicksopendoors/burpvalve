@@ -830,8 +830,18 @@ func TestE2ESetupConfigInstallAndCompletionFirstRun(t *testing.T) {
 	if _, err := os.Stat(filepath.Join(skillsDir, "burpvalve", "SKILL.md")); err != nil {
 		t.Fatalf("skill-shaped archive should install SKILL.md: %v", err)
 	}
-	if target, err := os.Readlink(filepath.Join(globalBin, "burpvalve")); err != nil || !strings.Contains(target, filepath.Join(skillsDir, "burpvalve", "scripts", "bin", "burpvalve")) {
-		t.Fatalf("install shim target wrong: target=%q err=%v", target, err)
+	commandPath := filepath.Join(globalBin, "burpvalve")
+	if info, err := os.Lstat(commandPath); err != nil || info.Mode()&os.ModeSymlink != 0 || info.Mode()&0o111 == 0 {
+		t.Fatalf("install command should be executable file, not symlink: info=%v err=%v", info, err)
+	}
+	movedSkills := skillsDir + "-moved"
+	if err := os.Rename(skillsDir, movedSkills); err != nil {
+		t.Fatal(err)
+	}
+	version := exec.Command(commandPath, "--version")
+	version.Env = append(os.Environ(), "PATH=/usr/bin:/bin")
+	if out, err := version.CombinedOutput(); err != nil || !strings.Contains(string(out), "burpvalve-test") {
+		t.Fatalf("installed command should survive skills dir move: out=%q err=%v", string(out), err)
 	}
 
 	h.requireExit(h.git(repo, nil, "add", "."), 0)

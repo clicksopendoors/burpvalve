@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "experiment": "orchestrator boot packet safety gate",
+  "packet_arm": {
+    "name": "packet",
+    "cost_units": 820,
+    "latency_ms": 1050,
+    "operator_focus_score": 5,
+    "answers": {
+      "next_action": "run burpvalve verifier begin --feature demo --one-feature --json, then submit independent cells against log/backpressure/responses/demo.json",
+      "authoritative_artifacts": "live ORCHESTRATOR.md and AGENTS.md outrank image pages; factsheet.txt is an exact-string index",
+      "preserved_identity": "JadeCreek must preserve the responses binding and re-read the toolbox before execution",
+      "gate_stop": "stop on fail/unknown"
+    },
+    "source_rereads": [
+      "ORCHESTRATOR.md",
+      "templates/claude/skills/burpvalve-orchestrator/references/orchestrator-toolbox.md.tmpl"
+    ],
+    "factsheet_text": "Exact command: burpvalve verifier begin --feature demo --one-feature --json\nResponses binding: log/backpressure/responses/demo.json\nIdentity: JadeCreek\n"
+  },
+  "plain_text_arm": {
+    "name": "plain_text",
+    "cost_units": 1740,
+    "latency_ms": 1280,
+    "operator_focus_score": 3,
+    "answers": {
+      "next_action": "begin verifier for demo and submit cells against log/backpressure/responses/demo.json",
+      "authoritative_artifacts": "live ORCHESTRATOR.md and AGENTS.md outrank image pages",
+      "preserved_identity": "JadeCreek must preserve the responses binding",
+      "gate_stop": "stop on fail/unknown"
+    },
+    "source_rereads": [
+      "ORCHESTRATOR.md",
+      "templates/claude/skills/burpvalve-orchestrator/references/orchestrator-toolbox.md.tmpl"
+    ]
+  },
+  "expected_exact_strings": [
+    "burpvalve verifier begin --feature demo --one-feature --json",
+    "log/backpressure/responses/demo.json",
+    "JadeCreek"
+  ],
+  "forbidden_facts": [
+    "main_agent_allowed",
+    "image pages are verifier evidence"
+  ],
+  "required_source_rereads": [
+    "ORCHESTRATOR.md",
+    "templates/claude/skills/burpvalve-orchestrator/references/orchestrator-toolbox.md.tmpl"
+  ],
+  "required_decision_needles": [
+    "stop on fail/unknown"
+  ],
+  "prototype_dropped_commands": [
+    "burpvalve verifier begin --feature demo --one-feature --json"
+  ]
+}

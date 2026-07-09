@@ -18,6 +18,7 @@ Install that package into a temporary skills directory:
 tmp="$(mktemp -d)"
 bash ./install.sh --from-archive dist/burpvalve_$(go env GOOS)_$(go env GOARCH).tar.gz --skills-dir "$tmp/skills" --bin-dir "$tmp/bin" --yes
 "$tmp/skills/burpvalve/scripts/bin/burpvalve" --version
+"$tmp/bin/burpvalve" --version
 test -f "$tmp/skills/burpvalve/INSTALL.md"
 test -f "$tmp/skills/burpvalve/references/deterministic-backpressure.md"
 "$tmp/bin/burpvalve" -h
@@ -63,7 +64,7 @@ Expected result:
 - `burpvalve prompts list` includes canonical prompt-bank entries;
 - `burpvalve prompts show` renders required-variable prompts without needing copied prompt bodies in the skill;
 - `burpvalve completion --color never` prints setup guidance, not a raw completion script;
-- `burpvalve setup` invokes the packaged binary from the command shim;
+- `burpvalve setup` invokes the copied user-bin command;
 - default `burpvalve init` does not install repo-local `bin/burpvalve`;
 - partial `burpvalve init` reports skipped components and still creates the backpressure scaffold;
 - targeted `burpvalve init log attestations` creates only those scaffold pieces;

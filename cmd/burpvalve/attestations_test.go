@@ -11,14 +11,16 @@ import (
 )
 
 type attestationListRecord struct {
-	Status        string   `json:"status"`
-	ArtifactType  string   `json:"artifact_type"`
-	Path          string   `json:"path"`
-	FeatureIDs    []string `json:"feature_ids"`
-	BeadIDs       []string `json:"bead_ids"`
-	PayloadHash   string   `json:"payload_hash"`
-	ParseWarnings []string `json:"parse_warnings"`
-	Conditions    []struct {
+	Status               string   `json:"status"`
+	ArtifactType         string   `json:"artifact_type"`
+	Path                 string   `json:"path"`
+	FeatureIDs           []string `json:"feature_ids"`
+	BeadIDs              []string `json:"bead_ids"`
+	LaneID               string   `json:"lane_id"`
+	LaneAuthorizationRef string   `json:"lane_authorization_ref"`
+	PayloadHash          string   `json:"payload_hash"`
+	ParseWarnings        []string `json:"parse_warnings"`
+	Conditions           []struct {
 		ConditionID     string                              `json:"condition_id"`
 		VerifierKind    string                              `json:"verifier_kind"`
 		Supplemental    []attestations.SupplementalVerifier `json:"supplemental_verifiers"`
@@ -187,6 +189,63 @@ func TestAttestationsListShowLatestJSONAndHuman(t *testing.T) {
 	}
 	if len(limitedList.Records) != 1 || limitedList.Records[0].PayloadHash != "abcdef1234567890" {
 		t.Fatalf("limit should return the newest single record: %#v", limitedList.Records)
+	}
+}
+
+func TestAttestationsExposeLaneMetadata(t *testing.T) {
+	root := t.TempDir()
+	created := time.Date(2026, 7, 8, 12, 0, 0, 0, time.UTC)
+	artifact := attestationQueryArtifactFixture(attestations.ArtifactPassing, "laneabcdef123456", "declared-lane-aj41", created)
+	artifact.BeadIDs = []string{"burpvalve-aj41.3", "burpvalve-aj41.4"}
+	artifact.Feature.BeadIDs = []string{"burpvalve-aj41.3", "burpvalve-aj41.4"}
+	artifact.Feature.DiffCluster = "lane:declared-lane-aj41"
+	artifact.Atomicity = attestations.Atomicity{
+		Mode:            attestations.AtomicityModeLane,
+		OneFeatureOrFix: false,
+		Message:         "Orchestrator-authorized lane commit naming every bead id.",
+		Lane: &attestations.LaneBinding{
+			LaneID:            "declared-lane-aj41",
+			BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+			Rationale:         "same authorized lane payload",
+			AuthorizedBy:      "BronzeDeer",
+			AuthorizationRef:  "ORCH-2026-07-08",
+			AuthorizationKind: attestations.LaneAuthorizationKindOrchestrator,
+			CreatedAt:         &created,
+		},
+	}
+	writeAttestationQueryFixture(t, root, "backpressure/attestations/laneabcdef123456.json", artifact)
+
+	stdout, stderr, err := executeBurpvalveCommand("attestations", "list", "--root", root, "--json")
+	if err != nil {
+		t.Fatalf("attestations list failed: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+	}
+	var list struct {
+		Records []attestationListRecord `json:"records"`
+	}
+	if err := json.Unmarshal([]byte(stdout), &list); err != nil {
+		t.Fatalf("decode list: %v\n%s", err, stdout)
+	}
+	if len(list.Records) != 1 {
+		t.Fatalf("expected one lane record, got %#v", list.Records)
+	}
+	record := list.Records[0]
+	if record.LaneID != "declared-lane-aj41" || record.LaneAuthorizationRef != "ORCH-2026-07-08" {
+		t.Fatalf("lane metadata missing from JSON record: %#v", record)
+	}
+	for _, beadID := range []string{"burpvalve-aj41.3", "burpvalve-aj41.4"} {
+		if !containsString(record.BeadIDs, beadID) {
+			t.Fatalf("lane bead id %q missing from query bead_ids: %#v", beadID, record.BeadIDs)
+		}
+	}
+
+	human, stderr, err := executeBurpvalveCommand("attestations", "show", "--root", root, "--color", "never", "laneabcdef")
+	if err != nil {
+		t.Fatalf("human show failed: %v\nstdout=%s\nstderr=%s", err, human, stderr)
+	}
+	for _, needle := range []string{"Lane:", "declared-lane-aj41", "Lane auth:", "ORCH-2026-07-08"} {
+		if !strings.Contains(human, needle) {
+			t.Fatalf("human show missing %q:\n%s", needle, human)
+		}
 	}
 }
 

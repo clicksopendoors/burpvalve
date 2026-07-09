@@ -280,6 +280,8 @@ func (m attestationBrowserModel) renderDetail(styles attestationBrowserStyles) s
 	writeTUIKV(&b, styles, "payload", attestationShortValue(record.PayloadHash, 24))
 	writeTUIKV(&b, styles, "feature", strings.Join(record.FeatureIDs, ", "))
 	writeTUIKV(&b, styles, "beads", strings.Join(record.BeadIDs, ", "))
+	writeTUIKV(&b, styles, "lane", record.LaneID)
+	writeTUIKV(&b, styles, "lane auth", record.LaneAuthorizationRef)
 	if record.CreatedAt != nil {
 		writeTUIKV(&b, styles, "created", record.CreatedAt.Format(time.RFC3339))
 	}
@@ -424,6 +426,7 @@ func recordSearchText(record attestations.Record) string {
 	parts = append(parts, record.Status, record.ArtifactType, record.Path, record.ID, record.PayloadHash, record.ManifestHash)
 	parts = append(parts, record.FeatureIDs...)
 	parts = append(parts, record.BeadIDs...)
+	parts = append(parts, record.LaneID, record.LaneAuthorizationRef)
 	parts = append(parts, record.Warnings...)
 	parts = append(parts, record.ParseWarnings...)
 	for _, condition := range record.ConditionVerdicts {

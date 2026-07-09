@@ -56,6 +56,44 @@ func TestRunCIValidatesStagedPassingArtifact(t *testing.T) {
 	}
 }
 
+func TestCIProvenanceExposesLaneMetadata(t *testing.T) {
+	created := time.Date(2026, 7, 8, 12, 0, 0, 0, time.UTC)
+	artifact := attestations.Artifact{
+		ArtifactKind:      attestations.ArtifactPassing,
+		Tool:              attestations.ToolName,
+		ToolVersion:       attestations.ToolVersion,
+		StagedPayloadHash: "sha256:lane",
+		ManifestHash:      "sha256:manifest",
+		Feature: attestations.Feature{
+			ID:          "declared-lane-aj41",
+			BeadIDs:     []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+			DiffCluster: "lane:declared-lane-aj41",
+		},
+		BeadIDs: []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+		Atomicity: attestations.Atomicity{
+			Mode:    attestations.AtomicityModeLane,
+			Message: "Orchestrator-authorized lane commit naming every bead id.",
+			Lane: &attestations.LaneBinding{
+				LaneID:            "declared-lane-aj41",
+				BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+				Rationale:         "same authorized lane payload",
+				AuthorizedBy:      "BronzeDeer",
+				AuthorizationRef:  "ORCH-2026-07-08",
+				AuthorizationKind: attestations.LaneAuthorizationKindOrchestrator,
+				CreatedAt:         &created,
+			},
+		},
+	}
+
+	provenance := ciProvenance("backpressure/attestations/lane.json", artifact)
+	if provenance.LaneID != "declared-lane-aj41" || provenance.LaneAuthorizationRef != "ORCH-2026-07-08" {
+		t.Fatalf("lane provenance missing: %#v", provenance)
+	}
+	if got := strings.Join(provenance.BeadIDs, ","); got != "burpvalve-aj41.3,burpvalve-aj41.4" {
+		t.Fatalf("bead ids = %q", got)
+	}
+}
+
 func TestRunCIRejectsMissingOrInvalidArtifact(t *testing.T) {
 	root := fixtureProject(t)
 	t.Run("missing", func(t *testing.T) {

@@ -43,7 +43,7 @@ confirms that the scrubbed tree is ready.
 
 | Input | Approved value | Decisions |
 | --- | --- | --- |
-| Source repository rename target. | `burpvalve-private` | `D-OSL-8` |
+| Source repository rename target. | `private-source-repo` | `D-OSL-8` |
 | Public About description. | `Repo-local backpressure for agentic development workflows.` | `D-OSL-11` |
 | Public About topics. | `go`, `cli`, `developer-tools`, `git-hooks`, `ai-agents`, `verification`, `backpressure` | `D-OSL-11` |
 | Public About homepage. | Blank unless a later real public URL is supplied. | `D-OSL-11` |
@@ -61,7 +61,7 @@ confirms that the scrubbed tree is ready.
 | 6 | Confirm `SECURITY.md` still points to GitHub Private Vulnerability Reporting and that the working-channel check remains deferred to the flip gate, not silently accepted earlier. | Security owner, owner | `burpvalve-osl-public-readme-community-utj`, `burpvalve-osl-preflip-gate-557` | `D-OSL-5`, `D-OSL-6` |
 | 7 | Confirm old release handling is ready: v0.1.0 and v0.1.1 GitHub releases and assets are approved for deletion before the public flip, but have not been deleted before this execution step. | Release owner, owner | `burpvalve-osl-old-release-handling-8mt` | `D-OSL-4`, `D-OSL-5` |
 | 8 | Confirm public fixture identity is consistent with the approved noreply address and no legacy placeholder-email fixture remains in the public tree where it would contradict the launch record. | Launch coordinator | `burpvalve-osl-audit-tracked-files-9gq`, `burpvalve-osl-preflip-gate-557` | `D-OSL-9`, `D-OSL-10` |
-| 9 | Rename the current source repository to `burpvalve-private` to free `clicksopendoors/burpvalve`. | Owner | `burpvalve-osl-launch-umbrella-dla`, `burpvalve-osl-preflip-gate-557` | `D-OSL-1`, `D-OSL-5`, `D-OSL-8` |
+| 9 | Rename the current source repository to `private-source-repo` to free `clicksopendoors/burpvalve`. | Owner | `burpvalve-osl-launch-umbrella-dla`, `burpvalve-osl-preflip-gate-557` | `D-OSL-1`, `D-OSL-5`, `D-OSL-8` |
 | 10 | Delete the v0.1.0 and v0.1.1 GitHub releases and their assets before the public repository is created or made visible. | Owner or release owner under owner approval | `burpvalve-osl-old-release-handling-8mt` | `D-OSL-4`, `D-OSL-5` |
 | 11 | Perform the bead-ID prefix rename as the last pre-flip scrub step, after the owner chooses the replacement prefix. Keep public `.beads/` data, including ordinary lingo/agent workflow context, but scrub security-sensitive infrastructure detail and stale evidence. Explicit Beads records remain authoritative; display-only metadata must not create ownership claims. | Tracker owner, owner | `burpvalve-fysf`, `burpvalve-osl-preflip-gate-557` | `D-OSL-3`, `D-OSL-7`, `D-OSL-13` |
 | 12 | Create the new public `clicksopendoors/burpvalve` repository from the scrubbed tree as a fresh squash-relaunch initial commit authored by `clicksopendoors <michael-bltzr@users.noreply.github.com>`. Do not preserve source commit history in the public repository and do not add AI co-author trailers. | Owner | `burpvalve-osl-launch-umbrella-dla`, `burpvalve-osl-preflip-gate-557` | `D-OSL-1`, `D-OSL-5`, `D-OSL-7`, `D-OSL-8`, `D-OSL-9` |

@@ -73,6 +73,130 @@ func TestRunVerifierSubmitRejectsStaleBinding(t *testing.T) {
 	}
 }
 
+func TestRunVerifierSubmitRequiresMatchingLaneBinding(t *testing.T) {
+	root, plan, responsesPath := beginLaneSubmitFixture(t)
+	bound := readResponsesFile(t, responsesPath).Binding.LaneBinding
+	if bound == nil {
+		t.Fatal("lane submit fixture missing lane binding")
+	}
+
+	input := submitInputFor(t, plan, "dry")
+	input.LaneBinding = bound
+	result, err := RunVerifierSubmit(context.Background(), SubmitVerifierOptions{
+		Root:              root,
+		ExplicitFeature:   "declared-lane-aj41",
+		ConditionID:       "dry",
+		ResponsesPath:     responsesPath,
+		StagedPayloadHash: plan.StagedPayloadHash,
+		ManifestHash:      plan.ManifestHash,
+		ConditionFileHash: plan.ConditionFileHashes["dry"],
+		Response:          input,
+		Staged:            fixtureStaged(),
+	})
+	if err != nil {
+		t.Fatalf("lane-bound submit failed: %v", err)
+	}
+	if result.Status != StatusResponsesUpdated || result.Fatal {
+		t.Fatalf("result = %#v", result)
+	}
+	responses := readResponsesFile(t, responsesPath)
+	if responses.Binding.LaneBinding == nil || responses.Binding.LaneBinding.LaneID != "declared-lane-aj41" {
+		t.Fatalf("lane binding not preserved: %#v", responses.Binding.LaneBinding)
+	}
+	if got := responseByCondition(t, responses, "dry").Verdict; got != attestations.VerdictPass {
+		t.Fatalf("dry verdict = %q", got)
+	}
+
+	tests := []struct {
+		name   string
+		mutate func(*SubmitVerifierInput)
+		want   string
+	}{
+		{
+			name: "missing lane binding",
+			mutate: func(input *SubmitVerifierInput) {
+				input.LaneBinding = nil
+			},
+			want: "requires matching submit lane_binding",
+		},
+		{
+			name: "lane id mismatch",
+			mutate: func(input *SubmitVerifierInput) {
+				copyBinding := *bound
+				copyBinding.LaneID = "other-lane"
+				input.LaneBinding = &copyBinding
+			},
+			want: "lane id mismatch",
+		},
+		{
+			name: "bead ids mismatch",
+			mutate: func(input *SubmitVerifierInput) {
+				copyBinding := *bound
+				copyBinding.BeadIDs = []string{"burpvalve-aj41.3"}
+				input.LaneBinding = &copyBinding
+			},
+			want: "lane bead ids mismatch",
+		},
+		{
+			name: "authorization ref mismatch",
+			mutate: func(input *SubmitVerifierInput) {
+				copyBinding := *bound
+				copyBinding.AuthorizationRef = "Agent Mail 4001"
+				input.LaneBinding = &copyBinding
+			},
+			want: "authorization_ref mismatch",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			input := submitInputFor(t, plan, "dry")
+			input.LaneBinding = bound
+			tt.mutate(input)
+			result, err := RunVerifierSubmit(context.Background(), SubmitVerifierOptions{
+				Root:              root,
+				ExplicitFeature:   "declared-lane-aj41",
+				ConditionID:       "dry",
+				ResponsesPath:     responsesPath,
+				StagedPayloadHash: plan.StagedPayloadHash,
+				ManifestHash:      plan.ManifestHash,
+				ConditionFileHash: plan.ConditionFileHashes["dry"],
+				Response:          input,
+				Staged:            fixtureStaged(),
+			})
+			if err == nil {
+				t.Fatal("lane mismatch should block")
+			}
+			if !strings.Contains(result.Message, tt.want) {
+				t.Fatalf("message = %q, want contains %q", result.Message, tt.want)
+			}
+		})
+	}
+}
+
+func TestRunVerifierSubmitRejectsUnexpectedLaneBinding(t *testing.T) {
+	root, plan, responsesPath := beginSubmitFixture(t)
+	input := submitInputFor(t, plan, "dry")
+	input.LaneBinding = &attestations.LaneBinding{LaneID: "unexpected-lane"}
+
+	result, err := RunVerifierSubmit(context.Background(), SubmitVerifierOptions{
+		Root:              root,
+		ExplicitFeature:   "br-123",
+		ConditionID:       "dry",
+		ResponsesPath:     responsesPath,
+		StagedPayloadHash: plan.StagedPayloadHash,
+		ManifestHash:      plan.ManifestHash,
+		ConditionFileHash: plan.ConditionFileHashes["dry"],
+		Response:          input,
+		Staged:            fixtureStaged(),
+	})
+	if err == nil {
+		t.Fatal("unexpected lane binding should block")
+	}
+	if !strings.Contains(result.Message, "not expected") {
+		t.Fatalf("message = %q", result.Message)
+	}
+}
+
 func TestRunVerifierSubmitRejectsMissingEvidenceAndAuthorizationOnlyEvidence(t *testing.T) {
 	root, plan, responsesPath := beginSubmitFixture(t)
 	tests := []struct {
@@ -394,6 +518,29 @@ func beginSubmitFixture(t *testing.T) (string, Plan, string) {
 		OneFeature:       true,
 		AtomicityMessage: "Staged changes map only to br-123.",
 		Staged:           fixtureStaged(),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return root, result.Plan, filepath.Join(root, filepath.FromSlash(result.ResponsesPath))
+}
+
+func beginLaneSubmitFixture(t *testing.T) (string, Plan, string) {
+	t.Helper()
+	root := fixtureProject(t)
+	result, err := RunVerifierBegin(context.Background(), BeginResponsesOptions{
+		Root:            root,
+		ExplicitFeature: "declared-lane-aj41",
+		Lane: LaneOptions{
+			Enabled:           true,
+			LaneID:            "declared-lane-aj41",
+			BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+			Rationale:         "same orchestrator-authorized lane",
+			AuthorizedBy:      "BronzeDeer",
+			AuthorizationRef:  "Agent Mail 4000",
+			AuthorizationKind: "orchestrator",
+		},
+		Staged: fixtureStaged(),
 	})
 	if err != nil {
 		t.Fatal(err)

@@ -96,6 +96,26 @@ func TestBeadsPreflightMultipleBeadsAcceptsRationale(t *testing.T) {
 	}
 }
 
+func TestBeadsPreflightAcceptsBeadsCSVAlias(t *testing.T) {
+	root := t.TempDir()
+	run(t, root, "git", "init", "-q")
+	installFakeBR(t, "closed")
+	stdout, stderr, err := executeBurpvalveCommand("beads", "preflight", "--root", root, "--json", "--admin-only", "--beads", "br-one, br-two,br-one")
+	if err != nil {
+		t.Fatalf("--beads alias should pass for admin preflight: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+	}
+	var got beadsPreflightReport
+	if err := json.Unmarshal([]byte(stdout), &got); err != nil {
+		t.Fatalf("decode --beads preflight: %v\n%s", err, stdout)
+	}
+	if got.AdminOnly != true || strings.Join(got.BeadIDs, ",") != "br-one,br-two" {
+		t.Fatalf("--beads metadata wrong: %#v", got)
+	}
+	if !containsWarning(got.Warnings, `duplicate bead ID "br-one"`) {
+		t.Fatalf("duplicate warning missing: %#v", got.Warnings)
+	}
+}
+
 func TestBeadsPreflightAdminOnlyDoesNotRequireStagedPayload(t *testing.T) {
 	root := t.TempDir()
 	run(t, root, "git", "init", "-q")
@@ -204,6 +224,15 @@ func TestBeadsPreflightInvalidBeadIDReportsRecovery(t *testing.T) {
 func installFakeBR(t *testing.T, status string) {
 	t.Helper()
 	installFakeBRJSON(t, `[{"id":"%s","title":"Delivery bead","status":"`+status+`"}]`)
+}
+
+func containsWarning(warnings []string, want string) bool {
+	for _, warning := range warnings {
+		if strings.Contains(warning, want) {
+			return true
+		}
+	}
+	return false
 }
 
 func installFakeBRJSON(t *testing.T, body string) {

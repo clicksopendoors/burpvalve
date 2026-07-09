@@ -248,7 +248,7 @@ Implications:
 
 The public repository takes the canonical name `clicksopendoors/burpvalve`.
 At flip-prep time, the current source repository is renamed to
-`burpvalve-private`, to free the `burpvalve` name. The scrubbed public tree is
+`private-source-repo`, to free the `burpvalve` name. The scrubbed public tree is
 then initialized as the fresh `clicksopendoors/burpvalve` repository described
 in D-OSL-7. The exact source-repo rename target was approved by the owner on
 2026-07-04.
@@ -467,7 +467,7 @@ On 2026-07-05 the owner explicitly authorized both remaining launch stages:
 2. The flip execution window itself, superseding the D-OSL-5 hold: old
    release deletion (D-OSL-4), prefix rename plus the 19 deferred issue
    reference edits, v0.2.0 launch release (D-OSL-16), source repo
-   rename to burpvalve-private and fresh-history public repo creation
+   rename to private-source-repo and fresh-history public repo creation
    (D-OSL-7/8), About metadata apply (D-OSL-11), PVR enablement and
    verification (D-OSL-17), visibility flip, and the anonymous verification
    suite, executed strictly in the recorded order via the flip-day runbook
@@ -497,3 +497,22 @@ Compensating controls, tracked in bead `burpvalve-mfuc`:
    fixed forward publicly.
 
 The public repository therefore ships the strict configuration.
+
+### D-OSL-22. v0.3.0 public snapshot scope and evidence boundary
+
+Owner-directed release task, 2026-07-09: publish the week's product work as
+v0.3.0 in the public repository. The public snapshot includes the source and
+documentation for `burpvalve gate run`, first-class lane commits, PXPACK
+orchestrator context packets, the orchestrator toolbox and poll scripts, Spark
+gate-operator ritual templates, and the installer skills-directory/copy fix.
+
+The snapshot boundary follows D-OSL-7. The public repository receives the
+product tree, docs, scrubbed tracker state, and its own public commit evidence
+line. It does not receive private-source commit attestations or private
+backpressure evidence artifacts. Private attestations remain in the source
+repository because they bind to private commit ids, local verifier rounds, and
+operational context that is not part of the public history.
+
+This decision authorizes the v0.3.0 public snapshot and docs update only. It
+does not authorize a GitHub release tag or binary asset publication unless the
+owner asks for that separate release step.

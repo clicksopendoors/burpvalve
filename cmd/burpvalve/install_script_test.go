@@ -24,7 +24,9 @@ func TestInstallScriptRequiresConfirmationBeforeUserWrites(t *testing.T) {
 	skillsDir := filepath.Join(root, "skills")
 	binDir := filepath.Join(root, "bin")
 
-	stdout, stderr, err := runInstallScript(t, repoRoot,
+	configHome := filepath.Join(root, "xdg")
+	stdout, stderr, err := runInstallScriptWithEnv(t, repoRoot,
+		[]string{"XDG_CONFIG_HOME=" + configHome},
 		"--from-archive", archive,
 		"--skills-dir", skillsDir,
 		"--bin-dir", binDir,
@@ -35,7 +37,7 @@ func TestInstallScriptRequiresConfirmationBeforeUserWrites(t *testing.T) {
 	for _, needle := range []string{
 		"Burpvalve install plan",
 		"Skill destination: " + filepath.Join(skillsDir, "burpvalve"),
-		"Command shim: " + filepath.Join(binDir, "burpvalve"),
+		"Command executable: " + filepath.Join(binDir, "burpvalve"),
 		"no terminal available; pass --yes to apply this install plan",
 	} {
 		if !strings.Contains(stderr, needle) {
@@ -62,8 +64,10 @@ func TestInstallScriptYesAppliesPreviewedPlan(t *testing.T) {
 	root := t.TempDir()
 	skillsDir := filepath.Join(root, "skills")
 	binDir := filepath.Join(root, "bin")
+	configHome := filepath.Join(root, "xdg")
 
-	stdout, stderr, err := runInstallScript(t, repoRoot,
+	stdout, stderr, err := runInstallScriptWithEnv(t, repoRoot,
+		[]string{"XDG_CONFIG_HOME=" + configHome},
 		"--from-archive", archive,
 		"--skills-dir", skillsDir,
 		"--bin-dir", binDir,
@@ -74,37 +78,58 @@ func TestInstallScriptYesAppliesPreviewedPlan(t *testing.T) {
 	}
 	destBinary := filepath.Join(skillsDir, "burpvalve", "scripts", "bin", "burpvalve")
 	destSkill := filepath.Join(skillsDir, "burpvalve", "SKILL.md")
-	shim := filepath.Join(binDir, "burpvalve")
+	command := filepath.Join(binDir, "burpvalve")
 	if info, err := os.Stat(destBinary); err != nil || info.Mode()&0o111 == 0 {
 		t.Fatalf("installed binary missing or not executable: info=%v err=%v", info, err)
 	}
 	if body, err := os.ReadFile(destSkill); err != nil || !strings.Contains(string(body), "test skill") {
 		t.Fatalf("installed skill marker missing or wrong: %q err=%v", string(body), err)
 	}
-	target, err := os.Readlink(shim)
-	if err != nil {
-		t.Fatalf("shim should be a symlink: %v", err)
+	if info, err := os.Lstat(command); err != nil || info.Mode()&os.ModeSymlink != 0 || info.Mode()&0o111 == 0 {
+		t.Fatalf("command should be an executable file, not a symlink: info=%v err=%v", info, err)
 	}
-	if target != destBinary {
-		t.Fatalf("shim target = %q, want %q", target, destBinary)
+	version := exec.Command(command, "--version")
+	version.Env = append(os.Environ(), "PATH=/usr/bin:/bin")
+	out, err := version.CombinedOutput()
+	if err != nil || strings.TrimSpace(string(out)) != "burpvalve-test" {
+		t.Fatalf("installed command failed after install: out=%q err=%v", string(out), err)
+	}
+	movedSkills := filepath.Join(root, "skills-moved")
+	if err := os.Rename(skillsDir, movedSkills); err != nil {
+		t.Fatal(err)
+	}
+	version = exec.Command(command, "--version")
+	version.Env = append(os.Environ(), "PATH=/usr/bin:/bin")
+	out, err = version.CombinedOutput()
+	if err != nil || strings.TrimSpace(string(out)) != "burpvalve-test" {
+		t.Fatalf("installed command should survive skills dir move: out=%q err=%v", string(out), err)
 	}
 	for _, needle := range []string{
 		"Burpvalve install plan",
 		"--yes supplied; applying install plan.",
-		"Command shim: " + shim + " -> " + destBinary,
+		"Command executable: " + command,
 	} {
 		if !strings.Contains(stderr, needle) {
 			t.Fatalf("installer stderr missing %q:\n%s", needle, stderr)
 		}
 	}
 	for _, needle := range []string{
-		"Installed burpvalve skill to " + filepath.Join(skillsDir, "burpvalve"),
-		"Installed command shims to " + binDir,
-		"Verify with: " + shim + " --version",
+		"Installed burpvalve skill to " + filepath.Join(movedSkills, "burpvalve"),
+		"Installed command executable to " + command,
+		"Verify with: " + command + " --version",
 		"Current PATH does not include " + binDir,
 	} {
-		if !strings.Contains(stdout, needle) {
+		if !strings.Contains(stdout, strings.ReplaceAll(needle, movedSkills, skillsDir)) {
 			t.Fatalf("installer stdout missing %q:\n%s", needle, stdout)
+		}
+	}
+	config := readFileString(t, filepath.Join(configHome, "burpvalve", "config.json"))
+	for _, needle := range []string{
+		`"skills_dir": "` + escapeInstallJSONPath(skillsDir) + `"`,
+		`"bin_dir": "` + escapeInstallJSONPath(binDir) + `"`,
+	} {
+		if !strings.Contains(config, needle) {
+			t.Fatalf("installer config missing %q:\n%s", needle, config)
 		}
 	}
 }
@@ -144,7 +169,7 @@ func TestInstallScriptPreviewsExistingReplacements(t *testing.T) {
 	}
 	for _, needle := range []string{
 		"Existing skill: replace " + dest,
-		"Existing shim: replace " + shim,
+		"Existing command: replace " + shim,
 	} {
 		if !strings.Contains(stderr, needle) {
 			t.Fatalf("installer stderr missing replacement preview %q:\n%s", needle, stderr)
@@ -152,6 +177,78 @@ func TestInstallScriptPreviewsExistingReplacements(t *testing.T) {
 	}
 	if _, err := os.Stat(filepath.Join(dest, "OLD")); !os.IsNotExist(err) {
 		t.Fatalf("old skill content should be replaced, stat err=%v", err)
+	}
+	if info, err := os.Lstat(shim); err != nil || info.Mode()&os.ModeSymlink != 0 || info.Mode()&0o111 == 0 {
+		t.Fatalf("stale symlink should be replaced by executable file: info=%v err=%v", info, err)
+	}
+}
+
+func TestInstallScriptRobotsInputCanSelectSkillsDir(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("install.sh is a POSIX shell installer")
+	}
+	repoRoot := findRepoRoot(t)
+	archive := writeMinimalInstallArchive(t)
+	root := t.TempDir()
+	skillsDir := filepath.Join(root, "robot-skills")
+	binDir := filepath.Join(root, "robot-bin")
+	input := fmt.Sprintf(`{"from_archive":%q,"skills_dir":%q,"bin_dir":%q,"confirm":true}`, archive, skillsDir, binDir)
+
+	stdout, stderr, err := runInstallScriptWithInput(t, repoRoot, input, "--robots")
+	if err != nil {
+		t.Fatalf("robots install failed: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+	}
+	if _, err := os.Stat(filepath.Join(skillsDir, "burpvalve", "SKILL.md")); err != nil {
+		t.Fatalf("robots install did not write skill package: %v", err)
+	}
+	if info, err := os.Lstat(filepath.Join(binDir, "burpvalve")); err != nil || info.Mode()&os.ModeSymlink != 0 || info.Mode()&0o111 == 0 {
+		t.Fatalf("robots install command should be executable file: info=%v err=%v", info, err)
+	}
+	if !strings.Contains(stdout, `"skills_dir":"`+escapeInstallJSONPath(skillsDir)+`"`) {
+		t.Fatalf("robots stdout should report selected skills_dir:\n%s", stdout)
+	}
+}
+
+func TestInstallScriptYesUsesPersistedSkillsDirDefault(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("install.sh is a POSIX shell installer")
+	}
+	repoRoot := findRepoRoot(t)
+	archive := writeMinimalInstallArchive(t)
+	root := t.TempDir()
+	skillsDir := filepath.Join(root, "persisted-skills")
+	binDir := filepath.Join(root, "persisted-bin")
+	configHome := filepath.Join(root, "xdg")
+	configPath := filepath.Join(configHome, "burpvalve", "config.json")
+	if err := os.MkdirAll(filepath.Dir(configPath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(configPath, []byte(`{
+  "schema_version": 1,
+  "defaults": {
+    "skills_dir": "`+escapeInstallJSONPath(skillsDir)+`",
+    "bin_dir": "`+escapeInstallJSONPath(binDir)+`"
+  }
+}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	stdout, stderr, err := runInstallScriptWithEnv(t, repoRoot,
+		[]string{"XDG_CONFIG_HOME=" + configHome},
+		"--from-archive", archive,
+		"--yes",
+	)
+	if err != nil {
+		t.Fatalf("install with persisted defaults failed: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+	}
+	if _, err := os.Stat(filepath.Join(skillsDir, "burpvalve", "SKILL.md")); err != nil {
+		t.Fatalf("persisted skills_dir was not used: %v", err)
+	}
+	if _, err := os.Stat(filepath.Join(binDir, "burpvalve")); err != nil {
+		t.Fatalf("persisted bin_dir was not used: %v", err)
+	}
+	if !strings.Contains(stderr, "Skills directory: "+skillsDir) {
+		t.Fatalf("preview should show persisted skills dir:\n%s", stderr)
 	}
 }
 
@@ -305,7 +402,33 @@ func runInstallScriptWithEnv(t *testing.T, repoRoot string, extraEnv []string, a
 	t.Helper()
 	cmd := exec.Command("bash", append([]string{"./install.sh"}, args...)...)
 	cmd.Dir = repoRoot
-	cmd.Env = mergeEnv(os.Environ(), append([]string{"PATH=/usr/bin:/bin"}, extraEnv...)...)
+	home := t.TempDir()
+	defaultEnv := []string{
+		"PATH=/usr/bin:/bin",
+		"HOME=" + home,
+		"XDG_CONFIG_HOME=" + filepath.Join(home, "xdg"),
+		"BURPVALVE_CONFIG=",
+	}
+	cmd.Env = mergeEnv(os.Environ(), append(defaultEnv, extraEnv...)...)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return stdout.String(), stderr.String(), err
+}
+
+func runInstallScriptWithInput(t *testing.T, repoRoot string, input string, args ...string) (string, string, error) {
+	t.Helper()
+	cmd := exec.Command("bash", append([]string{"./install.sh"}, args...)...)
+	cmd.Dir = repoRoot
+	home := t.TempDir()
+	cmd.Env = mergeEnv(os.Environ(),
+		"PATH=/usr/bin:/bin",
+		"HOME="+home,
+		"XDG_CONFIG_HOME="+filepath.Join(home, "xdg"),
+		"BURPVALVE_CONFIG=",
+	)
+	cmd.Stdin = strings.NewReader(input)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
@@ -322,13 +445,24 @@ func runInstallScriptFromStdin(t *testing.T, repoRoot string, args ...string) (s
 	defer script.Close()
 	cmd := exec.Command("bash", append([]string{"-s", "--"}, args...)...)
 	cmd.Dir = repoRoot
-	cmd.Env = append(os.Environ(), "PATH=/usr/bin:/bin")
+	home := t.TempDir()
+	cmd.Env = mergeEnv(os.Environ(),
+		"PATH=/usr/bin:/bin",
+		"HOME="+home,
+		"XDG_CONFIG_HOME="+filepath.Join(home, "xdg"),
+		"BURPVALVE_CONFIG=",
+	)
 	cmd.Stdin = script
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	err = cmd.Run()
 	return stdout.String(), stderr.String(), err
+}
+
+func escapeInstallJSONPath(path string) string {
+	replacer := strings.NewReplacer(`\`, `\\`, `"`, `\"`)
+	return replacer.Replace(path)
 }
 
 func mergeEnv(base []string, overrides ...string) []string {

@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""Poll a Burpvalve verifier responses file and optionally wake stuck panes."""
+
+import argparse
+import json
+import subprocess
+import tempfile
+import time
+from pathlib import Path
+
+
+def emit(event, **fields):
+    payload = {"event": event, **fields}
+    print(json.dumps(payload, sort_keys=True), flush=True)
+
+
+def load_counts(path):
+    data = json.loads(path.read_text())
+    conditions = data.get("conditions", [])
+    pending = [
+        c.get("condition_id", "(unknown)")
+        for c in conditions
+        if c.get("verdict") == "unknown" or c.get("subagent_confirmed") is not True
+    ]
+    return len(conditions), pending
+
+
+def run(cmd):
+    return subprocess.run(cmd, text=True, capture_output=True)
+
+
+def send_message(session, panes, message):
+    with tempfile.NamedTemporaryFile("w", delete=False, prefix="poll-round-", suffix=".md") as fh:
+        fh.write(message)
+        msg_file = fh.name
+    cmd = [
+        "ntm",
+        "--robot-send=" + session,
+        "--panes=" + panes,
+        "--type=prompt",
+        "--msg-file=" + msg_file,
+    ]
+    result = run(cmd)
+    Path(msg_file).unlink(missing_ok=True)
+    return result
+
+
+def maybe_wake(args, message, reason):
+    if not args.panes:
+        emit("wake_skipped", reason=reason, detail="no --panes supplied")
+        return
+    if not args.execute:
+        emit("wake_dry_run", reason=reason, panes=args.panes, message=message)
+        return
+    result = send_message(args.session, args.panes, message)
+    emit("wake_sent", reason=reason, panes=args.panes, ok=result.returncode == 0, stderr=result.stderr.strip())
+
+
+def poll_once(args):
+    path = Path(args.responses)
+    if not path.exists():
+        emit("missing", responses=args.responses)
+        return None
+    try:
+        total, pending = load_counts(path)
+    except Exception as exc:
+        emit("error", responses=args.responses, detail=str(exc))
+        return None
+    emit("poll", responses=args.responses, total=total, pending_count=len(pending), pending=pending)
+    return pending
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Monitor a verifier round responses file.")
+    parser.add_argument("--responses", required=True, help="Burpvalve responses JSON file")
+    parser.add_argument("--session", default="burpvalve", help="NTM session name")
+    parser.add_argument("--panes", help="Comma-separated pane list for announcements/wakes")
+    parser.add_argument("--announce", help="Proactive round announcement message")
+    parser.add_argument("--wake-message", default="Verifier round pending; re-read the responses binding and submit confirmed cells.", help="Auto-wake message")
+    parser.add_argument("--interval", type=float, default=20.0, help="Seconds between polls in --execute mode")
+    parser.add_argument("--max-polls", type=int, default=90, help="Maximum polls in --execute mode")
+    parser.add_argument("--stuck-polls", type=int, default=3, help="Unchanged pending count before auto-wake")
+    parser.add_argument("--execute", action="store_true", help="Run loop and send wakes; without this, report only")
+    args = parser.parse_args()
+
+    if args.announce:
+        maybe_wake(args, args.announce, "announce")
+
+    if not args.execute:
+        emit("dry_run", action="single responses-file report; add --execute for looped monitoring")
+        pending = poll_once(args)
+        return 0 if pending is not None else 1
+
+    previous = None
+    unchanged = 0
+    for index in range(1, args.max_polls + 1):
+        pending = poll_once(args)
+        if pending is None:
+            return 1
+        if not pending:
+            emit("result", status="complete", polls=index)
+            return 0
+        key = tuple(pending)
+        unchanged = unchanged + 1 if key == previous else 0
+        previous = key
+        if unchanged >= args.stuck_polls:
+            maybe_wake(args, args.wake_message, "stuck_pending")
+            unchanged = 0
+        time.sleep(args.interval)
+    emit("result", status="timeout", polls=args.max_polls, pending_count=len(previous or ()))
+    return 3
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

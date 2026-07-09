@@ -14,6 +14,7 @@ actionable work belongs in beads.
 - [dogfooding-findings-2026-07.md](dogfooding-findings-2026-07.md): living log of Burpvalve/Beads/process findings from the 2026-07 orchestration round — each entry a candidate for future plans, issues, or doc fixes.
 - [matt-pocock-skill-patterns.md](matt-pocock-skill-patterns.md): transferable Matt Pocock skill patterns for Burpvalve product and workflow design.
 - [ntm-bridge.md](ntm-bridge.md): optional NTM coordination policy.
+- [../README.md#burpvalve-pxpack](../README.md#burpvalve-pxpack): public PXPACK packet docs, prohibited inputs, staleness checks, and no-evidence-by-OCR policy.
 - [release-install.md](release-install.md): release package and installer workflow.
 - [result-contract.md](result-contract.md): shared JSON recovery fields for setup, init, repair, and lint.
 - [setup-pre-commit-patterns.md](setup-pre-commit-patterns.md): useful patterns from Matt Pocock's setup-pre-commit skill and how to translate them into Burpvalve.

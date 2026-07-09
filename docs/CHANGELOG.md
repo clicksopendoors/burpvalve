@@ -3,8 +3,8 @@
 This is a synthesized, agent-facing changelog for the full history of
 `burpvalve`.
 
-Scope window: project inception on 2026-06-20 through the v0.2.1 patch release
-preparation on 2026-07-05.
+Scope window: project inception on 2026-06-20 through the v0.3.0 public snapshot
+preparation on 2026-07-09.
 
 This document was rebuilt from git history, GitHub release metadata,
 `.beads/issues.jsonl`, and the working tree. The v0.1.2 section was written
@@ -14,12 +14,15 @@ written from the post-v0.1.2 dogfooding and release-prep chain. The v0.2.0
 section was written from the private open-source launch preparation chain.
 The v0.2.1 section was written from the post-launch anonymous verification
 fix-forward.
+The v0.3.0 section was written from the post-launch gate-run, lane-commit,
+PXPACK, orchestrator-toolbox, and installer fix-forward chain.
 It is intentionally organized by landed capabilities, not raw diff order.
 
 ## Version Timeline
 
 | Version | Kind | Date | Summary |
 |---------|------|------|---------|
+| v0.3.0 | Source snapshot | 2026-07-09 | Ships `burpvalve gate run`, first-class lane commits, PXPACK orchestrator packets, the orchestrator toolbox and poll scripts, Spark gate-operator templates, and installer copy handling in public source. |
 | v0.2.1 | Patch | 2026-07-05 | Fixes `burpvalve init --force --json` when the optional `br` Beads tool is absent; Beads setup now skips gracefully with a JSON-visible notice. |
 | v0.2.0 | Release | 2026-07-05 | Private launch release with MIT licensing, public skill metadata, licensed archives, scrubbed public-facing docs, SECURITY reporting policy, public install defaults, Claude/orchestrator route support, ownership accounting, and final pre-flip gate evidence. |
 | v0.1.3 | Release | 2026-07-03 | Ships the guided lint setup, verifier orchestration, Beads close/drift flow, prompt bank and prompt export surfaces, orchestrator target/config work, commit evidence helpers, hook recovery hints, NTM bridge docs, skill prompt-bank refactor, and dogfood-mode findings prompt. |
@@ -30,6 +33,66 @@ It is intentionally organized by landed capabilities, not raw diff order.
 | [`abf3234`](https://github.com/clicksopendoors/burpvalve/commit/abf3234f6d517330a2565cfe6d27a62f94bdea5b) | Commit | 2026-06-20 | Renamed the human-approval condition to autonomy boundary in the plan. |
 | [`bd617e0`](https://github.com/clicksopendoors/burpvalve/commit/bd617e03eddbfdf10e2bb34c54d90274210b30b7) | Commit | 2026-06-20 | Added the final compile and commit-gate verification bead. |
 | [`fb1d62f`](https://github.com/clicksopendoors/burpvalve/commit/fb1d62fc11072af3183091119140e2c4383c43a9) | Commit | 2026-06-20 | Initialized the original planning state and Beads state. |
+
+## v0.3.0 - Gate Run, Lane Commits, PXPACK, And Orchestrator Toolbox
+
+This source snapshot publishes the post-launch dogfooding work that made
+Burpvalve usable as an orchestrated release gate alongside its pre-commit
+refusal surface.
+The new features are aimed at multi-agent operators who need exact handoffs,
+hash-bound verifier rounds, and durable release ceremony logs.
+
+### Delivered capability
+
+- Added `burpvalve gate run`, a mechanical runner for prepared handoffs. A
+  handoff declares staged paths, expected `HEAD`, feature or lane binding,
+  responses file, commit message, bead close/sync intent, tests, and authorized
+  cleanup. The runner refuses stale hashes, dirty or unexpected index state,
+  failing tests, stale responses, verifier disagreement, and unexpected `HEAD`.
+- Added gate-run journaling and resume-safe phases for preflight, verifier,
+  commit, Beads close/sync, post-commit handoff, release cleanup, and wake
+  notifications. The v1 command records the exact push command when publication
+  is requested, but leaves the push for an orchestrator to review and run.
+- Added first-class lane commits. `verifier begin --lane` and
+  `commit --lane` now bind the lane id, bead ids, rationale, authorization
+  reference, and authorizer into responses and attestations, then reject tracker
+  exports whose changed issue ids fall outside the declared lane.
+- Added lane metadata to verifier packets, submissions, hooks, and attestation
+  output so orchestrators can audit who authorized a multi-bead payload and why
+  it stayed atomic.
+- Added `burpvalve pxpack` for optional orchestrator context packets. It
+  creates Burpvalve-owned `factsheet.txt`, `source-map.md`, and
+  `manifest.json` files, wraps PXPIPE as an image-lane renderer only, checks
+  source and output hashes for staleness, and blocks sensitive inputs.
+- Added `pxpack validate`, an A/B safety gate that keeps packet workflows
+  experimental until they beat or match plain-text context on exact strings,
+  invented facts, source re-read discipline, and decision quality while adding
+  a practical operator benefit.
+- Shipped the orchestrator toolbox in the Claude orchestrator skill: gate
+  choreography, verifier fanout, lane declaration rules, PXPACK use, NTM pane
+  wake discipline, poll helpers, contact and role-split references, and Spark
+  gate-operator ritual templates for exact handoff execution.
+- Fixed the public installer command-copy path so installed `burpvalve`
+  binaries are copied into the target command directory instead of symlinked,
+  preserving the canonical release-package install model.
+- Closed the gate-run lane and tracker state with strict independent verifier
+  rounds after the launch-window self-attestation relaxation was reversed.
+
+### Representative commits
+
+- [`d931f1a`](https://github.com/clicksopendoors/burpvalve/commit/d931f1a) ships the orchestrator toolbox and polling scripts.
+- [`2595251`](https://github.com/clicksopendoors/burpvalve/commit/2595251) codifies the Spark gate-operator ritual.
+- [`ebf0c5a`](https://github.com/clicksopendoors/burpvalve/commit/ebf0c5a) fixes installer command copying.
+- [`8f591a0`](https://github.com/clicksopendoors/burpvalve/commit/8f591a0) adds lane binding schema types.
+- [`ae77163`](https://github.com/clicksopendoors/burpvalve/commit/ae77163) adds lane binding CLI flags.
+- [`6d49285`](https://github.com/clicksopendoors/burpvalve/commit/6d49285) adds the PXPACK CLI schema.
+- [`29a6220`](https://github.com/clicksopendoors/burpvalve/commit/29a6220) adds the PXPACK renderer export wrapper.
+- [`c6c04b8`](https://github.com/clicksopendoors/burpvalve/commit/c6c04b8) adds the PXPACK validation gate.
+- [`4447b77`](https://github.com/clicksopendoors/burpvalve/commit/4447b77) adds the gate-run CLI schema.
+- [`5720a4c`](https://github.com/clicksopendoors/burpvalve/commit/5720a4c) adds the gate-run commit loop.
+- [`f77654e`](https://github.com/clicksopendoors/burpvalve/commit/f77654e) exposes lane metadata in attestation outputs.
+- [`65426d0`](https://github.com/clicksopendoors/burpvalve/commit/65426d0) adds gate-run executable condition integration.
+- [`06e8885`](https://github.com/clicksopendoors/burpvalve/commit/06e8885) closes the gate-run lane and goal-run tracker state.
 
 ## v0.2.1 - Missing Beads Tool Patch
 

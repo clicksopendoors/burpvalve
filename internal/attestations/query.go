@@ -20,20 +20,22 @@ type QueryOptions struct {
 }
 
 type Record struct {
-	SchemaVersion     int               `json:"schema_version"`
-	ArtifactType      string            `json:"artifact_type"`
-	Status            string            `json:"status"`
-	Path              string            `json:"path"`
-	ID                string            `json:"id,omitempty"`
-	FeatureIDs        []string          `json:"feature_ids,omitempty"`
-	BeadIDs           []string          `json:"bead_ids,omitempty"`
-	PayloadHash       string            `json:"payload_hash,omitempty"`
-	ManifestHash      string            `json:"manifest_hash,omitempty"`
-	ConditionVerdicts []ConditionRecord `json:"condition_verdicts,omitempty"`
-	GeneratedBy       Generator         `json:"generated_by,omitempty"`
-	CreatedAt         *time.Time        `json:"created_at,omitempty"`
-	Warnings          []string          `json:"warnings,omitempty"`
-	ParseWarnings     []string          `json:"parse_warnings,omitempty"`
+	SchemaVersion        int               `json:"schema_version"`
+	ArtifactType         string            `json:"artifact_type"`
+	Status               string            `json:"status"`
+	Path                 string            `json:"path"`
+	ID                   string            `json:"id,omitempty"`
+	FeatureIDs           []string          `json:"feature_ids,omitempty"`
+	BeadIDs              []string          `json:"bead_ids,omitempty"`
+	LaneID               string            `json:"lane_id,omitempty"`
+	LaneAuthorizationRef string            `json:"lane_authorization_ref,omitempty"`
+	PayloadHash          string            `json:"payload_hash,omitempty"`
+	ManifestHash         string            `json:"manifest_hash,omitempty"`
+	ConditionVerdicts    []ConditionRecord `json:"condition_verdicts,omitempty"`
+	GeneratedBy          Generator         `json:"generated_by,omitempty"`
+	CreatedAt            *time.Time        `json:"created_at,omitempty"`
+	Warnings             []string          `json:"warnings,omitempty"`
+	ParseWarnings        []string          `json:"parse_warnings,omitempty"`
 }
 
 type ConditionRecord struct {
@@ -218,6 +220,11 @@ func readRecord(path string, rel string, artifactType string, status string) Rec
 	record.BeadIDs = uniqueStrings(append(record.BeadIDs, artifact.Feature.BeadIDs...))
 	if artifact.Feature.SourceBead != "" && looksLikeLegacyBeadID(artifact.Feature.SourceBead) {
 		record.BeadIDs = uniqueStrings(append(record.BeadIDs, artifact.Feature.SourceBead))
+	}
+	if artifact.Atomicity.Lane != nil {
+		record.LaneID = strings.TrimSpace(artifact.Atomicity.Lane.LaneID)
+		record.LaneAuthorizationRef = strings.TrimSpace(artifact.Atomicity.Lane.AuthorizationRef)
+		record.BeadIDs = uniqueStrings(append(record.BeadIDs, artifact.Atomicity.Lane.BeadIDs...))
 	}
 	for _, condition := range artifact.Conditions {
 		record.ConditionVerdicts = append(record.ConditionVerdicts, ConditionRecord{

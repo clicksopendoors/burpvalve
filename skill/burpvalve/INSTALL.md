@@ -1,14 +1,15 @@
 # Install Burpvalve From A Skill-Only Copy
 
-Use this file when the `burpvalve` skill is present but the executable is not.
+Use this file when the `burpvalve` skill is present but the user-bin executable
+is not.
 The normal release package already includes:
 
 ```text
 scripts/bin/burpvalve
 ```
 
-If that file exists and is executable in an installed skill package, install
-only the command shim:
+If that file exists and is executable in an installed skill package, copy it
+into a directory on your `PATH`:
 
 ```bash
 skills_dir="${BURPVALVE_SKILLS_DIR:-$HOME/skills}"
@@ -16,7 +17,8 @@ skill_dir="$skills_dir/burpvalve"
 bin_dir="$HOME/.local/bin"
 
 mkdir -p "$bin_dir"
-ln -sfn "$skill_dir/scripts/bin/burpvalve" "$bin_dir/burpvalve"
+cp "$skill_dir/scripts/bin/burpvalve" "$bin_dir/burpvalve"
+chmod 0755 "$bin_dir/burpvalve"
 export PATH="$bin_dir:$PATH"
 burpvalve -h
 burpvalve completion --color never
@@ -63,14 +65,16 @@ That installer downloads the platform-specific release archive, verifies the
 checksum, installs the full skill package, and creates:
 
 ```text
-$bin_dir/burpvalve -> $skills_dir/burpvalve/scripts/bin/burpvalve
+$bin_dir/burpvalve
 ```
 
 The installer prints an install plan before touching `skills_dir` or `bin_dir`.
-It names the skill destination, command shim, and any existing files it will
-replace. Without `--yes`, it asks for final confirmation and defaults to No.
-Use `--yes` only when the selected directories are already the intended
-locations.
+It asks for the preferred skills directory when one is not supplied, names the
+skill destination, command executable, and any existing files it will replace.
+It persists the selected `skills_dir` and `bin_dir` in Burpvalve config so later
+upgrades can reuse them. Without `--yes`, it asks for final confirmation and
+defaults to No. Use `--yes` only when the selected directories are already the
+intended locations.
 
 Do not use Go's module installer for Burpvalve. The module path is
 intentionally `burpvalve`, so public installs use the release package and
@@ -123,7 +127,7 @@ test -x "$skills_dir/burpvalve/scripts/bin/burpvalve"
 Expected result:
 
 - `command -v burpvalve` points inside `bin_dir`.
-- `bin_dir/burpvalve` is a symlink to the skill binary.
+- `bin_dir/burpvalve` is an executable file, not a symlink into the skill tree.
 - `skills_dir/burpvalve/scripts/bin/burpvalve` exists and is executable.
 - `burpvalve -h` prints the CLI help.
 - `burpvalve completion --color never` prints shell-specific setup guidance

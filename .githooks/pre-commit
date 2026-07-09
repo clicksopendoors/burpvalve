@@ -30,6 +30,9 @@ fi
 if [[ -n "${BURPVALVE_MODEL:-}" ]]; then
   COMMIT_ARGS+=(--model "$BURPVALVE_MODEL")
 fi
+if [[ -n "${BURPVALVE_LANE_ID:-}" ]]; then
+  COMMIT_ARGS+=(--lane "$BURPVALVE_LANE_ID")
+fi
 if [[ -n "${BURPVALVE_BEAD:-}" ]]; then
   if [[ "$BURPVALVE_BEAD" == ,* || "$BURPVALVE_BEAD" == *, || "$BURPVALVE_BEAD" == *,,* ]]; then
     echo "BURPVALVE_BEAD_EMPTY_TOKEN: BURPVALVE_BEAD must be comma-separated bead IDs with no empty tokens" >&2
@@ -65,6 +68,15 @@ if [[ -n "${BURPVALVE_BEAD:-}" ]]; then
 fi
 if [[ -n "${BURPVALVE_BEAD_RATIONALE:-}" ]]; then
   COMMIT_ARGS+=(--bead-rationale "$BURPVALVE_BEAD_RATIONALE")
+  if [[ -n "${BURPVALVE_LANE_ID:-}" ]]; then
+    COMMIT_ARGS+=(--lane-rationale "$BURPVALVE_BEAD_RATIONALE")
+  fi
+fi
+if [[ -n "${BURPVALVE_LANE_AUTHORIZATION_REF:-}" ]]; then
+  COMMIT_ARGS+=(--lane-authorization-ref "$BURPVALVE_LANE_AUTHORIZATION_REF")
+fi
+if [[ -n "${BURPVALVE_LANE_AUTHORIZED_BY:-}" ]]; then
+  COMMIT_ARGS+=(--authorized-by "$BURPVALVE_LANE_AUTHORIZED_BY")
 fi
 
 BURPVALVE_HOOK_CONTEXT=pre-commit BURPVALVE_HOOK_COMMAND_SOURCE="$BURPVALVE_COMMAND_SOURCE" "${BURPVALVE[@]}" commit "${COMMIT_ARGS[@]}"

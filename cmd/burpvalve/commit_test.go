@@ -386,6 +386,98 @@ func TestCommitMultipleBeadsRequireRationale(t *testing.T) {
 	}
 }
 
+func TestCommitLaneAssertionMustMatchBoundResponses(t *testing.T) {
+	repoRoot := findRepoRoot(t)
+	target := fixtureGitRepo(t)
+	writeCLIFile(t, target, "src/lane.go", "package app\n\nconst Lane = true\n")
+	run(t, target, "git", "add", "src/lane.go")
+
+	stdout, stderr, err := runBurpvalve(t, repoRoot, "verifier", "begin",
+		"--root", target,
+		"--lane",
+		"--lane-id", "lane-aj41",
+		"--bead", "burpvalve-aj41.3",
+		"--bead", "burpvalve-aj41.4",
+		"--lane-rationale", "authorized lane payload",
+		"--lane-authorization-ref", "ORCH-2026-07-08",
+		"--authorized-by", "BronzeDeer",
+		"--json")
+	if err != nil {
+		t.Fatalf("lane verifier begin failed: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+	}
+	var begin backpressure.BeginResponsesResult
+	if err := json.Unmarshal(stdout, &begin); err != nil {
+		t.Fatalf("decode begin result: %v\nstdout=%s", err, stdout)
+	}
+	responsesPath := filepath.Join(target, filepath.FromSlash(begin.ResponsesPath))
+	var responses backpressure.Responses
+	if err := json.Unmarshal([]byte(readTestFile(t, responsesPath)), &responses); err != nil {
+		t.Fatalf("decode begin responses: %v", err)
+	}
+	for i := range responses.Conditions {
+		responses.Conditions[i].Verifier.Kind = "independent_subagent"
+		responses.Conditions[i].SubagentConfirmed = true
+		responses.Conditions[i].Verdict = "pass"
+		responses.Conditions[i].Message = "lane assertion test pass"
+		responses.Conditions[i].Evidence = []string{"test evidence"}
+		responses.Conditions[i].NextAction = ""
+	}
+	if err := os.WriteFile(responsesPath, []byte(mustJSONBytes(t, responses)), 0o644); err != nil {
+		t.Fatalf("rewrite responses: %v", err)
+	}
+
+	stdout, stderr, err = runBurpvalve(t, repoRoot, "commit",
+		"--root", target,
+		"--feature", "lane-aj41",
+		"--lane", "wrong-lane",
+		"--bead", "burpvalve-aj41.3",
+		"--bead", "burpvalve-aj41.4",
+		"--lane-rationale", "authorized lane payload",
+		"--lane-authorization-ref", "ORCH-2026-07-08",
+		"--authorized-by", "BronzeDeer",
+		"--responses", responsesPath)
+	if err == nil {
+		t.Fatalf("commit should reject lane mismatch\nstdout=%s\nstderr=%s", stdout, stderr)
+	}
+	if !strings.Contains(string(stderr), `commit lane id mismatch`) {
+		t.Fatalf("stderr missing lane mismatch:\n%s", stderr)
+	}
+}
+
+func TestNormalizeCommitBeadsAcceptsRepeatedAndCSVAlias(t *testing.T) {
+	beads, rationale, warnings, err := normalizeCommitBeads(
+		[]string{" br-one ", "br-one"},
+		[]string{"br-two, br-one", "br-three"},
+		" same staged payload ",
+	)
+	if err != nil {
+		t.Fatalf("normalizeCommitBeads returned error: %v", err)
+	}
+	if got, want := strings.Join(beads, ","), "br-one,br-two,br-three"; got != want {
+		t.Fatalf("beads = %q, want %q", got, want)
+	}
+	if rationale != "same staged payload" {
+		t.Fatalf("rationale = %q", rationale)
+	}
+	if len(warnings) != 2 || !strings.Contains(strings.Join(warnings, "\n"), `duplicate bead ID "br-one"`) {
+		t.Fatalf("duplicate warning missing: %#v", warnings)
+	}
+}
+
+func TestNormalizeCommitBeadsRejectsCommaInRepeatedBead(t *testing.T) {
+	_, _, _, err := normalizeCommitBeads([]string{"br-one,br-two"}, nil, "")
+	if err == nil || !strings.Contains(err.Error(), "must not contain commas") {
+		t.Fatalf("comma in --bead should be rejected, err=%v", err)
+	}
+}
+
+func TestNormalizeCommitBeadsRejectsEmptyCSVTokens(t *testing.T) {
+	_, _, _, err := normalizeCommitBeads(nil, []string{"br-one,,br-two"}, "")
+	if err == nil || !strings.Contains(err.Error(), "empty tokens") {
+		t.Fatalf("empty --beads token should be rejected, err=%v", err)
+	}
+}
+
 func TestLintModeHonorsDeclaredTimeoutAboveGlobalCoreTimeout(t *testing.T) {
 	repoRoot := findRepoRoot(t)
 	target := fixtureGitRepo(t)

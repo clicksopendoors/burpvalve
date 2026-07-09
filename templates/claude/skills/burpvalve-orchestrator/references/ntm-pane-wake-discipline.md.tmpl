@@ -19,11 +19,22 @@ or committed docs, not in the terminal nudge.
 
 ## Polling Standard
 
-- Use the runtime `Working (` marker for liveness. Treat a pane as idle only
-  after the marker is absent on two consecutive polls.
+- Use the full busy-marker list for liveness: `Working (`, `Waiting for
+  background terminal`, and `esc to interrupt`. Treat a pane as idle only after
+  all busy markers are absent on two consecutive polls.
 - Confirm completion from the artifact the work promised to produce: a findings
   file, verifier responses file, Agent Mail inbox or message, commit, or HEAD
   state. The pane tail is never the completion signal.
 - Pollers must terminate loudly on completion, stall, or timeout with a recorded
   result. They must not keep spinning silently after the monitored work has
   finished or stopped progressing.
+- Use `scripts/poll_worker.py` for worker evidence artifacts and
+  `scripts/poll_round.py` for verifier response files. These are the default
+  monitors; ad-hoc polling needs a reason in the handoff.
+- Worker blocker thresholds should be sustained, not based on one tail. At
+  30+ minutes of unchanged artifact state or repeated quiet polls, report the
+  blocker and keep polling hold conditions so the orchestrator can auto-resume
+  when the condition clears.
+- For verifier rounds, announcements should name the bead id, staged hash,
+  responses file, packet message ids or packet artifact, pane split, and
+  do-not-resubmit-earlier-round warning.

@@ -1,0 +1,118 @@
+# Orchestrator Toolbox
+
+This is the command catalog for Claude orchestrators. Read it before running a
+round, assigning panes, or opening a gate window.
+
+## Beads And Triage
+
+- `bv --robot-triage --format toon`: first triage view. Use it to see ready
+  work, blockers, graph-important recommendations, and suggested commands.
+- `bv --robot-next`: minimal next-action view when you only need the top ready
+  candidate.
+- `br show <id> --json`: inspect the current tracker record before claiming or
+  closing.
+- `br update <id> --status in_progress`: claim work after confirming it is the
+  intended bead.
+- `br close <id> --reason "<commit/evidence refs>"`: close only after the
+  commit, attestation, and verifier evidence exist.
+- `br sync --flush-only`: export tracker state to `.beads/issues.jsonl` before
+  staging tracker changes.
+
+Do not parse `.beads/issues.jsonl` by hand for scheduling. Use `bv` for graph
+triage and `br` for state changes.
+
+## NTM Robot Surface
+
+Use robot-readable commands only. Bare `ntm` can open an interactive UI.
+
+- `ntm --robot-capabilities`: confirm supported robot actions before any
+  state-changing NTM command.
+- `ntm --robot-snapshot`: capture sessions, panes, identities, attention state,
+  and current pane numbering.
+- `ntm --robot-tail=<session> --panes=<pane>`: inspect recent pane output as
+  liveness context only; tails are not completion evidence.
+- `ntm --robot-activity`: inspect live activity when a snapshot is not enough
+  to decide whether a pane is active.
+- `ntm --robot-send=<session> --panes=<pane> --type=prompt --msg-file=<path>`:
+  send a durable, file-backed wake or prompt after the mail/file context exists.
+- `ntm add <session> N:<model>:<effort>`: spawn deliberately. Choose effort by
+  task type: `xhigh` for critical-path implementers, `high` for judgment-cell
+  verifiers, and `medium` for mechanical verification, lookup, and inventory.
+
+Pane numbers can change after `ntm add`. Never rely on stale pane numbers. Use
+PID-diff identification or a fresh `ntm --robot-snapshot` before every send,
+then verify the target pane identity again after the send.
+
+If the runtime ignores per-spawn effort, use the config-default swap workaround:
+temporarily change the Codex template default effort, spawn the pane, then
+restore the default. Record the workaround and the intended `model:effort` in
+the dispatch note.
+
+## Agent Mail
+
+Register before work and open the expected contact mesh:
+
+- `macro_start_session`: start the project session and register the identity.
+- `register_agent`: lower-level registration when the macro is not available.
+- `set_contact_policy open`: use immediately after registration when the round
+  needs worker/verifier/orchestrator contact.
+- `respond_contact`: approve expected pending requests when operating in a
+  policy that requires pairwise approval.
+- `fetch_inbox` and `fetch_topic`: read durable dispatch, verifier packets, and
+  replies.
+- `send_message`: send claim notices, verifier packets, handoffs, and blockers.
+- `file_reservation_paths` and `release_file_reservations`: reserve exact paths
+  before edits and release after commit, abort, or handoff.
+
+If an identity resets, register again first, then open contact policy again.
+State the old-to-new identity continuity in the completion or verdict body.
+
+## Burpvalve Gate And Verifier Flow
+
+- `burpvalve hash --staged`: compute the staged payload hash before verifier
+  packets.
+- `burpvalve verifier begin`: create the responses binding for the exact
+  staged payload.
+- `burpvalve verifier prompts --json`: regenerate packet text for the current
+  responses binding and staged diff.
+- `burpvalve verifier submit`: submit a verdict only for cells actually
+  inspected in a separate context.
+- `burpvalve commit --responses <file> --agent <name> --model <model>`: run the
+  commit gate with the verifier evidence file named explicitly.
+
+Verifier provenance must be truthful:
+
+- `kind`: for pane/subagent review use `independent_subagent`; use
+  `main_agent` only when policy allows and the main agent really performed the
+  check.
+- `agent`: Agent Mail identity or the named native subagent.
+- `model`: actual model used for the verifier context.
+- `runtime`: include the surface, pane/subagent, and any identity-continuity
+  facts needed to audit the verdict.
+- `separate_context`: `true` only when the verifier actually had a separate
+  context.
+
+Verdicts are not vibes. Use `pass` for satisfied conditions, `not_applicable`
+when the condition truly does not apply and evidence explains why, `fail` for a
+real blocker, and `unknown` when the verifier could not complete the check.
+
+## Monitoring Patterns
+
+Use the shipped scripts as the required monitoring method. Ad-hoc polling needs
+a stated reason in the handoff.
+
+- `scripts/poll_worker.py`: monitor a worker pane. It treats `Working (`,
+  `Waiting for background terminal`, and `esc to interrupt` as busy markers,
+  requires consecutive quiet polls before calling a pane idle, and declares
+  completion only from the evidence artifact named in the dispatch.
+- `scripts/poll_round.py`: monitor a verifier responses file. It emits pending
+  counts, detects unchanged pending counts, can send proactive round
+  announcements, and can auto-wake stuck panes.
+
+Both scripts emit JSONL structured events. Default mode is report/dry-run;
+`--execute` is required for looped polling or terminal wakes.
+
+Round announcements should name the work unit, responses file or artifact,
+pane assignments, exact condition split, and the required completion phrase.
+Auto-wakes should point to the durable artifact or Agent Mail thread, not paste
+large instructions into the terminal.

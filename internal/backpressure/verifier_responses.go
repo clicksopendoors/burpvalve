@@ -21,9 +21,10 @@ type ResponseAdjudication = attestations.ResponseAdjudication
 
 type SubmitVerifierInput struct {
 	ResponseCondition
-	StagedPayloadHash string `json:"staged_payload_hash"`
-	ManifestHash      string `json:"manifest_hash"`
-	ConditionFileHash string `json:"condition_file_hash"`
+	StagedPayloadHash string                    `json:"staged_payload_hash"`
+	ManifestHash      string                    `json:"manifest_hash"`
+	ConditionFileHash string                    `json:"condition_file_hash"`
+	LaneBinding       *attestations.LaneBinding `json:"lane_binding,omitempty"`
 }
 
 type SubmitVerifierOptions struct {
@@ -420,6 +421,9 @@ func validateResponseFileBinding(responses *Responses, input *SubmitVerifierInpu
 	if responses.Binding.ManifestHash != input.ManifestHash {
 		return fmt.Errorf("response file manifest binding is stale: got %q want %q", responses.Binding.ManifestHash, input.ManifestHash)
 	}
+	if err := validateSubmitLaneBinding(responses.Binding.LaneBinding, input.LaneBinding); err != nil {
+		return err
+	}
 	for _, binding := range responses.Binding.Conditions {
 		if binding.ConditionID == input.ConditionID {
 			if binding.ConditionFileHash != input.ConditionFileHash {
@@ -429,6 +433,49 @@ func validateResponseFileBinding(responses *Responses, input *SubmitVerifierInpu
 		}
 	}
 	return fmt.Errorf("response file binding is missing condition %q", input.ConditionID)
+}
+
+func validateSubmitLaneBinding(bound, submitted *attestations.LaneBinding) error {
+	if bound == nil {
+		if submitted != nil {
+			return errors.New("submitted lane_binding is not expected for this single-work-unit response file")
+		}
+		return nil
+	}
+	if submitted == nil {
+		return errors.New("lane-bound response file requires matching submit lane_binding")
+	}
+	if strings.TrimSpace(submitted.LaneID) != strings.TrimSpace(bound.LaneID) {
+		return fmt.Errorf("response file lane id mismatch: got %q want %q", submitted.LaneID, bound.LaneID)
+	}
+	if !sameStringSlice(cleanBeadIDs(submitted.BeadIDs), cleanBeadIDs(bound.BeadIDs)) {
+		return fmt.Errorf("response file lane bead ids mismatch: got %q want %q", strings.Join(cleanBeadIDs(submitted.BeadIDs), ","), strings.Join(cleanBeadIDs(bound.BeadIDs), ","))
+	}
+	if strings.TrimSpace(submitted.Rationale) != strings.TrimSpace(bound.Rationale) {
+		return fmt.Errorf("response file lane rationale mismatch: got %q want %q", submitted.Rationale, bound.Rationale)
+	}
+	if strings.TrimSpace(submitted.AuthorizedBy) != strings.TrimSpace(bound.AuthorizedBy) {
+		return fmt.Errorf("response file lane authorized_by mismatch: got %q want %q", submitted.AuthorizedBy, bound.AuthorizedBy)
+	}
+	if strings.TrimSpace(submitted.AuthorizationRef) != strings.TrimSpace(bound.AuthorizationRef) {
+		return fmt.Errorf("response file lane authorization_ref mismatch: got %q want %q", submitted.AuthorizationRef, bound.AuthorizationRef)
+	}
+	if strings.TrimSpace(submitted.AuthorizationKind) != strings.TrimSpace(bound.AuthorizationKind) {
+		return fmt.Errorf("response file lane authorization_kind mismatch: got %q want %q", submitted.AuthorizationKind, bound.AuthorizationKind)
+	}
+	return nil
+}
+
+func sameStringSlice(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func mergeSupplementalVerifiers(existing, incoming []SupplementalVerifier) ([]SupplementalVerifier, []string) {

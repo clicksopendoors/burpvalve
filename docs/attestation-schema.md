@@ -41,6 +41,22 @@ name the delivery tasks this commit closes. If more than one bead id is recorded
 `coupled_work_rationale` should explain why one staged payload intentionally
 delivers them together.
 
+Lane artifacts are the orchestrator-authorized exception to the usual single
+work-unit shape. A lane artifact has `feature.kind: "lane"`, `feature.id` equal
+to `atomicity.lane.lane_id`, `feature.diff_cluster` equal to
+`lane:<lane_id>`, top-level `bead_ids` matching `atomicity.lane.bead_ids`, and
+`coupled_work_rationale` matching `atomicity.lane.rationale`. Lane atomicity
+uses `atomicity.mode: "lane"` and `one_feature_or_fix: false`; it records
+`lane_id`, `bead_ids`, `rationale`, `authorized_by`, `authorization_ref`, and
+`authorization_kind: "orchestrator"`.
+
+When a lane stages `.beads/issues.jsonl`, every changed JSONL issue id in that
+tracker export must appear in the lane bead ids. `verifier begin` and
+`commit` block if the staged tracker export changes an issue outside the
+declared lane, so an A+B lane cannot silently carry tracker state for C. Remove
+the extra tracker change or regenerate the lane binding with C named and
+rationalized.
+
 Each condition entry records:
 
 - `condition_id`

@@ -179,12 +179,13 @@ gate refuses stale evidence and reports a recovery command.
 ## Install And Release
 
 The installer defaults to `clicksopendoors/burpvalve`, can pin a release tag,
-can install from a local archive, and writes the command shim unless
-`--no-shims` is passed (`install.sh:4`-`install.sh:80`). It supports Linux and
-macOS on amd64 and arm64 (`install.sh:83`-`install.sh:97`), prefers
-`gh release download`, falls back to direct release URLs, verifies the archive
-against `checksums.txt`, and refuses packages missing
-`scripts/bin/burpvalve` (`install.sh:185`-`install.sh:307`).
+can install from a local archive, asks for or reads the preferred skills
+directory, and copies the command executable into `--bin-dir` unless
+`--no-shims` is passed (`install.sh:4`-`install.sh:150`). It supports Linux and
+macOS on amd64 and arm64, accepts agent JSON through `--robots`, prefers
+`gh release download`, falls back to direct release URLs, persists selected
+install locations in Burpvalve config, verifies the archive against
+`checksums.txt`, and refuses packages missing `scripts/bin/burpvalve`.
 
 Public install documentation should use a pinned release tag, prefer the
 download-inspect-run installer path, show piped install only as a tradeoff, and

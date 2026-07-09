@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+"""Poll an NTM worker pane until its declared evidence artifact completes."""
+
+import argparse
+import json
+import subprocess
+import time
+from pathlib import Path
+
+
+BUSY_MARKERS = ("Working (", "Waiting for background terminal", "esc to interrupt")
+
+
+def emit(event, **fields):
+    payload = {"event": event, **fields}
+    print(json.dumps(payload, sort_keys=True), flush=True)
+
+
+def run(cmd):
+    return subprocess.run(cmd, text=True, capture_output=True)
+
+
+def parse_tail(text):
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        return text
+    if isinstance(data, dict):
+        for key in ("tail", "text", "output", "content"):
+            value = data.get(key)
+            if isinstance(value, str):
+                return value
+        if isinstance(data.get("panes"), list):
+            return "\n".join(str(p.get("tail", "")) for p in data["panes"] if isinstance(p, dict))
+    return text
+
+
+def artifact_complete(path, min_bytes):
+    if not path.exists() or not path.is_file():
+        return False
+    return path.stat().st_size >= min_bytes
+
+
+def poll_once(args):
+    capabilities = run(["ntm", "--robot-capabilities"])
+    snapshot = run(["ntm", "--robot-snapshot"])
+    if capabilities.returncode != 0:
+        emit("error", command="ntm --robot-capabilities", stderr=capabilities.stderr.strip())
+        return False, False
+    if snapshot.returncode != 0:
+        emit("error", command="ntm --robot-snapshot", stderr=snapshot.stderr.strip())
+        return False, False
+    tail = run(["ntm", "--robot-tail=" + args.session, "--panes=" + args.pane])
+    text = parse_tail(tail.stdout) if tail.returncode == 0 else ""
+    busy = any(marker in text for marker in BUSY_MARKERS)
+    complete = artifact_complete(Path(args.artifact), args.min_bytes)
+    emit(
+        "poll",
+        pane=args.pane,
+        busy=busy,
+        complete=complete,
+        artifact=args.artifact,
+        tail_ok=tail.returncode == 0,
+    )
+    return busy, complete
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Monitor a worker pane using busy markers and an evidence artifact.")
+    parser.add_argument("--session", default="burpvalve", help="NTM session name")
+    parser.add_argument("--pane", required=True, help="Pane index from a fresh snapshot")
+    parser.add_argument("--artifact", required=True, help="Evidence artifact path that proves completion")
+    parser.add_argument("--min-bytes", type=int, default=1, help="Minimum artifact size for completion")
+    parser.add_argument("--interval", type=float, default=20.0, help="Seconds between polls in --execute mode")
+    parser.add_argument("--max-polls", type=int, default=90, help="Maximum polls in --execute mode")
+    parser.add_argument("--quiet-threshold", type=int, default=2, help="Consecutive non-busy polls before stall")
+    parser.add_argument("--execute", action="store_true", help="Run the polling loop; without this, report once")
+    args = parser.parse_args()
+
+    if not args.execute:
+        emit("dry_run", action="single poll only; add --execute for looped monitoring", artifact=args.artifact)
+        busy, complete = poll_once(args)
+        emit("result", status="complete" if complete else "busy" if busy else "quiet")
+        return 0
+
+    quiet = 0
+    for index in range(1, args.max_polls + 1):
+        busy, complete = poll_once(args)
+        if complete:
+            emit("result", status="complete", polls=index, artifact=args.artifact)
+            return 0
+        quiet = 0 if busy else quiet + 1
+        if quiet >= args.quiet_threshold:
+            emit("result", status="stalled", polls=index, quiet_polls=quiet, artifact=args.artifact)
+            return 2
+        time.sleep(args.interval)
+    emit("result", status="timeout", polls=args.max_polls, artifact=args.artifact)
+    return 3
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

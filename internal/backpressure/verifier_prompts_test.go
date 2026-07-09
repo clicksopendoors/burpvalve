@@ -150,6 +150,73 @@ func TestBuildVerifierPromptsProfilesAndAuthorizationWarning(t *testing.T) {
 	}
 }
 
+func TestBuildVerifierPromptsRendersLaneBinding(t *testing.T) {
+	root := fixtureVerifierPromptProject(t)
+	staged := fakeStaged{paths: []string{"src/app.go"}, content: map[string]string{"src/app.go": "package src\n"}}
+
+	set, err := BuildVerifierPrompts(context.Background(), VerifierPromptOptions{
+		Root:      root,
+		Feature:   "declared-lane-aj41",
+		Condition: "scope-control",
+		Profile:   "native",
+		Lane: LaneOptions{
+			Enabled:          true,
+			LaneID:           "declared-lane-aj41",
+			BeadIDs:          []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+			Rationale:        "same orchestrator-authorized lane",
+			AuthorizationRef: "Agent Mail 4000",
+			AuthorizedBy:     "BronzeDeer",
+		},
+		Staged: staged,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if set.LaneBinding == nil || set.LaneBinding.LaneID != "declared-lane-aj41" {
+		t.Fatalf("set lane binding missing: %#v", set.LaneBinding)
+	}
+	if set.Feature.ID != "declared-lane-aj41" {
+		t.Fatalf("feature id = %q", set.Feature.ID)
+	}
+	packet := set.Packets[0]
+	if packet.LaneBinding == nil || packet.LaneBinding.AuthorizationRef != "Agent Mail 4000" {
+		t.Fatalf("packet lane binding missing: %#v", packet.LaneBinding)
+	}
+	if got := strings.Join(packet.LaneBinding.BeadIDs, ","); got != "burpvalve-aj41.3,burpvalve-aj41.4" {
+		t.Fatalf("lane bead ids = %q", got)
+	}
+	for _, needle := range []string{
+		`"lane_binding"`,
+		`"lane_id": "declared-lane-aj41"`,
+		`"bead_ids": [`,
+		`"burpvalve-aj41.3"`,
+		`"authorization_ref": "Agent Mail 4000"`,
+	} {
+		if !strings.Contains(packet.ResponseSchemaJSON, needle) {
+			t.Fatalf("lane response schema missing %q:\n%s", needle, packet.ResponseSchemaJSON)
+		}
+	}
+	if packet.ConditionFileHashes["dry"] == "" || packet.ConditionFileHashes["scope-control"] == "" {
+		t.Fatalf("packet missing full condition hash map: %#v", packet.ConditionFileHashes)
+	}
+	for _, needle := range []string{
+		"Lane binding:",
+		"Lane id: declared-lane-aj41",
+		"Bead ids: burpvalve-aj41.3, burpvalve-aj41.4",
+		"Rationale: same orchestrator-authorized lane",
+		"Authorized by: BronzeDeer",
+		"Authorization ref: Agent Mail 4000",
+		"judge whether the staged payload stays inside this declared lane boundary",
+		"All condition file hashes:",
+		"dry: sha256:",
+		"scope-control: sha256:",
+	} {
+		if !strings.Contains(packet.Prompt, needle) {
+			t.Fatalf("lane prompt missing %q:\n%s", needle, packet.Prompt)
+		}
+	}
+}
+
 func TestBuildVerifierPromptsAntiRewardHackingScopeText(t *testing.T) {
 	root := fixtureVerifierPromptProject(t)
 	writeFile(t, root, ManifestPath, `conditions:

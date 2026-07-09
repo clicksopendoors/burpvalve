@@ -835,6 +835,80 @@ func TestLoadResponsesRequiresTopLevelConditionsArray(t *testing.T) {
 	}
 }
 
+func TestResponsesSchemaRoundTripsLaneBindingAndLegacyAtomicity(t *testing.T) {
+	createdAt := time.Date(2026, 7, 8, 0, 0, 0, 0, time.UTC)
+	responses := Responses{
+		Atomicity: attestations.Atomicity{
+			Mode:            attestations.AtomicityModeLane,
+			OneFeatureOrFix: false,
+			Message:         "Orchestrator-authorized lane commit naming every bead id.",
+		},
+		Binding: ResponseBinding{
+			StagedPayloadHash: "sha256:payload",
+			ManifestHash:      "sha256:manifest",
+			Conditions: []ResponseConditionBinding{{
+				ConditionID:       "dry",
+				ConditionFile:     "backpressure/dry.md",
+				ConditionFileHash: "sha256:dry",
+			}},
+			LaneBinding: &attestations.LaneBinding{
+				LaneID:            "declared-lane-aj41-95t2",
+				BeadIDs:           []string{"burpvalve-aj41", "burpvalve-95t2"},
+				Rationale:         "one orchestrator ruling plus tracker export",
+				AuthorizedBy:      "BronzeDeer",
+				AuthorizationRef:  "Agent Mail 1234 / ORCHESTRATOR.md ruling",
+				AuthorizationKind: "orchestrator",
+				CreatedAt:         &createdAt,
+			},
+		},
+		Conditions: []ResponseCondition{{
+			ConditionID:    "dry",
+			ConditionFile:  "backpressure/dry.md",
+			VerifierPolicy: attestations.VerifierPolicyIndependentRequired,
+			Verifier:       attestations.Verifier{Kind: attestations.VerifierUnknown},
+			Verdict:        attestations.VerdictUnknown,
+			Message:        "Replace with verifier result for dry.",
+			Evidence:       []string{},
+			NextAction:     "Replace with next action when verdict is fail or unknown.",
+		}},
+	}
+
+	body, err := json.Marshal(responses)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Contains(body, []byte(`"mode":"lane"`)) || !bytes.Contains(body, []byte(`"lane_binding"`)) {
+		t.Fatalf("lane response schema fields missing: %s", string(body))
+	}
+	var decoded Responses
+	if err := json.Unmarshal(body, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Atomicity.Mode != attestations.AtomicityModeLane {
+		t.Fatalf("atomicity mode = %q", decoded.Atomicity.Mode)
+	}
+	if decoded.Binding.LaneBinding == nil || decoded.Binding.LaneBinding.LaneID != "declared-lane-aj41-95t2" {
+		t.Fatalf("lane binding not preserved: %#v", decoded.Binding.LaneBinding)
+	}
+	if got := decoded.Binding.LaneBinding.BeadIDs; len(got) != 2 || got[0] != "burpvalve-aj41" || got[1] != "burpvalve-95t2" {
+		t.Fatalf("lane bead ids = %#v", got)
+	}
+	if decoded.Binding.LaneBinding.CreatedAt == nil || !decoded.Binding.LaneBinding.CreatedAt.Equal(createdAt) {
+		t.Fatalf("lane created_at = %#v", decoded.Binding.LaneBinding.CreatedAt)
+	}
+
+	var legacy Responses
+	if err := json.Unmarshal([]byte(`{"atomicity":{"one_feature_or_fix":true,"message":"single bead"},"conditions":[]}`), &legacy); err != nil {
+		t.Fatal(err)
+	}
+	if legacy.Atomicity.Mode != "" || !legacy.Atomicity.OneFeatureOrFix {
+		t.Fatalf("legacy atomicity changed: %#v", legacy.Atomicity)
+	}
+	if legacy.Binding.LaneBinding != nil {
+		t.Fatalf("legacy response should not synthesize lane binding: %#v", legacy.Binding.LaneBinding)
+	}
+}
+
 func TestValidateResponsesChecksBoundBindingAndPassEvidence(t *testing.T) {
 	root := fixtureProject(t)
 	plan, err := BuildPlan(context.Background(), Options{
@@ -878,6 +952,266 @@ func TestValidateResponsesChecksBoundBindingAndPassEvidence(t *testing.T) {
 			t.Fatalf("error = %v", err)
 		}
 	})
+}
+
+func TestValidateCommitLaneAssertions(t *testing.T) {
+	lane := attestations.LaneBinding{
+		LaneID:            "declared-lane-aj41",
+		BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+		Rationale:         "same orchestrator-authorized lane",
+		AuthorizedBy:      "BronzeDeer",
+		AuthorizationRef:  "Agent Mail 4000",
+		AuthorizationKind: "orchestrator",
+	}
+	responses := &Responses{Binding: ResponseBinding{LaneBinding: &lane}}
+	if err := validateCommitLaneAssertions(responses, PreCommitOptions{Lane: LaneOptions{
+		Enabled:           true,
+		LaneID:            "declared-lane-aj41",
+		BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+		Rationale:         "same orchestrator-authorized lane",
+		AuthorizedBy:      "BronzeDeer",
+		AuthorizationRef:  "Agent Mail 4000",
+		AuthorizationKind: "orchestrator",
+	}}); err != nil {
+		t.Fatalf("matching lane assertions blocked: %v", err)
+	}
+	tests := []struct {
+		name string
+		opts PreCommitOptions
+		want string
+	}{
+		{
+			name: "missing lane binding",
+			opts: PreCommitOptions{Lane: LaneOptions{Enabled: true, LaneID: "declared-lane-aj41"}},
+			want: "binding.lane_binding",
+		},
+		{
+			name: "id mismatch",
+			opts: PreCommitOptions{Lane: LaneOptions{Enabled: true, LaneID: "other"}},
+			want: "lane id mismatch",
+		},
+		{
+			name: "bead mismatch",
+			opts: PreCommitOptions{Lane: LaneOptions{Enabled: true, LaneID: "declared-lane-aj41", BeadIDs: []string{"burpvalve-aj41.3", "other"}}},
+			want: "bead ids mismatch",
+		},
+		{
+			name: "authorization mismatch",
+			opts: PreCommitOptions{Lane: LaneOptions{
+				Enabled:           true,
+				LaneID:            "declared-lane-aj41",
+				BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+				Rationale:         "same orchestrator-authorized lane",
+				AuthorizationRef:  "other",
+				AuthorizedBy:      "BronzeDeer",
+				AuthorizationKind: "orchestrator",
+			}},
+			want: "authorization ref mismatch",
+		},
+		{
+			name: "authorization kind mismatch",
+			opts: PreCommitOptions{Lane: LaneOptions{
+				Enabled:           true,
+				LaneID:            "declared-lane-aj41",
+				BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+				Rationale:         "same orchestrator-authorized lane",
+				AuthorizationRef:  "Agent Mail 4000",
+				AuthorizedBy:      "BronzeDeer",
+				AuthorizationKind: "human",
+			}},
+			want: "authorization kind mismatch",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotResponses := responses
+			if tt.name == "missing lane binding" {
+				gotResponses = &Responses{}
+			}
+			err := validateCommitLaneAssertions(gotResponses, tt.opts)
+			if err == nil || !strings.Contains(err.Error(), tt.want) {
+				t.Fatalf("error = %v, want %q", err, tt.want)
+			}
+		})
+	}
+}
+
+func TestRunPreCommitWritesLaneAttestation(t *testing.T) {
+	root := fixtureProject(t)
+	staged := fixtureStaged()
+	plan, err := BuildPlan(context.Background(), Options{
+		Root:            root,
+		Mode:            "pre-commit",
+		ExplicitFeature: "declared-lane-aj41",
+		Staged:          staged,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := attestations.LaneBinding{
+		LaneID:            "declared-lane-aj41",
+		BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+		Rationale:         "same orchestrator-authorized lane",
+		AuthorizedBy:      "BronzeDeer",
+		AuthorizationRef:  "Agent Mail 4000",
+		AuthorizationKind: "orchestrator",
+	}
+	responses := passingBoundResponses(t, plan)
+	responses.Atomicity = attestations.Atomicity{
+		Mode:            attestations.AtomicityModeLane,
+		OneFeatureOrFix: false,
+		Message:         "Orchestrator-authorized lane declared-lane-aj41.",
+		Lane:            &lane,
+	}
+	responses.Binding.LaneBinding = &lane
+	responsesPath := writeBoundResponses(t, root, plan, responses)
+
+	result, err := RunPreCommit(context.Background(), PreCommitOptions{
+		Root:            root,
+		ExplicitFeature: "declared-lane-aj41",
+		ResponsesPath:   responsesPath,
+		Lane: LaneOptions{
+			Enabled:           true,
+			LaneID:            "declared-lane-aj41",
+			BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+			Rationale:         "same orchestrator-authorized lane",
+			AuthorizedBy:      "BronzeDeer",
+			AuthorizationRef:  "Agent Mail 4000",
+			AuthorizationKind: "orchestrator",
+		},
+		Now:    func() time.Time { return artifactTestTime },
+		Staged: staged,
+	})
+	if err == nil {
+		t.Fatal("unstaged passing artifact should block once")
+	}
+	if result.Status != StatusAttestationWritten {
+		t.Fatalf("status = %q, want %q", result.Status, StatusAttestationWritten)
+	}
+	body, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(result.ArtifactPath)))
+	if err != nil {
+		t.Fatalf("lane artifact not written: %v", err)
+	}
+	var artifact attestations.Artifact
+	if err := json.Unmarshal(body, &artifact); err != nil {
+		t.Fatal(err)
+	}
+	if err := artifact.ValidatePassing(ExpectedBinding(result.Plan)); err != nil {
+		t.Fatalf("lane artifact should validate: %v", err)
+	}
+	if artifact.Feature.Kind != "lane" || artifact.Feature.ID != "declared-lane-aj41" || artifact.Feature.DiffCluster != "lane:declared-lane-aj41" {
+		t.Fatalf("lane feature metadata wrong: %#v", artifact.Feature)
+	}
+	if got := strings.Join(artifact.BeadIDs, ","); got != "burpvalve-aj41.3,burpvalve-aj41.4" {
+		t.Fatalf("artifact bead ids = %q", got)
+	}
+	if artifact.CoupledWorkRationale != "same orchestrator-authorized lane" {
+		t.Fatalf("coupled rationale = %q", artifact.CoupledWorkRationale)
+	}
+}
+
+func TestRunPreCommitRejectsLaneBoundResponsesWithoutLaneAssertions(t *testing.T) {
+	root := fixtureProject(t)
+	staged := fixtureStaged()
+	plan, err := BuildPlan(context.Background(), Options{
+		Root:            root,
+		Mode:            "pre-commit",
+		ExplicitFeature: "declared-lane-aj41",
+		Staged:          staged,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := attestations.LaneBinding{
+		LaneID:            "declared-lane-aj41",
+		BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+		Rationale:         "same orchestrator-authorized lane",
+		AuthorizedBy:      "BronzeDeer",
+		AuthorizationRef:  "Agent Mail 4000",
+		AuthorizationKind: "orchestrator",
+	}
+	responses := passingBoundResponses(t, plan)
+	responses.Atomicity = attestations.Atomicity{
+		Mode:            attestations.AtomicityModeLane,
+		OneFeatureOrFix: false,
+		Message:         "Orchestrator-authorized lane declared-lane-aj41.",
+		Lane:            &lane,
+	}
+	responses.Binding.LaneBinding = &lane
+	responsesPath := writeBoundResponses(t, root, plan, responses)
+
+	result, err := RunPreCommit(context.Background(), PreCommitOptions{
+		Root:            root,
+		ExplicitFeature: "declared-lane-aj41",
+		ResponsesPath:   responsesPath,
+		Now:             func() time.Time { return artifactTestTime },
+		Staged:          staged,
+	})
+	if err == nil || !strings.Contains(err.Error(), "lane-bound responses require --lane") {
+		t.Fatalf("missing lane assertions should block, err=%v result=%#v", err, result)
+	}
+	if result.Status != StatusBlocked || result.BlockedReportPath == "" {
+		t.Fatalf("missing lane assertions should write blocked report: %#v", result)
+	}
+}
+
+func TestValidateResponsesRequiresLaneBindingMatchesAtomicity(t *testing.T) {
+	root := fixtureProject(t)
+	plan, err := BuildPlan(context.Background(), Options{
+		Root:            root,
+		Mode:            "pre-commit",
+		ExplicitFeature: "declared-lane-aj41",
+		Staged:          fixtureStaged(),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := attestations.LaneBinding{
+		LaneID:            "declared-lane-aj41",
+		BeadIDs:           []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+		Rationale:         "same orchestrator-authorized lane",
+		AuthorizedBy:      "BronzeDeer",
+		AuthorizationRef:  "Agent Mail 4000",
+		AuthorizationKind: "orchestrator",
+	}
+	responses := passingBoundResponses(t, plan)
+	responses.Atomicity = attestations.Atomicity{
+		Mode:    attestations.AtomicityModeLane,
+		Message: "Orchestrator-authorized lane declared-lane-aj41.",
+		Lane:    &lane,
+	}
+	responses.Binding.LaneBinding = &lane
+	if err := validateResponses(plan, responses); err != nil {
+		t.Fatalf("matching lane responses should validate: %v", err)
+	}
+	contradictory := *responses
+	contradictory.Atomicity.OneFeatureOrFix = true
+	if err := validateResponses(plan, &contradictory); err == nil || !strings.Contains(err.Error(), "one_feature_or_fix") {
+		t.Fatalf("lane one_feature_or_fix should block, err=%v", err)
+	}
+	missingKind := *responses
+	missingKindLane := *responses.Atomicity.Lane
+	missingKindLane.AuthorizationKind = ""
+	missingKind.Atomicity.Lane = &missingKindLane
+	missingKind.Binding.LaneBinding = &missingKindLane
+	if err := validateResponses(plan, &missingKind); err == nil || !strings.Contains(err.Error(), "authorization metadata") {
+		t.Fatalf("missing lane authorization kind should block, err=%v", err)
+	}
+	wrongKind := *responses
+	wrongKindLane := *responses.Atomicity.Lane
+	wrongKindLane.AuthorizationKind = "human"
+	wrongKind.Atomicity.Lane = &wrongKindLane
+	wrongKind.Binding.LaneBinding = &wrongKindLane
+	if err := validateResponses(plan, &wrongKind); err == nil || !strings.Contains(err.Error(), `not "orchestrator"`) {
+		t.Fatalf("non-orchestrator lane authorization kind should block, err=%v", err)
+	}
+	mismatched := *responses
+	bound := *responses.Binding.LaneBinding
+	bound.AuthorizationRef = "Agent Mail 4001"
+	mismatched.Binding.LaneBinding = &bound
+	if err := validateResponses(plan, &mismatched); err == nil || !strings.Contains(err.Error(), "authorization metadata") {
+		t.Fatalf("mismatched lane binding should block, err=%v", err)
+	}
 }
 
 func TestBuildResponsesTemplateIncludesEveryCondition(t *testing.T) {
@@ -982,6 +1316,149 @@ func TestRunVerifierBeginWritesBoundResponses(t *testing.T) {
 		if responses.Binding.Conditions[i].ConditionFileHash != result.Plan.ConditionFileHashes[condition.ID] {
 			t.Fatalf("condition %d binding hash = %q, want %q", i, responses.Binding.Conditions[i].ConditionFileHash, result.Plan.ConditionFileHashes[condition.ID])
 		}
+	}
+}
+
+func TestRunVerifierBeginWritesLaneBoundResponses(t *testing.T) {
+	root := fixtureProject(t)
+	result, err := RunVerifierBegin(context.Background(), BeginResponsesOptions{
+		Root:            root,
+		ExplicitFeature: "declared-lane-aj41",
+		Lane: LaneOptions{
+			Enabled:          true,
+			LaneID:           "declared-lane-aj41",
+			BeadIDs:          []string{"burpvalve-aj41.3", "burpvalve-aj41.4"},
+			Rationale:        "same orchestrator-authorized lane",
+			AuthorizationRef: "Agent Mail 4000",
+			AuthorizedBy:     "BronzeDeer",
+		},
+		Staged: fixtureStaged(),
+	})
+	if err != nil {
+		t.Fatalf("RunVerifierBegin lane failed: %v", err)
+	}
+	body, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(result.ResponsesPath)))
+	if err != nil {
+		t.Fatalf("responses file not written: %v", err)
+	}
+	var responses Responses
+	if err := json.Unmarshal(body, &responses); err != nil {
+		t.Fatalf("decode lane responses: %v\n%s", err, body)
+	}
+	if responses.Atomicity.Mode != attestations.AtomicityModeLane || responses.Atomicity.OneFeatureOrFix {
+		t.Fatalf("lane atomicity wrong: %#v", responses.Atomicity)
+	}
+	if responses.Binding.LaneBinding == nil || responses.Binding.LaneBinding.LaneID != "declared-lane-aj41" {
+		t.Fatalf("lane binding missing: %#v", responses.Binding.LaneBinding)
+	}
+	if got := responses.Binding.LaneBinding.BeadIDs; len(got) != 2 || got[0] != "burpvalve-aj41.3" || got[1] != "burpvalve-aj41.4" {
+		t.Fatalf("lane bead ids = %#v", got)
+	}
+}
+
+func TestRunVerifierBeginRejectsLaneTrackerExportOutsideDeclaredBeads(t *testing.T) {
+	root := fixtureProject(t)
+	gitOutputCore(t, root, "init", "-q")
+	gitOutputCore(t, root, "config", "user.email", "tests@example.invalid")
+	gitOutputCore(t, root, "config", "user.name", "Burpvalve Tests")
+
+	baseline := `{"id":"burpvalve-aj41.7","status":"open"}
+{"id":"burpvalve-aj41.8","status":"open"}
+{"id":"burpvalve-aj41.9","status":"open"}
+`
+	writeFile(t, root, ".beads/issues.jsonl", baseline)
+	gitOutputCore(t, root, "add", ".")
+	gitOutputCore(t, root, "commit", "-qm", "baseline")
+
+	withOutside := `{"id":"burpvalve-aj41.7","status":"closed"}
+{"id":"burpvalve-aj41.8","status":"closed"}
+{"id":"burpvalve-aj41.9","status":"closed"}
+`
+	writeFile(t, root, ".beads/issues.jsonl", withOutside)
+	gitOutputCore(t, root, "add", ".beads/issues.jsonl")
+
+	lane := LaneOptions{
+		Enabled:          true,
+		LaneID:           "declared-lane-aj41-docs",
+		BeadIDs:          []string{"burpvalve-aj41.7", "burpvalve-aj41.8"},
+		Rationale:        "same orchestrator-authorized lane",
+		AuthorizationRef: "Agent Mail 4000",
+		AuthorizedBy:     "BronzeDeer",
+	}
+	result, err := RunVerifierBegin(context.Background(), BeginResponsesOptions{
+		Root: root,
+		Lane: lane,
+	})
+	if err == nil {
+		t.Fatal("lane tracker export with extra bead id should block")
+	}
+	if !strings.Contains(result.Message, "outside declared lane") || !strings.Contains(result.Message, "burpvalve-aj41.9") {
+		t.Fatalf("message = %q, want outside lane bead id", result.Message)
+	}
+
+	withinLane := `{"id":"burpvalve-aj41.7","status":"closed"}
+{"id":"burpvalve-aj41.8","status":"closed"}
+{"id":"burpvalve-aj41.9","status":"open"}
+`
+	writeFile(t, root, ".beads/issues.jsonl", withinLane)
+	gitOutputCore(t, root, "add", ".beads/issues.jsonl")
+	result, err = RunVerifierBegin(context.Background(), BeginResponsesOptions{
+		Root: root,
+		Lane: lane,
+	})
+	if err != nil {
+		t.Fatalf("lane tracker export limited to declared beads should pass: %v", err)
+	}
+	if result.Status != StatusResponsesWritten {
+		t.Fatalf("status = %q, want %q", result.Status, StatusResponsesWritten)
+	}
+}
+
+func TestRunVerifierBeginRejectsInvalidLaneFlags(t *testing.T) {
+	root := fixtureProject(t)
+	tests := []struct {
+		name string
+		opts BeginResponsesOptions
+		want string
+	}{
+		{
+			name: "one feature conflict",
+			opts: BeginResponsesOptions{
+				Root:       root,
+				OneFeature: true,
+				Lane:       LaneOptions{Enabled: true, LaneID: "lane", BeadIDs: []string{"a", "b"}, Rationale: "r", AuthorizationRef: "ref", AuthorizedBy: "BronzeDeer"},
+			},
+			want: "mutually exclusive",
+		},
+		{
+			name: "feature mismatch",
+			opts: BeginResponsesOptions{
+				Root:            root,
+				ExplicitFeature: "other",
+				Lane:            LaneOptions{Enabled: true, LaneID: "lane", BeadIDs: []string{"a", "b"}, Rationale: "r", AuthorizationRef: "ref", AuthorizedBy: "BronzeDeer"},
+			},
+			want: "must match --lane-id",
+		},
+		{
+			name: "missing authorization",
+			opts: BeginResponsesOptions{
+				Root: root,
+				Lane: LaneOptions{Enabled: true, LaneID: "lane", BeadIDs: []string{"a", "b"}, Rationale: "r"},
+			},
+			want: "--lane-authorization-ref",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.opts.Staged = fixtureStaged()
+			result, err := RunVerifierBegin(context.Background(), tt.opts)
+			if err == nil {
+				t.Fatal("invalid lane options should block")
+			}
+			if !strings.Contains(result.Message, tt.want) {
+				t.Fatalf("message = %q, want %q", result.Message, tt.want)
+			}
+		})
 	}
 }
 

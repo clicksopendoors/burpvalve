@@ -30,13 +30,16 @@ type CIResult struct {
 }
 
 type CIProvenance struct {
-	Path              string `json:"path"`
-	ArtifactKind      string `json:"artifact_kind,omitempty"`
-	Tool              string `json:"tool,omitempty"`
-	ToolVersion       string `json:"tool_version,omitempty"`
-	StagedPayloadHash string `json:"staged_payload_hash,omitempty"`
-	ManifestHash      string `json:"manifest_hash,omitempty"`
-	FeatureID         string `json:"feature_id,omitempty"`
+	Path                 string   `json:"path"`
+	ArtifactKind         string   `json:"artifact_kind,omitempty"`
+	Tool                 string   `json:"tool,omitempty"`
+	ToolVersion          string   `json:"tool_version,omitempty"`
+	StagedPayloadHash    string   `json:"staged_payload_hash,omitempty"`
+	ManifestHash         string   `json:"manifest_hash,omitempty"`
+	FeatureID            string   `json:"feature_id,omitempty"`
+	BeadIDs              []string `json:"bead_ids,omitempty"`
+	LaneID               string   `json:"lane_id,omitempty"`
+	LaneAuthorizationRef string   `json:"lane_authorization_ref,omitempty"`
 }
 
 type CIConditionProvenance struct {
@@ -135,7 +138,7 @@ func assertCommitFeature(explicit string, artifact attestations.Artifact) error 
 }
 
 func ciProvenance(path string, artifact attestations.Artifact) CIProvenance {
-	return CIProvenance{
+	provenance := CIProvenance{
 		Path:              path,
 		ArtifactKind:      string(artifact.ArtifactKind),
 		Tool:              artifact.Tool,
@@ -144,6 +147,28 @@ func ciProvenance(path string, artifact attestations.Artifact) CIProvenance {
 		ManifestHash:      artifact.ManifestHash,
 		FeatureID:         artifact.Feature.ID,
 	}
+	provenance.BeadIDs = uniqueCIStrings(append(provenance.BeadIDs, artifact.BeadIDs...))
+	provenance.BeadIDs = uniqueCIStrings(append(provenance.BeadIDs, artifact.Feature.BeadIDs...))
+	if artifact.Atomicity.Lane != nil {
+		provenance.LaneID = strings.TrimSpace(artifact.Atomicity.Lane.LaneID)
+		provenance.LaneAuthorizationRef = strings.TrimSpace(artifact.Atomicity.Lane.AuthorizationRef)
+		provenance.BeadIDs = uniqueCIStrings(append(provenance.BeadIDs, artifact.Atomicity.Lane.BeadIDs...))
+	}
+	return provenance
+}
+
+func uniqueCIStrings(values []string) []string {
+	seen := map[string]bool{}
+	var unique []string
+	for _, value := range values {
+		value = strings.TrimSpace(value)
+		if value == "" || seen[value] {
+			continue
+		}
+		seen[value] = true
+		unique = append(unique, value)
+	}
+	return unique
 }
 
 func ciConditionProvenance(artifact attestations.Artifact) []CIConditionProvenance {

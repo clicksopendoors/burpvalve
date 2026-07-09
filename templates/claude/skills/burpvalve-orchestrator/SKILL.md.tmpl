@@ -46,6 +46,19 @@ agents from self-certifying weak work; the valve is the fail-closed commit
 gate; a seal is a Burpvalve attestation; a work unit is the atomic work being
 checked; a bead is a Beads/br tracker issue, not the generic name for all work.
 
+## PXPACK Context Packets
+
+PXPACK packets are optional context assistance for fresh orchestrators, not a
+replacement for live instructions or evidence. Live instructions, source files,
+`AGENTS.md`, `ORCHESTRATOR.md`, Beads state, Agent Mail, and current git state
+outrank imaged context. Use Burpvalve-generated `factsheet.txt`,
+`source-map.md`, and `manifest.json` as authoritative packet metadata; run
+`burpvalve pxpack --orchestrator --check <packet-dir>` before relying on a
+packet as current.
+PXPIPE is only the image-lane renderer. Do not treat PXPIPE pages, OCR, or
+renderer manifests as verifier evidence, command authority, or a substitute for
+re-reading cited source files.
+
 ## Quick Start
 
 1. Read `AGENTS.md`, `ORCHESTRATOR.md` when present, and the active work unit.
@@ -59,6 +72,22 @@ checked; a bead is a Beads/br tracker issue, not the generic name for all work.
    with refs, release reservations, and wake the next queued owner.
 6. When git committing, never add co-authorship for Codex or Claude (no Co-Authored-By trailers for AI tools). Author is clicksopendoors only.
 7. Never estimate or reference development time or timelines. Describe scope, sequencing, and blockers instead.
+
+## Lane Commits
+
+Declare a lane only when the owner or orchestrator has explicitly ruled that
+multiple beads are one gate payload. Record the lane id, every bead id, the
+rationale, the authorizer, and the durable authorization ref before packets are
+sent. Lane authorization permits the coupled payload; it is not verifier
+evidence.
+
+All lane commands must use matching `--lane`, `--lane-id`, repeated `--bead`,
+`--lane-rationale`, `--lane-authorization-ref`, and `--authorized-by` values
+from verifier begin through commit. If `.beads/issues.jsonl` is staged, every
+changed tracker issue id must be one of the declared lane bead ids. If a
+tracker export includes another bead, hold the gate and regenerate the lane
+binding with that bead named and rationalized, or remove the extra tracker
+change.
 
 ## Decision Tables
 
@@ -86,6 +115,8 @@ checked; a bead is a Beads/br tracker issue, not the generic name for all work.
 | Script | Default | Explicit Mutation |
 |---|---|---|
 | `scripts/pane_wake.py` | Preflight and print planned wake | `--execute` sends the wake |
+| `scripts/poll_worker.py` | Emit one worker liveness/artifact report | `--execute` runs the polling loop |
+| `scripts/poll_round.py` | Emit one verifier responses-file report | `--execute` loops and sends configured wakes |
 | `scripts/attestation_summary.py` | Read and summarize attestation JSON | None |
 | `scripts/append_finding.py` | Print a dated finding skeleton | `--write` appends to a findings log |
 
@@ -110,10 +141,13 @@ checked; a bead is a Beads/br tracker issue, not the generic name for all work.
 | Agent Mail and file coordination | [references/agent-mail-and-file-coordination.md](references/agent-mail-and-file-coordination.md) |
 | NTM pane wake discipline | [references/ntm-pane-wake-discipline.md](references/ntm-pane-wake-discipline.md) |
 | Beads and gate windows | [references/beads-and-gate-window-operations.md](references/beads-and-gate-window-operations.md) |
+| Orchestrator toolbox | [references/orchestrator-toolbox.md](references/orchestrator-toolbox.md) |
 | Worked gated handoff | [examples/gated-implementation-handoff.md](examples/gated-implementation-handoff.md) |
 | Worked disagreement hold | [examples/verifier-disagreement-hold.md](examples/verifier-disagreement-hold.md) |
 | Worked gate-window release | [examples/gate-window-release.md](examples/gate-window-release.md) |
 | Wake helper | [scripts/pane_wake.py](scripts/pane_wake.py) |
+| Worker poll helper | [scripts/poll_worker.py](scripts/poll_worker.py) |
+| Round poll helper | [scripts/poll_round.py](scripts/poll_round.py) |
 | Attestation summary helper | [scripts/attestation_summary.py](scripts/attestation_summary.py) |
 | Findings-log helper | [scripts/append_finding.py](scripts/append_finding.py) |
 | Operating self-test | [SELF-TEST.md](SELF-TEST.md) |

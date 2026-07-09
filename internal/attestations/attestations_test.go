@@ -1,6 +1,7 @@
 package attestations
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 	"time"
@@ -325,6 +326,181 @@ func TestValidateBlockedRejectsBareFailure(t *testing.T) {
 	artifact.Conditions[0].NextAction = ""
 
 	assertValidationError(t, artifact.ValidateBlocked(expectedBinding()), "missing failure or unknown message")
+}
+
+func TestArtifactSchemaRoundTripsLaneAtomicityAndLegacySingleMode(t *testing.T) {
+	artifact := validPassingArtifact()
+	artifact.Feature = Feature{
+		ID:          "declared-lane-aj41-95t2",
+		Kind:        "lane",
+		Name:        "declared-lane-aj41-95t2",
+		BeadIDs:     []string{"burpvalve-aj41", "burpvalve-95t2"},
+		DiffCluster: "lane:declared-lane-aj41-95t2",
+	}
+	artifact.BeadIDs = []string{"burpvalve-aj41", "burpvalve-95t2"}
+	artifact.CoupledWorkRationale = "one orchestrator ruling plus tracker export"
+	artifact.Atomicity = Atomicity{
+		Mode:            AtomicityModeLane,
+		OneFeatureOrFix: false,
+		Message:         "Orchestrator-authorized lane commit naming every bead id.",
+		Lane: &LaneBinding{
+			LaneID:            "declared-lane-aj41-95t2",
+			BeadIDs:           []string{"burpvalve-aj41", "burpvalve-95t2"},
+			Rationale:         "one orchestrator ruling plus tracker export",
+			AuthorizedBy:      "BronzeDeer",
+			AuthorizationRef:  "Agent Mail 1234 / ORCHESTRATOR.md ruling",
+			AuthorizationKind: "orchestrator",
+		},
+	}
+
+	body, err := json.Marshal(artifact)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{`"kind":"lane"`, `"mode":"lane"`, `"lane":`, `"bead_ids":["burpvalve-aj41","burpvalve-95t2"]`} {
+		if !strings.Contains(string(body), want) {
+			t.Fatalf("artifact JSON missing %s: %s", want, string(body))
+		}
+	}
+	var decoded Artifact
+	if err := json.Unmarshal(body, &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Atomicity.Mode != AtomicityModeLane || decoded.Atomicity.Lane == nil {
+		t.Fatalf("lane atomicity not preserved: %#v", decoded.Atomicity)
+	}
+	if decoded.Feature.Kind != "lane" || decoded.Feature.DiffCluster != "lane:declared-lane-aj41-95t2" {
+		t.Fatalf("lane feature not preserved: %#v", decoded.Feature)
+	}
+	if got := decoded.Atomicity.Lane.AuthorizationKind; got != "orchestrator" {
+		t.Fatalf("authorization_kind = %q", got)
+	}
+
+	var legacy Artifact
+	if err := json.Unmarshal([]byte(`{"atomicity":{"one_feature_or_fix":true,"message":"single bead"}}`), &legacy); err != nil {
+		t.Fatal(err)
+	}
+	if legacy.Atomicity.Mode != "" || legacy.Atomicity.Lane != nil || !legacy.Atomicity.OneFeatureOrFix {
+		t.Fatalf("legacy atomicity changed: %#v", legacy.Atomicity)
+	}
+}
+
+func TestValidatePassingAcceptsCompleteLaneAtomicity(t *testing.T) {
+	artifact := validPassingArtifact()
+	artifact.Feature = Feature{
+		ID:          "declared-lane-aj41-95t2",
+		Kind:        "lane",
+		Name:        "declared-lane-aj41-95t2",
+		BeadIDs:     []string{"burpvalve-aj41", "burpvalve-95t2"},
+		DiffCluster: "lane:declared-lane-aj41-95t2",
+	}
+	artifact.BeadIDs = []string{"burpvalve-aj41", "burpvalve-95t2"}
+	artifact.CoupledWorkRationale = "one orchestrator ruling plus tracker export"
+	artifact.Atomicity = Atomicity{
+		Mode:            AtomicityModeLane,
+		OneFeatureOrFix: false,
+		Message:         "Orchestrator-authorized lane commit naming every bead id.",
+		Lane: &LaneBinding{
+			LaneID:            "declared-lane-aj41-95t2",
+			BeadIDs:           []string{"burpvalve-aj41", "burpvalve-95t2"},
+			Rationale:         "one orchestrator ruling plus tracker export",
+			AuthorizedBy:      "BronzeDeer",
+			AuthorizationRef:  "Agent Mail 1234 / ORCHESTRATOR.md ruling",
+			AuthorizationKind: "orchestrator",
+		},
+	}
+	if err := artifact.ValidatePassing(expectedBinding()); err != nil {
+		t.Fatalf("lane artifact should validate: %v", err)
+	}
+}
+
+func TestValidatePassingRejectsIncompleteLaneAtomicity(t *testing.T) {
+	base := validPassingArtifact()
+	base.Feature = Feature{
+		ID:          "declared-lane-aj41-95t2",
+		Kind:        "lane",
+		Name:        "declared-lane-aj41-95t2",
+		BeadIDs:     []string{"burpvalve-aj41", "burpvalve-95t2"},
+		DiffCluster: "lane:declared-lane-aj41-95t2",
+	}
+	base.BeadIDs = []string{"burpvalve-aj41", "burpvalve-95t2"}
+	base.CoupledWorkRationale = "one orchestrator ruling plus tracker export"
+	base.Atomicity = Atomicity{
+		Mode:    AtomicityModeLane,
+		Message: "Orchestrator-authorized lane commit naming every bead id.",
+		Lane: &LaneBinding{
+			LaneID:            "declared-lane-aj41-95t2",
+			BeadIDs:           []string{"burpvalve-aj41", "burpvalve-95t2"},
+			Rationale:         "one orchestrator ruling plus tracker export",
+			AuthorizedBy:      "BronzeDeer",
+			AuthorizationRef:  "Agent Mail 1234 / ORCHESTRATOR.md ruling",
+			AuthorizationKind: "orchestrator",
+		},
+	}
+	tests := []struct {
+		name   string
+		mutate func(*Artifact)
+		want   string
+	}{
+		{
+			name: "one feature flag set",
+			mutate: func(a *Artifact) {
+				a.Atomicity.OneFeatureOrFix = true
+			},
+			want: "one_feature_or_fix",
+		},
+		{
+			name: "missing lane",
+			mutate: func(a *Artifact) {
+				a.Atomicity.Lane = nil
+			},
+			want: "atomicity.lane",
+		},
+		{
+			name: "bead mismatch",
+			mutate: func(a *Artifact) {
+				a.BeadIDs = []string{"burpvalve-aj41", "other"}
+			},
+			want: "bead_ids must match",
+		},
+		{
+			name: "feature kind mismatch",
+			mutate: func(a *Artifact) {
+				a.Feature.Kind = "feature"
+			},
+			want: "feature kind lane",
+		},
+		{
+			name: "authorization missing",
+			mutate: func(a *Artifact) {
+				a.Atomicity.Lane.AuthorizationRef = ""
+			},
+			want: "authorization_ref",
+		},
+		{
+			name: "authorization kind missing",
+			mutate: func(a *Artifact) {
+				a.Atomicity.Lane.AuthorizationKind = ""
+			},
+			want: "authorization_kind",
+		},
+		{
+			name: "authorization kind not orchestrator",
+			mutate: func(a *Artifact) {
+				a.Atomicity.Lane.AuthorizationKind = "human"
+			},
+			want: `not "orchestrator"`,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			artifact := base
+			lane := *base.Atomicity.Lane
+			artifact.Atomicity.Lane = &lane
+			tt.mutate(&artifact)
+			assertValidationError(t, artifact.ValidatePassing(expectedBinding()), tt.want)
+		})
+	}
 }
 
 func validPassingArtifact() Artifact {

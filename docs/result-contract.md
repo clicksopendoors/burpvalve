@@ -65,6 +65,30 @@ feature detection points to staging one atomic feature or passing `--feature`,
 and a generated passing attestation tells the agent exactly which JSON file to
 stage before rerunning `git commit`.
 
+`burpvalve gate run` reports a journal-backed state machine for the full local
+gate ceremony. Results include the canonical handoff path, `journal_path`,
+current `phase`, ordered step records, `partial_success`, and exact
+`next_steps` for resuming or handing off. Stop phases include `head_mismatch`,
+`dirty_index`, `peer_dirt`, `stage_mismatch`, `hash_mismatch`, `test_failure`,
+`responses_missing`, `verifier_blocked`, `attestation_bounce`,
+`gate_revalidation_failed`, `commit_failed`, `push_journal_failed`,
+`close_or_sync_failed`, and `release_failed`. A successful v1 run records the
+local commit SHA and, when publication is requested, a journaled push command;
+it does not execute the push.
+
+Gate-run journals may include `executable_conditions`. In the current v1
+contract this phase is a serial no-op unless a later configuration explicitly
+enables executable condition fanout. A skipped no-op phase is not evidence that
+extra condition commands ran; it only records that the seam was evaluated and
+left inactive.
+
+In lane mode, `burpvalve verifier begin --lane` writes a response binding with
+`binding.lane_binding`. `burpvalve commit --lane` must repeat matching lane
+assertions: lane id, bead ids, rationale, authorization ref, and authorizer. A
+lane gate blocks on stale response bindings, mismatched lane flags, missing
+lane authorization metadata, or a staged `.beads/issues.jsonl` export that
+changes issue ids outside the declared lane bead ids.
+
 `burpvalve hash --staged --json` and `burpvalve verifier prompts --json` use
 the same staged-path accounting contract. `staged_payload` contains only
 hash-included staged path records. `hash_excluded_staged_payload` contains
@@ -109,6 +133,13 @@ Adjudication records owner/ruling audit metadata only; `final_verdict` never
 turns a primary `fail` or `unknown` into an accepted passing artifact. Explain
 and attestation query surfaces must expose supplemental disagreement with a
 hold/escalate recovery step.
+
+Attestation query records from `attestations list`, `attestations latest`, and
+`attestations show` expose lane metadata as `lane_id` and
+`lane_authorization_ref` when the artifact is lane-bound. The existing
+`bead_ids` field still contains the lane bead ids. `burpvalve ci --commit`
+reports the same lane id and authorization ref in attestation provenance, so CI
+can audit a lane without treating authorization as verifier evidence.
 
 `burpvalve lint` distinguishes real executable enforcement from scaffold-only
 policy text:

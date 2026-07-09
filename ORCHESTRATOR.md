@@ -120,3 +120,26 @@ prevents worker agents from confusing their role with coordination.
   provenance, and adjudications get audit-trail references. Workers should
   report their Agent Mail identity back in their completion message, and the
   orchestrator records it with the evidence.
+
+## Atomicity Override: Lane Commits (owner ruling, 2026-07-08)
+
+- One bead, one commit remains the DEFAULT and is binding on implementer
+  agents, who may never batch on their own judgment.
+- The ORCHESTRATOR may authorize a lane commit: one staged payload covering
+  multiple beads that form a single coherent lane (for example a scrub
+  campaign's residue units, a batch of mechanical closures, or tracker state
+  riding with the work that produced it).
+- Requirements for a valid lane commit:
+  - The override is explicit in the dispatch brief; a worker without that
+    written authorization must split the payload as usual.
+  - The `--atomicity-message` states the truth: that this is an
+    orchestrator-authorized lane of N beads, naming every bead id and the
+    lane rationale. Never assert single-bead atomicity for a batch.
+  - All covered beads close with the same commit and attestation refs, and
+    `BURPVALVE_BEAD` carries the full comma-separated id list where the
+    binding supports it.
+  - Verifiers are told the payload is a declared lane and judge it as such;
+    scope-control review checks the lane boundary, not single-bead scope.
+- The gate's `--one-feature` flag is an assertion surface, not a verified
+  fact; the honesty of the assertion is what this section governs. A
+  first-class `--lane` binding is tracked as product work.

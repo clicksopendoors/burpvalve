@@ -268,10 +268,13 @@ func TestGeneratedClaudeOrchestratorSkillPackageAcceptance(t *testing.T) {
 		"references/agent-mail-and-file-coordination.md",
 		"references/ntm-pane-wake-discipline.md",
 		"references/beads-and-gate-window-operations.md",
+		"references/orchestrator-toolbox.md",
 		"examples/gated-implementation-handoff.md",
 		"examples/verifier-disagreement-hold.md",
 		"examples/gate-window-release.md",
 		"scripts/pane_wake.py",
+		"scripts/poll_worker.py",
+		"scripts/poll_round.py",
 		"scripts/attestation_summary.py",
 		"scripts/append_finding.py",
 	}
@@ -305,10 +308,13 @@ func TestGeneratedClaudeOrchestratorSkillPackageAcceptance(t *testing.T) {
 		"(references/agent-mail-and-file-coordination.md)",
 		"(references/ntm-pane-wake-discipline.md)",
 		"(references/beads-and-gate-window-operations.md)",
+		"(references/orchestrator-toolbox.md)",
 		"(examples/gated-implementation-handoff.md)",
 		"(examples/verifier-disagreement-hold.md)",
 		"(examples/gate-window-release.md)",
 		"(scripts/pane_wake.py)",
+		"(scripts/poll_worker.py)",
+		"(scripts/poll_round.py)",
 		"(scripts/attestation_summary.py)",
 		"(scripts/append_finding.py)",
 		"(SELF-TEST.md)",
@@ -351,8 +357,12 @@ esac
 `)
 	calls := filepath.Join(t.TempDir(), "ntm-calls.txt")
 	env := append(os.Environ(), "PATH="+fakeBin+string(os.PathListSeparator)+os.Getenv("PATH"), "NTM_CALLS="+calls)
-	for _, rel := range []string{"pane_wake.py", "attestation_summary.py", "append_finding.py"} {
-		cmd := exec.Command("python3", filepath.Join(base, "scripts", rel), "--help")
+	for _, rel := range []string{"pane_wake.py", "poll_worker.py", "poll_round.py", "attestation_summary.py", "append_finding.py"} {
+		scriptPath := filepath.Join(base, "scripts", rel)
+		if _, err := os.Stat(scriptPath); err != nil {
+			t.Fatalf("stat generated script %s: %v", rel, err)
+		}
+		cmd := exec.Command("python3", scriptPath, "--help")
 		cmd.Env = env
 		if output, err := cmd.CombinedOutput(); err != nil {
 			t.Fatalf("%s --help failed: %v\n%s", rel, err, output)

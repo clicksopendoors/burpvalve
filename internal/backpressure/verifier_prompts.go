@@ -24,6 +24,7 @@ type VerifierPromptOptions struct {
 	Feature   string
 	Condition string
 	Profile   string
+	Lane      LaneOptions
 	Staged    StagedReader
 }
 
@@ -32,8 +33,10 @@ type VerifierPromptSet struct {
 	Command                   string                    `json:"command"`
 	Profile                   string                    `json:"profile"`
 	Feature                   Feature                   `json:"feature"`
+	LaneBinding               *attestations.LaneBinding `json:"lane_binding,omitempty"`
 	ManifestHash              string                    `json:"manifest_hash"`
 	StagedPayloadHash         string                    `json:"staged_payload_hash"`
+	ConditionFileHashes       map[string]string         `json:"condition_file_hashes"`
 	StagedPayload             []StagedPayloadFile       `json:"staged_payload"`
 	HashExcludedStagedPayload []StagedPayloadFile       `json:"hash_excluded_staged_payload,omitempty"`
 	GeneratedPathPrefixes     []string                  `json:"generated_path_prefixes"`
@@ -49,9 +52,11 @@ type VerifierPromptPacket struct {
 	Profile                   string                      `json:"profile"`
 	FeatureID                 string                      `json:"feature_id"`
 	FeatureName               string                      `json:"feature_name"`
+	LaneBinding               *attestations.LaneBinding   `json:"lane_binding,omitempty"`
 	ConditionID               string                      `json:"condition_id"`
 	ConditionFile             string                      `json:"condition_file"`
 	ConditionFileHash         string                      `json:"condition_file_hash"`
+	ConditionFileHashes       map[string]string           `json:"condition_file_hashes"`
 	ConditionContent          string                      `json:"condition_content"`
 	VerifierPolicy            attestations.VerifierPolicy `json:"verifier_policy"`
 	ManifestHash              string                      `json:"manifest_hash"`
@@ -107,6 +112,16 @@ func BuildVerifierPrompts(ctx context.Context, opts VerifierPromptOptions) (Veri
 	if staged == nil {
 		staged = GitStagedReader{}
 	}
+	if opts.Lane.Enabled {
+		beginOpts := BeginResponsesOptions{
+			ExplicitFeature: opts.Feature,
+			Lane:            opts.Lane,
+		}
+		if err := validateBeginLaneOptions(&beginOpts); err != nil {
+			return VerifierPromptSet{}, err
+		}
+		opts.Feature = strings.TrimSpace(opts.Lane.LaneID)
+	}
 	plan, err := BuildPlan(ctx, Options{
 		Root:            root,
 		Mode:            "pre-commit",
@@ -130,13 +145,20 @@ func BuildVerifierPrompts(ctx context.Context, opts VerifierPromptOptions) (Veri
 	details := verifierPromptFileSlices(ctx, root, staged, allStaged)
 	auth, configWarnings := verifierPromptAuthorization(root, plan.Matrix.Conditions)
 	feature := plan.Features[0]
+	var laneBinding *attestations.LaneBinding
+	if opts.Lane.Enabled {
+		lane := laneBindingFromOptions(opts.Lane)
+		laneBinding = &lane
+	}
 	set := VerifierPromptSet{
 		SchemaVersion:             1,
 		Command:                   "verifier prompts",
 		Profile:                   profile,
 		Feature:                   feature,
+		LaneBinding:               cloneLaneBinding(laneBinding),
 		ManifestHash:              plan.ManifestHash,
 		StagedPayloadHash:         plan.StagedPayloadHash,
+		ConditionFileHashes:       cloneStringMap(plan.ConditionFileHashes),
 		StagedPayload:             append([]StagedPayloadFile(nil), plan.StagedPayloadFiles...),
 		HashExcludedStagedPayload: excluded,
 		GeneratedPathPrefixes:     gitindex.GeneratedPathPrefixes(),
@@ -153,7 +175,7 @@ func BuildVerifierPrompts(ctx context.Context, opts VerifierPromptOptions) (Veri
 		if err != nil {
 			return VerifierPromptSet{}, fmt.Errorf("read condition %s: %w", condition.ID, err)
 		}
-		set.Packets = append(set.Packets, buildVerifierPromptPacket(profile, feature, condition, plan, auth, string(conditionContent), excluded, details, configWarnings))
+		set.Packets = append(set.Packets, buildVerifierPromptPacket(profile, feature, laneBinding, condition, plan, auth, string(conditionContent), excluded, details, configWarnings))
 	}
 	if len(set.Packets) == 0 {
 		return VerifierPromptSet{}, fmt.Errorf("condition %q not found in enabled backpressure matrix", opts.Condition)
@@ -161,7 +183,7 @@ func BuildVerifierPrompts(ctx context.Context, opts VerifierPromptOptions) (Veri
 	return set, nil
 }
 
-func buildVerifierPromptPacket(profile string, feature Feature, condition ConditionSpec, plan Plan, auth VerifierPromptAuth, conditionContent string, excluded []StagedPayloadFile, details []VerifierPromptFileSlice, warnings []string) VerifierPromptPacket {
+func buildVerifierPromptPacket(profile string, feature Feature, laneBinding *attestations.LaneBinding, condition ConditionSpec, plan Plan, auth VerifierPromptAuth, conditionContent string, excluded []StagedPayloadFile, details []VerifierPromptFileSlice, warnings []string) VerifierPromptPacket {
 	policy := attestations.NormalizeVerifierPolicy(condition.VerifierPolicy)
 	response := ResponseCondition{
 		ConditionID:    condition.ID,
@@ -183,9 +205,11 @@ func buildVerifierPromptPacket(profile string, feature Feature, condition Condit
 		Profile:                   profile,
 		FeatureID:                 feature.ID,
 		FeatureName:               feature.Name,
+		LaneBinding:               cloneLaneBinding(laneBinding),
 		ConditionID:               condition.ID,
 		ConditionFile:             condition.Path,
 		ConditionFileHash:         conditionHash,
+		ConditionFileHashes:       cloneStringMap(plan.ConditionFileHashes),
 		ConditionContent:          conditionContent,
 		VerifierPolicy:            policy,
 		ManifestHash:              plan.ManifestHash,
@@ -199,7 +223,7 @@ func buildVerifierPromptPacket(profile string, feature Feature, condition Condit
 		ReadOnlyExpectation:       "Inspect the current staged payload, hash-excluded generated paths, and this condition file only. Do not edit files, stage files, commit, or fabricate confirmation.",
 		SuccessCriteria:           verifierPromptSuccessCriteria(condition.ID),
 		ResponseSchema:            response,
-		ResponseSchemaJSON:        verifierPromptResponseSchemaJSON(response),
+		ResponseSchemaJSON:        verifierPromptResponseSchemaJSON(response, laneBinding),
 		SubmitCommand:             verifierSubmitCommand(feature.ID, condition.ID, plan.StagedPayloadHash, plan.ManifestHash, conditionHash),
 		ProfileNotes:              verifierPromptProfileNotes(profile),
 		Warnings:                  append([]string(nil), warnings...),
@@ -213,11 +237,29 @@ func renderVerifierPromptPacket(packet VerifierPromptPacket) string {
 	fmt.Fprintln(&b, packet.Authorization.Message)
 	fmt.Fprintln(&b)
 	fmt.Fprintf(&b, "Feature: %s (%s)\n", packet.FeatureID, packet.FeatureName)
+	if packet.LaneBinding != nil {
+		fmt.Fprintln(&b, "Lane binding:")
+		fmt.Fprintf(&b, "- Lane id: %s\n", packet.LaneBinding.LaneID)
+		fmt.Fprintf(&b, "- Bead ids: %s\n", strings.Join(packet.LaneBinding.BeadIDs, ", "))
+		fmt.Fprintf(&b, "- Rationale: %s\n", packet.LaneBinding.Rationale)
+		fmt.Fprintf(&b, "- Authorized by: %s\n", packet.LaneBinding.AuthorizedBy)
+		fmt.Fprintf(&b, "- Authorization ref: %s\n", packet.LaneBinding.AuthorizationRef)
+		fmt.Fprintf(&b, "- Authorization kind: %s\n", packet.LaneBinding.AuthorizationKind)
+		if packet.ConditionID == "scope-control" {
+			fmt.Fprintln(&b, "- Scope-control instruction: judge whether the staged payload stays inside this declared lane boundary, not whether it is a single-bead payload.")
+		}
+	}
 	fmt.Fprintf(&b, "Condition: %s (%s)\n", packet.ConditionID, packet.ConditionFile)
 	fmt.Fprintf(&b, "Verifier policy: %s\n", packet.VerifierPolicy)
 	fmt.Fprintf(&b, "Staged payload hash: %s\n", packet.StagedPayloadHash)
 	fmt.Fprintf(&b, "Manifest hash: %s\n", packet.ManifestHash)
 	fmt.Fprintf(&b, "Condition file hash: %s\n", packet.ConditionFileHash)
+	if len(packet.ConditionFileHashes) > 0 {
+		fmt.Fprintln(&b, "All condition file hashes:")
+		for _, id := range sortedStringMapKeys(packet.ConditionFileHashes) {
+			fmt.Fprintf(&b, "- %s: %s\n", id, packet.ConditionFileHashes[id])
+		}
+	}
 	fmt.Fprintln(&b, "Read-only expectation: "+packet.ReadOnlyExpectation)
 	fmt.Fprintln(&b)
 	fmt.Fprintln(&b, "Hash-included staged payload:")
@@ -267,6 +309,35 @@ func renderVerifierPromptPacket(packet VerifierPromptPacket) string {
 	fmt.Fprintln(&b)
 	fmt.Fprintln(&b, "Return JSON matching the inline schema for this packet. Do not fabricate subagent confirmation.")
 	return strings.TrimSpace(b.String())
+}
+
+func cloneLaneBinding(lane *attestations.LaneBinding) *attestations.LaneBinding {
+	if lane == nil {
+		return nil
+	}
+	clone := *lane
+	clone.BeadIDs = append([]string(nil), lane.BeadIDs...)
+	return &clone
+}
+
+func cloneStringMap(values map[string]string) map[string]string {
+	if len(values) == 0 {
+		return nil
+	}
+	clone := make(map[string]string, len(values))
+	for key, value := range values {
+		clone[key] = value
+	}
+	return clone
+}
+
+func sortedStringMapKeys(values map[string]string) []string {
+	keys := make([]string, 0, len(values))
+	for key := range values {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	return keys
 }
 
 func verifierPromptAllStagedEntries(ctx context.Context, root string, staged StagedReader) ([]StagedPayloadFile, error) {
@@ -389,7 +460,7 @@ func verifierPromptSuccessCriteria(conditionID string) string {
 	return criteria
 }
 
-func verifierPromptResponseSchemaJSON(response ResponseCondition) string {
+func verifierPromptResponseSchemaJSON(response ResponseCondition, laneBinding *attestations.LaneBinding) string {
 	schema := map[string]any{
 		"condition_id":       response.ConditionID,
 		"condition_file":     response.ConditionFile,
@@ -401,22 +472,25 @@ func verifierPromptResponseSchemaJSON(response ResponseCondition) string {
 		"message":            response.Message,
 		"evidence":           response.Evidence,
 		"next_action":        response.NextAction,
-		"supplemental_verifiers": []map[string]any{
-			{
-				"verifier":       response.Verifier,
-				"verdict":        "pass | not_applicable | fail | unknown",
-				"message":        "supplemental verifier finding",
-				"evidence":       []string{"supplemental evidence"},
-				"transcript_ref": "optional transcript reference",
-				"next_action":    "required for fail or unknown",
-			},
+	}
+	if laneBinding != nil {
+		schema["lane_binding"] = laneBinding
+	}
+	schema["supplemental_verifiers"] = []map[string]any{
+		{
+			"verifier":       response.Verifier,
+			"verdict":        "pass | not_applicable | fail | unknown",
+			"message":        "supplemental verifier finding",
+			"evidence":       []string{"supplemental evidence"},
+			"transcript_ref": "optional transcript reference",
+			"next_action":    "required for fail or unknown",
 		},
-		"adjudication": map[string]any{
-			"authority":     "agent or person who ruled on a disagreement",
-			"summary":       "ruling summary",
-			"final_verdict": "optional final verdict",
-			"audit_ref":     "Agent Mail message id, thread id, or equivalent audit reference",
-		},
+	}
+	schema["adjudication"] = map[string]any{
+		"authority":     "agent or person who ruled on a disagreement",
+		"summary":       "ruling summary",
+		"final_verdict": "optional final verdict",
+		"audit_ref":     "Agent Mail message id, thread id, or equivalent audit reference",
 	}
 	body, err := json.MarshalIndent(schema, "", "  ")
 	if err != nil {

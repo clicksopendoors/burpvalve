@@ -26,6 +26,8 @@ Claude can enter a Burpvalve repo through two explicit routes:
 When both the skill and this file exist, the skill is the procedural entry
 point for Claude orchestration. This file records project-specific operating
 preferences and links back to the canonical contract instead of replacing it.
+The concrete command catalog lives in
+`.claude/skills/burpvalve-orchestrator/references/orchestrator-toolbox.md`.
 
 ## Role Split
 
@@ -53,6 +55,10 @@ preferences and links back to the canonical contract instead of replacing it.
 - Record each pane's model and effort in dispatch notes. Adjust a running pane
   only between rounds, never mid-verification; for long mechanical phases,
   respawn at the right tier instead of paying `xhigh` for lookups.
+- If per-spawn effort is not honored by the NTM runtime, use the documented
+  config-default swap workaround from the toolbox: temporarily set the Codex
+  template default effort, spawn the pane, then restore the default. Record the
+  workaround in the dispatch notes.
 
 ## Conduct Rules
 
@@ -82,6 +88,9 @@ preferences and links back to the canonical contract instead of replacing it.
   verdicts, file reservations, and adjudications. Workers must report their
   Agent Mail identity in completion messages so the orchestrator can record it
   with the evidence.
+- After any MCP reset or identity churn, register fresh, set contact policy
+  open again, approve expected pending contacts, and state identity continuity
+  in reports or verdicts.
 
 ## Contact Mesh
 
@@ -109,6 +118,9 @@ preferences and links back to the canonical contract instead of replacing it.
 - Use verify-early, gate-fast choreography in shared queues: send verifier
   packets at park time, bind them to the staged-payload hash, and keep
   `GATE-WINDOW` free while verdicts are pending.
+- Round-bound verifier announcements must name the bead id, staged hash,
+  responses file, packet message ids or packet artifact, pane split, and a
+  do-not-resubmit-earlier-round warning.
 - Hold `GATE-WINDOW` only for mechanics: confirm the index is empty, stage the
   payload, confirm the hash matches verified evidence, run the gate, commit,
   push once when required, close, release, and wake.
@@ -118,13 +130,48 @@ preferences and links back to the canonical contract instead of replacing it.
 ## Monitoring Discipline
 
 - Never treat a pane tail or a single grep hit as completion evidence.
+- Use the shipped orchestrator-skill polling scripts as the required monitoring
+  method: `scripts/poll_worker.py` for worker evidence artifacts and
+  `scripts/poll_round.py` for verifier response files. Ad-hoc monitors require
+  a stated reason in the handoff.
 - A pane is live while the runtime `Working (` marker is present. Treat it as
-  idle only after that marker is absent on two consecutive polls.
+  idle only after the full busy-marker list is absent on two consecutive polls:
+  `Working (`, `Waiting for background terminal`, and `esc to interrupt`.
 - Completion is proven by the expected artifact: findings file, verifier
   responses file, Agent Mail inbox or message, commit, or HEAD state named in
   the handoff. The pane tail is not the completion signal.
 - Pollers must terminate loudly with a recorded result on completion, stall, or
   timeout; they must not spin silently or leave the orchestrator idle.
+- Worker blockers should trip after sustained silence or unchanged artifacts,
+  not after one quiet tail. At a 30+ minute blocker threshold, poll hold
+  conditions and auto-resume when the condition clears; do not report and idle.
+- Re-verify the index at action time before every stage, hash, gate, commit,
+  close, or wake. A prior clean check does not authorize a later mutation.
+
+## Spark Gate-Operator Ritual
+
+- A dedicated low-tier pane may execute the commit-gate ceremony from prepared
+  hash-bound handoffs: index check, stage named files, verifier begin, packet
+  relay, cell wait, gate commit, attestation staging, commit, push when
+  required, bead close/sync, reservation release, and next wake.
+- Spark escalates instead of judging. Hash mismatch, dirty index or peer dirt,
+  verifier disagreement, any fail or unknown cell, test failure, or any
+  unpredicted state means halt and report the blocker.
+- Handoffs must be fully prepared: exact file list, commit message, bead refs,
+  verifier pane split, responses file, expected hashes, and recovery owner.
+- The fail-closed valve distrusts its operator, so cheap capacity can run
+  repeatable mechanics while expensive capacity stays on implementation and
+  judgment cells.
+
+## Lane Commits
+
+- One bead, one commit remains the default worker rule in `AGENTS.md`.
+- Only the orchestrator may authorize a lane commit, and only by explicitly
+  naming the lane, every covered bead id, and the rationale in the dispatch.
+- The atomicity message must tell the truth: it is an
+  orchestrator-authorized lane, not single-bead atomicity.
+- Keep this override on the orchestrator surface. Do not weaken the worker
+  contract in `AGENTS.md`.
 
 ## Audit And Rollback Duties
 

@@ -65,15 +65,26 @@ curl -fsSL "https://raw.githubusercontent.com/clicksopendoors/burpvalve/${versio
 ```
 
 The downloaded-file path is safer because you can read `install.sh` first and
-let the installer ask for final confirmation. Press Enter to accept the
-recommended skills directory default:
+let the installer ask for your preferred skills directory and final
+confirmation. Press Enter to accept the remembered or recommended skills
+directory default:
 
 ```text
 ~/skills
 ```
 
-The final confirmation defaults to No. Pass `--yes` only for noninteractive
-installs where `--skills-dir` and `--bin-dir` are already explicit.
+The installer persists the selected `skills_dir` and `bin_dir` in Burpvalve
+config for future upgrades. The final confirmation defaults to No. Pass `--yes`
+only for noninteractive installs where `--skills-dir` and `--bin-dir` are
+already explicit.
+
+Agent installs can also provide JSON on stdin:
+
+```bash
+archive="dist/burpvalve_$(go env GOOS)_$(go env GOARCH).tar.gz"
+printf '{"from_archive":"%s","skills_dir":"%s","bin_dir":"%s","confirm":true}\n' "$archive" "$HOME/skills" "$HOME/.local/bin" \
+  | bash install.sh --robots
+```
 
 Pinned install:
 
@@ -102,6 +113,7 @@ burpvalve --version
 burpvalve -h
 burpvalve init -h
 burpvalve setup --json
+test ! -L "$(command -v burpvalve)"
 jsm validate "$HOME/skills/burpvalve"
 ```
 

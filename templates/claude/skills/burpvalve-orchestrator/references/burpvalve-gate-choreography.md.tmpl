@@ -23,7 +23,8 @@ Use this queue pattern when multiple agents share one gate window:
 
 1. Claim the Beads issue when present and reserve exact files.
 2. Implement only the work-unit payload.
-3. Confirm the index is empty before staging.
+3. Confirm the index is empty before staging, then re-check the index at each
+   later action boundary before hash, gate, commit, close, or wake.
 4. Stage the payload and confirm the staged hash matches current verifier
    evidence.
 5. Assemble responses from actual verifier verdicts.
@@ -34,5 +35,67 @@ Use this queue pattern when multiple agents share one gate window:
 10. Close the Beads issue when present, sync beads, release reservations, and
     wake the next owner.
 
+For an orchestrator-declared lane, replace the single-feature begin and commit
+flags with matching lane assertions: `--lane`, `--lane-id`, repeated `--bead`,
+`--lane-rationale`, `--lane-authorization-ref`, and `--authorized-by`. Before
+mailing packets, check that staged `.beads/issues.jsonl` changes touch only
+the declared bead ids. If the tracker export includes another bead id, stop the
+gate and either remove that tracker change or redeclare the lane with the bead
+named and rationalized.
+
 Never use `--no-verify`. Never invent evidence. If the valve burps the work
 unit back, the blocked gate is a real finding, not a formatting problem.
+
+## Gate Run Handoffs
+
+Use `burpvalve gate run` when the handoff is already authored, exact, and
+hash-bound. The handoff must name the expected `HEAD`, exact stage paths,
+feature or lane binding, response file, commit message, bead close/sync intent,
+and any authorized release or wake cleanup.
+
+Preferred sequence:
+
+1. Run `burpvalve gate run --dry-run --handoff <file> --json`.
+2. Confirm the dry-run reports the intended paths, feature or lane binding,
+   responses file, bead ids, canonical handoff copy, and journal path.
+3. Run `burpvalve gate run --handoff <file> --yes --json` only when the current
+   state still matches the handoff.
+4. If the result stops, follow the structured `next_steps` or hand the blocker
+   to the named owner. Do not patch around the stop.
+5. If the result succeeds and includes a journaled push command, review and run
+   that push as an orchestrator step. Gate run v1 does not push by itself.
+
+Gate run may release Agent Mail reservations only when the handoff explicitly
+authorizes that cleanup phase. Wake references remain handoff output; they are
+not verifier verdicts.
+
+## Spark Gate-Operator Ritual
+
+Use a dedicated low-tier gate operator only when the handoff is already
+prepared and hash-bound. The operator runs mechanics, not judgment.
+
+Required handoff:
+
+- exact file list and commit message;
+- bead refs and closure text;
+- staged payload hash or instructions to compute it before packet relay;
+- verifier pane split, responses file, and packet message ids or packet
+  artifact;
+- expected attestation path and push/close/sync order;
+- recovery owner for blockers.
+
+Spark sequence:
+
+1. Re-check the index and worktree state at action time.
+2. Stage only the named files and compute or confirm the staged hash.
+3. Begin or reuse the verifier responses binding only for that exact hash.
+4. Relay packets, wake panes, and wait for all cells to be confirmed.
+5. Run the Burpvalve gate, stage only the generated attestation, and commit
+   through the live hook.
+6. Push when required, close the bead with refs, sync tracker state, release
+   reservations, and wake the next owner.
+
+Hard stops: hash mismatch, dirty index or peer dirt, verifier disagreement,
+any fail or unknown cell, test failure, missing attestation, push failure, or
+any state the handoff did not predict. Spark reports the blocker and halts; it
+does not reinterpret evidence or waive a condition.

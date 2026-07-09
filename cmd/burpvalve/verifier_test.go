@@ -148,6 +148,57 @@ func TestVerifierBeginCommandWritesBoundResponses(t *testing.T) {
 	}
 }
 
+func TestVerifierBeginCommandWritesLaneBoundResponses(t *testing.T) {
+	repoRoot := findRepoRoot(t)
+	target := fixtureGitRepo(t)
+	writeCLIFile(t, target, "cmd/app/main.go", "package main\n")
+	run(t, target, "git", "add", "cmd/app/main.go")
+
+	stdout, stderr, err := runBurpvalve(t, repoRoot, "verifier", "begin",
+		"--root", target,
+		"--feature", "lane-aj41",
+		"--lane",
+		"--lane-id", "lane-aj41",
+		"--bead", "burpvalve-aj41.3",
+		"--beads", "burpvalve-aj41.4,burpvalve-aj41.5",
+		"--lane-rationale", "authorized lane payload",
+		"--lane-authorization-ref", "ORCH-2026-07-08",
+		"--authorized-by", "BronzeDeer",
+		"--json")
+	if err != nil {
+		t.Fatalf("lane verifier begin failed: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+	}
+	if len(stderr) != 0 {
+		t.Fatalf("lane verifier begin json should not write stderr:\n%s", stderr)
+	}
+	var result backpressure.BeginResponsesResult
+	if err := json.Unmarshal([]byte(stdout), &result); err != nil {
+		t.Fatalf("decode lane begin result: %v\n%s", err, stdout)
+	}
+	body, err := os.ReadFile(filepath.Join(target, filepath.FromSlash(result.ResponsesPath)))
+	if err != nil {
+		t.Fatalf("responses file not written: %v", err)
+	}
+	var responses backpressure.Responses
+	if err := json.Unmarshal(body, &responses); err != nil {
+		t.Fatalf("decode lane responses file: %v\n%s", err, body)
+	}
+	if responses.Binding.LaneBinding == nil {
+		t.Fatalf("lane binding missing: %#v", responses.Binding)
+	}
+	lane := responses.Binding.LaneBinding
+	if responses.Atomicity.Mode != "lane" || responses.Atomicity.OneFeatureOrFix {
+		t.Fatalf("lane atomicity not recorded: %#v", responses.Atomicity)
+	}
+	if lane.LaneID != "lane-aj41" || lane.Rationale != "authorized lane payload" ||
+		lane.AuthorizationRef != "ORCH-2026-07-08" || lane.AuthorizedBy != "BronzeDeer" {
+		t.Fatalf("lane binding metadata mismatch: %#v", lane)
+	}
+	if got, want := strings.Join(lane.BeadIDs, ","), "burpvalve-aj41.3,burpvalve-aj41.4,burpvalve-aj41.5"; got != want {
+		t.Fatalf("lane bead ids = %q, want %q", got, want)
+	}
+}
+
 func TestVerifierBeginCommandRequiresAtomicity(t *testing.T) {
 	repoRoot := findRepoRoot(t)
 	target := fixtureGitRepo(t)

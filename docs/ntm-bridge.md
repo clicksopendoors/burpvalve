@@ -109,8 +109,12 @@ verifier kind for the cell.
 
 Burpvalve owns contracts, prompts, evidence surfaces, and commit gates. Agent
 Mail, NTM, and Beads are coordination substrates. Burpvalve never spawns panes,
-monitors panes, sends Agent Mail, or turns coordination activity into automatic
-verification evidence.
+monitors panes, or turns coordination activity into automatic verification
+evidence. Burpvalve generally does not own Agent Mail coordination; the narrow
+exception is `burpvalve gate run`, which may release Agent Mail file
+reservations through MCP only when the prepared handoff explicitly authorizes
+that cleanup phase. That release is post-gate handoff cleanup, not verifier
+evidence and not permission to send arbitrary coordination mail.
 
 Prompt-bank entries such as `verifier-bootstrap`, `verifier-brief`, and
 `verifier-packet-relay` should be used when available to keep peer-pane packets

@@ -1,7 +1,7 @@
 # burpvalve
 
-![Status](https://img.shields.io/badge/status-pre_public_launch-555)
-![Release](https://img.shields.io/badge/release-v0.2.1-2ea44f)
+![Status](https://img.shields.io/badge/status-public_source_snapshot-555)
+![Source](https://img.shields.io/badge/source-v0.3.0-2ea44f)
 ![CI](https://github.com/clicksopendoors/burpvalve/actions/workflows/ci.yml/badge.svg?branch=main)
 ![Go](https://img.shields.io/badge/go-1.25-00ADD8)
 ![License](https://img.shields.io/badge/license-MIT-blue)
@@ -14,7 +14,7 @@ Agents build pressure. Burpvalve makes them earn the release.
 
 ## Install
 
-Use a pinned release tag:
+Use a pinned published release tag:
 
 ```bash
 version="v0.2.1"
@@ -40,6 +40,10 @@ Release packages are built for Linux and macOS on amd64 and arm64. Do not use
 Go's module installer; the public install path is the release package and
 installer.
 
+This branch documents the v0.3.0 public source snapshot. Tagged v0.3.0 release
+archives are separate from this snapshot and are not implied by the install
+example above.
+
 ## The Problem
 
 Coding agents can write code, declare it done, and hand the pressure to a human
@@ -60,10 +64,14 @@ gate could have shown the agent directly.
 | Operating contract | `AGENTS.md`, optional Claude route, and standard instructions for agents. |
 | Project scaffold | `docs/`, `plans/`, `log/`, `backpressure/`, hooks, and optional `.beads/` setup. |
 | Commit valve | `burpvalve commit` refuses staged work without matching verifier evidence. |
+| Gate runner | `burpvalve gate run` executes exact prepared handoffs and journals the ceremony. |
 | Evidence ledger | Passing seals under `backpressure/attestations/` and blocked reports under `log/backpressure/failed/`. |
 | Lint runner | Exact `lint_commands` from `backpressure/manifest.yaml`, with honest `not_enforced` output when none exist. |
 | CI audit | `burpvalve ci` validates staged or committed attestation evidence. |
 | Verifier packets | `burpvalve verifier prompts` and `verifier begin/submit` package and merge read-only verifier cells. |
+| Lane commits | `--lane` binds orchestrator-authorized multi-bead payloads to explicit rationale and authorization metadata. |
+| PXPACK packets | `burpvalve pxpack` builds optional orchestrator context packets with factsheets, source maps, and stale checks. |
+| Orchestrator toolbox | The Claude orchestrator skill ships gate choreography, polling helpers, Spark rituals, and role-split references. |
 | Agent prompts | `burpvalve prompts` exposes canonical orchestration prompts from the installed binary. |
 | Beads helpers | `burpvalve beads preflight`, `drift`, and `close` help close Beads-backed work through the valve. |
 
@@ -127,6 +135,88 @@ git commit -m "feat: deliver br-123"
 If any enabled condition is missing, stale, failed, unknown, malformed, or
 unsupported by its verifier policy, Burpvalve writes a blocked report instead of
 letting the commit through.
+
+## Orchestrated Gate Work
+
+Burpvalve v0.3.0 adds the surfaces that proved useful in the multi-agent
+release run: exact gate handoffs, lane commits, context packets, and a shipped
+orchestrator toolbox.
+
+### Gate handoffs
+
+Use `burpvalve gate run` when an orchestrator has already prepared the gate
+handoff. The handoff names the expected `HEAD`, staged paths, feature or lane
+binding, responses file, tests, commit message, bead close/sync intent, and any
+authorized reservation cleanup.
+
+```bash
+burpvalve gate run --dry-run \
+  --handoff log/backpressure/gate-runs/<id>-handoff.json --json
+burpvalve gate run \
+  --handoff log/backpressure/gate-runs/<id>-handoff.json --yes --json
+```
+
+The runner stages only the declared paths, checks hashes, refuses stale
+responses or verifier disagreement, runs the same attestation loop as
+`burpvalve commit`, and journals the outcome. In v1 it does not push; if the
+handoff requests publication, the journal records the exact `git push` command
+for an orchestrator to review and run.
+
+### Lane commits
+
+Lane mode covers the narrow case where an orchestrator authorizes one atomic
+payload to close multiple Beads issues. The verifier round and commit command
+must repeat the same lane id, bead ids, rationale, authorization reference, and
+authorizer.
+
+```bash
+burpvalve verifier begin --lane --lane-id declared-lane-aj41 \
+  --bead br-123 --bead br-456 \
+  --lane-rationale "same orchestrator-authorized lane" \
+  --lane-authorization-ref "Agent Mail 4000" \
+  --authorized-by BronzeDeer --json
+
+burpvalve commit --lane --lane-id declared-lane-aj41 \
+  --bead br-123 --bead br-456 \
+  --lane-rationale "same orchestrator-authorized lane" \
+  --lane-authorization-ref "Agent Mail 4000" \
+  --authorized-by BronzeDeer \
+  --responses log/backpressure/responses/<hash>.json
+```
+
+Tracker exports are checked against the lane. If `.beads/issues.jsonl` includes
+changed issue ids outside the declared beads, Burpvalve blocks until the export
+is narrowed or the lane is redeclared by the orchestrator.
+
+### PXPACK orchestrator context
+
+`burpvalve pxpack` builds optional PXPIPE-backed context packets for dense
+orchestrator briefings. Burpvalve owns the safety contract: factsheets,
+source maps, manifest hashes, stale checks, sensitive-input preflight, and the
+validation gate that decides whether a packet workflow is good enough to
+recommend.
+
+```bash
+burpvalve pxpack --orchestrator \
+  --out backpressure/pxpipe-packets/orchestrator-bootstrap --json
+burpvalve pxpack --orchestrator \
+  --check backpressure/pxpipe-packets/orchestrator-bootstrap --json
+burpvalve pxpack validate \
+  --fixture cmd/burpvalve/testdata/pxpack-validation-safe.json --json
+```
+
+PXPIPE remains an image-lane renderer only. Live authority stays in the task
+brief, source files, verifier packets, and response files.
+
+### Orchestrator toolbox and scripts
+
+The packaged Claude orchestrator skill now includes reusable references for
+gate choreography, verifier fanout, lane declarations, PXPACK use, NTM pane
+wake discipline, and the orchestrator toolbox. It also ships `poll_worker.py`
+and `poll_round.py` templates so worker liveness and verifier-response polling
+use a consistent method instead of ad-hoc terminal watching. Spark
+gate-operator templates cover low-effort ceremony execution from exact
+handoffs.
 
 ## Vocabulary
 
@@ -244,6 +334,11 @@ burpvalve commit --feature br-123
 burpvalve commit --feature docs-example --bead br-123
 burpvalve commit --feature docs-example --bead br-123 --bead br-456 \
   --bead-rationale "same staged payload"
+burpvalve commit --lane --lane-id declared-lane-aj41 \
+  --bead br-123 --bead br-456 \
+  --lane-rationale "same orchestrator-authorized lane" \
+  --lane-authorization-ref "Agent Mail 4000" \
+  --authorized-by BronzeDeer
 burpvalve commit --responses responses.json --agent codex --model gpt-5
 ```
 
@@ -251,12 +346,25 @@ If one staged payload intentionally closes multiple delivery beads, repeat
 `--bead` and include `--bead-rationale`. Without a rationale, Burpvalve refuses
 the command instead of normalizing unrelated coupled work.
 
+Lane mode is stricter than a multi-bead commit. It is for an
+orchestrator-authorized lane, not worker self-batching, and the lane assertions
+must match the hash-bound verifier response file. If `.beads/issues.jsonl` is
+staged in a lane, every changed issue id in that tracker export must be named
+by `--bead`; otherwise the valve blocks until the extra tracker change is
+removed or the lane binding is regenerated with that bead and rationale.
+
 ### `burpvalve verifier`
 
 Prepare and submit read-only verifier evidence.
 
 ```bash
-burpvalve verifier begin --feature br-123 --json
+burpvalve verifier begin --feature br-123 --one-feature \
+  --atomicity-message "staged payload maps only to br-123" --json
+burpvalve verifier begin --lane --lane-id declared-lane-aj41 \
+  --bead br-123 --bead br-456 \
+  --lane-rationale "same orchestrator-authorized lane" \
+  --lane-authorization-ref "Agent Mail 4000" \
+  --authorized-by BronzeDeer --json
 burpvalve verifier prompts --feature br-123 --json
 burpvalve verifier submit --responses log/backpressure/responses/<hash>.json \
   --condition dry \
@@ -268,6 +376,84 @@ burpvalve verifier doctor --json
 `verifier prompts` is read-only. It packages staged paths, condition files,
 verifier policy, authorization language, and response schema; it does not spawn
 agents or claim verification happened.
+
+`verifier begin --lane` writes `binding.lane_binding` into the responses file.
+Later `commit --lane` must repeat the same lane id, bead ids, rationale,
+authorization ref, and authorizer.
+
+### `burpvalve gate run`
+
+Run the fail-closed gate ceremony from a prepared handoff.
+
+```bash
+burpvalve gate run --dry-run --handoff log/backpressure/gate-runs/<id>-handoff.json --json
+burpvalve gate run --handoff log/backpressure/gate-runs/<id>-handoff.json --yes --json
+printf '{"handoff_path":"log/backpressure/gate-runs/<id>-handoff.json","confirm":true}' \
+  | burpvalve gate run --robots
+```
+
+`gate run` is a mechanical runner, not a verifier. The handoff must name exact
+stage paths, the expected `HEAD`, commit message, feature or lane binding,
+responses file, bead close/sync intent, and any authorized release or wake
+cleanup. The command stages only handoff paths, compares hashes, stops on
+dirty index, stale responses, verifier disagreement, failing tests, or stale
+`HEAD`, then runs the same `burpvalve commit` attestation loop used by the
+hook.
+
+In v1, `gate run` does not push. When publication is requested it writes the
+exact `git push <remote> <branch>` command into the journal for an
+orchestrator to run after reviewing the completed local commit. If the handoff
+authorizes Agent Mail cleanup, the release phase may release matching file
+reservations and records that outcome in the journal.
+
+### `burpvalve pxpack`
+
+Build optional PXPIPE context packets for orchestrators.
+
+```bash
+burpvalve pxpack --orchestrator \
+  --out backpressure/pxpipe-packets/orchestrator-bootstrap --json
+burpvalve pxpack --orchestrator \
+  --check backpressure/pxpipe-packets/orchestrator-bootstrap --json
+burpvalve pxpack validate \
+  --fixture cmd/burpvalve/testdata/pxpack-validation-safe.json --json
+```
+
+`pxpack` is a context aid, not an evidence system. PXPIPE renders only the
+image lane. Burpvalve owns `factsheet.txt`, `source-map.md`, and
+`manifest.json`; the renderer's factsheet and manifest are telemetry only.
+Never treat image pages, OCR, or PXPIPE metadata as verifier evidence,
+instruction authority, or a source for executable commands.
+
+Generated packet directories use this layout:
+
+```text
+backpressure/pxpipe-packets/<packet-id>/
+  manifest.json
+  prompt.txt
+  factsheet.txt
+  source-map.md
+  page-001.png
+  renderer/
+```
+
+`factsheet.txt` carries exact anchors such as command strings, paths, ids, and
+hashes. `source-map.md` tells the orchestrator which source file to re-read
+before executing, approving, or quoting anything. `manifest.json` records
+Burpvalve-computed source-content hashes and output hashes; `pxpack --check`
+fails closed when any source or packet output changes.
+
+Do not put these inputs in a packet: credentials, private keys, tokens,
+environment dumps, private IP addresses, private infrastructure details,
+active response files, verifier evidence, exact legal/compliance text that must
+be quoted, or any rule that the agent must obey as live authority. Keep
+`AGENTS.md`, backpressure condition files, current user dispatch, staged hashes,
+and active verifier packets live in the prompt or task brief.
+
+`pxpack validate` scores the required A/B gate before templates may recommend
+packet mode. The packet arm must be at least as safe as plain text for missed
+exact strings, invented facts, source re-read discipline, and decision quality,
+and it must show a cost, latency, or operator-focus benefit.
 
 ### `burpvalve lint`
 
@@ -406,7 +592,7 @@ Burpvalve reads JSON config before choosing command defaults.
 
 | File | Purpose |
 | --- | --- |
-| `~/.config/burpvalve/config.json` | Global defaults for shell, completion behavior, command shim paths, and setup selections. |
+| `~/.config/burpvalve/config.json` | Global defaults for skills directory, command path, shell, completion behavior, and setup selections. |
 | `.burpvalve.json` | Project override read from the target repo root. |
 
 Example:
@@ -533,6 +719,7 @@ bash ./install.sh \
   --bin-dir "$tmp/bin" \
   --yes
 "$tmp/bin/burpvalve" setup --json
+test ! -L "$tmp/bin/burpvalve"
 jsm validate "$tmp/skills/burpvalve"
 ```
 
@@ -622,8 +809,6 @@ Project config in `.burpvalve.json` overrides
   every condition cell.
 - Burpvalve is not an OS sandbox, cloud permission boundary, secret scanner, or
   substitute for human review.
-- The repository remains behind the explicit open-source launch gate until the
-  owner authorizes the visibility flip.
 
 ## FAQ
 
@@ -657,6 +842,11 @@ burpvalve init --no-beads --no-ntm
 Yes, when the staged payload is genuinely one atomic work unit. Repeat
 `--bead` and include `--bead-rationale`; Burpvalve rejects multi-bead commits
 without a rationale.
+
+Use `--lane` only when an orchestrator explicitly authorizes a lane that spans
+multiple beads. Lane responses and attestations keep `bead_ids` queryable, add
+`lane_id` and authorization metadata, and block tracker exports that include
+changed issue ids outside the declared lane.
 
 ### Why does `feature` still appear in commands and JSON?
 

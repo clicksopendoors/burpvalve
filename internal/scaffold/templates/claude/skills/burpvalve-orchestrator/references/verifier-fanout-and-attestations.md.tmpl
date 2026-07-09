@@ -14,6 +14,13 @@ same staged hash.
 Authorization permits spawning or contacting verifiers. Authorization is never
 per-cell evidence.
 
+Lane verifier packets include the same `lane_binding` in every cell packet and
+in the response file binding. Relay the lane id, bead ids, rationale,
+authorizer, and authorization ref exactly; do not summarize them into a loose
+"multi-bead" claim. If a staged `.beads/issues.jsonl` export changes an issue
+id outside the lane bead ids, hold the round and ask the owner to remove the
+extra tracker change or redeclare the lane.
+
 ## Provenance
 
 Record the actual verifier agent, runtime, model, separate-context status, and

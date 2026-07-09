@@ -37,7 +37,7 @@ the `burpvalve` command on `PATH`.
 Bootstrap order for skill-only installs:
 
 1. Check whether `scripts/bin/burpvalve` exists in the installed skill package.
-2. If it exists, create or repair the command shim described in `INSTALL.md`.
+2. If it exists, copy or repair the user-bin command described in `INSTALL.md`.
 3. If it is missing, install a compiled release package with `INSTALL.md`.
 4. Verify `burpvalve -h`, `burpvalve config --json`, and
    `burpvalve prompts list` before relying on prompt-bank references below.
@@ -53,6 +53,7 @@ Bootstrap order for skill-only installs:
 | `burpvalve init` | Add the standard scaffold and hook wiring. | Yes |
 | `burpvalve repair` | Restore missing generated pieces without overwriting project knowledge. | Yes |
 | `burpvalve commit` | Check the staged payload and write/pass attestation evidence. | Writes attestation or blocked report |
+| `burpvalve gate run` | Execute a prepared, hash-bound local gate ceremony through commit and journaled handoff. | Yes, with explicit confirmation or robot confirmation |
 | `burpvalve explain` | Translate setup, lint, commit, attestation, or blocked-report JSON into recovery steps. | No |
 | `burpvalve prompts` | List or render canonical orchestrator prompt templates. | No, unless `prompts show --write` exports a local copy |
 | `burpvalve verifier prompts` | Generate read-only verifier handoff packets for the staged payload. | No |
@@ -71,6 +72,7 @@ Bootstrap order for skill-only installs:
 | Agent recovering from a blocked result | `burpvalve setup --json \| burpvalve explain --json -` or `burpvalve explain --json log/backpressure/failed/<file>.json` | Explain reads structured facts and returns stable blockers plus next steps without scraping human prose. |
 | Agent needing reusable workflow prompts | `burpvalve prompts list` and `burpvalve prompts show <name>` | Prompt-bank entries are versioned in the binary and avoid stale copied workflow prose. |
 | Agent preparing verifier cells | `burpvalve verifier prompts --feature <id> --json` | Prompt packets include staged paths, condition policy, and the response schema for read-only verifiers. |
+| Agent running prepared gate mechanics | `burpvalve gate run --handoff <file> --dry-run --json`, then `--yes --json` only if the handoff and state match | Gate run refuses stale hashes, missing verifier evidence, dirty index, and stale `HEAD`; it does not fabricate verdicts. |
 | Commit hook or CI | `burpvalve commit --feature ... --responses ...`, `burpvalve lint`, `burpvalve ci` | Hooks and CI need deterministic inputs and outputs. |
 
 Mutating commands default to human safety. In an interactive terminal they ask
@@ -122,6 +124,17 @@ burpvalve init --force --json log attestations
 burpvalve repair --force --json AGENTS.md
 burpvalve repair --force --json hooks
 ```
+
+If an orchestrator supplied a prepared gate-run handoff:
+
+```bash
+burpvalve gate run --dry-run --handoff log/backpressure/gate-runs/<id>-handoff.json --json
+burpvalve gate run --handoff log/backpressure/gate-runs/<id>-handoff.json --yes --json
+```
+
+Treat `gate run` as a fail-closed mechanical runner. It still relies on real
+verifier responses bound to the current staged payload. In v1 it journals the
+push command for the orchestrator instead of pushing by itself.
 
 Robot input example:
 
@@ -176,8 +189,13 @@ audit reference.
 The normal installed shape is:
 
 ```text
-~/.local/bin/burpvalve -> <skills-dir>/burpvalve/scripts/bin/burpvalve
+~/.local/bin/burpvalve
+<skills-dir>/burpvalve/scripts/bin/burpvalve
 ```
+
+The user-bin command is a copied executable, not a symlink into the skill tree.
+Moving or reorganizing the skill directory should not break `burpvalve` on
+`PATH`.
 
 After installation, verify the global command:
 

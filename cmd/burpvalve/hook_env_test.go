@@ -58,6 +58,67 @@ func TestHookEnvForwardsBeadsAndRationaleForAllHookCopies(t *testing.T) {
 	}
 }
 
+func TestHookEnvForwardsLaneAssertionsForAllHookCopies(t *testing.T) {
+	repo := findRepoRoot(t)
+	for _, tc := range []struct {
+		name string
+		path string
+	}{
+		{name: "template", path: filepath.Join(repo, "templates/githooks/pre-commit")},
+		{name: "embedded-template", path: filepath.Join(repo, "internal/scaffold/templates/githooks/pre-commit")},
+		{name: "live-hook", path: filepath.Join(repo, ".githooks/pre-commit")},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			stdout, stderr, err := runHookEnvFixture(t, tc.path, map[string]string{
+				"BURPVALVE_FEATURE":                "declared-lane-aj41",
+				"BURPVALVE_BEAD":                   "burpvalve-aj41.7,burpvalve-aj41.8",
+				"BURPVALVE_BEAD_RATIONALE":         "same lane-bound hook payload",
+				"BURPVALVE_LANE_ID":                "declared-lane-aj41",
+				"BURPVALVE_LANE_AUTHORIZATION_REF": "Agent Mail 4000",
+				"BURPVALVE_LANE_AUTHORIZED_BY":     "BronzeDeer",
+			})
+			if err != nil {
+				t.Fatalf("hook failed: %v\nstdout=%s\nstderr=%s", err, stdout, stderr)
+			}
+			if stderr != "" {
+				t.Fatalf("unexpected stderr:\n%s", stderr)
+			}
+			want := strings.Join([]string{
+				"hook=pre-commit",
+				"source=source",
+				"run",
+				"./cmd/burpvalve",
+				"commit",
+				"--feature",
+				"declared-lane-aj41",
+				"--lane",
+				"declared-lane-aj41",
+				"--bead",
+				"burpvalve-aj41.7",
+				"--bead",
+				"burpvalve-aj41.8",
+				"--bead-rationale",
+				"same lane-bound hook payload",
+				"--lane-rationale",
+				"same lane-bound hook payload",
+				"--lane-authorization-ref",
+				"Agent Mail 4000",
+				"--authorized-by",
+				"BronzeDeer",
+				"hook=pre-commit",
+				"source=source",
+				"run",
+				"./cmd/burpvalve",
+				"lint",
+				"",
+			}, "\n")
+			if stdout != want {
+				t.Fatalf("hook argv = %q, want %q", stdout, want)
+			}
+		})
+	}
+}
+
 func TestHookEnvRejectsEmptyBeadTokens(t *testing.T) {
 	repo := findRepoRoot(t)
 	for _, hookPath := range []string{

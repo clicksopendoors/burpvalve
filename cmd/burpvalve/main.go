@@ -163,6 +163,8 @@ Set NO_TUI=1 to avoid terminal UI prompts.`,
 		newCICommand(),
 		newAccountCommand(),
 		newPromptsCommand(),
+		newPxpackCommand(),
+		newGateCommand(),
 		newVerifierCommand(),
 		newAttestationsCommand(),
 		newBeadsCommand(),
@@ -409,15 +411,19 @@ func robotInputDoc(command string) any {
 	case "commit", "pre-commit", "burpvalve commit", "burpvalve pre-commit":
 		return map[string]any{
 			"stdin_json": map[string]any{
-				"root":               "optional repository root; defaults to .",
-				"feature":            "optional explicit atomic feature or bead id",
-				"beads":              "optional array of delivery bead ids to record in attestation metadata",
-				"bead_rationale":     "required when multiple bead ids intentionally share one staged payload",
-				"responses_path":     "optional explicit legacy JSON verifier responses path; omitted commits auto-discover log/backpressure/responses/<staged-payload-hash>.json when present",
-				"responses":          "alias for responses_path",
-				"responses_template": "when true, print a JSON template for the current staged feature x condition matrix instead of running the gate",
-				"agent":              "optional agent name recorded in artifacts",
-				"model":              "optional model name recorded in artifacts",
+				"root":                   "optional repository root; defaults to .",
+				"feature":                "optional explicit atomic feature or bead id",
+				"beads":                  "optional array of delivery bead ids to record in attestation metadata",
+				"bead_rationale":         "required when multiple bead ids intentionally share one staged payload",
+				"lane":                   "optional lane id assertion for a lane-bound verifier response file",
+				"lane_rationale":         "required rationale assertion for lane-bound response files",
+				"lane_authorization_ref": "orchestrator authorization reference asserted for lane-bound response files",
+				"authorized_by":          "agent or person who authorized the lane-bound response file",
+				"responses_path":         "optional explicit legacy JSON verifier responses path; omitted commits auto-discover log/backpressure/responses/<staged-payload-hash>.json when present",
+				"responses":              "alias for responses_path",
+				"responses_template":     "when true, print a JSON template for the current staged feature x condition matrix instead of running the gate",
+				"agent":                  "optional agent name recorded in artifacts",
+				"model":                  "optional model name recorded in artifacts",
 			},
 			"responses_file_schema": map[string]any{
 				"atomicity": map[string]any{
@@ -475,6 +481,39 @@ func robotInputDoc(command string) any {
 			},
 			"output_schema": map[string]any{
 				"prompts": "array of canonical prompt names, versions, descriptions, and variable metadata",
+			},
+		}
+	case "pxpack", "burpvalve pxpack":
+		return map[string]any{
+			"stdin_json": map[string]any{
+				"mode":              "orchestrator",
+				"packet_id":         "optional stable packet id; defaults from out_dir basename",
+				"out_dir":           "packet directory to write or inspect",
+				"sources":           "optional extra sources recorded in the packet plan",
+				"factsheet_sources": "exact-text sources for Burpvalve-generated factsheet.txt; never PXPIPE auto-extraction",
+				"image_sources":     "dense sources rendered by PXPIPE into page-*.png",
+				"live_sources":      "sources recorded as live-only and not rendered",
+				"excludes":          "optional source exclusion globs",
+				"max_pages":         "positive image page cap",
+				"replace":           "allow replacing an existing packet directory in later mutating units",
+				"dry_run":           "print the packet plan without writing files",
+				"check":             "validate an existing packet directory read-only",
+			},
+		}
+	case "gate", "burpvalve gate", "burpvalve gate run":
+		return map[string]any{
+			"stdin_json": map[string]any{
+				"handoff_path": "prepared gate-run handoff JSON path",
+				"handoff":      "inline handoff object; use this instead of handoff_path when no file exists yet",
+				"confirm":      "confirm future mutation when later gate-run execution units are implemented",
+				"resume":       "resume from a journal after recomputing repository reality",
+				"dry_run":      "validate and print the gate-run plan without mutation",
+				"journal_push": "journal-push mode records the exact push command instead of pushing",
+				"remote":       "publication remote override recorded in the journaled push command",
+				"branch":       "publication branch override recorded in the journaled push command",
+				"message":      "commit message override when the handoff permits it",
+				"agent":        "agent identity recorded in future generated artifacts",
+				"model":        "model identity recorded in future generated artifacts",
 			},
 		}
 	case "burpvalve prompts show":
@@ -552,21 +591,35 @@ func robotInputDoc(command string) any {
 	case "verifier", "burpvalve verifier", "burpvalve verifier prompts":
 		return map[string]any{
 			"flags": map[string]string{
-				"root":      "repository root whose staged payload and backpressure manifest should be inspected",
-				"feature":   "explicit atomic feature or bead id for staged changes; required when staged changes are ambiguous",
-				"condition": "optional enabled condition id to emit a single verifier packet",
-				"profile":   "handoff profile: native, ntm, hermes, or manual; all values are lower-case",
-				"json":      "emit machine-readable prompt packets",
+				"root":                   "repository root whose staged payload and backpressure manifest should be inspected",
+				"feature":                "explicit atomic feature or bead id for staged changes; required when staged changes are ambiguous",
+				"condition":              "optional enabled condition id to emit a single verifier packet",
+				"profile":                "handoff profile: native, ntm, hermes, or manual; all values are lower-case",
+				"lane":                   "declare an orchestrator-authorized lane payload instead of one feature",
+				"lane-id":                "lane id recorded as the bound feature id in lane mode",
+				"bead":                   "delivery bead id in the authorized lane; repeat for multiple beads",
+				"beads":                  "comma-separated delivery bead ids in the authorized lane",
+				"lane-rationale":         "why the listed bead ids belong to one lane payload",
+				"lane-authorization-ref": "durable orchestrator authorization reference for the lane payload",
+				"authorized-by":          "agent or person who authorized the lane payload",
+				"json":                   "emit machine-readable prompt packets",
 			},
 		}
 	case "burpvalve verifier begin":
 		return map[string]any{
 			"flags": map[string]string{
-				"root":              "repository root whose staged payload and backpressure manifest should be inspected",
-				"feature":           "explicit atomic feature or bead id for staged changes; required when staged changes are ambiguous",
-				"one-feature":       "required confirmation that the staged payload is one atomic feature or bug fix",
-				"atomicity-message": "required explanation for why the staged payload is atomic",
-				"json":              "emit machine-readable result contract",
+				"root":                   "repository root whose staged payload and backpressure manifest should be inspected",
+				"feature":                "explicit atomic feature or bead id for staged changes; required when staged changes are ambiguous",
+				"one-feature":            "required confirmation that the staged payload is one atomic feature or bug fix",
+				"atomicity-message":      "required explanation for why the staged payload is atomic",
+				"lane":                   "declare an orchestrator-authorized lane commit instead of --one-feature",
+				"lane-id":                "lane id recorded as the bound feature id in lane mode",
+				"bead":                   "delivery bead id in the authorized lane; repeat for multiple beads",
+				"beads":                  "comma-separated delivery bead ids in the authorized lane",
+				"lane-rationale":         "why the listed bead ids belong to one lane payload",
+				"lane-authorization-ref": "durable orchestrator authorization reference for the lane payload",
+				"authorized-by":          "agent or person who authorized the lane payload",
+				"json":                   "emit machine-readable result contract",
 			},
 		}
 	case "burpvalve verifier submit":
@@ -837,16 +890,18 @@ func robotOutputDoc(command string) any {
 		}
 	case "attestations", "burpvalve attestations", "burpvalve attestations list", "burpvalve attestations latest", "burpvalve attestations show":
 		return map[string]string{
-			"schema_version":     "query response schema version for list responses or record schema version for individual records",
-			"records":            "list of normalized attestation records for list",
-			"artifact_type":      "passing_attestation or blocked_report",
-			"status":             "pass, blocked, or malformed",
-			"path":               "project-relative artifact path",
-			"feature_ids":        "feature ids recorded in the artifact",
-			"bead_ids":           "bead ids recorded in the artifact when present",
-			"payload_hash":       "staged payload hash recorded by the artifact",
-			"condition_verdicts": "condition id, verdict, verifier policy, and verifier provenance summary",
-			"parse_warnings":     "malformed artifact warnings included by list; show returns a JSON error instead",
+			"schema_version":         "query response schema version for list responses or record schema version for individual records",
+			"records":                "list of normalized attestation records for list",
+			"artifact_type":          "passing_attestation or blocked_report",
+			"status":                 "pass, blocked, or malformed",
+			"path":                   "project-relative artifact path",
+			"feature_ids":            "feature ids recorded in the artifact",
+			"bead_ids":               "bead ids recorded in the artifact when present",
+			"lane_id":                "orchestrator-authorized lane id when the artifact records lane atomicity",
+			"lane_authorization_ref": "durable authorization reference when the artifact records lane atomicity",
+			"payload_hash":           "staged payload hash recorded by the artifact",
+			"condition_verdicts":     "condition id, verdict, verifier policy, and verifier provenance summary",
+			"parse_warnings":         "malformed artifact warnings included by list; show returns a JSON error instead",
 		}
 	case "beads", "burpvalve beads", "burpvalve beads preflight":
 		return map[string]string{
@@ -912,6 +967,55 @@ func robotOutputDoc(command string) any {
 		return map[string]string{
 			"prompts": "canonical prompt bank entries with stable name, version, description, and variable metadata",
 		}
+	case "pxpack", "burpvalve pxpack":
+		return map[string]string{
+			"schema_version":         "pxpack result schema version",
+			"command":                "pxpack",
+			"status":                 "planned, blocked, or failed",
+			"mode":                   "orchestrator for this first mode",
+			"packet_id":              "stable packet id",
+			"packet_dir":             "planned or checked packet directory",
+			"manifest_path":          "Burpvalve-owned manifest path",
+			"factsheet_path":         "Burpvalve-generated exact factsheet path",
+			"source_map_path":        "source-map path recording lanes and re-read rules",
+			"page_count":             "known page count for checks, or zero before rendering",
+			"source_hashes":          "Burpvalve-owned source-content hashes; empty until later units compute inventory",
+			"stale":                  "true only when check detects stale sources; false for dry-run plans",
+			"pxpipe_role":            "image_lane_renderer_only",
+			"factsheet_mode":         "burpvalve_generated",
+			"manifest_hash_mode":     "burpvalve_source_content_hashes",
+			"warnings":               "nonfatal limitations and prototype-derived cautions",
+			"next_steps":             "implementation or recovery guidance",
+			"planned_pxpipe_command": "argument-vector command preview for the image lane",
+		}
+	case "gate", "burpvalve gate", "burpvalve gate run":
+		return map[string]string{
+			"schema_version":         "gate run result schema version",
+			"command":                "gate run",
+			"status":                 "planned, blocked, committed, or failed",
+			"phase":                  "handoff, handoff_validation, validated, verifier_responses, commit_gate, stage_attestation, commit_gate_revalidate, or local_commit",
+			"partial_success":        "true after a mutating phase succeeds before a stop or commit",
+			"mutating":               "true only with --yes or robots confirm=true",
+			"run_id":                 "stable handoff run id after path cleaning",
+			"work_unit":              "single feature or lane binding declared by the handoff",
+			"handoff_path":           "input handoff path when provided",
+			"canonical_handoff_path": "planned canonical handoff copy path",
+			"journal_path":           "planned gate-run journal path",
+			"expected_head":          "handoff expected HEAD",
+			"stage_paths":            "exact handoff paths gate run stages before verifier and commit-gate execution",
+			"commit_message":         "handoff or allowed override commit message",
+			"responses_path":         "planned verifier responses path",
+			"executable_conditions":  "pre-verifier executable-condition phase result; v1 defaults to skipped serial no-op",
+			"planned_push_command":   "journal-push argument vector preview",
+			"push_journaled":         "true after a successful local commit records the orchestrator push command without executing it",
+			"reservation_release":    "Agent Mail reservation release instruction classified from the handoff release block",
+			"wake_ref":               "handoff release wake reference copied into post-commit output",
+			"wake_instructions":      "structured next-owner wake or handoff instructions",
+			"agent":                  "agent identity supplied by flag or robot input",
+			"model":                  "model identity supplied by flag or robot input",
+			"warnings":               "nonfatal handoff or execution limitations",
+			"next_steps":             "structured recovery or publication guidance",
+		}
 	case "burpvalve prompts show":
 		return map[string]string{
 			"name":             "stable public prompt name",
@@ -927,8 +1031,10 @@ func robotOutputDoc(command string) any {
 			"command":                      "verifier prompts",
 			"profile":                      "native, ntm, hermes, or manual",
 			"feature":                      "detected or explicit feature metadata",
+			"lane_binding":                 "optional orchestrator-authorized lane metadata with lane id, bead ids, rationale, authorized_by, authorization_ref, and authorization_kind",
 			"manifest_hash":                "hash of backpressure/manifest.yaml used for packet binding",
 			"staged_payload_hash":          "canonical Burpvalve staged payload hash used for packet binding",
+			"condition_file_hashes":        "full condition id to condition file hash map bound into every packet",
 			"staged_payload":               "hash-included staged path records including path, status, git_status, and old_path for renames",
 			"hash_excluded_staged_payload": "generated staged paths listed for review but excluded from the payload hash",
 			"generated_path_prefixes":      "generated prefixes excluded from HashStagedPayload",
@@ -1091,6 +1197,21 @@ func robotNotes(command string) []string {
 			"prompt names are stable public API; renames or removals are breaking changes",
 			"burpvalve verifier prompts is different: it generates staged-payload verifier packets with binding hashes",
 			"rendering substitutes only declared variables and does not run shell commands",
+		}
+	case "pxpack", "burpvalve pxpack":
+		return []string{
+			"pxpack is read-only in --dry-run and --check modes",
+			"PXPIPE is only the image-lane renderer; Burpvalve generates factsheet.txt, source-map.md, and manifest.json",
+			"never rely on PXPIPE auto-extracted factsheet content for exact command strings",
+			"non-dry-run packet rendering is implemented by later rzq3 units and remains blocked in this CLI-schema slice",
+		}
+	case "gate", "burpvalve gate", "burpvalve gate run":
+		return []string{
+			"gate run accepts handoff_path or an inline handoff object in robot input",
+			"journal-push records the exact push command instead of pushing during the gate-run ceremony",
+			"gate run stages only handoff-declared paths and the generated attestation path before making the local commit",
+			"after local commit, gate run journals push, reservation release, and wake handoff output without executing a push",
+			"mutating runs recompute repository reality before resuming from any journal",
 		}
 	case "verifier", "burpvalve verifier", "burpvalve verifier prompts":
 		return []string{
@@ -3204,7 +3325,12 @@ commit finishes.`,
 	cmd.Flags().StringVar(&opts.root, "root", ".", "repository root")
 	cmd.Flags().StringVar(&opts.feature, "feature", "", "explicit atomic feature or bead id for staged changes")
 	cmd.Flags().StringArrayVar(&opts.beads, "bead", nil, "delivery bead id to record in attestation metadata; repeat for coupled work")
+	cmd.Flags().StringArrayVar(&opts.beadLists, "beads", nil, "comma-separated delivery bead ids to record in attestation metadata")
 	cmd.Flags().StringVar(&opts.beadRationale, "bead-rationale", "", "why multiple --bead ids belong to one staged payload")
+	cmd.Flags().StringVar(&opts.laneID, "lane", "", "lane id assertion for a lane-bound verifier response file")
+	cmd.Flags().StringVar(&opts.laneRationale, "lane-rationale", "", "rationale assertion for a lane-bound verifier response file")
+	cmd.Flags().StringVar(&opts.laneAuthorization, "lane-authorization-ref", "", "authorization reference assertion for a lane-bound verifier response file")
+	cmd.Flags().StringVar(&opts.laneAuthorizedBy, "authorized-by", "", "authorizer assertion for a lane-bound verifier response file")
 	cmd.Flags().StringVar(&opts.responses, "responses", "", "JSON matrix responses for non-interactive pre-commit artifact processing")
 	cmd.Flags().BoolVar(&opts.responsesTemplate, "responses-template", false, "print a JSON response template for the current staged condition matrix")
 	cmd.Flags().StringVar(&opts.agent, "agent", "codex", "agent name recorded in generated artifacts")
@@ -3745,11 +3871,18 @@ func parsePromptVars(assignments []string) (map[string]string, error) {
 }
 
 type verifierPromptOptions struct {
-	root       string
-	feature    string
-	condition  string
-	profile    string
-	jsonOutput bool
+	root             string
+	feature          string
+	condition        string
+	profile          string
+	lane             bool
+	laneID           string
+	beads            []string
+	beadLists        []string
+	laneRationale    string
+	authorizationRef string
+	authorizedBy     string
+	jsonOutput       bool
 }
 
 type promptShowOptions struct {
@@ -3769,6 +3902,13 @@ type verifierBeginOptions struct {
 	feature          string
 	oneFeature       bool
 	atomicityMessage string
+	lane             bool
+	laneID           string
+	beads            []string
+	beadLists        []string
+	laneRationale    string
+	authorizationRef string
+	authorizedBy     string
 	jsonOutput       bool
 }
 
@@ -3822,6 +3962,13 @@ hashes. Atomicity is supplied once here and preserved for later submit steps.`,
 	cmd.Flags().StringVar(&opts.feature, "feature", "", "explicit atomic feature or bead id for staged changes")
 	cmd.Flags().BoolVar(&opts.oneFeature, "one-feature", false, "confirm the staged payload is exactly one feature or bug fix")
 	cmd.Flags().StringVar(&opts.atomicityMessage, "atomicity-message", "", "why the staged payload is exactly one feature or bug fix")
+	cmd.Flags().BoolVar(&opts.lane, "lane", false, "declare an orchestrator-authorized lane payload instead of one feature")
+	cmd.Flags().StringVar(&opts.laneID, "lane-id", "", "lane id recorded as the bound feature id")
+	cmd.Flags().StringArrayVar(&opts.beads, "bead", nil, "delivery bead id included in the authorized lane; repeat for multiple beads")
+	cmd.Flags().StringArrayVar(&opts.beadLists, "beads", nil, "comma-separated delivery bead ids included in the authorized lane")
+	cmd.Flags().StringVar(&opts.laneRationale, "lane-rationale", "", "why the listed bead ids belong to one lane payload")
+	cmd.Flags().StringVar(&opts.authorizationRef, "lane-authorization-ref", "", "durable orchestrator authorization reference for the lane payload")
+	cmd.Flags().StringVar(&opts.authorizedBy, "authorized-by", "", "agent or person who authorized the lane payload")
 	cmd.Flags().BoolVar(&opts.jsonOutput, "json", false, "print machine-readable result")
 	return cmd
 }
@@ -3890,11 +4037,22 @@ evidence the verifier must return.`,
 	cmd.Flags().StringVar(&opts.feature, "feature", "", "explicit atomic feature or bead id for staged changes")
 	cmd.Flags().StringVar(&opts.condition, "condition", "", "limit output to one enabled condition id")
 	cmd.Flags().StringVar(&opts.profile, "profile", "native", "handoff profile: native, ntm, hermes, or manual")
+	cmd.Flags().BoolVar(&opts.lane, "lane", false, "declare an orchestrator-authorized lane payload instead of one feature")
+	cmd.Flags().StringVar(&opts.laneID, "lane-id", "", "lane id recorded as the bound feature id")
+	cmd.Flags().StringArrayVar(&opts.beads, "bead", nil, "delivery bead id included in the authorized lane; repeat for multiple beads")
+	cmd.Flags().StringArrayVar(&opts.beadLists, "beads", nil, "comma-separated delivery bead ids included in the authorized lane")
+	cmd.Flags().StringVar(&opts.laneRationale, "lane-rationale", "", "why the listed bead ids belong to one lane payload")
+	cmd.Flags().StringVar(&opts.authorizationRef, "lane-authorization-ref", "", "durable orchestrator authorization reference for the lane payload")
+	cmd.Flags().StringVar(&opts.authorizedBy, "authorized-by", "", "agent or person who authorized the lane payload")
 	cmd.Flags().BoolVar(&opts.jsonOutput, "json", false, "print machine-readable JSON")
 	return cmd
 }
 
 func runVerifierBegin(cmd *cobra.Command, opts verifierBeginOptions) error {
+	laneOpts, parseWarnings, err := verifierBeginLaneOptions(opts)
+	if err != nil {
+		return fail(2, "%v", err)
+	}
 	ctx, cancel := backpressure.WithTimeout(context.Background())
 	defer cancel()
 	result, err := backpressure.RunVerifierBegin(ctx, backpressure.BeginResponsesOptions{
@@ -3902,7 +4060,9 @@ func runVerifierBegin(cmd *cobra.Command, opts verifierBeginOptions) error {
 		ExplicitFeature:  opts.feature,
 		OneFeature:       opts.oneFeature,
 		AtomicityMessage: opts.atomicityMessage,
+		Lane:             laneOpts,
 	})
+	result.Warnings = append(parseWarnings, result.Warnings...)
 	if opts.jsonOutput {
 		if encodeErr := encodeJSON(cmd.OutOrStdout(), result, "encode verifier begin"); encodeErr != nil {
 			return encodeErr
@@ -3915,6 +4075,21 @@ func runVerifierBegin(cmd *cobra.Command, opts verifierBeginOptions) error {
 		return exitCode(2)
 	}
 	return nil
+}
+
+func verifierBeginLaneOptions(opts verifierBeginOptions) (backpressure.LaneOptions, []string, error) {
+	beads, _, warnings, err := normalizeBeadIDs(opts.beads, opts.beadLists, "", true)
+	if err != nil {
+		return backpressure.LaneOptions{}, nil, err
+	}
+	return backpressure.LaneOptions{
+		Enabled:          opts.lane,
+		LaneID:           opts.laneID,
+		BeadIDs:          beads,
+		Rationale:        opts.laneRationale,
+		AuthorizationRef: opts.authorizationRef,
+		AuthorizedBy:     opts.authorizedBy,
+	}, warnings, nil
 }
 
 func runVerifierSubmit(cmd *cobra.Command, opts verifierSubmitOptions) error {
@@ -3991,6 +4166,10 @@ func runVerifierDoctor(cmd *cobra.Command, opts verifierDoctorOptions) error {
 }
 
 func runVerifierPrompts(cmd *cobra.Command, opts verifierPromptOptions) error {
+	laneOpts, parseWarnings, err := verifierPromptLaneOptions(opts)
+	if err != nil {
+		return fail(2, "%v", err)
+	}
 	ctx, cancel := backpressure.WithTimeout(context.Background())
 	defer cancel()
 	set, err := backpressure.BuildVerifierPrompts(ctx, backpressure.VerifierPromptOptions{
@@ -3998,15 +4177,32 @@ func runVerifierPrompts(cmd *cobra.Command, opts verifierPromptOptions) error {
 		Feature:   opts.feature,
 		Condition: opts.condition,
 		Profile:   opts.profile,
+		Lane:      laneOpts,
 	})
 	if err != nil {
 		return fail(2, "%v", err)
 	}
+	set.Warnings = append(parseWarnings, set.Warnings...)
 	if opts.jsonOutput {
 		return encodeJSON(cmd.OutOrStdout(), set, "encode verifier prompts")
 	}
 	printVerifierPrompts(cmd.OutOrStdout(), set)
 	return nil
+}
+
+func verifierPromptLaneOptions(opts verifierPromptOptions) (backpressure.LaneOptions, []string, error) {
+	beads, _, warnings, err := normalizeBeadIDs(opts.beads, opts.beadLists, "", true)
+	if err != nil {
+		return backpressure.LaneOptions{}, nil, err
+	}
+	return backpressure.LaneOptions{
+		Enabled:          opts.lane,
+		LaneID:           opts.laneID,
+		BeadIDs:          beads,
+		Rationale:        opts.laneRationale,
+		AuthorizationRef: opts.authorizationRef,
+		AuthorizedBy:     opts.authorizedBy,
+	}, warnings, nil
 }
 
 func printVerifierBeginResult(out io.Writer, result backpressure.BeginResponsesResult) {
@@ -4378,6 +4574,12 @@ func printAttestationDetail(out io.Writer, record attestations.Record) {
 	if len(record.BeadIDs) > 0 {
 		fmt.Fprintf(out, "%s %s\n", ui.Label("Beads:"), strings.Join(record.BeadIDs, ", "))
 	}
+	if record.LaneID != "" {
+		fmt.Fprintf(out, "%s %s\n", ui.Label("Lane:"), record.LaneID)
+	}
+	if record.LaneAuthorizationRef != "" {
+		fmt.Fprintf(out, "%s %s\n", ui.Label("Lane auth:"), record.LaneAuthorizationRef)
+	}
 	if record.CreatedAt != nil {
 		fmt.Fprintf(out, "%s %s\n", ui.Label("Created:"), attestationShortTime(record.CreatedAt))
 	}
@@ -4401,6 +4603,7 @@ type beadsPreflightOptions struct {
 	root                   string
 	jsonOutput             bool
 	adminOnly              bool
+	beadLists              []string
 	beadRationale          string
 	requireDeliveryPayload bool
 }
@@ -4470,6 +4673,7 @@ type beadsDriftFinding struct {
 type beadsCloseOptions struct {
 	root          string
 	beadIDs       []string
+	beadLists     []string
 	jsonOutput    bool
 	adminOnly     bool
 	reason        string
@@ -4565,6 +4769,9 @@ Burpvalve commit gate can bind evidence to the exact staged payload.`,
 			if robotsMode {
 				return nil
 			}
+			if len(opts.beadLists) > 0 {
+				return nil
+			}
 			return cobra.MinimumNArgs(1)(cmd, args)
 		},
 		Example: `  burpvalve beads preflight br-123
@@ -4591,6 +4798,7 @@ Burpvalve commit gate can bind evidence to the exact staged payload.`,
 	cmd.Flags().StringVar(&opts.root, "root", ".", "repository root")
 	cmd.Flags().BoolVar(&opts.jsonOutput, "json", false, "print machine-readable JSON")
 	cmd.Flags().BoolVar(&opts.adminOnly, "admin-only", false, "classify this as issue-only/admin work that does not need commit evidence")
+	cmd.Flags().StringArrayVar(&opts.beadLists, "beads", nil, "comma-separated bead ids to inspect")
 	cmd.Flags().StringVar(&opts.beadRationale, "bead-rationale", "", "why multiple bead ids belong to one staged payload")
 	return cmd
 }
@@ -4637,6 +4845,9 @@ and code attestations, and may batch multiple admin bead ids.`,
 			if robotsMode {
 				return nil
 			}
+			if len(opts.beadLists) > 0 {
+				return nil
+			}
 			return cobra.MinimumNArgs(1)(cmd, args)
 		},
 		Example: `  burpvalve beads close br-123 --reason "Complete br-123 delivery" --responses responses.json --json
@@ -4655,6 +4866,7 @@ and code attestations, and may batch multiple admin bead ids.`,
 	cmd.Flags().StringVar(&opts.root, "root", ".", "repository root")
 	cmd.Flags().BoolVar(&opts.jsonOutput, "json", false, "print machine-readable JSON")
 	cmd.Flags().BoolVar(&opts.adminOnly, "admin-only", false, "classify this as issue-only/admin work that does not need code attestation")
+	cmd.Flags().StringArrayVar(&opts.beadLists, "beads", nil, "comma-separated bead ids to close")
 	cmd.Flags().StringVar(&opts.reason, "reason", "", "required br close reason; reference the bead and feature, not a commit SHA")
 	cmd.Flags().StringVar(&opts.beadRationale, "bead-rationale", "", "why multiple bead ids belong to one staged payload")
 	cmd.Flags().StringVar(&opts.responses, "responses", "", "JSON matrix responses for the final staged payload")
@@ -4668,7 +4880,7 @@ and code attestations, and may batch multiple admin bead ids.`,
 }
 
 func buildBeadsPreflightReport(opts beadsPreflightOptions, ids []string) (beadsPreflightReport, error) {
-	beadIDs, rationale, normErr := normalizeCloseBeads(ids, opts.beadRationale, opts.adminOnly)
+	beadIDs, rationale, parseWarnings, normErr := normalizeCloseBeads(ids, opts.beadLists, opts.beadRationale, opts.adminOnly)
 	root, err := filepath.Abs(defaultCLIRoot(opts.root))
 	if err != nil {
 		root = defaultCLIRoot(opts.root)
@@ -4682,6 +4894,7 @@ func buildBeadsPreflightReport(opts beadsPreflightOptions, ids []string) (beadsP
 		BeadIDs:              beadIDs,
 		AdminOnly:            opts.adminOnly,
 		CoupledWorkRationale: rationale,
+		Warnings:             append([]string(nil), parseWarnings...),
 	}
 	if normErr != nil {
 		report.Status = "blocked"
@@ -5326,7 +5539,7 @@ func runBeadsClose(cmd *cobra.Command, opts beadsCloseOptions) error {
 }
 
 func executeBeadsClose(cmd *cobra.Command, opts beadsCloseOptions) (beadsCloseResult, error) {
-	beadIDs, rationale, normErr := normalizeCloseBeads(opts.beadIDs, opts.beadRationale, opts.adminOnly)
+	beadIDs, rationale, parseWarnings, normErr := normalizeCloseBeads(opts.beadIDs, opts.beadLists, opts.beadRationale, opts.adminOnly)
 	root, err := filepath.Abs(defaultCLIRoot(opts.root))
 	if err != nil {
 		root = defaultCLIRoot(opts.root)
@@ -5346,6 +5559,7 @@ func executeBeadsClose(cmd *cobra.Command, opts beadsCloseOptions) (beadsCloseRe
 		Root:          root,
 		BeadIDs:       beadIDs,
 		JournalPath:   journalPath,
+		Warnings:      append([]string(nil), parseWarnings...),
 	}
 	journal := beadsCloseJournal{SchemaVersion: 1, Command: "beads close", BeadIDs: beadIDs}
 	if normErr != nil {
@@ -6526,7 +6740,12 @@ type commitOptions struct {
 	root              string
 	feature           string
 	beads             []string
+	beadLists         []string
 	beadRationale     string
+	laneID            string
+	laneRationale     string
+	laneAuthorization string
+	laneAuthorizedBy  string
 	responses         string
 	responsesTemplate bool
 	agent             string
@@ -6624,6 +6843,10 @@ type robotCommitInput struct {
 	Feature           string   `json:"feature"`
 	Beads             []string `json:"beads"`
 	BeadRationale     string   `json:"bead_rationale"`
+	Lane              string   `json:"lane"`
+	LaneRationale     string   `json:"lane_rationale"`
+	LaneAuthorization string   `json:"lane_authorization_ref"`
+	LaneAuthorizedBy  string   `json:"authorized_by"`
 	Responses         string   `json:"responses"`
 	ResponsesPath     string   `json:"responses_path"`
 	ResponsesTemplate bool     `json:"responses_template"`
@@ -6839,6 +7062,18 @@ func runCommitRobots(cmd *cobra.Command, opts commitOptions) error {
 	}
 	if input.BeadRationale != "" {
 		opts.beadRationale = input.BeadRationale
+	}
+	if input.Lane != "" {
+		opts.laneID = input.Lane
+	}
+	if input.LaneRationale != "" {
+		opts.laneRationale = input.LaneRationale
+	}
+	if input.LaneAuthorization != "" {
+		opts.laneAuthorization = input.LaneAuthorization
+	}
+	if input.LaneAuthorizedBy != "" {
+		opts.laneAuthorizedBy = input.LaneAuthorizedBy
 	}
 	if input.ResponsesPath != "" {
 		opts.responses = input.ResponsesPath
@@ -7708,36 +7943,59 @@ func runRepair(opts repairOptions) error {
 	return nil
 }
 
-func normalizeCommitBeads(ids []string, rationale string) ([]string, string, error) {
-	return normalizeBeadIDs(ids, rationale, false)
+func normalizeCommitBeads(ids []string, beadLists []string, rationale string) ([]string, string, []string, error) {
+	return normalizeBeadIDs(ids, beadLists, rationale, false)
 }
 
-func normalizeCloseBeads(ids []string, rationale string, adminOnly bool) ([]string, string, error) {
-	return normalizeBeadIDs(ids, rationale, adminOnly)
+func normalizeCloseBeads(ids []string, beadLists []string, rationale string, adminOnly bool) ([]string, string, []string, error) {
+	return normalizeBeadIDs(ids, beadLists, rationale, adminOnly)
 }
 
-func normalizeBeadIDs(ids []string, rationale string, allowMultipleWithoutRationale bool) ([]string, string, error) {
+func normalizeBeadIDs(ids []string, beadLists []string, rationale string, allowMultipleWithoutRationale bool) ([]string, string, []string, error) {
 	seen := map[string]bool{}
 	var clean []string
+	var warnings []string
 	for _, id := range ids {
 		id = strings.TrimSpace(id)
 		if id == "" {
-			return nil, "", fmt.Errorf("--bead values must not be empty")
+			return nil, "", nil, fmt.Errorf("--bead values must not be empty")
 		}
 		if strings.ContainsAny(id, " \t\r\n") {
-			return nil, "", fmt.Errorf("--bead %q must not contain whitespace", id)
+			return nil, "", nil, fmt.Errorf("--bead %q must not contain whitespace", id)
+		}
+		if strings.Contains(id, ",") {
+			return nil, "", nil, fmt.Errorf("--bead %q must not contain commas; use --beads for comma-separated bead ids", id)
 		}
 		if seen[id] {
+			warnings = append(warnings, fmt.Sprintf("ignoring duplicate bead ID %q", id))
 			continue
 		}
 		seen[id] = true
 		clean = append(clean, id)
 	}
+	for _, list := range beadLists {
+		tokens := strings.Split(list, ",")
+		for _, token := range tokens {
+			id := strings.TrimSpace(token)
+			if id == "" {
+				return nil, "", nil, fmt.Errorf("--beads values must not contain empty tokens")
+			}
+			if strings.ContainsAny(id, " \t\r\n") {
+				return nil, "", nil, fmt.Errorf("--beads token %q must not contain whitespace", id)
+			}
+			if seen[id] {
+				warnings = append(warnings, fmt.Sprintf("ignoring duplicate bead ID %q", id))
+				continue
+			}
+			seen[id] = true
+			clean = append(clean, id)
+		}
+	}
 	rationale = strings.TrimSpace(rationale)
 	if len(clean) > 1 && rationale == "" && !allowMultipleWithoutRationale {
-		return nil, "", fmt.Errorf("--bead-rationale is required when multiple --bead values describe one staged payload")
+		return clean, rationale, warnings, fmt.Errorf("--bead-rationale is required when multiple bead ids describe one staged payload")
 	}
-	return clean, rationale, nil
+	return clean, rationale, warnings, nil
 }
 
 func defaultCLIRoot(root string) string {
@@ -7748,7 +8006,10 @@ func defaultCLIRoot(root string) string {
 }
 
 func runPreCommit(opts commitOptions) error {
-	beads, beadRationale, err := normalizeCommitBeads(opts.beads, opts.beadRationale)
+	if opts.laneRationale != "" && opts.beadRationale == "" {
+		opts.beadRationale = opts.laneRationale
+	}
+	beads, beadRationale, parseWarnings, err := normalizeCommitBeads(opts.beads, opts.beadLists, opts.beadRationale)
 	if err != nil {
 		return fail(2, "%v", err)
 	}
@@ -7773,10 +8034,19 @@ func runPreCommit(opts commitOptions) error {
 		BeadIDs:         opts.beads,
 		BeadRationale:   opts.beadRationale,
 		ResponsesPath:   opts.responses,
-		Agent:           opts.agent,
-		Model:           opts.model,
-		ColorMode:       colorMode,
+		Lane: backpressure.LaneOptions{
+			Enabled:          opts.laneID != "",
+			LaneID:           opts.laneID,
+			BeadIDs:          opts.beads,
+			Rationale:        opts.laneRationale,
+			AuthorizationRef: opts.laneAuthorization,
+			AuthorizedBy:     opts.laneAuthorizedBy,
+		},
+		Agent:     opts.agent,
+		Model:     opts.model,
+		ColorMode: colorMode,
 	})
+	result.Warnings = append(parseWarnings, result.Warnings...)
 	if encodeErr := encodeJSON(os.Stdout, result, "encode commit result"); encodeErr != nil {
 		return encodeErr
 	}

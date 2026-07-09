@@ -2,6 +2,7 @@ package backpressure
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -29,6 +30,7 @@ type ResponseBinding struct {
 	StagedPayloadHash string                     `json:"staged_payload_hash"`
 	ManifestHash      string                     `json:"manifest_hash"`
 	Conditions        []ResponseConditionBinding `json:"conditions"`
+	LaneBinding       *attestations.LaneBinding  `json:"lane_binding,omitempty"`
 }
 
 type ResponseConditionBinding struct {
@@ -57,6 +59,7 @@ type PreCommitOptions struct {
 	ExplicitFeature string
 	BeadIDs         []string
 	BeadRationale   string
+	Lane            LaneOptions
 	ResponsesPath   string
 	Agent           string
 	Model           string
@@ -90,7 +93,18 @@ type BeginResponsesOptions struct {
 	ExplicitFeature  string
 	OneFeature       bool
 	AtomicityMessage string
+	Lane             LaneOptions
 	Staged           StagedReader
+}
+
+type LaneOptions struct {
+	Enabled           bool
+	LaneID            string
+	BeadIDs           []string
+	Rationale         string
+	AuthorizationRef  string
+	AuthorizedBy      string
+	AuthorizationKind string
 }
 
 type BeginResponsesResult struct {
@@ -99,6 +113,7 @@ type BeginResponsesResult struct {
 	Status            string   `json:"status"`
 	Message           string   `json:"message"`
 	Fatal             bool     `json:"fatal"`
+	Warnings          []string `json:"warnings,omitempty"`
 	NextSteps         []string `json:"next_steps,omitempty"`
 	ResponsesPath     string   `json:"responses_path,omitempty"`
 	StagedPayloadHash string   `json:"staged_payload_hash,omitempty"`
@@ -207,6 +222,20 @@ func RunPreCommit(ctx context.Context, opts PreCommitOptions) (PreCommitResult, 
 		result.NextSteps = hookAwareNextSteps([]string{"Fix the verifier responses so every required feature x condition cell has acceptable evidence, then rerun burpvalve commit."})
 		return result, firstErr(writeErr, err)
 	}
+	if err := validateCommitLaneAssertions(responses, opts); err != nil {
+		report, path, writeErr := writeBlockedReport(root, plan, responses, opts, err.Error())
+		result.BlockedReportPath = path
+		result.Message = report.Atomicity.Message
+		result.NextSteps = hookAwareNextSteps([]string{"Use commit lane assertion flags that match the bound verifier responses, or rerun verifier begin for the intended lane."})
+		return result, firstErr(writeErr, err)
+	}
+	if err := validateLaneTrackerDiff(ctx, root, plan, opts.Lane); err != nil {
+		report, path, writeErr := writeBlockedReport(root, plan, responses, opts, err.Error())
+		result.BlockedReportPath = path
+		result.Message = report.Atomicity.Message
+		result.NextSteps = hookAwareNextSteps([]string{"Remove tracker changes outside the declared lane, or rerun verifier begin with a lane binding that names every changed bead id and rationale."})
+		return result, firstErr(writeErr, err)
+	}
 
 	artifact := BuildArtifact(plan, responses, opts, attestations.ArtifactPassing)
 	if err := artifact.ValidatePassing(expected); err != nil {
@@ -225,6 +254,120 @@ func RunPreCommit(ctx context.Context, opts PreCommitOptions) (PreCommitResult, 
 	result.Message = "wrote passing attestation; stage it with: git add " + result.ArtifactPath
 	result.NextSteps = hookAwareNextSteps([]string{"git add " + result.ArtifactPath, "rerun git commit"})
 	return result, errors.New(result.Message)
+}
+
+func validateCommitLaneAssertions(responses *Responses, opts PreCommitOptions) error {
+	if responses == nil || responses.Binding.LaneBinding == nil {
+		if opts.Lane.Enabled {
+			return errors.New("--lane requires bound responses with binding.lane_binding")
+		}
+		return nil
+	}
+	if !opts.Lane.Enabled {
+		return errors.New("lane-bound responses require --lane with matching lane assertions")
+	}
+	lane := responses.Binding.LaneBinding
+	if got, want := strings.TrimSpace(opts.Lane.LaneID), strings.TrimSpace(lane.LaneID); got == "" || got != want {
+		return fmt.Errorf("commit lane id mismatch: got %q want %q", got, want)
+	}
+	if !sameCleanStrings(cleanBeadIDs(opts.Lane.BeadIDs), cleanBeadIDs(lane.BeadIDs)) {
+		return fmt.Errorf("commit lane bead ids mismatch: got %q want %q", strings.Join(cleanBeadIDs(opts.Lane.BeadIDs), ","), strings.Join(cleanBeadIDs(lane.BeadIDs), ","))
+	}
+	if got, want := strings.TrimSpace(opts.Lane.Rationale), strings.TrimSpace(lane.Rationale); got == "" || got != want {
+		return fmt.Errorf("commit lane rationale mismatch: got %q want %q", got, want)
+	}
+	if got, want := strings.TrimSpace(opts.Lane.AuthorizationRef), strings.TrimSpace(lane.AuthorizationRef); got == "" || got != want {
+		return fmt.Errorf("commit lane authorization ref mismatch: got %q want %q", got, want)
+	}
+	if got, want := strings.TrimSpace(opts.Lane.AuthorizedBy), strings.TrimSpace(lane.AuthorizedBy); got == "" || got != want {
+		return fmt.Errorf("commit lane authorized-by mismatch: got %q want %q", got, want)
+	}
+	if got, want := strings.TrimSpace(laneBindingFromOptions(opts.Lane).AuthorizationKind), strings.TrimSpace(lane.AuthorizationKind); got == "" || got != want {
+		return fmt.Errorf("commit lane authorization kind mismatch: got %q want %q", got, want)
+	}
+	return nil
+}
+
+func sameCleanStrings(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func validateLaneTrackerDiff(ctx context.Context, root string, plan Plan, lane LaneOptions) error {
+	if !lane.Enabled || !planStagesPath(plan, ".beads/issues.jsonl") {
+		return nil
+	}
+	allowed := map[string]bool{}
+	for _, id := range cleanBeadIDs(lane.BeadIDs) {
+		allowed[id] = true
+	}
+	changed, err := stagedTrackerIssueIDs(ctx, root)
+	if err != nil {
+		return err
+	}
+	var outside []string
+	for id := range changed {
+		if !allowed[id] {
+			outside = append(outside, id)
+		}
+	}
+	sort.Strings(outside)
+	if len(outside) > 0 {
+		return fmt.Errorf("lane staged tracker export includes bead ids outside declared lane: %s; remove them or rerun verifier begin with a lane binding that names every changed bead id and rationale", strings.Join(outside, ", "))
+	}
+	return nil
+}
+
+func planStagesPath(plan Plan, path string) bool {
+	want := filepath.ToSlash(path)
+	for _, staged := range plan.StagedPayloadPaths {
+		if filepath.ToSlash(staged) == want {
+			return true
+		}
+	}
+	return false
+}
+
+func stagedTrackerIssueIDs(ctx context.Context, root string) (map[string]bool, error) {
+	cmd := exec.CommandContext(ctx, "git", "diff", "--cached", "--unified=0", "--", ".beads/issues.jsonl")
+	cmd.Dir = root
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("inspect staged .beads/issues.jsonl diff for lane binding: %w", err)
+	}
+	ids := map[string]bool{}
+	scanner := bufio.NewScanner(bytes.NewReader(output))
+	scanner.Buffer(make([]byte, 1024), 1024*1024)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if len(line) < 2 || (line[0] != '+' && line[0] != '-') || strings.HasPrefix(line, "+++") || strings.HasPrefix(line, "---") {
+			continue
+		}
+		body := strings.TrimSpace(line[1:])
+		if body == "" {
+			continue
+		}
+		var issue struct {
+			ID string `json:"id"`
+		}
+		if err := json.Unmarshal([]byte(body), &issue); err != nil {
+			return nil, fmt.Errorf("parse staged .beads/issues.jsonl diff line for lane binding: %w", err)
+		}
+		if id := strings.TrimSpace(issue.ID); id != "" {
+			ids[id] = true
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("scan staged .beads/issues.jsonl diff for lane binding: %w", err)
+	}
+	return ids, nil
 }
 
 func hookAwareNextSteps(base []string) []string {
@@ -471,6 +614,10 @@ func BuildBoundResponsesTemplate(plan Plan, atomicity attestations.Atomicity) Re
 		Atomicity: atomicity,
 		Binding:   BuildResponseBinding(plan),
 	}
+	if atomicity.Lane != nil {
+		lane := *atomicity.Lane
+		template.Binding.LaneBinding = &lane
+	}
 	for _, condition := range plan.Matrix.Conditions {
 		template.Conditions = append(template.Conditions, ResponseCondition{
 			ConditionID:       condition.ID,
@@ -508,14 +655,30 @@ func RunVerifierBegin(ctx context.Context, opts BeginResponsesOptions) (BeginRes
 	if err != nil {
 		return BeginResponsesResult{}, err
 	}
+	if opts.Lane.Enabled {
+		if err := validateBeginLaneOptions(&opts); err != nil {
+			return BeginResponsesResult{
+				SchemaVersion: 1,
+				Command:       "verifier begin",
+				Status:        StatusBlocked,
+				Fatal:         true,
+				Message:       err.Error(),
+				NextSteps:     []string{"Rerun burpvalve verifier begin with --lane, --lane-id, at least two --bead/--beads ids, --lane-rationale, --lane-authorization-ref, and --authorized-by."},
+			}, err
+		}
+	}
 	staged := opts.Staged
 	if staged == nil {
 		staged = GitStagedReader{}
 	}
+	explicitFeature := opts.ExplicitFeature
+	if opts.Lane.Enabled {
+		explicitFeature = strings.TrimSpace(opts.Lane.LaneID)
+	}
 	plan, planErr := BuildPlan(ctx, Options{
 		Root:            root,
 		Mode:            "pre-commit",
-		ExplicitFeature: opts.ExplicitFeature,
+		ExplicitFeature: explicitFeature,
 		Staged:          staged,
 	})
 	result := BeginResponsesResult{
@@ -530,23 +693,39 @@ func RunVerifierBegin(ctx context.Context, opts BeginResponsesOptions) (BeginRes
 		result.NextSteps = []string{"Stage one atomic feature or pass --feature with the bead or feature id, then rerun burpvalve verifier begin."}
 		return result, planErr
 	}
+	if err := validateLaneTrackerDiff(ctx, root, plan, opts.Lane); err != nil {
+		result.Message = err.Error()
+		result.NextSteps = []string{"Remove tracker changes outside the declared lane, or rerun burpvalve verifier begin with a lane binding that names every changed bead id and rationale."}
+		return result, err
+	}
 	result.StagedPayloadHash = plan.StagedPayloadHash
 	result.ManifestHash = plan.ManifestHash
 	result.ResponsesPath = ResponsesPath(plan.StagedPayloadHash)
-	if !opts.OneFeature {
+	if !opts.OneFeature && !opts.Lane.Enabled {
 		result.Message = "atomicity not confirmed: pass --one-feature and --atomicity-message"
 		result.NextSteps = []string{"Rerun burpvalve verifier begin with --one-feature --atomicity-message \"why this staged payload is exactly one feature or bug fix\"."}
 		return result, errors.New(result.Message)
 	}
-	if strings.TrimSpace(opts.AtomicityMessage) == "" {
+	if opts.OneFeature && strings.TrimSpace(opts.AtomicityMessage) == "" {
 		result.Message = "atomicity message is required"
 		result.NextSteps = []string{"Provide --atomicity-message describing why this staged payload is exactly one feature or bug fix."}
 		return result, errors.New(result.Message)
 	}
-	responses := BuildBoundResponsesTemplate(plan, attestations.Atomicity{
+	atomicity := attestations.Atomicity{
+		Mode:            attestations.AtomicityModeSingle,
 		OneFeatureOrFix: true,
 		Message:         strings.TrimSpace(opts.AtomicityMessage),
-	})
+	}
+	if opts.Lane.Enabled {
+		lane := laneBindingFromOptions(opts.Lane)
+		atomicity = attestations.Atomicity{
+			Mode:            attestations.AtomicityModeLane,
+			OneFeatureOrFix: false,
+			Message:         defaultString(strings.TrimSpace(opts.AtomicityMessage), "Orchestrator-authorized lane "+lane.LaneID+": "+lane.Rationale),
+			Lane:            &lane,
+		}
+	}
+	responses := BuildBoundResponsesTemplate(plan, atomicity)
 	if err := writeResponses(root, result.ResponsesPath, responses); err != nil {
 		result.Message = err.Error()
 		result.NextSteps = []string{"Fix the filesystem error that prevented writing the response file, then rerun burpvalve verifier begin."}
@@ -559,12 +738,49 @@ func RunVerifierBegin(ctx context.Context, opts BeginResponsesOptions) (BeginRes
 	return result, nil
 }
 
+func validateBeginLaneOptions(opts *BeginResponsesOptions) error {
+	if opts.OneFeature {
+		return errors.New("--lane and --one-feature are mutually exclusive")
+	}
+	laneID := strings.TrimSpace(opts.Lane.LaneID)
+	if laneID == "" {
+		return errors.New("--lane-id is required with --lane")
+	}
+	if feature := strings.TrimSpace(opts.ExplicitFeature); feature != "" && feature != laneID {
+		return fmt.Errorf("--feature %q must match --lane-id %q in lane mode", feature, laneID)
+	}
+	if len(cleanBeadIDs(opts.Lane.BeadIDs)) < 2 {
+		return errors.New("--lane requires at least two bead ids")
+	}
+	if strings.TrimSpace(opts.Lane.Rationale) == "" {
+		return errors.New("--lane-rationale is required with --lane")
+	}
+	if strings.TrimSpace(opts.Lane.AuthorizationRef) == "" {
+		return errors.New("--lane-authorization-ref is required with --lane")
+	}
+	if strings.TrimSpace(opts.Lane.AuthorizedBy) == "" {
+		return errors.New("--authorized-by is required with --lane")
+	}
+	return nil
+}
+
+func laneBindingFromOptions(opts LaneOptions) attestations.LaneBinding {
+	return attestations.LaneBinding{
+		LaneID:            strings.TrimSpace(opts.LaneID),
+		BeadIDs:           cleanBeadIDs(opts.BeadIDs),
+		Rationale:         strings.TrimSpace(opts.Rationale),
+		AuthorizedBy:      strings.TrimSpace(opts.AuthorizedBy),
+		AuthorizationRef:  strings.TrimSpace(opts.AuthorizationRef),
+		AuthorizationKind: defaultString(strings.TrimSpace(opts.AuthorizationKind), attestations.LaneAuthorizationKindOrchestrator),
+	}
+}
+
 func validateResponses(plan Plan, responses *Responses) error {
 	if responses == nil {
 		return fmt.Errorf("missing matrix responses")
 	}
-	if !responses.Atomicity.OneFeatureOrFix {
-		return fmt.Errorf("atomicity not confirmed: %s", responses.Atomicity.Message)
+	if err := validateResponseAtomicity(responses); err != nil {
+		return err
 	}
 	bound := responsesHasBinding(responses)
 	if bound {
@@ -596,6 +812,37 @@ func validateResponses(plan Plan, responses *Responses) error {
 		}
 	}
 	return nil
+}
+
+func validateResponseAtomicity(responses *Responses) error {
+	switch responses.Atomicity.Mode {
+	case "", attestations.AtomicityModeSingle:
+		if !responses.Atomicity.OneFeatureOrFix {
+			return fmt.Errorf("atomicity not confirmed: %s", responses.Atomicity.Message)
+		}
+		return nil
+	case attestations.AtomicityModeLane:
+		if responses.Atomicity.OneFeatureOrFix {
+			return errors.New("lane atomicity must not confirm one_feature_or_fix")
+		}
+		if responses.Atomicity.Lane == nil {
+			return errors.New("lane atomicity requires atomicity.lane")
+		}
+		if strings.TrimSpace(responses.Atomicity.Lane.LaneID) == "" ||
+			len(cleanBeadIDs(responses.Atomicity.Lane.BeadIDs)) < 2 ||
+			strings.TrimSpace(responses.Atomicity.Lane.Rationale) == "" ||
+			strings.TrimSpace(responses.Atomicity.Lane.AuthorizedBy) == "" ||
+			strings.TrimSpace(responses.Atomicity.Lane.AuthorizationRef) == "" ||
+			strings.TrimSpace(responses.Atomicity.Lane.AuthorizationKind) == "" {
+			return errors.New("lane atomicity requires complete lane authorization metadata")
+		}
+		if strings.TrimSpace(responses.Atomicity.Lane.AuthorizationKind) != attestations.LaneAuthorizationKindOrchestrator {
+			return fmt.Errorf("lane atomicity authorization_kind %q is not %q", responses.Atomicity.Lane.AuthorizationKind, attestations.LaneAuthorizationKindOrchestrator)
+		}
+		return nil
+	default:
+		return fmt.Errorf("invalid atomicity mode %q", responses.Atomicity.Mode)
+	}
 }
 
 func validateResponseCondition(condition ConditionSpec, response ResponseCondition, bound bool) error {
@@ -680,6 +927,39 @@ func validateResponsesBinding(plan Plan, responses *Responses) error {
 			return fmt.Errorf("bound responses missing condition binding %q", conditionID)
 		}
 	}
+	if err := validateResponseLaneBinding(responses); err != nil {
+		return err
+	}
+	return nil
+}
+
+func validateResponseLaneBinding(responses *Responses) error {
+	if responses.Atomicity.Mode != attestations.AtomicityModeLane {
+		if responses.Binding.LaneBinding != nil {
+			return errors.New("single-work-unit responses must not include binding.lane_binding")
+		}
+		return nil
+	}
+	if responses.Binding.LaneBinding == nil {
+		return errors.New("lane responses missing binding.lane_binding")
+	}
+	lane := responses.Atomicity.Lane
+	bound := responses.Binding.LaneBinding
+	if lane == nil {
+		return errors.New("lane responses missing atomicity.lane")
+	}
+	if strings.TrimSpace(bound.LaneID) != strings.TrimSpace(lane.LaneID) {
+		return fmt.Errorf("lane binding id mismatch: got %q want %q", bound.LaneID, lane.LaneID)
+	}
+	if !sameCleanStrings(cleanBeadIDs(bound.BeadIDs), cleanBeadIDs(lane.BeadIDs)) {
+		return fmt.Errorf("lane binding bead ids mismatch: got %q want %q", strings.Join(cleanBeadIDs(bound.BeadIDs), ","), strings.Join(cleanBeadIDs(lane.BeadIDs), ","))
+	}
+	if strings.TrimSpace(bound.Rationale) != strings.TrimSpace(lane.Rationale) ||
+		strings.TrimSpace(bound.AuthorizedBy) != strings.TrimSpace(lane.AuthorizedBy) ||
+		strings.TrimSpace(bound.AuthorizationRef) != strings.TrimSpace(lane.AuthorizationRef) ||
+		strings.TrimSpace(bound.AuthorizationKind) != strings.TrimSpace(lane.AuthorizationKind) {
+		return errors.New("lane binding authorization metadata must match atomicity.lane")
+	}
 	return nil
 }
 
@@ -720,6 +1000,9 @@ func BuildArtifact(plan Plan, responses *Responses, opts PreCommitOptions, kind 
 	}
 	if responses != nil {
 		artifact.Atomicity = responses.Atomicity
+		if responses.Binding.LaneBinding != nil {
+			applyLaneBindingToArtifact(&artifact, responses.Binding.LaneBinding)
+		}
 	}
 	responseByCondition := map[string]ResponseCondition{}
 	if responses != nil {
@@ -759,6 +1042,25 @@ func BuildArtifact(plan Plan, responses *Responses, opts PreCommitOptions, kind 
 		artifact.Conditions = append(artifact.Conditions, cell)
 	}
 	return artifact
+}
+
+func applyLaneBindingToArtifact(artifact *attestations.Artifact, lane *attestations.LaneBinding) {
+	if artifact == nil || lane == nil {
+		return
+	}
+	beads := cleanBeadIDs(lane.BeadIDs)
+	artifact.BeadIDs = append([]string(nil), beads...)
+	artifact.CoupledWorkRationale = strings.TrimSpace(lane.Rationale)
+	artifact.Feature.ID = strings.TrimSpace(lane.LaneID)
+	artifact.Feature.Kind = "lane"
+	artifact.Feature.Name = strings.TrimSpace(lane.LaneID)
+	artifact.Feature.SourceBead = ""
+	artifact.Feature.BeadIDs = append([]string(nil), beads...)
+	artifact.Feature.DiffCluster = "lane:" + strings.TrimSpace(lane.LaneID)
+	if artifact.Atomicity.Lane == nil {
+		laneCopy := *lane
+		artifact.Atomicity.Lane = &laneCopy
+	}
 }
 
 func cleanBeadIDs(ids []string) []string {
